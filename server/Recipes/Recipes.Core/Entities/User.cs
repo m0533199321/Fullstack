@@ -38,7 +38,7 @@ namespace Recipes.Core.Entities
         {
             RecipesList = new List<Recipe>();
             RolesList = new List<Role>();
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
         }
 
         public override bool Equals(object obj)

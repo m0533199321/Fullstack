@@ -13,7 +13,5 @@
         public string Profile { get; set; }
 
         public string Information { get; set; }
-
-        public DateTime CreatedAt { get; set; }
     }
 }

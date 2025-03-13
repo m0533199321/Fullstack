@@ -24,7 +24,7 @@ namespace Recipes.Core.Entities
 
         public Comment()
         {
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
         }
     }
 }

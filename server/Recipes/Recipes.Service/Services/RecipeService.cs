@@ -42,18 +42,24 @@ namespace Recipes.Service.Services
             return recipeDto;
         }
 
-        public async Task<IEnumerable<Recipe>> GetByCategoryAsync(string category)
+        public async Task<IEnumerable<RecipeDto>> GetByCategoryAsync(string category)
         {
-            return await _iManager._recipeRepository.GetByCategoryAsync(category);
+            var recipes = await _iManager._recipeRepository.GetByCategoryAsync(category);
+            var recipesDto = _mapper.Map<IEnumerable<RecipeDto>>(recipes);
+            return recipesDto;
         }
 
-        public async Task<IEnumerable<Recipe>> GetPublicRecipesAsync()
+        public async Task<IEnumerable<RecipeDto>> GetPublicRecipesAsync()
         {
-            return await _iManager._recipeRepository.GetPublicRecipesAsync();
+            var recipes = await _iManager._recipeRepository.GetPublicRecipesAsync();
+            var recipesDto = _mapper.Map<IEnumerable<RecipeDto>>(recipes);
+            return recipesDto;
         }
-        public async Task<IEnumerable<Recipe>> GetPrivateRecipesAsync(int id)
+        public async Task<IEnumerable<RecipeDto>> GetPrivateRecipesAsync(int id)
         {
-            return await _iManager._recipeRepository.GetPrivateRecipesAsync(id);
+            var recipes = await _iManager._recipeRepository.GetPrivateRecipesAsync(id);
+            var recipesDto = _mapper.Map<IEnumerable<RecipeDto>>(recipes);
+            return recipesDto;
         }
 
         public async Task<RecipeDto> AddAsync(RecipeDto recipeDto)

@@ -17,6 +17,6 @@ namespace Recipes.Core.Interfaces.IServices
         
         public Result<LoginResponseDto?> Login(string email, string password);
         
-        public Task<Result<UserDto?>> Register(UserDto userDto);
+        public Task<Result<LoginResponseDto?>> Register(UserDto userDto);
     }
 }

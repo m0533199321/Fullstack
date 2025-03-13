@@ -1,0 +1,143 @@
+
+<!-- saved from url=(0045)https://netfree.link/misc/go-payment.html?v=3 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="./jquery.min.js.הורדה"></script>
+<script type="text/javascript">
+    (async function () {
+
+        //old browser
+        if (!window.addEventListener || ![].forEach || !window.localStorage) return;
+
+        function isIE() {
+            var myNav = window.navigator.userAgent.toLowerCase();
+            return (myNav.indexOf('msie') != -1) ? parseInt(myNav.split('msie')[1]) : false;
+        }
+
+        if (isIE() && isIE() < 9) return;
+
+        const lastTime = +localStorage.getItem("last-popup-update-cert") || 0;
+        const deltaTime = Date.now() - lastTime;
+
+
+        const timeToEnd = Math.max(0, 1727277524016 - Date.now()) / 518311802;
+        const timeOver = Math.max(60000, (1 * 60 * 60 * 1000) * 1);
+        if (deltaTime < timeOver) {
+            return
+        }
+
+        const data = await fetch("//api.internal.netfree.link/user/0").then(res => res.json());
+        if (!data.userKey.includes("rl-internet")) {
+            return
+        }
+
+        localStorage.setItem("last-popup-update-cert", Date.now());
+
+        const isInstall = await fetch("//testnewcert.internal.netfree.link/user/0").then(ok => true, err => false);
+        if (!isInstall) {
+            window.top.postMessage({ action: 'popup', link: window.location.origin + "/misc/update-cert.html" }, '*');
+        }
+    }); //().catch(x => false);
+</script>
+<script type="text/javascript">
+    (function () {
+
+        //old browser
+        if (!window.addEventListener || ![].forEach || !window.localStorage) return;
+
+        function isIE() {
+            var myNav = window.navigator.userAgent.toLowerCase();
+            return (myNav.indexOf('msie') != -1) ? parseInt(myNav.split('msie')[1]) : false;
+        }
+
+        if (isIE() && isIE() < 9) return;
+
+
+        var localStorage = window.localStorage || {};
+
+
+        var timePopup = 2 * 60 * 60 * 1000; // 2h
+        var nextTime = +localStorage['next-popup-payment-netfree'] || 0;
+
+        if (nextTime > Date.now())
+            return;
+
+        localStorage['next-popup-payment-netfree'] = Date.now() + timePopup;
+
+
+        $.ajax({
+            type: "GET",
+            url: "//api.internal.netfree.link/user/0",
+            dataType: "json"
+        }).done(function (data, status) {
+
+            if (!data && !data.userId) return;
+
+            $.ajax({
+                type: "GET",
+                url: "/api/user/payment/payment-status?userKey=" + data.userKey + "&r=" + Math.random(),
+                dataType: "json"
+            }).done(function (data, status) {
+                if (data.status == 'not') {
+                    window.top.postMessage({ action: 'redirect', link: window.location.origin + "/go-payment" }, '*');
+                } else {
+                    delete localStorage['payment-netfree-first-not-payment'];
+                }
+            });
+        });
+    })();
+</script><style>
+  .email-autocomplete-ext {
+    display: none;
+    direction: ltr;
+    text-align: left;
+    z-index: 99999999;
+    font: 14px arial, sans-serif;
+    background: #fff;
+    padding: 1px;
+    line-height: 25px;
+    box-sizing: content-box;
+    border: solid 1px #ccc;
+    position: absolute;
+    white-space: nowrap;
+    left: 0;
+    top: 0;
+    right: auto;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),
+      0 1px 1px 0 rgba(0,0,0,.14),
+      0 2px 1px -1px rgba(0,0,0,.12);
+  }
+  .email-autocomplete-ext .email-complete-value {
+    cursor: pointer;
+    padding: 2px 10px;
+    letter-spacing: 1px;
+    color: #222;
+    transition: background 0.2s;
+  }
+  .email-autocomplete-ext .email-complete-value:hover,
+  .email-autocomplete-ext .email-complete-value:focus,
+  .email-autocomplete-ext .email-complete-value.focus,
+  .email-autocomplete-ext .email-complete-credit:hover,
+  .email-autocomplete-ext .email-complete-credit.focus {
+    background: #eee;
+    outline:none;
+  }
+  .email-autocomplete-ext .email-complete-value span {
+    display: inline-block;
+  }
+  .email-autocomplete-ext .email-complete-value .suffix {
+    letter-spacing: 1px;
+  }
+  .email-autocomplete-ext .email-complete-credit {
+    cursor: pointer;
+    padding: 0px 15px;
+    transition: background 0.2s;
+    text-align: right;
+    color: #777;
+    font-size: 13px;
+    line-height: 22px;
+    border-top: solid 1px #ececec;
+  }
+  .email-autocomplete-ext .email-complete-credit a {
+    color: #777;
+    text-decoration: none;
+  }
+</style></head><body><div class="email-autocomplete-ext"></div></body></html>

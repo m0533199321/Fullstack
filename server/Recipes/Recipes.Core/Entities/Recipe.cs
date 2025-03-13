@@ -38,7 +38,7 @@ namespace Recipes.Core.Entities
         {
             CommentsList = new List<Comment>();
             UsersList = new List<User>();
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
         }
     }
 }

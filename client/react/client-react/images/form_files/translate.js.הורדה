@@ -1,0 +1,69 @@
+
+
+
+window.translate = (function(){
+    
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    
+    get.fallback = 'he';
+    get.curr = 'he';
+    
+    var sourceData = window._stringsData || {};
+    
+    function get(key){
+        return (sourceData[get.curr] && sourceData[get.curr][key]) ||
+            (sourceData[get.fallback] && sourceData[get.fallback][key]) || key;
+    }
+
+    function normalizeText(text) {
+        return text.replace(/[\r\n]+/g," ").replace(/[\t\s]+/g," ").trim();
+    }
+
+    get.tanslateByAttr =  function(attr){
+        attr = attr || 'string-key';
+        $('['+ attr + ']').each(function(i, elm){
+            var $this = $(this);
+            var key = $this.attr(attr);
+            if (key) {
+                var text = get(key); 
+                if(text) $this.text(text);
+            } else {
+                elm.childNodes.forEach(function(node){
+                    if (node.nodeType == 3) { //text
+                        var key = normalizeText(node.data);
+                        var text = get(key); 
+                        if(text) node.data = text;
+                    }
+                });
+            }
+        });
+    };
+    
+    get.setAutoLang =  function(){
+        
+        var saveLang = getCookie('locale');
+        
+        if(saveLang){
+            get.curr = saveLang;
+            return;
+        }
+        
+        var navigatorLang = window.navigator.language || window.navigator.browserLanguage;
+        
+        get.curr = navigatorLang.substr(0,2);
+    };
+    
+    get.setAutoLang();
+    
+    return get;
+    
+})();

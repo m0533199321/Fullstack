@@ -64,6 +64,7 @@ namespace Recipes.Service.Services
                 return Result<UserDto>.Failure("User already exists.");
             }
 
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             var result = await _iManager._userRepository.AddAsync(user);
             if (result == null)
             {

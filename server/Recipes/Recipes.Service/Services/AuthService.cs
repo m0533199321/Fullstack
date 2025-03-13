@@ -82,10 +82,31 @@ namespace Recipes.Service.Services
             return Result<LoginResponseDto?>.NotFound("User does not exist.");
         }
 
-        public async Task<Result<UserDto>> Register(UserDto userDto)
+        //public async Task<Result<UserDto>> Register(UserDto userDto)
+        //{
+        //    return await _userService.AddAsync(userDto);
+        //}
+
+        public async Task<Result<LoginResponseDto?>> Register(UserDto userDto)
         {
-            userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
-            return await _userService.AddAsync(userDto);
+            var result = await _userService.AddAsync(userDto);
+            if (result == null)
+                return null;
+            var user = _mapper.Map<User>(result.Data);
+
+            if (result.IsSuccess)
+            {
+                var token = GenerateJwtToken(user);
+                var response = new LoginResponseDto
+                {
+                    User = user,
+                    Token = token
+                };
+                return Result<LoginResponseDto>.Success(response);
+            }
+
+            return Result<LoginResponseDto>.NotFound("User registration failed.");
         }
+
     }
 }

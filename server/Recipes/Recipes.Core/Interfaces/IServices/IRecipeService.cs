@@ -18,11 +18,11 @@ namespace Recipes.Core.Interfaces.IServices
 
         public Task<RecipeDto?> GetByIdAsync(int id);
 
-        public Task<IEnumerable<Recipe>> GetByCategoryAsync(string category);
+        public Task<IEnumerable<RecipeDto>> GetByCategoryAsync(string category);
 
-        public Task<IEnumerable<Recipe>> GetPublicRecipesAsync();
+        public Task<IEnumerable<RecipeDto>> GetPublicRecipesAsync();
 
-        public Task<IEnumerable<Recipe>> GetPrivateRecipesAsync(int id);
+        public Task<IEnumerable<RecipeDto>> GetPrivateRecipesAsync(int id);
 
         public Task<RecipeDto> AddAsync(RecipeDto r);
 

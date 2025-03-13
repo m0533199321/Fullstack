@@ -63,7 +63,7 @@ namespace Recipes.API.Controllers
         // GET-CATEGORY: api/<Users>
         [HttpGet("Category/{category}")]
         [AllowAnonymous]
-        public async Task<IEnumerable<Recipe>> GetCategory(string category)
+        public async Task<IEnumerable<RecipeDto>> GetCategory(string category)
         {
             return await _iService.GetByCategoryAsync(category);
         }
@@ -71,19 +71,19 @@ namespace Recipes.API.Controllers
         // GET-PUBLIC: api/<Users>
         [HttpGet("Public")]
         [AllowAnonymous]
-        public async Task<IEnumerable<Recipe>> GetPublicRecipes()
+        public async Task<IEnumerable<RecipeDto>> GetPublicRecipes()
         {
             return await _iService.GetPublicRecipesAsync();
         }
 
         // GET-PRIVATE: api/<Users>/5
         [HttpGet("Private/{id}")]
-        public async Task<IEnumerable<Recipe>> GetPrivateRecipes(int id)
+        public async Task<IEnumerable<RecipeDto>> GetPrivateRecipes(int id)
         {
             var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var tokenId = int.Parse(HttpContext.User.Claims.First(claim => claim.Type == "id").Value);
             if (tokenId != id)
-                return Enumerable.Empty<Recipe>();
+                return Enumerable.Empty<RecipeDto>();
             return await _iService.GetPrivateRecipesAsync(id);
         }
 

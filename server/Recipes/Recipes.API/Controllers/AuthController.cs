@@ -39,10 +39,12 @@ namespace Recipes.API.Controllers
 
             var userDto = _mapper.Map<UserDto>(user);
             var result = await _authService.Register(userDto);
-            if (result.IsSuccess)
+            if (result != null && result.IsSuccess)
             {
                 return Ok(result.Data);
             }
+            if (result == null)
+                return BadRequest("Cant add");
             return StatusCode(result.StatusCode, result.ErrorMessage);
         }
     }

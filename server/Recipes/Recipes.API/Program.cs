@@ -22,13 +22,14 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins", builder =>
+    options.AddPolicy("AllowAll", builder =>
     {
         builder.AllowAnyOrigin() // מאפשר לכל מקור לגשת (כל אתר/לקוח)
                .AllowAnyMethod()  // מאפשר כל שיטה (GET, POST, PUT, DELETE וכו')
                .AllowAnyHeader(); // מאפשר כל כותרת
     });
 });
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -62,7 +63,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowAllOrigins");
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 
