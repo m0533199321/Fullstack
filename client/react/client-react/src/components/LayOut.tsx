@@ -1,10 +1,10 @@
 import { Outlet } from "react-router";
-import Login from "./Auth";
+import Auth from "./Auth";
 
 const LayOut = () => {
       
     return (<>
-        <Login />
+        <Auth />
         <div style={{ marginTop: '20vh', marginLeft: '10vw', marginRight: '20vw' }}>
             <Outlet />
         </div>

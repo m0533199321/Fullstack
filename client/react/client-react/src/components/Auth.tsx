@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Auth = () => {
     const navigate = useNavigate();
 
 
@@ -21,4 +21,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Auth;

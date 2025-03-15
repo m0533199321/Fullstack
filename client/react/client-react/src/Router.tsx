@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router"
 import LayOut from "./components/LayOut"
 import LoginForm from "./components/LoginForm"
 import RegisterForm from "./components/RegisterForm"
+import ProfilePicture from "./components/ProfilePicture"
 
 
 
@@ -14,6 +15,7 @@ export const Router = createBrowserRouter([
             // { path: 'Home', element: <Home /> },
             { path: 'register', element: <RegisterForm /> },
             { path: 'login', element: <LoginForm /> },
+            // { path: 'register/profile', element: <ProfilePicture onSelect={() => {}} /> }
         ]
     }
 ])

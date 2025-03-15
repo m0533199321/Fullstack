@@ -1,34 +1,61 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { FormDataRegister } from "../models/FormType";
 import { useNavigate } from "react-router-dom";
+import {
+    Container,
+    Box,
+    Button,
+    Typography,
+    FormControlLabel,
+    Checkbox,
+    TextField,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions
+} from '@mui/material';
 import { AppDispatch } from "./Redux/Store";
 import { useDispatch } from "react-redux";
 import { registerUser } from "./Redux/AuthSlice";
 import { UserRegister } from "../models/AuthType";
-import { TextField, Button, Typography, Container, Box, FormControlLabel, Checkbox } from '@mui/material';
+import createTextField from './CreateTextFieldRegister';
+import ProfilePicture from './ProfilePicture';
+import { uploadProfilePicture } from "./Redux/ProfileSlice";
+
+interface FormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    profilePicture: File | null;
+    allergies: string[];
+    preferences: string;
+    additionalNotes: string;
+}
 
 const RegisterForm: React.FC = () => {
-    const [formData, setFormData] = useState<FormDataRegister>({
+    const [formData, setFormData] = useState<FormData>({
         firstName: '',
         lastName: '',
         email: '',
         password: '',
+        profilePicture: null,
         allergies: [],
         preferences: '',
-        profilePicture: null,
-        additionalNotes: '',
+        additionalNotes: ''
     });
 
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState<number>(1);
+    const [showProfilePicture, setShowProfilePicture] = useState<boolean>(false);
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value, type, files, checked } = e.target as HTMLInputElement;
+        const { name, value, type } = e.target;
 
         if (type === 'checkbox') {
+            const target = e.target as HTMLInputElement;
             setFormData(prev => {
-                const allergies = checked
+                const allergies = target.checked
                     ? [...prev.allergies, value]
                     : prev.allergies.filter(allergy => allergy !== value);
                 return { ...prev, allergies };
@@ -36,21 +63,37 @@ const RegisterForm: React.FC = () => {
         } else {
             setFormData(prev => ({
                 ...prev,
-                [name]: type === 'file' ? files![0] : value,
+                [name]: value,
             }));
         }
+    };
+
+    const handleProfilePictureSelect = (file: File | null) => {
+        if (file) {
+            // שלח את הקובץ ל-Slice להעלאה
+            dispatch(uploadProfilePicture(file));
+            setFormData(prev => ({ ...prev, profilePicture: file }));
+        }
+        setShowProfilePicture(false);
     };
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (step === 2) {
-            const text = formData.allergies.join(', ');
-            const user: UserRegister = {
-                fName: formData.firstName, lName: formData.lastName,
-                email: formData.email, password: formData.password, profile: formData.profilePicture,
-                information: "sensitivities: " + text + " preferences: " + formData.preferences + " additionalNotes: " + formData.additionalNotes
+            // בדוק אם תמונת הפרופיל נבחרה
+            if (!formData.profilePicture) {
+                alert('נא לבחור תמונת פרופיל'); // ניתן לשפר את ההודעה או להשתמש בהודעה גרפית
+                return; // עצור את השליחה אם לא נבחרה תמונה
             }
-            console.log(user);
+    
+            const user: UserRegister = {
+                fName: formData.firstName,
+                lName: formData.lastName,
+                email: formData.email,
+                password: formData.password,
+                profile: formData.profilePicture,
+                information: "sensitivities: " + formData.allergies.join(', ') + " preferences: " + formData.preferences + " additionalNotes: " + formData.additionalNotes
+            };
             dispatch(registerUser({ user }));
             navigate('/');
         } else {
@@ -58,64 +101,64 @@ const RegisterForm: React.FC = () => {
         }
     };
 
+    const handleNavigateToProfilePicture = () => {
+        setShowProfilePicture(true);
+    };
+
+    const handleBackToStep1 = () => {
+        setStep(1);
+    };
+
     return (
         <Container component="main" maxWidth="xs">
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 8, padding: 3, borderRadius: 2, boxShadow: 3, backgroundColor: 'white' }}>
-                <Typography component="h1" variant="h5" sx={{ color: 'black' }}>{step === 1 ? 'שלב 1: פרטים אישיים' : 'שלב 2: רגישויות והערות'}</Typography>
+                <Typography component="h1" variant="h5" sx={{ color: 'black', marginBottom: 2 }}>
+                    {step === 1 ? 'שלב 1: פרטים אישיים' : 'שלב 2: רגישויות והערות'}
+                </Typography>
                 <form onSubmit={handleSubmit} style={{ width: '100%', marginTop: 1 }}>
                     {step === 1 && (
                         <>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="firstName"
-                                label="שם פרטי"
-                                value={formData.firstName}
-                                onChange={handleChange}
-                                sx={{ input: { color: 'black' }, label: { color: 'black' } }}
-                            />
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="lastName"
-                                label="שם משפחה"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                                sx={{ input: { color: 'black' }, label: { color: 'black' } }}
-                            />
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="email"
-                                label="מייל"
-                                type="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                sx={{ input: { color: 'black' }, label: { color: 'black' } }}
-                            />
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="סיסמה"
-                                type="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                sx={{ input: { color: 'black' }, label: { color: 'black' } }}
-                            />
+                            {createTextField({
+                                name: "firstName",
+                                label: "שם פרטי",
+                                value: formData.firstName,
+                                onChange: handleChange,
+                                required: true,
+                            })}
+                            {createTextField({
+                                name: "lastName",
+                                label: "שם משפחה",
+                                value: formData.lastName,
+                                onChange: handleChange,
+                                required: true,
+                            })}
+                            {createTextField({
+                                name: "email",
+                                label: "מייל",
+                                type: "email",
+                                value: formData.email,
+                                onChange: handleChange,
+                                required: true,
+                            })}
+                            {createTextField({
+                                name: "password",
+                                label: "סיסמה",
+                                type: "password",
+                                value: formData.password,
+                                onChange: handleChange,
+                                required: true,
+                            })}
+                            <Button onClick={handleNavigateToProfilePicture}>
+                                בחר תמונת פרופיל
+                            </Button>
                         </>
                     )}
                     {step === 2 && (
                         <>
-                            <Typography variant="body1" sx={{ marginBottom: 2 }}>רגישויות למאכלים:</Typography>
+                            <Button onClick={handleBackToStep1} variant="outlined" sx={{ marginBottom: 2 }}>
+                                חזור לשלב 1
+                            </Button>
+                            <Typography variant="body1" sx={{ marginBottom: 2 }}>סימון אלרגניים:</Typography>
                             {['אגוזים', 'חלב', 'גלוטן', 'ביצים'].map(allergy => (
                                 <FormControlLabel
                                     key={allergy}
@@ -136,7 +179,7 @@ const RegisterForm: React.FC = () => {
                                 margin="normal"
                                 fullWidth
                                 name="preferences"
-                                label="מצרכים אהובים"
+                                label="מצרכים נגישים"
                                 multiline
                                 rows={4}
                                 value={formData.preferences}
@@ -161,6 +204,15 @@ const RegisterForm: React.FC = () => {
                         {step === 1 ? 'המשך לשלב 2' : 'שלח'}
                     </Button>
                 </form>
+                <Dialog open={showProfilePicture} onClose={() => setShowProfilePicture(false)}>
+                    <DialogTitle>בחירת תמונת פרופיל</DialogTitle>
+                    <DialogContent>
+                        <ProfilePicture onSelect={handleProfilePictureSelect} onClose={() => setShowProfilePicture(false)} />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setShowProfilePicture(false)}>סגור</Button>
+                    </DialogActions>
+                </Dialog>
             </Box>
         </Container>
     );
