@@ -18,11 +18,21 @@ export const registerUser = createAsyncThunk(
         { user }: { user: UserRegister },
         thunkAPI
     ) => {
+        const user2 =
+        {
+            fName: user.fName,
+            lName: user.lName,
+            email: user.email,
+            password:user.password,
+            profile: "https",
+            information: user.information
+        };
         try {
-            const response = await axios.post(`${API_URL}/register`, user)
-            const userLogin: UserLogin = { email: user.email, password: user.password };
-            loginUser({ user: userLogin });
-            // localStorage.setItem("token", JSON.stringify(response.data.token));
+            const response = await axios.post(`${API_URL}/register`, user2)
+            // const userLogin: UserLogin = { email: user.email, password: user.password };
+            // loginUser({ user: userLogin });
+            localStorage.setItem("token", JSON.stringify(response.data.token));
+            localStorage.setItem("userId", JSON.stringify(response.data.user.id));
             Swal.fire("Success!", "Your account has been created!", "success");
             return response.data;
         } catch (e: any) {
@@ -41,6 +51,7 @@ export const loginUser = createAsyncThunk(
         try {
             const response = await axios.post(`${API_URL}/login`, user);
             localStorage.setItem("token", JSON.stringify(response.data.token));
+            localStorage.setItem("userId", JSON.stringify(response.data.user.id));
             Swal.fire("Success!", "You have successfully logged in!", "success");
             return response.data;
         } catch (e: any) {
@@ -50,10 +61,10 @@ export const loginUser = createAsyncThunk(
     }
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-    localStorage.removeItem("token");
-    Swal.fire("Logged Out!", "You have been logged out successfully.", "success");
-});
+// export const logout = createAsyncThunk("auth/logout", async () => {
+//     localStorage.removeItem("token");
+//     Swal.fire("Logged Out!", "You have been logged out successfully.", "success");
+// });
 
 
 const AuthSlice = createSlice({
@@ -86,9 +97,9 @@ const AuthSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload as string;
             })
-            .addCase(logout.fulfilled, (state) => {
-                state.token = null;
-            });
+        // .addCase(logout.fulfilled, (state) => {
+        //     state.token = null;
+        // });
     },
 });
 

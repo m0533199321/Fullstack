@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./Redux/Store";
-import { fetchPublicRecipes } from "./Redux/PublicRecipesSlice";
 import { Recipe } from "../models/RecipeType";
 import { useEffect, useState } from "react";
 import '../styles/PublicRecipes.css';
 import { Button, Menu, MenuItem } from "@mui/material";
+import { fetchPrivateRecipes } from "./Redux/PrivateRecipesSlice";
 
-const PublicRecipes = () => {
+const PrivateRecipes = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [success, setSuccess] = useState(false);
@@ -14,14 +14,18 @@ const PublicRecipes = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); // מצב לתפריט
 
     const allRecipes = async () => {
-        const resultAction = await dispatch(fetchPublicRecipes());
-        if (fetchPublicRecipes.fulfilled.match(resultAction)) {
-            setSuccess(true);
-            setRecipes(resultAction.payload);
-        } else {
-            console.error('Failed to fetch recipes:', resultAction.error);
-        }
-    };
+        const id = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
+        if (token) {
+            const resultAction = await dispatch(fetchPrivateRecipes({ id: Number(id), token: token }));
+            if (fetchPrivateRecipes.fulfilled.match(resultAction)) {
+                setSuccess(true);
+                setRecipes(resultAction.payload);
+            } else {
+                console.error('Failed to fetch recipes:', resultAction.error);
+            }
+        };
+    }
 
     useEffect(() => {
         allRecipes();
@@ -79,5 +83,5 @@ const PublicRecipes = () => {
     );
 }
 
-export default PublicRecipes;
+export default PrivateRecipes;
 

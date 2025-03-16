@@ -104,7 +104,8 @@ namespace Recipes.API.Controllers
         }
 
         // ⬆️ שלב 1: קבלת URL להעלאת קובץ ל-S3
-        [HttpGet("upload-url")]
+        [HttpGet("Upload-url")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUploadUrl([FromQuery] string fileName, [FromQuery] string contentType)
         {
             if (string.IsNullOrEmpty(fileName))
@@ -114,7 +115,7 @@ namespace Recipes.API.Controllers
         }
 
         // ⬇️ שלב 2: קבלת URL להורדת קובץ מה-S3
-        [HttpGet("download-url/{fileName}")]
+        [HttpGet("Download-url/{fileName}")]
         public async Task<IActionResult> GetDownloadUrl(string fileName)
         {
             var url = await _s3Service.GetDownloadUrlAsync(fileName);

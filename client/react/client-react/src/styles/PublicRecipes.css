@@ -1,0 +1,20 @@
+.recipe-list {
+    list-style-type: none; /* מסיר את הסימונים של הרשימה */
+    padding: 0; /* מסיר ריפוד */
+}
+
+.recipe-item {
+    border: 1px solid #ccc; /* גבול סביב כל מתכון */
+    border-radius: 5px; /* פינות מעוגלות */
+    margin: 10px 0; /* רווח בין המתכונים */
+    padding: 15px; /* ריפוד פנימי */
+    background-color: #f9f9f9; /* צבע רקע */
+}
+
+.recipe-item h3 {
+    margin: 0; /* מסיר רווח מעל ומתחת לכותרת */
+}
+
+.recipe-item p {
+    color: #555; /* צבע טקסט לתיאור */
+}

@@ -13,10 +13,15 @@ const Auth = () => {
         navigate('/register');
     }
 
+    const allRecipes =() => {
+        navigate('/private-recipes');
+    }
+
     return (
         <>
             <Button onClick={signIn}>sign in</Button>
             <Button onClick={signUp}>sign up</Button>
+            <Button onClick={allRecipes}>private recipes</Button>
         </>
     )
 }

@@ -20,6 +20,7 @@ import { UserRegister } from "../models/AuthType";
 import createTextField from './CreateTextFieldRegister';
 import ProfilePicture from './ProfilePicture';
 import { uploadProfilePicture } from "./Redux/ProfileSlice";
+import uploadSlice, { fetchUploadUrl } from "./Redux/P";
 
 interface FormData {
     firstName: string;
@@ -71,7 +72,8 @@ const RegisterForm: React.FC = () => {
     const handleProfilePictureSelect = (file: File | null) => {
         if (file) {
             // שלח את הקובץ ל-Slice להעלאה
-            dispatch(uploadProfilePicture(file));
+            // dispatch(uploadProfilePicture(file));
+            dispatch(fetchUploadUrl(file))
             setFormData(prev => ({ ...prev, profilePicture: file }));
         }
         setShowProfilePicture(false);
@@ -80,11 +82,11 @@ const RegisterForm: React.FC = () => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (step === 2) {
-            // בדוק אם תמונת הפרופיל נבחרה
-            if (!formData.profilePicture) {
-                alert('נא לבחור תמונת פרופיל'); // ניתן לשפר את ההודעה או להשתמש בהודעה גרפית
-                return; // עצור את השליחה אם לא נבחרה תמונה
-            }
+            // // בדוק אם תמונת הפרופיל נבחרה
+            // if (!formData.profilePicture) {
+            //     alert('נא לבחור תמונת פרופיל'); // ניתן לשפר את ההודעה או להשתמש בהודעה גרפית
+            //     return; // עצור את השליחה אם לא נבחרה תמונה
+            // }
     
             const user: UserRegister = {
                 fName: formData.firstName,

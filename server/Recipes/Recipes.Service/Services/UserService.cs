@@ -71,9 +71,10 @@ namespace Recipes.Service.Services
                 return Result<UserDto>.Failure("Unable to add the user at this time.");
             }
 
+            await _iManager.SaveAsync();
+
             var resultDto = _mapper.Map<UserDto>(result);
 
-            await _iManager.SaveAsync();
             return Result<UserDto>.Success(resultDto);
         }
 

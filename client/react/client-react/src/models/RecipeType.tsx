@@ -1,8 +1,21 @@
+export interface RecipeInterface {
+    id: number,
+    title: string,
+    isPublic: boolean,
+    degree: number,
+    createdAt: Date,
+    path: string,
+    category: number
+}
+
 export type Recipe = {
     id: number,
     title: string,
+    isPublic: boolean,
     degree: number,
-    createdAt: Date
+    createdAt: Date,
+    path: string,
+    category: number
 }
 export type RecipeWithOutId = {
     title: string,

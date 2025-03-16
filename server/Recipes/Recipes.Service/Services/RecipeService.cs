@@ -69,6 +69,7 @@ namespace Recipes.Service.Services
             if (recipe != null)
             {
                 await _iManager.SaveAsync();
+                recipeDto = _mapper.Map<RecipeDto>(recipe);
                 return recipeDto;
             }
             return null;
@@ -95,9 +96,10 @@ namespace Recipes.Service.Services
             if (recipe != null)
             {
                 await _iManager.SaveAsync();
+                var recipeDto = _mapper.Map<RecipeDto>(recipe);
+                return recipeDto;
             }
-            var recipeDto = _mapper.Map<RecipeDto>(recipe);
-            return recipeDto;
+            return null;
         }
 
         public async Task<RecipeDto> UpdateAsync(int id, RecipeDto recipeDto)
@@ -136,11 +138,11 @@ namespace Recipes.Service.Services
         {
             //if (user.RecipesList.Any(r => r.Id == recipe.Id))
             //{
-                user.RecipesList.Remove(recipe);
-                if(!recipe.IsPublic)
-                    await _iManager._recipeRepository.DeleteAsync(recipe.Id);
-                await _iManager.SaveAsync();
-                return true;
+            user.RecipesList.Remove(recipe);
+            if (!recipe.IsPublic)
+                await _iManager._recipeRepository.DeleteAsync(recipe.Id);
+            await _iManager.SaveAsync();
+            return true;
             //}
             //return false;
         }
