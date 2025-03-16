@@ -1,38 +1,61 @@
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthState, UserLogin, UserRegister } from "../../models/AuthType";
+import api from "../api";
 
-
-const API_URL = "https://localhost:7005/api/Auth";
+const API_URL = "https://localhost:7005/api";
 
 const initialState: AuthState = {
     token: localStorage.getItem("token") || null,
+    user: null,
     loading: false,
     error: null,
+    isAuthenticated: !!localStorage.getItem("token"),
 };
+
+function getIdFromToken(token: string): string | null {
+    if (!token) return null;
+
+    const payload = token.split('.')[1];
+    const decodedPayload = JSON.parse(atob(payload));
+    return decodedPayload.sub;
+}
+
+export const fetchUser = createAsyncThunk(
+    "auth/fetchUser",
+    async (_, thunkAPI) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            return thunkAPI.rejectWithValue("No token found");
+        }
+        try {
+            const id = getIdFromToken(token);
+            console.log(id);
+            const response = await api.get(`${API_URL}/User/Full/${id}`);
+            console.log(response);
+            return response.data;
+        } catch (e: any) {
+            return thunkAPI.rejectWithValue(e.message);
+        }
+    }
+);
 
 export const registerUser = createAsyncThunk(
     "register",
-    async (
-        { user }: { user: UserRegister },
-        thunkAPI
-    ) => {
-        const user2 =
-        {
+    async ({ user }: { user: UserRegister }, thunkAPI) => {
+        const user2 = {
             fName: user.fName,
             lName: user.lName,
             email: user.email,
-            password:user.password,
+            password: user.password,
             profile: "https",
             information: user.information
         };
         try {
-            const response = await axios.post(`${API_URL}/register`, user2)
-            // const userLogin: UserLogin = { email: user.email, password: user.password };
-            // loginUser({ user: userLogin });
-            localStorage.setItem("token", JSON.stringify(response.data.token));
-            localStorage.setItem("userId", JSON.stringify(response.data.user.id));
+            const response = await axios.post(`${API_URL}/Auth/register`, user2);
+            localStorage.setItem("token", response.data.token);
             Swal.fire("Success!", "Your account has been created!", "success");
             return response.data;
         } catch (e: any) {
@@ -44,14 +67,10 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
     "login",
-    async (
-        { user }: { user: UserLogin },
-        thunkAPI
-    ) => {
+    async ({ user }: { user: UserLogin }, thunkAPI) => {
         try {
-            const response = await axios.post(`${API_URL}/login`, user);
-            localStorage.setItem("token", JSON.stringify(response.data.token));
-            localStorage.setItem("userId", JSON.stringify(response.data.user.id));
+            const response = await axios.post(`${API_URL}/Auth/login`, user);
+            localStorage.setItem("token", response.data.token);
             Swal.fire("Success!", "You have successfully logged in!", "success");
             return response.data;
         } catch (e: any) {
@@ -61,10 +80,21 @@ export const loginUser = createAsyncThunk(
     }
 );
 
-// export const logout = createAsyncThunk("auth/logout", async () => {
-//     localStorage.removeItem("token");
-//     Swal.fire("Logged Out!", "You have been logged out successfully.", "success");
-// });
+export const UpdateUserName = createAsyncThunk(
+    "updateName",
+    async ({ id, fName, lName }: { id: number, fName: string, lName: string }, thunkAPI) => {
+        try {
+            console.log(id, fName, lName);        
+            const response = await api.put(`${API_URL}/User/Name/${id}?fName=${fName}&lName=${lName}`);
+            // const response = await api.put(`${API_URL}/User/Name`, { id, fName, lName });
+            Swal.fire("Success!", "You have successfully updated name!", "success");
+            return response.data;
+        } catch (e: any) {
+            Swal.fire("Error!", "Updated failed. Please try later.", "error");
+            return thunkAPI.rejectWithValue(e.message);
+        }
+    }
+);
 
 
 const AuthSlice = createSlice({
@@ -73,13 +103,28 @@ const AuthSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(fetchUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+                state.isAuthenticated = true;
+            })
+            .addCase(fetchUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
             .addCase(registerUser.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.token = action.payload;
+                state.token = action.payload.token;
+                state.user = action.payload.user;
+                state.isAuthenticated = true;
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.loading = false;
@@ -91,58 +136,31 @@ const AuthSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.token = action.payload;
+                state.token = action.payload.token;
+                state.user = action.payload.user;
+                state.isAuthenticated = true;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
-        // .addCase(logout.fulfilled, (state) => {
-        //     state.token = null;
-        // });
+            .addCase(UpdateUserName.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(UpdateUserName.fulfilled, (state, action) => {
+                state.loading = false;
+                if (state.user) {
+                    state.user.fName = action.payload.fName;
+                    state.user.lName = action.payload.lName;
+                }
+                Swal.fire("Success!", "Name updated successfully!", "success");
+            })
+            .addCase(UpdateUserName.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            });
     },
 });
 
 export default AuthSlice;
-
-// import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import axios from 'axios';
-// import { AuthState, User } from '../../models/AuthType';
-
-// const baseUrl = "https://localhost:7005/api/Auth/"
-
-
-// export const loginUser = createAsyncThunk('login',
-//      async (user: User) => {
-//     const response = await axios.post(baseUrl + 'login', user);
-//     return response.data;
-// });
-
-// const authSlice = createSlice({
-//     name: 'auth',
-//     initialState: {
-//         user: null,
-//         loading: false,
-//         error: null,
-//     } as AuthState,
-//     reducers: {},
-//     extraReducers: (builder) => {
-//         builder
-//             .addCase(loginUser.pending, (state) => {
-//                 state.loading = true;
-//                 state.error = null;
-//             })
-//             .addCase(loginUser.fulfilled, (state, action) => {
-//                 state.loading = false;
-//                 state.user = action.payload;
-//             })
-//             .addCase(loginUser.rejected, (state, action) => {
-//                 state.loading = false;
-//                 state.error = action.error.message || 'Something went wrong';
-//             });
-//     },
-// });
-
-
-// export const { reducer } = authSlice;
-// export default authSlice;

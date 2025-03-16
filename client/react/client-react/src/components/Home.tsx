@@ -1,3 +1,109 @@
+import { Button, Typography, Grid, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
+const HomePage = () => {
+  const navigate = useNavigate();
+
+  const goToPublicRecipes = () => {
+    navigate("/public-recipes");
+  };
+
+  const goToPrivateRecipes = () => {
+    navigate("/private-recipes");
+  };
+
+  return (
+    <Box sx={{ backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
+      {/* תמונה רקע */}
+      <Box
+        sx={{
+          backgroundImage: "url('https://source.unsplash.com/1600x900/?food')",
+          backgroundSize: "cover",
+          height: "60vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+          color: "white",
+          backgroundPosition: "center",
+        }}
+      >
+        <Typography variant="h3" sx={{ fontWeight: "bold", fontFamily: "Roboto" }}>
+          Welcome to Recipe World
+        </Typography>
+      </Box>
+
+      {/* תוכן עמוד */}
+      <Box sx={{ padding: "2rem 5rem" }}>
+        <Typography variant="h4" sx={{ textAlign: "center", marginBottom: "2rem" }}>
+          Explore Amazing Recipes
+        </Typography>
+
+        <Grid container spacing={4} justifyContent="center">
+          <Grid item xs={12} sm={6} md={4}>
+            <Box
+              sx={{
+                backgroundImage: "url('https://source.unsplash.com/1600x900/?cooking')",
+                backgroundSize: "cover",
+                height: "300px",
+                borderRadius: "10px",
+                boxShadow: 3,
+              }}
+            >
+              <Box sx={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#FFA500",
+                    color: "white",
+                    fontSize: "1.2rem",
+                    padding: "10px 20px",
+                    borderRadius: "5px",
+                  }}
+                  onClick={goToPublicRecipes}
+                >
+                  Public Recipes
+                </Button>
+              </Box>
+            </Box>
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+            <Box
+              sx={{
+                backgroundImage: "url('https://source.unsplash.com/1600x900/?chef')",
+                backgroundSize: "cover",
+                height: "300px",
+                borderRadius: "10px",
+                boxShadow: 3,
+              }}
+            >
+              <Box sx={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#FFA500",
+                    color: "white",
+                    fontSize: "1.2rem",
+                    padding: "10px 20px",
+                    borderRadius: "5px",
+                  }}
+                  onClick={goToPrivateRecipes}
+                >
+                  Private Recipes
+                </Button>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
+  );
+};
+
+export default HomePage;
+
+
 // import { motion } from "framer-motion";
 // import { FaSearch, FaRegBookmark, FaUsers } from "react-icons/fa";
 // import Button from "@mui/material/Button";

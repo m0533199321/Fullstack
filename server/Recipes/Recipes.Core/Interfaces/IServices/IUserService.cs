@@ -23,6 +23,7 @@ namespace Recipes.Core.Interfaces.IServices
 
         public Task<UserDto> UpdateAsync(int id, UserDto u);
 
+        public Task<UserDto> UpdateNameAsync(int id, string fName, string lName);
         public Task<bool> DeleteAsync(int id);
     }
 }

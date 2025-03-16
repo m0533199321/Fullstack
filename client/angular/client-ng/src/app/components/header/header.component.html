@@ -1,0 +1,25 @@
+<mat-toolbar class="toolbar">
+    <span>Recipes</span>
+    <span class="spacer"></span>
+
+    @if(user.value.id==0) {
+    <button routerLink="/signUp" class="button">
+        <mat-icon class="icon">person_add</mat-icon>
+        <span class="text">sign Up</span>
+    </button>
+
+    <button routerLink="/signIn" class="button">
+        <mat-icon class="icon">person</mat-icon>
+        <span class="text"> sign In</span>
+    </button>}
+
+    <button routerLink="/" class="button">
+        <mat-icon class="icon">home</mat-icon>
+        <span class="text2">home</span>
+    </button>
+
+</mat-toolbar>
+
+<div class="outlet">
+<router-outlet></router-outlet>
+</div>

@@ -92,6 +92,18 @@ namespace Recipes.Service.Services
             return null;
         }
 
+        public async Task<UserDto> UpdateNameAsync(int id, string fName, string lName)
+        {
+            var user = await _iManager._userRepository.UpdateNameAsync(id, fName, lName);
+            if (user != null)
+            {
+                await _iManager.SaveAsync();
+                var userDto = _mapper.Map<UserDto>(user);
+                return userDto;
+            }
+            return null;
+        }
+
         public async Task<bool> DeleteAsync(int id)
         {
             var user = await GetFullByIdAsync(id);

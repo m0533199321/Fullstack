@@ -1,9 +1,10 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "./Redux/Store";
 
 const Auth = () => {
     const navigate = useNavigate();
-
+    const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
     const signIn = (): void => {
         navigate('/login');
@@ -13,15 +14,27 @@ const Auth = () => {
         navigate('/register');
     }
 
-    const allRecipes =() => {
+    const allPrivateRecipes = () => {
         navigate('/private-recipes');
+    }
+
+    const allPublicRecipes = () => {
+        navigate('/public-recipes');
     }
 
     return (
         <>
-            <Button onClick={signIn}>sign in</Button>
-            <Button onClick={signUp}>sign up</Button>
-            <Button onClick={allRecipes}>private recipes</Button>
+            {!isAuthenticated ? (
+                <>
+                    <Button onClick={signIn}>Sign In</Button>
+                    <Button onClick={signUp}>Sign Up</Button>
+                </>
+            ) : (
+                <>
+                    <Button onClick={allPublicRecipes}>Pubilc Recipes</Button>
+                    <Button onClick={allPrivateRecipes}>Private Recipes</Button>
+                </>
+            )}
         </>
     )
 }

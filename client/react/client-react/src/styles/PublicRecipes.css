@@ -1,20 +1,74 @@
-.recipe-list {
-    list-style-type: none; /* מסיר את הסימונים של הרשימה */
-    padding: 0; /* מסיר ריפוד */
+.public-recipes-container {
+    padding: 20px;
+    min-height: 100vh;
 }
 
-.recipe-item {
-    border: 1px solid #ccc; /* גבול סביב כל מתכון */
-    border-radius: 5px; /* פינות מעוגלות */
-    margin: 10px 0; /* רווח בין המתכונים */
-    padding: 15px; /* ריפוד פנימי */
-    background-color: #f9f9f9; /* צבע רקע */
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
 }
 
-.recipe-item h3 {
-    margin: 0; /* מסיר רווח מעל ומתחת לכותרת */
+.recipe-card {
+    background: rgba(57, 62, 70, 0.9);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: right;
 }
 
-.recipe-item p {
-    color: #555; /* צבע טקסט לתיאור */
+.recipe-title {
+    margin: 0;
+    font-size: 1.7rem;
+    color: #FF8C42;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.stars {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.filled-star {
+    color: gold;
+    font-size: 1.8rem;
+}
+
+.empty-star {
+    color: lightgray;
+    font-size: 1.8rem;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.sort-btn, .add-btn, .details-btn, .download-btn, .email-btn {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    background: #FF8C42;
+    color: #333;
+    border: none;
+}
+
+.sort-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.sort-container .MuiSvgIcon-root, 
+.buttons-container .MuiSvgIcon-root {
+    color: #001aff; /* כחול זוהר */
 }

@@ -1,13 +1,13 @@
 import { Outlet } from "react-router";
-import Auth from "./Auth";
+import Header from "./Header";
 
 const LayOut = () => {
       
     return (<>
-        <Auth />
-        <div style={{ marginTop: '20vh', marginLeft: '10vw', marginRight: '20vw' }}>
-            <Outlet />
-        </div>
+       <Header />
+      <div style={{ marginTop: '10vh', marginLeft: '10vw', marginRight: '20vw' }}>
+        <Outlet />
+      </div>
     </>
     );
 }

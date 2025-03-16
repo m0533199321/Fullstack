@@ -57,7 +57,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 interface ProfilePictureSelectorProps {
     onSelect: (file: File | null) => void;
-    onClose: () => void; // פונקציה לסגירת הקומפוננטה
+    onClose: () => void;
 }
 
 const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClose }) => {
@@ -71,14 +71,14 @@ const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClo
             const imageUrl = URL.createObjectURL(file);
             setSelectedImage(imageUrl);
             onSelect(file);
-            onClose(); // סגור את הקומפוננטה לאחר בחירת התמונה
+            onClose();
         }
     };
 
     const handleDefaultImageSelect = (imageUrl: string) => {
         setSelectedImage(imageUrl);
         onSelect(new File([], imageUrl));
-        onClose(); // סגור את הקומפוננטה לאחר בחירת תמונה ברירת מחדל
+        onClose();
     };
 
     const handleShowImages = () => {
@@ -89,7 +89,6 @@ const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClo
         <Dialog open onClose={onClose}>
             <DialogTitle>
               <div>בחירת תמונת פרופיל</div>
-                {/* <Typography variant="h5">בחר תמונת פרופיל</Typography> */}
             </DialogTitle>
             <DialogContent>
                 <Box textAlign="center">
@@ -99,7 +98,7 @@ const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClo
                         onClick={handleShowImages} 
                         startIcon={<PhotoCamera />}
                     >
-                        {showImages ? 'הסתר תמונות' : 'הצג תמונות'}
+                        {showImages ? 'הסתר תמונות קיימות' : 'הצג תמונות קיימות'}
                     </Button>
                 </Box>
                 {showImages && (

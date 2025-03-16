@@ -14,6 +14,8 @@ namespace Recipes.Core.Interfaces.IRepository
 
         public Task<User?> GetFullByIdAsync(int id);
 
+        public Task<User?> UpdateNameAsync(int id, string fName, string lName);
+
         public User? GetUserFullRoles(string email);
 
         public IEnumerable<Role> GetRolesToUser(int id);

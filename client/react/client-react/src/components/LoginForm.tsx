@@ -5,12 +5,13 @@ import { useDispatch } from 'react-redux';
 import { loginUser } from "./Redux/AuthSlice";
 import { UserLogin } from "../models/AuthType";
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
+import inputStyles from "./LoginGenericTextField";
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
-    
+
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
@@ -37,17 +38,17 @@ const LoginForm: React.FC = () => {
         }
     };
 
-    const inputStyles = {
-        input: { color: 'black' },
-        label: { color: 'black' },
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': { borderColor: 'black' },
-            '&:hover fieldset': { borderColor: 'black' },
-            '&.Mui-focused fieldset': { borderColor: 'black' },
-        },
-        '& .MuiInputLabel-root': { color: 'black' }, // שינוי צבע הלייבלים
-        '& .MuiInputLabel-root.Mui-focused': { color: 'black' }, // צבע הלייבל במיקוד
-    };
+    // const inputStyles = {
+    //     input: { color: 'black' },
+    //     label: { color: 'black' },
+    //     '& .MuiOutlinedInput-root': {
+    //         '& fieldset': { borderColor: 'black' },
+    //         '&:hover fieldset': { borderColor: 'black' },
+    //         '&.Mui-focused fieldset': { borderColor: 'black' },
+    //     },
+    //     '& .MuiInputLabel-root': { color: 'black' }, // שינוי צבע הלייבלים
+    //     '& .MuiInputLabel-root.Mui-focused': { color: 'black' }, // צבע הלייבל במיקוד
+    // };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -55,10 +56,7 @@ const LoginForm: React.FC = () => {
                 <Typography component="h1" variant="h5" sx={{ color: 'black' }}>התחבר</Typography>
                 <form onSubmit={handleSubmit} style={{ width: '100%', marginTop: 1 }}>
                     <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
+                        {...inputStyles}
                         name="email"
                         label="מייל"
                         autoComplete="email"
@@ -67,13 +65,9 @@ const LoginForm: React.FC = () => {
                         onChange={handleChange}
                         error={!!errors.email}
                         helperText={errors.email}
-                        sx={inputStyles}
                     />
                     <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
+                        {...inputStyles}
                         name="password"
                         label="סיסמה"
                         type="password"
@@ -82,7 +76,6 @@ const LoginForm: React.FC = () => {
                         onChange={handleChange}
                         error={!!errors.password}
                         helperText={errors.password}
-                        sx={inputStyles}
                     />
                     <Button type="submit" fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: '#333' } }}>
                         התחבר

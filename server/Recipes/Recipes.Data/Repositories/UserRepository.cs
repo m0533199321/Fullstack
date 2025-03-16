@@ -31,6 +31,19 @@ namespace Recipes.Data.Repository
                  .Include(u => u.RecipesList).FirstOrDefaultAsync();
         }
 
+        public async Task<User?> UpdateNameAsync(int id, string fName, string lName)
+        {
+            var users = await GetAsync();
+            var existUser = users.FirstOrDefault(u => u.Id == id);
+            if (existUser != null)
+            {
+                existUser.FName = fName;
+                existUser.LName = lName;
+                return existUser;
+            }
+            return null;
+        }
+
         //public bool DeleteUserAsync(User user, Recipe recipe)
         //{
         //    var existUser = recipe.UsersList.Any(u => u.Id == user.Id);
@@ -57,5 +70,6 @@ namespace Recipes.Data.Repository
                 .Include(u => u.RolesList).FirstOrDefault();
             return user?.RolesList ?? Enumerable.Empty<Role>();
         }
+        
     }
 }

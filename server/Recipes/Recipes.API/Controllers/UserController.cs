@@ -95,6 +95,21 @@ namespace Recipes.API.Controllers
             return userDto;
         }
 
+        // PUT api/<Users>/5
+        [HttpPut("Name/{id}")]
+        public async Task<ActionResult<UserDto?>> PutName(int id, string fName, string lName)
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var tokenId = int.Parse(HttpContext.User.Claims.First(claim => claim.Type == "id").Value);
+            if (tokenId != id)
+                return Forbid();
+            var userDto = await _iService.UpdateNameAsync(id, fName, lName);
+            if (userDto == null)
+                return NotFound();
+            return userDto;
+        }
+
+
         // DELETE api/<Users>/5
         [HttpDelete("{id}")]
         [Authorize(Policy = "Admin")]

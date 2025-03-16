@@ -1,0 +1,62 @@
+<div class="overlay">
+    <div id="root" class="form-container">
+        <h1>{{ step === 1 ? 'Step 1: Personal Details' : 'Step 2: Allergies and Notes' }}</h1>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
+            <mat-form-field appearance="outline" class="input-field full-width">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="fName" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="input-field full-width">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lName" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="input-field full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="input-field full-width">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required />
+                <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+                    <mat-icon>{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <div class="button-group full-width">
+                <button mat-flat-button type="submit" color="primary" class="full-width">Sign Up</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .full-width {
+        width: 100%;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .overlay {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding-top: 50px;
+    }
+
+    .form-container {
+        max-width: 400px;
+        min-height: 500px;
+        max-height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 20px;
+    }
+</style>
