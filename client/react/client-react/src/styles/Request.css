@@ -1,0 +1,30 @@
+h1{
+    font-size: 70px;
+    margin-left: 17vw;
+    margin-top: 20vh;
+}
+
+.input-with-icon {
+    direction: rtl;
+    margin-left: 9vw; 
+    margin-top: 20vh; 
+    width: 60vw; 
+    height: 15vh; 
+    background-color: white; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border-radius: 10px; 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+    padding: 10px; 
+    font-size: larger;
+}
+
+.icon-container {
+    position: absolute;
+    right: 78%;
+    color: black;
+    top: 74%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

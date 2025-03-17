@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "./Redux/Store";
+import CategoriesGrid from "./Categories";
 
 const Auth = () => {
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ const Auth = () => {
 
     return (
         <>
+        <CategoriesGrid />
             {!isAuthenticated ? (
                 <>
                     <Button onClick={signIn}>Sign In</Button>

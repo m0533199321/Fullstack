@@ -70,6 +70,7 @@ namespace Recipes.API.Controllers
                 return BadRequest("User data is required.");
 
             var userDto = _mapper.Map<UserDto>(userPostModel);
+            userDto.CreatedAt = DateTime.UtcNow;
             var result = await _iService.AddAsync(userDto);
             if (result.IsSuccess)
             {
@@ -104,6 +105,20 @@ namespace Recipes.API.Controllers
             if (tokenId != id)
                 return Forbid();
             var userDto = await _iService.UpdateNameAsync(id, fName, lName);
+            if (userDto == null)
+                return NotFound();
+            return userDto;
+        }
+
+        // PUT api/<Users>/5
+        [HttpPut("Profile/{id}")]
+        public async Task<ActionResult<UserDto?>> PutProfile(int id, string profile)
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var tokenId = int.Parse(HttpContext.User.Claims.First(claim => claim.Type == "id").Value);
+            if (tokenId != id)
+                return Forbid();
+            var userDto = await _iService.UpdateProfileAsync(id, profile);
             if (userDto == null)
                 return NotFound();
             return userDto;

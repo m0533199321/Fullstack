@@ -75,11 +75,23 @@ const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClo
         }
     };
 
-    const handleDefaultImageSelect = (imageUrl: string) => {
-        setSelectedImage(imageUrl);
-        onSelect(new File([], imageUrl));
-        onClose();
+    const handleDefaultImageSelect = async (imageUrl: string) => {
+        try {
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+            
+            // יצירת אובייקט File עם ה-Blob
+            const file = new File([blob], fileName, { type: 'image/jpeg' });
+            
+            setSelectedImage(imageUrl);
+            onSelect(file);
+            onClose();
+        } catch (error) {
+            console.error('Error fetching the image:', error);
+        }
     };
+    
 
     const handleShowImages = () => {
         setShowImages(!showImages);

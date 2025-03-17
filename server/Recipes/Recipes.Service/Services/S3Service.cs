@@ -31,7 +31,7 @@ namespace Recipes.Service.Services
         {
             var request = new GetPreSignedUrlRequest
             {
-                BucketName = "malismartchef",
+                BucketName = _bucketName,
                 Key = fileName,
                 Verb = HttpVerb.PUT,
                 Expires = DateTime.UtcNow.AddMinutes(10),

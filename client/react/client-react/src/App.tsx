@@ -9,23 +9,8 @@ import { fetchUser } from './components/Redux/AuthSlice';
 function App() {
     return (
         <Provider store={Store}>
-            <AppContent />
+            <RouterProvider router={Router} />
         </Provider>
-    );
-}
-
-function AppContent() {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            dispatch(fetchUser() as any);
-        }
-    }, [dispatch]);
-
-    return (
-        <RouterProvider router={Router} />
     );
 }
 

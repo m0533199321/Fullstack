@@ -38,6 +38,7 @@ namespace Recipes.API.Controllers
                 return BadRequest("User data is required.");
 
             var userDto = _mapper.Map<UserDto>(user);
+            userDto.CreatedAt = DateTime.UtcNow;
             var result = await _authService.Register(userDto);
             if (result != null && result.IsSuccess)
             {

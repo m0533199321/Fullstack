@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Recipes.Core.Entities
 {
     public enum CategoryType
-    { Starters, Main_dishes, Extras, Soups, Salads, Pastries_breads, Desserts, Drinks }
+    { BreakFast, Starters, Main_dishes, Extras, Soups, Salads, Pastries_breads, Desserts, Drinks }
     public class Recipe
     {
         [Key]

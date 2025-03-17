@@ -25,6 +25,18 @@ export const fetchPublicRecipes = async (): Promise<Recipe[]> => {
     }
 };
 
+export const fetchCategoryRecipes = async (
+    category: string
+): Promise<Recipe[]> => {
+    try {
+        const response = await axios.get(`${API_URL}/Category/${category}`);
+        return response.data;
+    } catch (e: any) {
+        Swal.fire("Error!", "Failed to fetch category's recipes. Please try again.", "error");
+        throw new Error(e.message);
+    }
+};
+
 export const fetchPublicToPrivate = async (
     userId: number,
     recipeId: number

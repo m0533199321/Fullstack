@@ -25,7 +25,7 @@ interface FormData {
     lastName: string;
     email: string;
     password: string;
-    profilePicture: File | null;
+    profilePicture: string | null;
     allergies: string[];
     preferences: string;
     additionalNotes: string;
@@ -79,7 +79,13 @@ const RegisterForm: React.FC = () => {
 
     const handleProfilePictureSelect = (file: File | null) => {
         if (file) {
-            uploadProfilePictureService(file);
+            uploadProfilePictureService(file).then(path => {
+                if (path) {
+                    setFormData(prev => ({ ...prev, profilePicture: path }));   
+                } else {
+                    console.error("Failed to upload profile picture.");
+                }
+            });
         }
         setShowProfilePicture(false);
     };
@@ -95,7 +101,7 @@ const RegisterForm: React.FC = () => {
             return;
         }
 
-        setErrors({}); // Reset errors if there are no errors
+        setErrors({});
 
         if (step === 2) {
             const user: UserRegister = {
@@ -106,6 +112,7 @@ const RegisterForm: React.FC = () => {
                 profile: formData.profilePicture,
                 information: "sensitivities: " + formData.allergies.join(', ') + " preferences: " + formData.preferences + " additionalNotes: " + formData.additionalNotes
             };
+            console.log(user);     
             dispatch(registerUser({ user }));
             navigate('/');
         } else {

@@ -47,7 +47,8 @@ namespace Recipes.Data.Repositories
         {
             if (Enum.TryParse<CategoryType>(category, out var categoryType))
             {
-                return await _dbset.Where(c => c.Category == categoryType).ToListAsync();
+                var categoryAll =  await _dbset.Where(c => c.Category == categoryType).ToListAsync();
+                return categoryAll.Where(c => c.IsPublic);
             }
             else
             {

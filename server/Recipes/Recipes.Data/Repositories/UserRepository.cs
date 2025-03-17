@@ -44,6 +44,18 @@ namespace Recipes.Data.Repository
             return null;
         }
 
+        public async Task<User?> UpdateProfileAsync(int id, string profile)
+        {
+            var users = await GetAsync();
+            var existUser = users.FirstOrDefault(u => u.Id == id);
+            if (existUser != null)
+            {
+                existUser.Profile = profile;
+                return existUser;
+            }
+            return null;
+        }
+
         //public bool DeleteUserAsync(User user, Recipe recipe)
         //{
         //    var existUser = recipe.UsersList.Any(u => u.Id == user.Id);

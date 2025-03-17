@@ -10,7 +10,7 @@ export interface UserRegister {
     lName: string;
     email: string;
     password: string;
-    profile: File | null;
+    profile: string | null;
     information: string;
 }
 

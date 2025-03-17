@@ -92,6 +92,7 @@ namespace Recipes.API.Controllers
         public async Task<ActionResult<RecipeDto>> Post([FromBody] RecipePostModel recipePostModel)
         {
             var recipeDto = _mapper.Map<RecipeDto>(recipePostModel);
+            recipeDto.CreatedAt = DateTime.UtcNow;
             recipeDto = await _iService.AddAsync(recipeDto);
             if (recipeDto == null)
                 return NotFound();

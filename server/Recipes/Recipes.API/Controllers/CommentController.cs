@@ -42,6 +42,7 @@ namespace Recipes.API.Controllers
             if (commentPostModel == null)
                 return BadRequest("Comment data is required.");
             var commentDto = _mapper.Map<CommentDto>(commentPostModel);
+            commentDto.CreatedAt = DateTime.UtcNow;
             var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var tokenId = int.Parse(HttpContext.User.Claims.First(claim => claim.Type == "id").Value);
             commentDto.UserId = tokenId;

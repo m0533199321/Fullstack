@@ -34,7 +34,8 @@ export const fetchUser = createAsyncThunk(
             const id = getIdFromToken(token);
             console.log(id);
             const response = await api.get(`${API_URL}/User/Full/${id}`);
-            console.log(response);
+            console.log(response.data);
+            
             return response.data;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
@@ -45,18 +46,12 @@ export const fetchUser = createAsyncThunk(
 export const registerUser = createAsyncThunk(
     "register",
     async ({ user }: { user: UserRegister }, thunkAPI) => {
-        const user2 = {
-            fName: user.fName,
-            lName: user.lName,
-            email: user.email,
-            password: user.password,
-            profile: "https",
-            information: user.information
-        };
         try {
-            const response = await axios.post(`${API_URL}/Auth/register`, user2);
+            console.log(user);
+            
+            const response = await axios.post(`${API_URL}/Auth/register`, user);
             localStorage.setItem("token", response.data.token);
-            Swal.fire("Success!", "Your account has been created!", "success");
+            Swal.fire("Success!", "Your account has been created!", "success");   
             return response.data;
         } catch (e: any) {
             Swal.fire("Error!", "Registration failed. Please try again.", "error");
@@ -88,6 +83,21 @@ export const UpdateUserName = createAsyncThunk(
             const response = await api.put(`${API_URL}/User/Name/${id}?fName=${fName}&lName=${lName}`);
             // const response = await api.put(`${API_URL}/User/Name`, { id, fName, lName });
             Swal.fire("Success!", "You have successfully updated name!", "success");
+            return response.data;
+        } catch (e: any) {
+            Swal.fire("Error!", "Updated failed. Please try later.", "error");
+            return thunkAPI.rejectWithValue(e.message);
+        }
+    }
+);
+
+export const UpdateUserProfile = createAsyncThunk(
+    "updateProfile",
+    async ({ id, profile }: { id: number, profile: string }, thunkAPI) => {
+        try {
+            console.log(id, profile);        
+            const response = await api.put(`${API_URL}/User/Profile/${id}?profile=${profile}`);
+            Swal.fire("Success!", "You have successfully updated profile!", "success");
             return response.data;
         } catch (e: any) {
             Swal.fire("Error!", "Updated failed. Please try later.", "error");

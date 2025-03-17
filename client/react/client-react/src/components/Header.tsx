@@ -6,10 +6,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"; // ייבוא אייקון חץ
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { UpdateUserName } from "./Redux/AuthSlice";
+import { fetchUser, UpdateUserName, UpdateUserProfile } from "./Redux/AuthSlice";
+import ProfilePicture from "./ProfilePicture";
+import { uploadProfilePictureService } from "./Services/ProfileService";
 
 const Header = () => {
     const user = useAppSelector((state) => state.auth.user);
@@ -17,7 +19,8 @@ const Header = () => {
     const navigate = useNavigate();
     const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [editing, setEditing] = useState(false);
+    const [editingName, setEditingName] = useState(false);
+    const [editingProfile, setEditingProflie] = useState(false);
     const [fName, setFName] = useState(user?.fName || '');
     const [lName, setLName] = useState(user?.lName || '');
 
@@ -31,21 +34,44 @@ const Header = () => {
 
     const handleClosePopover = () => {
         setAnchorEl(null);
-        setEditing(false);
+        setEditingName(false);
+        setEditingProflie(false);
     };
 
-    const handleEditClick = () => {
+    const handleEditName = () => {
         setFName(user?.fName || '');
         setLName(user?.lName || '');
-        setEditing(true);
+        setEditingName(true);
     };
 
+    const handleEditProfile = () => {
+        setEditingProflie(true);
+    }
+
     const handleSaveChanges = () => {
-        if (user && fName && lName && fName!="" && lName!="") {
+        if (user && fName && lName && fName != "" && lName != "") {
             dispatch(UpdateUserName({ id: user.id, fName, lName }));
         }
         handleClosePopover();
     };
+
+    const handleSelectProfilePicture = (file: File | null) => {
+        if (file) {
+            uploadProfilePictureService(file).then(path => {
+                if (user && path) {
+                    dispatch(UpdateUserProfile({ id: user.id , profile: path }));
+                    window.location.reload();
+                } else {
+                    console.error("Failed to upload profile picture.");
+                }
+            });
+        }
+        setEditingProflie(false);
+    };
+
+    const handleCloseProfilePicture = () => {
+        setEditingProflie(false);
+    }
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -74,14 +100,21 @@ const Header = () => {
                         </>
                     ) : (
                         <>
-                            <Button color="inherit" onClick={() => goTo("/public-recipes")} startIcon={<RestaurantIcon />} sx={{ ml: 2 }}>
-                                Public Recipes
+                            <Button color="inherit" onClick={() => goTo("/api")} startIcon={<RestaurantIcon />} sx={{ ml: 2 }}>
+                                API
+                            </Button>
+                            <Button color="inherit" onClick={() => goTo("/categories")} startIcon={<RestaurantIcon />} sx={{ ml: 2 }}>
+                                המומלצים שלנו
+                            </Button>
+                            <Button color="inherit" onClick={() => goTo("/request")} startIcon={<RestaurantIcon />} sx={{ ml: 2 }}>
+                                חיפוש מתכון
                             </Button>
                             <Button color="inherit" onClick={() => goTo("/private-recipes")} startIcon={<RestaurantIcon />} sx={{ ml: 2 }}>
-                                Private Recipes
+                                ספר המתכונים שלי
                             </Button>
                             <Avatar
-                                src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                                src={user?.profile}
+                                // src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
                                 onClick={handleProfileClick}
                                 sx={{ cursor: 'pointer', ml: 2 }}
                             />
@@ -105,10 +138,10 @@ const Header = () => {
                 }}
             >
                 <Box sx={{ p: 2, backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white', width: '250px', maxHeight: '400px', overflowY: 'auto' }}> {/* רוחב קבוע */}
-                    {editing ? (
+                    {editingName ? (
                         <>
-                            <IconButton onClick={() => setEditing(false)} sx={{ color: 'white' }}>
-                                <ArrowBackIcon /> {/* חץ לחזרה */}
+                            <IconButton onClick={() => setEditingName(false)} sx={{ color: 'white' }}>
+                                <ArrowBackIcon />
                             </IconButton>
                             <TextField
                                 label="שם פרטי"
@@ -135,16 +168,17 @@ const Header = () => {
                             <Typography variant="h6">{user?.fName + " " + user?.lName}</Typography>
                             <Typography variant="body1">{user?.email}</Typography>
                             <Box sx={{ mt: 2 }}>
-                                <Button onClick={handleEditClick} color="primary" fullWidth>
+                                <Button onClick={handleEditName} color="primary" fullWidth>
                                     ערוך שם משתמש
                                 </Button>
-                                <Button onClick={handleClosePopover} color="secondary" fullWidth sx={{ mt: 1 }}>
+                                <Button onClick={handleEditProfile} color="secondary" fullWidth sx={{ mt: 1 }}>
                                     ערוך פרופיל
                                 </Button>
                             </Box>
                         </>
                     )}
                 </Box>
+                {editingProfile && <ProfilePicture onSelect={handleSelectProfilePicture} onClose={handleCloseProfilePicture} />}
             </Popover>
         </>
     );
