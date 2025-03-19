@@ -14,6 +14,8 @@ namespace Recipes.Core.Interfaces.IServices
 
         public Task<IEnumerable<Comment>> GetFullAsync();
 
+        public Task<IEnumerable<Comment>> GetFullByRecipeIdAsync(int recipeId);
+
         public Task<CommentDto?> GetByIdAsync(int id);
 
         public Task<CommentDto> AddAsync(CommentDto c);

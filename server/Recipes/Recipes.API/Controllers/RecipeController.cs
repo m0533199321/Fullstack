@@ -100,6 +100,19 @@ namespace Recipes.API.Controllers
         }
 
         // POST-TOUSER api/<Users>
+        [HttpPost("AddNewToUser")]
+        public async Task<ActionResult<RecipeDto>> PostNewToUser(int userId, RecipePostModel recipePostModel)
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var tokenId = int.Parse(HttpContext.User.Claims.First(claim => claim.Type == "id").Value);
+            if (tokenId != userId)
+                return Forbid();
+            var recipeDto = _mapper.Map<RecipeDto>(recipePostModel);
+            recipeDto.CreatedAt = DateTime.UtcNow;
+            return await _iService.AddNewRecipeToUserAsync(userId, recipeDto);
+        }
+
+        // POST-TOUSER api/<Users>
         [HttpPost("AddToUser")]
         public async Task<ActionResult<RecipeDto>> PostToUser(int userId, int recipeId)
         {

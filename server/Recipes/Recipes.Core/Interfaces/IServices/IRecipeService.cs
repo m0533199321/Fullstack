@@ -27,6 +27,8 @@ namespace Recipes.Core.Interfaces.IServices
         public Task<RecipeDto> AddAsync(RecipeDto r);
 
         public Task<RecipeDto> AddRecipeToUserAsync(int userId, int recipeId);
+        
+        public Task<RecipeDto> AddNewRecipeToUserAsync(int userId, RecipeDto recipeDto);
 
         public Task<RecipeDto> UpdateAsync(int id, RecipeDto r);
 

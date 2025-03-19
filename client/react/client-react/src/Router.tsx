@@ -9,6 +9,8 @@ import Categories from "./components/Categories"
 import OneCategory from "./components/OneCategory"
 import Request from "./components/Request"
 import FileViewer from "./components/FileViewer"
+import Comments from "./components/Comments"
+import DisplayRecipe from "./components/DisplayRecipe"
 // import Home  from "./components/Home"
 
 
@@ -26,9 +28,13 @@ export const Router = createBrowserRouter([
             { path: 'public-recipes', element: <PublicRecipes /> },
             { path: 'private-recipes', element: <PrivateRecipes /> },
             { path: 'request', element: <Request /> },
-            {path:'file-viewer', element: <FileViewer onClose={() => {}} 
-                fileUrl="https://malismartchef.s3.amazonaws.com/recipes/261742341982508.docx"
-                details={['חלה מתוקה', '4', '0']}/>}
+            { path: 'comments', element: <Comments recipeId={1} /> },
+            { path: 'recipe/:id', element: <DisplayRecipe /> },
+            {
+                path: 'file-viewer', element: <FileViewer onClose={() => { }}
+                    fileUrl="https://malismartchef.s3.amazonaws.com/recipes/11742408587166.docx"
+                    details={['חלה מתוקה', '4', '0']} />
+            }
         ]
     }
 ])

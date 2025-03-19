@@ -35,6 +35,15 @@ namespace Recipes.API.Controllers
             return await _iService.GetFullAsync();
         }
 
+        //GET-FULL: api/<Users>
+        [HttpGet("Full/{recipeId}")]
+        [AllowAnonymous]
+        public async Task<IEnumerable<Comment>> GetFullByRecipeId(int recipeId)
+        {
+            return await _iService.GetFullByRecipeIdAsync(recipeId);
+        }
+
+
         // POST api/<Users>
         [HttpPost]
         public async Task<ActionResult<CommentDto>> Post([FromBody] CommentPostModel commentPostModel)

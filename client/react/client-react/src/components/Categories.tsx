@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import '../styles/Categories.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +15,6 @@ const categories = [
 
 const Categories = () => {
     const navigate = useNavigate();
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     const handleCategoryClick = (categoryName: string) => {
         navigate(`/categories/${categoryName}`);
@@ -24,18 +22,17 @@ const Categories = () => {
 
     return (
         <div className="categories-container">
-            {categories.map((category, index) => (
+            {categories.map((category) => (
                 <div
                     className="category-card"
-                    key={index}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
+                    key={category.english}
                     onClick={() => handleCategoryClick(category.english)}
                 >
-                    <h3>{category.name}</h3>
-                    <div className="image-container">
+                    <div className="category-image-container">
                         <img src={category.image} alt={category.name} className="category-image" />
-                        {hoveredIndex === index && <div className="overlay"></div>}
+                        <div className="category-overlay">
+                            <h3>{category.name}</h3>
+                        </div>
                     </div>
                 </div>
             ))}
@@ -44,6 +41,7 @@ const Categories = () => {
 };
 
 export default Categories;
+
 
 
 

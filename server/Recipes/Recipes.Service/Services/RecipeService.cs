@@ -88,6 +88,21 @@ namespace Recipes.Service.Services
         //    return recipeDto;
         //}
 
+        public async Task<RecipeDto> AddNewRecipeToUserAsync(int userId, RecipeDto recipeDto)
+        {
+            var user = await _iManager._userRepository.GetFullByIdAsync(userId);
+            //var recipe = await _iManager._recipeRepository.GetByIdAsync(recipeId);
+            var recipe = _mapper.Map<Recipe>(recipeDto);
+            recipe = await _iManager._recipeRepository.AddRecipeToUserAsync(user, recipe);
+            if (recipe != null)
+            {
+                await _iManager.SaveAsync();
+                recipeDto = _mapper.Map<RecipeDto>(recipe);
+                return recipeDto;
+            }
+            return null;
+        }
+
         public async Task<RecipeDto> AddRecipeToUserAsync(int userId, int recipeId)
         {
             var user = await _iManager._userRepository.GetFullByIdAsync(userId);

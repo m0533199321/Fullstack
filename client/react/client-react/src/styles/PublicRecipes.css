@@ -1,5 +1,6 @@
 .public-recipes-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -7,7 +8,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 50%;
+    gap: 4.5%;
     padding: 0;
     margin: 0;
 }
@@ -16,12 +17,16 @@
     border-radius: 8px;
     overflow: hidden; 
     position: relative;
-    padding: 5%;
+    padding: 0.8%;
+    padding-top: 0;
+    padding-bottom: 4%;
     height: 34vh;
     width: 15vw;
     background-color: #212121;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease-in-out;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 .buttons-container {
@@ -44,24 +49,28 @@
 
 .recipe-image {
     margin-bottom: 2%;
-    width: 100%; /* תמונה תתמלא את הכרטיס */
+    width: 100% !important; /* תמונה תתמלא את הכרטיס */
     height: auto; /* גובה אוטומטי */
 }
 
 .difficulty-rating {
     position: absolute; /* מיקום הדרגת קושי */
-    bottom: 12%; /* מיקום בתחתית התמונה */
     left: 0; /* מיקום מהצד השמאלי */
-    right: 15%;
+    right: 30%;
     display: flex; /* תצוגה של כוכבים בשורה */
     justify-content: center; /* מרכז את הכוכבים */
     padding: 4px 0; /* רווח פנימי */
 }
 
+.filled-star{
+    color: gold !important;
+}
+
 .recipe-title {
-    top:0;
-    margin-bottom: 3px; /* רווח בין השם לתמונה */
-    text-align: center; /* מרכז את השם */
+    color: orange;
+    top:0 !important;
+    margin-bottom: 1%;
+    text-align: center;
 }
 
 

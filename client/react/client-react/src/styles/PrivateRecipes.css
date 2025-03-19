@@ -1,76 +1,73 @@
-/* .private-recipes-container {
-    padding: 20px;
-    min-height: 100vh;
-    background-color: #1a1d23;
-} */
-
-.sort-container {
+.privateRecipes-container {
     display: flex;
-    justify-content: flex-end;
-    padding: 10px 20px;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.sort-button {
-    color: #008CFF !important;
-}
-
-.recipe-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
-
-.recipe-card {
-    background: rgba(40, 44, 52, 0.95);
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    text-align: right;
-    /* transition: transform 0.3s ease-in-out; */
-}
-
-/* .recipe-card:hover {
-    transform: scale(1.05);
-} */
-
-.recipe-title {
+.privateRecipe-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4.5%;
+    padding: 0;
     margin: 0;
-    font-size: 1.7rem;
-    color: #FF8C42;
-    font-weight: bold;
 }
 
-p {
-    margin: 10px 0;
-    font-size: 1.1rem;
-    color: white;
+.privateRecipe-card {
+    border-radius: 8px;
+    overflow: hidden; 
+    position: relative;
+    padding: 0.8%;
+    padding-top: 0;
+    padding-bottom: 4%;
+    height: 34vh;
+    width: 15vw;
+    background-color: #212121;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+    margin-top: 4%;
 }
 
-.stars {
+.privateRecipe-image {
+    margin-bottom: 2%;
+    width: 100% !important;
+    height: auto;
+}
+
+.privateRecipe-title {
+    color: orange;
+    top:0 !important;
+    margin-bottom: 1%;
+    text-align: center;
+}
+
+.private-difficulty-rating {
+    position: absolute; 
+    left: 0;
+    right: 30%;
     display: flex;
-    gap: 5px;
-    margin-bottom: 10px;
+    justify-content: center;
+    padding: 4px 0;
 }
 
-.filled-star {
-    color: gold;
-    font-size: 1.8rem;
+.private-filled-star{
+    color: gold !important;
 }
 
-.empty-star {
-    color: lightgray;
-    font-size: 1.8rem;
-}
-
-.buttons-container {
+.private-buttons-container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    margin-top: 30px;
+    gap: 8px;
+    z-index: 1;
 }
 
-.icon {
-    color: #008CFF;
-    font-size: 1.8rem;
+.private-recipe-icons {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

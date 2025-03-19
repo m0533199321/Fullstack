@@ -37,6 +37,18 @@ export const fetchCategoryRecipes = async (
     }
 };
 
+export const fetchRecipeById = async (
+    recipeId: number
+): Promise<Recipe> => {
+    try {
+        const response = await api.get(`${API_URL}/${recipeId}`);
+        return response.data;
+    } catch (e: any) {
+        Swal.fire("Error!", "Failed to fetch category's recipes. Please try again.", "error");
+        throw new Error(e.message);
+    }
+};
+
 export const fetchPublicToPrivate = async (
     userId: number,
     recipeId: number
@@ -50,7 +62,19 @@ export const fetchPublicToPrivate = async (
         });
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to add recipe to public. Please try again.", "error");
+        Swal.fire("Error!", "Failed to add recipe to private. Please try again.", "error");
+        throw new Error(e.message);
+    }
+};
+
+export const fetchPrivateToPublic = async (
+    recipeId: number
+): Promise<any> => {
+    try {
+        const response = await api.put(`${API_URL}/PrivateToPublic/${recipeId}`)
+        return response.data;
+    } catch (e: any) {
+        Swal.fire("Error!", "Failed to update recipe to public. Please try again.", "error");
         throw new Error(e.message);
     }
 };
@@ -72,14 +96,11 @@ export const fetchAddToMyBook = async (
     recipe: RecipePostModel
 ): Promise<any> => {
     try {
-        const response = await api.post(`${API_URL}`, recipe);
-        const response2 = await api.post(`${API_URL}/AddToUser`, null, {
+        const response2 = await api.post(`${API_URL}/AddNewToUser`, recipe, {
             params: {
                 userId,
-                recipe,
             },
         });
-        console.log(response);
         console.log(response2);
         // return response.data;
     } catch (e: any) {
@@ -103,7 +124,7 @@ export const recipeDetailsService = async (
         if (response.ok) {
             const result = await response.json();
             if (result) {
-                console.log(result);       
+                console.log(result);
                 const data = JSON.parse(result.result);
                 console.log(data);
                 return data;

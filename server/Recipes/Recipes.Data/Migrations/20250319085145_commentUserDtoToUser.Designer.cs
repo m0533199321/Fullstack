@@ -12,8 +12,8 @@ using Recipes.Data;
 namespace Recipes.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250312215622_stringToIntIdComment")]
-    partial class stringToIntIdComment
+    [Migration("20250319085145_commentUserDtoToUser")]
+    partial class commentUserDtoToUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -116,10 +116,6 @@ namespace Recipes.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Picture")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

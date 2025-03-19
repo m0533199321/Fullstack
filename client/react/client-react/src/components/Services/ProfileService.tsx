@@ -5,7 +5,7 @@ export const uploadProfilePictureService = async (file: File): Promise<string | 
     if (file) {
         try {
             const imageName = '' + file.name + new Date().getTime()
-            console.log(file.name);
+            console.log(imageName);
             console.log(file.type);
 
             const res = await axios.get(`${API_URL}/Upload-url`, {

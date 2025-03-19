@@ -28,6 +28,11 @@ namespace Recipes.Service.Services
             return await _iManager._commentRepository.GetFullAsync();
         }
 
+        public async Task<IEnumerable<Comment>> GetFullByRecipeIdAsync(int recipeId)
+        {
+            return await _iManager._commentRepository.GetFullByRecipeIdAsync(recipeId);
+        }
+
         public async Task<CommentDto?> GetByIdAsync(int id)
         {
             var comments = await _iManager._commentRepository.GetByIdAsync(id);
@@ -46,7 +51,9 @@ namespace Recipes.Service.Services
             if (recipe == null)
                 return null;
             var comment = _mapper.Map<Comment>(commentDto);
-            var user = await _iManager._userRepository.GetFullByIdAsync(commentDto.UserId);
+            var user = await _iManager._userRepository.GetByIdAsync(commentDto.UserId);
+            if (user == null)
+                return null;
             comment.User = user;
             comment = await _iManager._commentRepository.AddAsync(comment);
             if (comment != null)

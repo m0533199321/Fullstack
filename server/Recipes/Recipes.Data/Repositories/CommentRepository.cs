@@ -27,5 +27,11 @@ namespace Recipes.Data.Repositories
         {
             return await _dbset.Include(c => c.User).FirstOrDefaultAsync();
         }
+
+        public async Task<IEnumerable<Comment>> GetFullByRecipeIdAsync(int recipeId)
+        {
+            var comments = await GetFullAsync();
+            return comments.Where(c => c.RecipeId == recipeId);
+        }
     }
 }

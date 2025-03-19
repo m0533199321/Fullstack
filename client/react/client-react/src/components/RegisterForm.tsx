@@ -78,8 +78,10 @@ const RegisterForm: React.FC = () => {
     };
 
     const handleProfilePictureSelect = (file: File | null) => {
+        console.log(file);    
         if (file) {
             uploadProfilePictureService(file).then(path => {
+                console.log(path);
                 if (path) {
                     setFormData(prev => ({ ...prev, profilePicture: path }));   
                 } else {

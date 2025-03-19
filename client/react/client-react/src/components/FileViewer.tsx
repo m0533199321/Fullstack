@@ -11,6 +11,7 @@ interface FileViewerProps {
 
 const FileViewer: React.FC<FileViewerProps> = ({ fileUrl, onClose, details }) => {
     const user = useAppSelector((state) => state.auth.user);
+    console.log(fileUrl);  
     console.log(details);
     const onSelect = async () => {
         console.log(details);
