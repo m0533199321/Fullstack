@@ -16,9 +16,9 @@ const LayOut = () => {
 
   return (<>
     <Header />
-    <div style={{ marginTop: '10vh', marginLeft: '10vw', marginRight: '20vw' }}>
+    {/* <div style={{ marginTop: '10vh', marginLeft: '10vw', marginRight: '20vw' }}> */}
       <Outlet />
-    </div>
+    {/* </div> */}
   </>
   );
 }

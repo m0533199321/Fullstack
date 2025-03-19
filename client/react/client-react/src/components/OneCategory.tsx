@@ -5,7 +5,6 @@ import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
 import { Star, StarBorder, Visibility, Download, Email, Sort, Bookmark } from "@mui/icons-material";
 import { fetchPublicToPrivate, fetchPrivateRecipes, fetchCategoryRecipes } from "./Services/RecipeService";
 import "../styles/PublicRecipes.css";
-import { useParams } from "react-router-dom";
 
 const OneCategory = () => {
     const user = useAppSelector((state) => state.auth.user);

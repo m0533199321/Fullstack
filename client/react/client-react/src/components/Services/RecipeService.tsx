@@ -1,18 +1,18 @@
 import api from "../api";
-import { Recipe } from "../../models/RecipeType";
+import { Recipe, RecipePostModel } from "../../models/RecipeType";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 const API_URL = "https://localhost:7005/api/Recipe";
 
 export const fetchPrivateRecipes = async (id: number): Promise<Recipe[]> => {
-        try {
-            const response = await api.get(`${API_URL}/Private/${id}`);
-            return response.data;
-        } catch (e: any) {
-            Swal.fire("Error!", "Failed to fetch private recipes. Please try again.", "error");
-            throw new Error(e.message);
-        }
+    try {
+        const response = await api.get(`${API_URL}/Private/${id}`);
+        return response.data;
+    } catch (e: any) {
+        Swal.fire("Error!", "Failed to fetch private recipes. Please try again.", "error");
+        throw new Error(e.message);
+    }
 };
 
 export const fetchPublicRecipes = async (): Promise<Recipe[]> => {
@@ -64,5 +64,59 @@ export const fetchDeletePrivateRecipe = async (
     } catch (e: any) {
         Swal.fire("Error!", "Failed to delete private recipes. Please try again.", "error");
         throw new Error(e.message);
+    }
+};
+
+export const fetchAddToMyBook = async (
+    userId: number,
+    recipe: RecipePostModel
+): Promise<any> => {
+    try {
+        const response = await api.post(`${API_URL}`, recipe);
+        const response2 = await api.post(`${API_URL}/AddToUser`, null, {
+            params: {
+                userId,
+                recipe,
+            },
+        });
+        console.log(response);
+        console.log(response2);
+        // return response.data;
+    } catch (e: any) {
+        Swal.fire("Error!", "Failed to add recipe to public. Please try again.", "error");
+        throw new Error(e.message);
+    }
+};
+
+export const recipeDetailsService = async (
+    request: string
+) => {
+    try {
+        const response = await fetch('http://localhost:5000/api/categorize_recipe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ request: request }),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            if (result) {
+                console.log(result);       
+                const data = JSON.parse(result.result);
+                console.log(data);
+                return data;
+            } else {
+                return null;
+            }
+        } else {
+            const errorText = await response.text();
+            console.error('Error:', errorText);
+            return null;
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
+        return null;
     }
 };

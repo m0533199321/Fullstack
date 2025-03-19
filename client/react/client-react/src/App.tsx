@@ -1,10 +1,7 @@
-import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import Store from './components/Redux/Store';
 import { Router } from './Router';
-import { useDispatch } from 'react-redux';
-import { fetchUser } from './components/Redux/AuthSlice';
 
 function App() {
     return (

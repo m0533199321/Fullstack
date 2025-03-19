@@ -76,63 +76,65 @@ const PublicRecipes = () => {
 
     return (
         <div className="public-recipes-container">
-            {success && sortedRecipes.length > 0 && (
-                <>
-                    <div className="sort-container">
-                        <Tooltip title="מיין לפי">
-                            <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-                                <Sort />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
-                            <MenuItem onClick={() => handleSortChange('category')}>קטגוריה</MenuItem>
-                            <MenuItem onClick={() => handleSortChange('degree')}>דרגת קושי</MenuItem>
-                            <MenuItem onClick={() => handleSortChange('name')}>שם</MenuItem>
-                            <MenuItem onClick={() => handleSortChange('date')}>תאריך יצירה</MenuItem>
-                        </Menu>
-                    </div>
-                    <div className="recipe-grid">
-                        {sortedRecipes.map((recipe) => (
-                            <div key={recipe.id} className="recipe-card">
-                                <h3 className="recipe-title">{recipe.title}</h3>
-                                <p><strong>קטגוריה:</strong> {recipe.category}</p>
-                                <p><strong>:דרגת קושי</strong></p>
+        {success && sortedRecipes.length > 0 && (
+            <>
+                <div className="sort-container">
+                    <Tooltip title="מיין לפי">
+                        <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+                            <Sort />
+                        </IconButton>
+                    </Tooltip>
+                    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+                        <MenuItem onClick={() => handleSortChange('category')}>קטגוריה</MenuItem>
+                        <MenuItem onClick={() => handleSortChange('degree')}>דרגת קושי</MenuItem>
+                        <MenuItem onClick={() => handleSortChange('name')}>שם</MenuItem>
+                        <MenuItem onClick={() => handleSortChange('date')}>תאריך יצירה</MenuItem>
+                    </Menu>
+                </div>
+                <div className="recipe-grid">
+                    {sortedRecipes.map((recipe) => (
+                        <div key={recipe.id} className="recipe-card">
+                            <h3 className="recipe-title">{recipe.title}</h3>
+                            <img src="../../images/back/recipes4.png" alt={recipe.title} className="recipe-image" />
+                            <div className="difficulty-rating">
                                 <div className="stars">
-                                    {Array.from({ length: 4 }).map((_, index) => (
+                                    {Array.from({ length: 5 }).map((_, index) => (
                                         index < recipe.degree ? <Star key={index} className="filled-star" /> : <StarBorder key={index} className="empty-star" />
                                     ))}
                                 </div>
-                                <p><strong>תאריך יצירה:</strong> {new Date(recipe.createdAt).toLocaleDateString()}</p>
-                                <div className="buttons-container">
-                                    <Tooltip title="הצג פרטים">
-                                        <IconButton>
-                                            <Visibility />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="הורד מתכון">
-                                        <IconButton>
-                                            <Download />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="שלח למייל">
-                                        <IconButton>
-                                            <Email />
-                                        </IconButton>
-                                    </Tooltip>
-                                    {!existInPrivate(recipe.id) &&
-                                        <Tooltip title="הוסף לספר המתכונים שלי">
-                                            <IconButton onClick={() => handlePublicToPrivate(recipe.id)}>
-                                                <Bookmark />
-                                            </IconButton>
-                                        </Tooltip>
-                                    }
-                                </div>
+                                {/* <p style={{fontSize:'14px'}}>דרגת קושי</p> */}
                             </div>
-                        ))}
-                    </div>
-                </>
-            )}
-        </div>
+                            <div className="buttons-container" style={{ display: 'flex', alignItems: 'flex-end' }}>
+                                <Tooltip title="הצג פרטים">
+                                    <IconButton className="recipe-icons" style={{ color: 'black' }}>
+                                        <Visibility />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="הורד מתכון">
+                                    <IconButton style={{ color: 'black' }}>
+                                        <Download />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="שלח למייל">
+                                    <IconButton style={{ color: 'black' }}>
+                                        <Email />
+                                    </IconButton>
+                                </Tooltip>
+                                {!existInPrivate(recipe.id) &&
+                                    <Tooltip title="הוסף לספר המתכונים שלי">
+                                        <IconButton onClick={() => handlePublicToPrivate(recipe.id)} style={{ color: 'black' }}>
+                                            <Bookmark />
+                                        </IconButton>
+                                    </Tooltip>
+                                }
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </>
+        )}
+    </div>
+    
     );
 }
 

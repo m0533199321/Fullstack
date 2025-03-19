@@ -3,23 +3,14 @@ import axios from "axios";
 const API_URL = "https://localhost:7005/api/User";
 export const uploadProfilePictureService = async (file: File): Promise<string | null> => {
     if (file) {
-        // const fileNameWithExtension = file.name.split('/').pop();
-        // if (fileNameWithExtension == null) return null;
-        // const fileName = fileNameWithExtension.split('.').shift();
-
-        // const fileExtension = fileNameWithExtension.split('.').pop();
-
-        // console.log(fileName);
-        // console.log(fileExtension);
-        
-
         try {
+            const imageName = '' + file.name + new Date().getTime()
             console.log(file.name);
             console.log(file.type);
-            
+
             const res = await axios.get(`${API_URL}/Upload-url`, {
                 params: {
-                    fileName:file.name,
+                    fileName: imageName,
                     contentType: file.type
                 },
             });
