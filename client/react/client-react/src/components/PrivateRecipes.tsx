@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Recipe } from "../models/RecipeType";
 import { useAppSelector } from "./Redux/Store";
 import '../styles/PrivateRecipes.css';
-import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
-import { Delete, Download, Email, Sort, Star, StarBorder, Visibility } from "@mui/icons-material";
+import { IconButton, InputAdornment, Menu, MenuItem, TextField, Tooltip } from "@mui/material";
+import { Delete, Download, Email, Search, Sort, Star, StarBorder, Visibility } from "@mui/icons-material";
 import { fetchDeletePrivateRecipe, fetchPrivateRecipes, fetchPrivateToPublic, fetchPublicRecipes } from "./Services/RecipeService";
 import { downloadRecipeFromUrl } from "./DownAndEmail";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ const PrivateRecipes = () => {
     const navigate = useNavigate();
     const [showPrivate, setShowPrivate] = useState(false);
     const [showPublic, setShowPublic] = useState(false);
+    const [searchRecipe, setSearchRecipe] = useState('');
 
     const allPrivateRecipes = async () => {
         if (user?.id) {
@@ -93,6 +94,10 @@ const PrivateRecipes = () => {
 
     const sortedRecipes = sortRecipes(recipes, sortBy);
 
+    const filteredRecipes = sortedRecipes.filter(recipe =>
+        recipe.title.toLowerCase().includes(searchRecipe.toLowerCase())
+    );
+
     return (
         <>
             <div style={{
@@ -132,10 +137,28 @@ const PrivateRecipes = () => {
                         </>)}
                     </>)}
                 </div>
+                <TextField
+                    className="private-text-field"
+                    variant="outlined"
+                    placeholder="חפש מתכון..."
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Search style={{ color: '#FFA500' }} />
+                            </InputAdornment>
+                        ),
+                        style: {
+                            height: '35px',
+                            padding: '0',
+                            color: 'orange',
+                        }
+                    }}
+                    onChange={(e) => setSearchRecipe(e.target.value)}
+                />
             </div>
 
             <div className="privateRecipes-container">
-                {success && sortedRecipes.length > 0 && (
+                {success && filteredRecipes.length > 0 && (
                     <>
                         <div className="private-sort-container">
                             <Tooltip title="מיון לפי">
@@ -151,7 +174,7 @@ const PrivateRecipes = () => {
                             </Menu>
                         </div>
                         <div className="privateRecipe-grid">
-                            {sortedRecipes.map((recipe) => (
+                            {filteredRecipes.map((recipe) => (
                                 (showPrivate && !recipe.isPublic) || (showPublic && recipe.isPublic) ?
                                     (<div key={recipe.id} className="privateRecipe-card" onClick={() => handleDisplayRecipe(recipe.id)}>
                                         {recipe.title.length < 16 &&
@@ -195,7 +218,7 @@ const PrivateRecipes = () => {
                                             </Tooltip>
                                             <Tooltip title="הורדה">
                                                 <IconButton style={{ color: 'black' }}>
-                                                    <Download onClick={() => DownLoadRecipe(recipe)} />
+                                                    <Download onClick={(event) => {event.stopPropagation(); DownLoadRecipe(recipe)}} />
                                                 </IconButton>
                                             </Tooltip>
                                             <Tooltip title="שליחה למייל">

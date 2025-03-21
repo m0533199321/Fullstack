@@ -86,6 +86,34 @@
 }
 
 
+.text-field {
+    margin-right: 20vw !important;
+    height: 35px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: black;
+}
+
+.text-field .MuiOutlinedInput-notchedOutline {
+    border-color: #FFA500 !important; /* צבע המסגרת במצב רגיל */
+}
+
+.text-field:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #FFA500 !important; /* צבע המסגרת במצב ריחוף */
+}
+
+.text-field.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #FFA500 !important; /* צבע המסגרת במצב ממוקד */
+}
+
+.text-field input {
+    color: orange; /* צבע הטקסט */
+}
+
+.text-field::placeholder {
+    color: orange; /* צבע הטקסט של הפלייסהולדר */
+}
+
 
 /* .public-recipes-container {
     padding: 20px;

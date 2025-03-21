@@ -49,29 +49,19 @@ const Request = () => {
     };
 
     const handleDifficultyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setDifficulty(Number(event.target.value));
-    };
+        const value = Number(event.target.value);
+        setDifficulty(value);
+        event.target.style.setProperty('--value', `${(value - 1) * (100 / 4)}%`); // עדכון הערך עבור הגרדיאנט
+    };    
 
-    const getSliderColor = (value: number) => {
-        switch (value) {
-            case 0:
-                return 'red';
-            case 1:
-                return 'orange';
-            case 2:
-                return 'yellow';
-            case 3:
-                return 'lightgreen';
-            case 4:
-                return 'green';
-            default:
-                return 'green'
-        }
-    };
     return (
         <>
             {!showFileViewer ? (<>
-                <h1>smart-chef חיפוש עם</h1>
+                <div style={{ display: 'flex', alignItems: 'center', marginTop: '8vh', marginLeft: '25vw' }}>
+                    <img src="../../images/back/only-smartChef.png" alt="chef" style={{ width: '25vw', marginRight: '5px' }} />
+                    <h1 style={{ margin: '0', marginTop: '19%', color: 'rgb(255, 217, 0)' }}>חיפוש עם</h1> {/* הוספת margin: 0 כדי למנוע רווחים */}
+                </div>
+
                 {send && <h3>אנחנו מכינים בשבילך</h3>}
                 <input
                     type="text"
@@ -86,11 +76,11 @@ const Request = () => {
                         <label>דרגת קושי: {difficulty}</label>
                         <input
                             type="range"
-                            min="0"
-                            max="4"
+                            min="1"
+                            max="5"
                             value={difficulty}
                             onChange={handleDifficultyChange}
-                            style={{ width: '100%', backgroundColor: getSliderColor(difficulty) }}
+                            style={{ width: '100%' , borderRadius: '10px' }}
                         />
                     </div>
                     <span className="icon-container" onClick={handleSend}>

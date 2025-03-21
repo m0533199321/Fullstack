@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Recipe } from "../models/RecipeType";
 import { useAppSelector } from "./Redux/Store";
-import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
-import { Star, StarBorder, Visibility, Download, Email, Sort, Bookmark } from "@mui/icons-material";
+import { IconButton, InputAdornment, Menu, MenuItem, TextField, Tooltip } from "@mui/material";
+import { Star, StarBorder, Visibility, Download, Email, Sort, Bookmark, Search } from "@mui/icons-material";
 import { fetchPublicRecipes, fetchPublicToPrivate, fetchPrivateRecipes } from "./Services/RecipeService";
 import "../styles/PublicRecipes.css";
 import { downloadRecipeFromUrl, emailRecipeWithUrl } from "./DownAndEmail";
@@ -18,6 +18,7 @@ const PublicRecipes = () => {
     const navigate = useNavigate();
     const [showPrivate, setShowPrivate] = useState(false);
     const [showPublic, setShowPublic] = useState(false);
+    const [searchRecipe, setSearchRecipe] = useState('');
 
     const allRecipes = async () => {
         try {
@@ -104,9 +105,13 @@ const PublicRecipes = () => {
         setShowPrivate(false);
     }
 
+    const filteredRecipes = sortedRecipes.filter(recipe =>
+        recipe.title.toLowerCase().includes(searchRecipe.toLowerCase())
+    );
+
     return (
         <>
-              <div style={{
+            <div style={{
                 position: "sticky", top: '0', zIndex: 1000, backgroundColor: '#212121', direction: 'rtl', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', padding: '10px', paddingTop: '12vh', paddingRight: '5vh'
             }}>
                 <h1 style={{ color: 'white', margin: '0', textAlign: 'right', marginLeft: '20px' }}>מומלצים</h1>
@@ -143,10 +148,28 @@ const PublicRecipes = () => {
                         </>)}
                     </>)}
                 </div>
+                <TextField
+                    className="text-field"
+                    variant="outlined"
+                    placeholder="חפש מתכון..."
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Search style={{ color: '#FFA500' }} />
+                            </InputAdornment>
+                        ),
+                        style: {
+                            height: '35px',
+                            padding: '0',
+                            color: 'orange',
+                        }
+                    }}
+                    onChange={(e) => setSearchRecipe(e.target.value)}
+                />
             </div>
 
             <div className="public-recipes-container">
-                {success && sortedRecipes.length > 0 && (
+                {success && filteredRecipes.length > 0 && (
                     <>
                         <div className="sort-container">
                             <Tooltip title="מיון לפי">
@@ -162,7 +185,7 @@ const PublicRecipes = () => {
                             </Menu>
                         </div>
                         <div className="recipe-grid">
-                            {sortedRecipes.map((recipe) => (
+                            {filteredRecipes.map((recipe) => (
                                 (showPrivate && existInPrivate(recipe.id)) || (showPublic && !(existInPrivate(recipe.id))) ?
                                     (<div key={recipe.id} className="recipe-card" onClick={() => handleDisplayRecipe(recipe.id)}>
                                         {recipe.title.length < 16 &&

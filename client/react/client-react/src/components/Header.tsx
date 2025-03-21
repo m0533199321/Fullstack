@@ -87,14 +87,15 @@ const Header = () => {
         <>
             <AppBar position="fixed" sx={{ backgroundColor: "black", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)", marginBottom: '20%', }}>
                 <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                    {/* <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                         <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" sx={{ flexGrow: 1, color: "#FFA500" }}>
+                    </IconButton> */}
+                    <img src="../../images/back/smartChef.png" alt="smart-chef" style={{width:'10vw', marginRight: '51vw'}}/>
+                    {/* <Typography variant="h6" sx={{ flexGrow: 1, color: "#FFA500" }}>
                         Recipe App
-                    </Typography>
+                    </Typography> */}
                     <IconButton color="inherit" onClick={() => goTo("/")} sx={{ ml: 2 }}>
-                        <HomeIcon />
+                        <HomeIcon style={{color: 'orange'}}/>
                     </IconButton>
                     {!isAuthenticated ? (
                         <>
@@ -107,7 +108,7 @@ const Header = () => {
                         </>
                     ) : (
                         <>
-                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/categories")} startIcon={<Favorite />}>
+                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/public-recipes")} startIcon={<Favorite />}>
                                 המומלצים שלנו
                             </Button>
                             <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/request")} startIcon={<Search />}>

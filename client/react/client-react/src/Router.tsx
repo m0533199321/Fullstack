@@ -11,6 +11,7 @@ import Request from "./components/Request"
 import FileViewer from "./components/FileViewer"
 import Comments from "./components/Comments"
 import DisplayRecipe from "./components/DisplayRecipe"
+import About from "./components/About"
 // import Home  from "./components/Home"
 
 
@@ -21,6 +22,7 @@ export const Router = createBrowserRouter([
         errorElement: <div>error</div>,
         children: [
             // { path: '', element: <Home /> },
+            { path: 'about', element: <About /> },
             { path: 'register', element: <RegisterForm /> },
             { path: 'login', element: <LoginForm /> },
             { path: 'categories', element: <Categories /> },
