@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { UpdateUserName, UpdateUserProfile } from "./Redux/AuthSlice";
 import ProfilePicture from "./ProfilePicture";
 import { uploadProfilePictureService } from "./Services/ProfileService";
+import { Book, Favorite, Receipt, Search } from "@mui/icons-material";
 
 const Header = () => {
     const user = useAppSelector((state) => state.auth.user);
@@ -48,6 +49,12 @@ const Header = () => {
         setEditingProflie(true);
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+        window.location.reload();
+    }
+
     const handleSaveChanges = () => {
         if (user && fName && lName && fName != "" && lName != "") {
             dispatch(UpdateUserName({ id: user.id, fName, lName }));
@@ -59,7 +66,7 @@ const Header = () => {
         if (file) {
             uploadProfilePictureService(file).then(path => {
                 if (user && path) {
-                    dispatch(UpdateUserProfile({ id: user.id , profile: path }));
+                    dispatch(UpdateUserProfile({ id: user.id, profile: path }));
                     window.location.reload();
                 } else {
                     console.error("Failed to upload profile picture.");
@@ -78,12 +85,12 @@ const Header = () => {
 
     return (
         <>
-            <AppBar position="static" sx={{ backgroundColor: "#FFA500" }}>
+            <AppBar position="fixed" sx={{ backgroundColor: "black", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)", marginBottom: '20%', }}>
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" sx={{ flexGrow: 1, color: "#FFA500" }}>
                         Recipe App
                     </Typography>
                     <IconButton color="inherit" onClick={() => goTo("/")} sx={{ ml: 2 }}>
@@ -91,25 +98,22 @@ const Header = () => {
                     </IconButton>
                     {!isAuthenticated ? (
                         <>
-                            <Button color="inherit" onClick={() => goTo("/login")} startIcon={<LoginIcon />} sx={{ ml: 2 }}>
+                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/login")} startIcon={<LoginIcon />}>
                                 Sign In
                             </Button>
-                            <Button color="inherit" onClick={() => goTo("/register")} startIcon={<PersonAddIcon />} sx={{ ml: 2 }}>
+                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/register")} startIcon={<PersonAddIcon />}>
                                 Sign Up
                             </Button>
                         </>
                     ) : (
                         <>
-                            <Button color="inherit" onClick={() => goTo("/api")} startIcon={<RestaurantIcon />} sx={{ ml: 2 }}>
-                                API
-                            </Button>
-                            <Button color="inherit" onClick={() => goTo("/categories")} startIcon={<RestaurantIcon />} sx={{ ml: 2 }}>
+                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/categories")} startIcon={<Favorite />}>
                                 המומלצים שלנו
                             </Button>
-                            <Button color="inherit" onClick={() => goTo("/request")} startIcon={<RestaurantIcon />} sx={{ ml: 2 }}>
+                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/request")} startIcon={<Search />}>
                                 חיפוש מתכון
                             </Button>
-                            <Button color="inherit" onClick={() => goTo("/private-recipes")} startIcon={<RestaurantIcon />} sx={{ ml: 2 }}>
+                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/private-recipes")} startIcon={<Receipt />}>
                                 ספר המתכונים שלי
                             </Button>
                             <Avatar
@@ -172,6 +176,9 @@ const Header = () => {
                                 </Button>
                                 <Button onClick={handleEditProfile} color="secondary" fullWidth sx={{ mt: 1 }}>
                                     ערוך פרופיל
+                                </Button>
+                                <Button onClick={handleLogout} sx={{ mt: 1, color: 'red' }} fullWidth>
+                                    יציאה
                                 </Button>
                             </Box>
                         </>

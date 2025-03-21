@@ -52,30 +52,40 @@ body {
     margin-left: 10px;
 }
 
-/* .comments-container {
-    margin-top: 0;
-    margin-bottom: 0;
-    direction: rtl;
+
+.displayRecipe-buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-left: 0;
+    margin-right: 24vw;
+    padding: 0;
+    left: 0 !important;
 }
 
-.comments-title {
-    margin-top: 1%;
-    margin-bottom: 0;
-    color: white;
-    font-size: 50px;
-    margin-right: 5vw;
-} */
-
-.add-comment-button {
+.add-comment-button,
+.display-recipe-button {
     background-color: rgb(0, 0, 0);
-    /* border: 1px solid white !important; */
     color: orange !important;
     padding: 8px 16px !important;
     cursor: pointer !important;
     font-size: 20px !important;
-    margin-right: 52vw !important;
-    bottom: 1%;
+    margin-right: 10px;
+    white-space: nowrap;
 }
+
+
+.display-recipe-button {
+    background-color: rgb(0, 0, 0);
+    color: orange !important;
+    padding: 8px 16px !important;
+    cursor: pointer !important;
+    font-size: 20px !important;
+    bottom: 1%;
+} 
 
 .add-comment-input{
     background-color: rgb(255, 255, 255) !important;

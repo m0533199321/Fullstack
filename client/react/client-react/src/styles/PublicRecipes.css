@@ -25,8 +25,14 @@
     background-color: #212121;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease-in-out;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-top: 4%;
+    transition: transform 0.2s; 
+    cursor: pointer;
+    margin-bottom: 4%;
+}
+
+.recipe-card:hover {
+    transform: scale(1.005);
 }
 
 .buttons-container {
@@ -71,6 +77,12 @@
     top:0 !important;
     margin-bottom: 1%;
     text-align: center;
+}
+
+.title-with-underline {
+    border-bottom: 2px solid orange;
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
 

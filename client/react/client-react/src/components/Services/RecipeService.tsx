@@ -122,6 +122,7 @@ export const recipeDetailsService = async (
         });
 
         if (response.ok) {
+            console.log(response); 
             const result = await response.json();
             if (result) {
                 console.log(result);

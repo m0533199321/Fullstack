@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { fetchAddComment } from "./Services/CommentService";
 import { useParams } from "react-router-dom";
 import { fetchRecipeById } from "./Services/RecipeService";
+import FileViewer from "./FileViewer";
 
 const DisplayRecipe = () => {
 
@@ -15,6 +16,8 @@ const DisplayRecipe = () => {
     const [loading, setLoading] = useState(true);
     const [addComment, setAddComment] = useState(false);
     const [commentValue, setCommentValue] = useState('');
+    const [file, setFile] = useState(false);
+
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -70,37 +73,47 @@ const DisplayRecipe = () => {
 
     return (
         <>
-            <div style={{ height: '8vh' }}></div>
-            <div className="displayRecipe-container">
-                <img className="displayRecipe-image" src="../../images/back/recipes4.png" alt={recipe.title} />
-                <div className="displayRecipe-details">
-                    <h3 className="displayRecipe-title">{recipe.title}</h3>
-                    <div style={{ color: 'black' }}><strong className="displayRecipe-defenitions">קטגוריה:</strong> {category(recipe.category)}</div>
-                    <div style={{ marginBottom: '10px' }}></div>
-                    <div className="stars">
-                        <strong className="displayRecipe-defenitions">דרגת קושי:</strong>
-                        {Array.from({ length: 5 }).map((_, index) => (
-                            index < recipe.degree ? <Star key={index} className="filled-star" /> : <StarBorder key={index} className="empty-star" />
-                        ))}
+            {!file ? (
+                <>
+                    <div style={{ height: '8vh' }}></div>
+                    <div className="displayRecipe-container">
+                        <img className="displayRecipe-image" src="../../images/back/recipes4.png" alt={recipe.title} />
+                        <div className="displayRecipe-details">
+                            <h3 className="displayRecipe-title">{recipe.title}</h3>
+                            <div style={{ color: 'black' }}><strong className="displayRecipe-defenitions">קטגוריה:</strong> {category(recipe.category)}</div>
+                            <div style={{ marginBottom: '10px' }}></div>
+                            <div className="stars">
+                                <strong className="displayRecipe-defenitions">דרגת קושי:</strong>
+                                {Array.from({ length: 5 }).map((_, index) => (
+                                    index < recipe.degree ? <Star key={index} className="filled-star" /> : <StarBorder key={index} className="empty-star" />
+                                ))}
+                            </div>
+                            <div style={{ marginBottom: '10px' }}></div>
+                            <div style={{ color: 'black' }}><strong className="displayRecipe-defenitions">תאריך יצירה:</strong> {new Date(recipe.createdAt).toLocaleDateString()}</div>
+                            <div className="displayRecipe-buttons">
+                                <Button className="add-comment-button" onClick={() => setAddComment(true)}>הוספת תגובה</Button>
+                                <Button className="display-recipe-button" onClick={() => setFile(true)}>הצגת המתכון</Button>
+                            </div>
+                        </div>
                     </div>
-                    <div style={{ marginBottom: '10px' }}></div>
-                    <div style={{ color: 'black' }}><strong className="displayRecipe-defenitions">תאריך יצירה:</strong> {new Date(recipe.createdAt).toLocaleDateString()}</div>
-                    <Button className="add-comment-button" onClick={() => setAddComment(true)}>להוספת תגובה</Button>
-                </div>
-            </div>
-            {addComment &&
-                <div className="input-container">
-                    <input
-                        className="add-comment-input"
-                        placeholder="כתוב/כתבי את התגובה שלך"
-                        value={commentValue}
-                        onChange={(e) => setCommentValue(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                    />
-                    <Send className="send-icon" onClick={handleAddCommentClick} />
-                </div>
+                    {addComment &&
+                        <div className="input-container">
+                            <input
+                                className="add-comment-input"
+                                placeholder="כתוב/כתבי את התגובה שלך"
+                                value={commentValue}
+                                onChange={(e) => setCommentValue(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                            />
+                            <Send className="send-icon" onClick={handleAddCommentClick} />
+                        </div>
+                    }
+                    {recipe && <Comments recipeId={recipe.id} />}
+                </>) :
+                (<>
+                    <FileViewer fileUrl={recipe.path} onClose={() => null} details={null} />
+                </>)
             }
-            {recipe && <Comments recipeId={recipe.id} />}
         </>
     );
 }

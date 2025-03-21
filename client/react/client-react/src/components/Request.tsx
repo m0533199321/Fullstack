@@ -11,8 +11,9 @@ const Request = () => {
     const [inputValue, setInputValue] = useState("");
     const [fileUrl, setFileUrl] = useState<string | null>(null);
     const [showFileViewer, setShowFileViewer] = useState(false);
-    const [difficulty, setDifficulty] = useState(0);
+    const [difficulty, setDifficulty] = useState<number>(2);
     const [details, setDetails] = useState<string[]>([]);
+    const [send, setSend] = useState(false);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -20,8 +21,9 @@ const Request = () => {
 
     const handleSend = async () => {
         if (user && inputValue != "") {
+            setSend(true);
             console.log("Sent:", inputValue);
-            const url = await RequestService(inputValue + " difficulty: " + difficulty, user.id);
+            const url = await RequestService(inputValue + " difficulty: " + difficulty + " " + user.information, user.id);
             console.log(url);
             if (url) {
                 console.log(url);
@@ -43,29 +45,68 @@ const Request = () => {
         setShowFileViewer(false);
         console.log(fileUrl);
         setFileUrl(null);
+        setSend(false);
+    };
+
+    const handleDifficultyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setDifficulty(Number(event.target.value));
+    };
+
+    const getSliderColor = (value: number) => {
+        switch (value) {
+            case 0:
+                return 'red';
+            case 1:
+                return 'orange';
+            case 2:
+                return 'yellow';
+            case 3:
+                return 'lightgreen';
+            case 4:
+                return 'green';
+            default:
+                return 'green'
+        }
     };
     return (
         <>
-            <input type="number" value={difficulty} onChange={event => { setDifficulty(Number(event.target.value)) }} />
-            <h1>smart-chef חיפוש עם</h1>
-            <input
-                type="text"
-                className="input-with-icon"
-                placeholder="ספר/י לי מה את/ה רוצה"
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
-            />
-            <span className="icon-container" onClick={handleSend}>
-                <Send className="send" />
-            </span>
-            {showFileViewer && fileUrl && (
-                <FileViewer fileUrl={fileUrl} onClose={handleClose} details={[...details, ''+difficulty]} />
+            {!showFileViewer ? (<>
+                <h1>smart-chef חיפוש עם</h1>
+                {send && <h3>אנחנו מכינים בשבילך</h3>}
+                <input
+                    type="text"
+                    className="input-with-icon"
+                    placeholder="ספר/י לי מה את/ה רוצה"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
+                />
+                <div style={{ width: '20%', marginLeft: '18vw' }}>
+                    <div className="difficulty-slider">
+                        <label>דרגת קושי: {difficulty}</label>
+                        <input
+                            type="range"
+                            min="0"
+                            max="4"
+                            value={difficulty}
+                            onChange={handleDifficultyChange}
+                            style={{ width: '100%', backgroundColor: getSliderColor(difficulty) }}
+                        />
+                    </div>
+                    <span className="icon-container" onClick={handleSend}>
+                        <Send className="send" />
+                    </span>
+                </div>
+            </>) : (
+                <>
+                    {showFileViewer && fileUrl && (
+                        <FileViewer fileUrl={fileUrl} onClose={handleClose} details={[...details, '' + difficulty]} />
+                    )}
+                </>
             )}
         </>
-    );
-};
-
+    )
+}
 export default Request;
 
 

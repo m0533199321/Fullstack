@@ -52,14 +52,23 @@ const LoginForm: React.FC = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 8, padding: 3, borderRadius: 2, boxShadow: 3, backgroundColor: 'white' }}>
-                <Typography component="h1" variant="h5" sx={{ color: 'black' }}>התחבר</Typography>
+            <Box sx={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                marginTop: 8, 
+                padding: 3, 
+                borderRadius: 2, 
+                boxShadow: 3, 
+                backgroundColor: '#333' 
+            }}>
+                <Typography component="h1" variant="h5" sx={{ color: 'orange' }}>התחבר</Typography> {/* צבע טקסט כתום */}
                 <form onSubmit={handleSubmit} style={{ width: '100%', marginTop: 1 }}>
                     <TextField
                         {...inputStyles}
                         name="email"
                         label="מייל"
-                        autoComplete="email"
+                        autoComplete="off"
                         autoFocus
                         value={email}
                         onChange={handleChange}
@@ -71,19 +80,20 @@ const LoginForm: React.FC = () => {
                         name="password"
                         label="סיסמה"
                         type="password"
-                        autoComplete="current-password"
+                        autoComplete="off"
                         value={password}
                         onChange={handleChange}
                         error={!!errors.password}
                         helperText={errors.password}
                     />
-                    <Button type="submit" fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: '#333' } }}>
+                    <Button type="submit" fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff8800' } }}>
                         התחבר
                     </Button>
                 </form>
             </Box>
         </Container>
     );
+    
 };
 
 export default LoginForm;

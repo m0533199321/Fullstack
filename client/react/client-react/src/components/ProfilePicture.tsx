@@ -1,59 +1,13 @@
-// import React, { useState } from 'react';
-
-// const ProfilePictureSelector = () => {
-//   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-//   const [showImages, setShowImages] = useState(false); // מצב לתצוגת התמונות
-
-//   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     const file = event.target.files?.[0];
-//     if (file) {
-//       const imageUrl = URL.createObjectURL(file);
-//       setSelectedImage(imageUrl);
-//     }
-//   };
-
-//   const handleDefaultImageSelect = (imageUrl: string) => {
-//     setSelectedImage(imageUrl);
-//   };
-
-//   const handleShowImages = () => {
-//     setShowImages(true); // מציג את התמונות
-//   };
-
-//   return (
-//     <div>
-//       <h2>בחר תמונת פרופיל</h2>
-//       <button onClick={handleShowImages}>הצג תמונות</button>
-//       {showImages && (
-//         <div>
-//           <button onClick={() => handleDefaultImageSelect('url_to_default_image_1')}>
-//             תמונה 1
-//           </button>
-//           <button onClick={() => handleDefaultImageSelect('url_to_default_image_2')}>
-//             תמונה 2
-//           </button>
-//           <input type="file" accept="image/*" onChange={handleImageChange} />
-//         </div>
-//       )}
-//       {selectedImage && <img src={selectedImage} alt="Profile Preview" style={{ width: '100px', height: '100px' }} />}
-//     </div>
-//   );
-// };
-
-// export default ProfilePictureSelector;
-
-
 import React, { useState } from 'react';
 import {
     Dialog,
     DialogTitle,
     DialogContent,
-    DialogActions,
     Button,
     Grid,
-    Box
+    Box,
+    Typography
 } from '@mui/material';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 interface ProfilePictureSelectorProps {
     onSelect: (file: File | null) => void;
@@ -61,9 +15,7 @@ interface ProfilePictureSelectorProps {
 }
 
 const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClose }) => {
-
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
-    const [showImages, setShowImages] = useState(false);
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -80,10 +32,7 @@ const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClo
             const response = await fetch(imageUrl);
             const blob = await response.blob();
             const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
-            
-            // יצירת אובייקט File עם ה-Blob
             const file = new File([blob], fileName, { type: 'image/jpeg' });
-            
             setSelectedImage(imageUrl);
             onSelect(file);
             onClose();
@@ -91,70 +40,97 @@ const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClo
             console.error('Error fetching the image:', error);
         }
     };
-    
 
-    const handleShowImages = () => {
-        setShowImages(!showImages);
+    const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        const file = event.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const imageUrl = URL.createObjectURL(file);
+            setSelectedImage(imageUrl);
+            onSelect(file);
+            onClose();
+        }
+    };
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
     };
 
     return (
-        <Dialog open onClose={onClose}>
-            <DialogTitle>
-              <div>בחירת תמונת פרופיל</div>
+        <Dialog open onClose={onClose} fullWidth maxWidth="sm">
+            <DialogTitle style={{ backgroundColor: '#222', color: 'white', textAlign: 'center', margin: 0 }}>
+                <div>בחירת תמונת פרופיל</div>
             </DialogTitle>
-            <DialogContent>
-                <Box textAlign="center">
-                    <Button 
-                        variant="outlined" 
-                        style={{ width: '200px', color: 'black', borderColor: 'black', backgroundColor: 'white'  }} 
-                        onClick={handleShowImages} 
-                        startIcon={<PhotoCamera />}
-                    >
-                        {showImages ? 'הסתר תמונות קיימות' : 'הצג תמונות קיימות'}
-                    </Button>
+            <DialogContent
+                sx={{ backgroundColor: '#222', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+            >
+                <Box
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    sx={{
+                        border: '2px dashed white',
+                        borderRadius: '5px',
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
+                        textAlign: 'center',
+                        width: '250px',
+                        height: '80px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#999',
+                        margin: 0,
+                        marginBottom: 2
+                    }}
+                >
+                    <Typography variant="body1" color="white" sx={{ margin: 0, padding: 0, fontSize: '20px' }}>
+                        גרור לכאן
+                    </Typography>
                 </Box>
-                {showImages && (
-                    <Grid container spacing={2} justifyContent="center" sx={{ marginTop: 2 }}>
-                        <Grid item>
-                            <Button onClick={() => handleDefaultImageSelect('../../images/profiles/1.jpg')}>
-                                <img src='../../images/profiles/1.jpg' alt="Default 1" style={{ width: '100px', height: '100px', borderRadius: '8px' }} />
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <Button onClick={() => handleDefaultImageSelect('../../images/profiles/2.jpg')}>
-                                <img src='../../images/profiles/2.jpg' alt="Default 2" style={{ width: '100px', height: '100px', borderRadius: '8px' }} />
-                            </Button>
-                        </Grid>
+
+                <Typography variant="h6" sx={{ margin: '5px 0', color: 'white', fontSize: '25px' }}>
+                    בחר תמונה
+                </Typography>
+                <Grid container spacing={1} justifyContent="center" sx={{ marginTop: '10px' }}>
+                    <Grid item>
                     </Grid>
-                )}
-                <Box textAlign="center" sx={{ marginTop: 2 }}>
-                    <input
-                        accept="image/*"
-                        style={{ display: 'none' }}
-                        id="icon-button-file"
-                        type="file"
-                        onChange={handleImageChange}
-                    />
-                    <label htmlFor="icon-button-file">
-                        <Button 
-                            variant="contained" 
-                            component="span" 
-                            style={{ width: '200px', backgroundColor: 'black', color: 'white' }} 
-                            startIcon={<PhotoCamera />}
-                        >
-                            בחר מהמחשב שלי
+                    <Grid item>
+                        <Button onClick={() => handleDefaultImageSelect('../../images/profiles/2.jpg')}>
+                            <img src='../../images/profiles/2.jpg' alt="Default 2" style={{ width: '80px', height: '80px', borderRadius: '50%' }} />
                         </Button>
-                    </label>
-                </Box>
-                {selectedImage && (
-                    <Box textAlign="center" sx={{ marginTop: 2 }}>
-                        <img src={selectedImage} alt="Profile Preview" style={{ width: '100px', height: '100px', borderRadius: '8px' }} />
+                    </Grid>
+                    <Grid item>
+                        <Button onClick={() => handleDefaultImageSelect('../../images/profiles/1.jpg')}>
+                            <img src='../../images/profiles/1.jpg' alt="Default 1" style={{ width: '80px', height: '80px', borderRadius: '50%' }} />
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button onClick={() => handleDefaultImageSelect('../../images/profiles/3.jpg')}>
+                            <img src='../../images/profiles/3.jpg' alt="Default 3" style={{ width: '80px', height: '80px', borderRadius: '50%' }} />
+                        </Button>
+                    </Grid>
+                    <Box sx={{ marginTop: '2%', marginLeft: '10px', width: 'auto', textAlign: 'center' }}>
+                        <input
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            id="icon-button-file"
+                            type="file"
+                            onChange={handleImageChange}
+                        />
+                        <label htmlFor="icon-button-file">
+                            <Button
+                                variant="contained"
+                                component="span"
+                                style={{ backgroundColor: '#999', color: 'white', borderRadius: '50%', width: '83px', height: '83px', fontSize: '30px' }}
+                            // startIcon={<PhotoCamera />}
+                            >
+                                +
+                            </Button>
+                        </label>
                     </Box>
-                )}
+                </Grid>
             </DialogContent>
-            <DialogActions>
-                <Button onClick={onClose} color="secondary">סגור</Button>
-            </DialogActions>
         </Dialog>
     );
 };

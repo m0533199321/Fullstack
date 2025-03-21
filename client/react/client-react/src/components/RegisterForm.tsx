@@ -19,6 +19,7 @@ import { UserRegister } from "../models/AuthType";
 import ProfilePicture from './ProfilePicture';
 import { uploadProfilePictureService } from "./Services/ProfileService";
 import { CustomTextField, CreateTextField } from "./RegisterGenericTextField";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 interface FormData {
     firstName: string;
@@ -78,10 +79,8 @@ const RegisterForm: React.FC = () => {
     };
 
     const handleProfilePictureSelect = (file: File | null) => {
-        console.log(file);    
         if (file) {
             uploadProfilePictureService(file).then(path => {
-                console.log(path);
                 if (path) {
                     setFormData(prev => ({ ...prev, profilePicture: path }));   
                 } else {
@@ -114,7 +113,6 @@ const RegisterForm: React.FC = () => {
                 profile: formData.profilePicture,
                 information: "sensitivities: " + formData.allergies.join(', ') + " preferences: " + formData.preferences + " additionalNotes: " + formData.additionalNotes
             };
-            console.log(user);     
             dispatch(registerUser({ user }));
             navigate('/');
         } else {
@@ -131,9 +129,10 @@ const RegisterForm: React.FC = () => {
     };
 
     return (
+        <div style={{direction: 'rtl'}}>
         <Container component="main" maxWidth="xs">
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 8, padding: 3, borderRadius: 2, boxShadow: 3, backgroundColor: 'white' }}>
-                <Typography component="h1" variant="h5" sx={{ color: 'black', marginBottom: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 8, padding: 3, borderRadius: 2, boxShadow: 3, backgroundColor: '#222' }}>
+                <Typography component="h1" variant="h5" sx={{ color: 'orange', marginBottom: 0 }}>
                     {step === 1 ? 'שלב 1: פרטים אישיים' : 'שלב 2: רגישויות והערות'}
                 </Typography>
                 <form onSubmit={handleSubmit} style={{ width: '100%', marginTop: 1 }}>
@@ -171,17 +170,17 @@ const RegisterForm: React.FC = () => {
                         helperText={errors.password}
                         handleChange={handleChange}
                     />
-                    <Button onClick={handleNavigateToProfilePicture}>
+                    <Button onClick={handleNavigateToProfilePicture} sx={{ color: 'orange' , marginRight: 14}}>
                         בחר תמונת פרופיל
                     </Button>
                 </>
             )}
             {step === 2 && (
             <>
-            <Button onClick={handleBackToStep1} variant="outlined" sx={{ marginBottom: 2 }}>
-                חזור לשלב 1
+            <Button onClick={handleBackToStep1} variant="outlined" sx={{ marginBottom: 2, border: 'none', marginRight: '34vw' }}>
+            <ArrowBackIcon sx={{ left: 0, color: 'orange' }}/>
             </Button>
-            <Typography variant="body1" sx={{ marginBottom: 2 }}>סימון אלרגניים:</Typography>
+            <Typography variant="body1" sx={{ marginBottom: 2, color: '#777' }}>סימון אלרגניים:</Typography>
             {['אגוזים', 'חלב', 'גלוטן', 'ביצים'].map(allergy => (
                 <FormControlLabel
                     key={allergy}
@@ -191,45 +190,48 @@ const RegisterForm: React.FC = () => {
                             onChange={handleChange}
                             name={allergy}
                             value={allergy}
-                            sx={{ '&.Mui-checked': { color: 'black' } }}
+                            sx={{ '&.Mui-checked': { color: 'orange' } }}
                         />
                     }
                     label={allergy}
-                    />
-                ))}
-                        <CustomTextField 
-                                    name="preferences" 
-                                    label="מצרכים נגישים" 
-                                    value={formData.preferences}
-                                    handleChange={handleChange} 
-                        />
-                        <CustomTextField 
-                                    name="additionalNotes" 
-                                    label="הערות נוספות" 
-                                    value={formData.additionalNotes}
-                                    handleChange={handleChange} 
-                        />
+                    sx={{ color: '#777' }}
+                />
+            ))}
+            <CustomTextField 
+                name="preferences" 
+                label="מצרכים נגישים" 
+                value={formData.preferences}
+                handleChange={handleChange} 
+            />
+            <CustomTextField 
+                name="additionalNotes" 
+                label="הערות נוספות" 
+                value={formData.additionalNotes}
+                handleChange={handleChange} 
+            />
             </>
                     )}
-                    <Button type="submit" fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: '#333' } }}>
+                    <Button type="submit" fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff9800' } }}>
                         {step === 1 ? 'המשך לשלב 2' : 'שלח'}
                     </Button>
                 </form>
                 <Dialog open={showProfilePicture} onClose={() => setShowProfilePicture(false)}>
-                    <DialogTitle>בחירת תמונת פרופיל</DialogTitle>
+                    <DialogTitle sx={{ color: 'orange' }}>בחירת תמונת פרופיל</DialogTitle>
                     <DialogContent>
                         <ProfilePicture onSelect={handleProfilePictureSelect} onClose={() => setShowProfilePicture(false)} />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => setShowProfilePicture(false)}>סגור</Button>
+                        <Button onClick={() => setShowProfilePicture(false)} sx={{ color: 'orange' }}>סגור</Button>
                     </DialogActions>
                 </Dialog>
             </Box>
         </Container>
+        </div>
     );
 };
 
 export default RegisterForm;
+
 
 
 

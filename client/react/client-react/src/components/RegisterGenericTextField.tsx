@@ -6,9 +6,10 @@ interface CustomTextFieldProps {
     label: string;
     value: string;
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    sx?: object;
 }
 
-export const CustomTextField: React.FC<CustomTextFieldProps> = ({ name, label, value, handleChange }) => {
+export const CustomTextField: React.FC<CustomTextFieldProps> = ({ name, label, value, handleChange, sx }) => {
     return (
         <TextField
             variant="outlined"
@@ -20,28 +21,33 @@ export const CustomTextField: React.FC<CustomTextFieldProps> = ({ name, label, v
             rows={4}
             value={value}
             onChange={handleChange}
+            InputProps={{
+                style: { textAlign: 'right' },
+                dir: 'rtl'
+            }}
             sx={{
+                ...sx,
                 '& .MuiOutlinedInput-root': {
                     '& fieldset': {
-                        borderColor: 'black',
+                        borderColor: '#777',
                     },
                     '&:hover fieldset': {
-                        borderColor: 'black',
+                        borderColor: '#777',
                     },
                     '&.Mui-focused fieldset': {
-                        borderColor: 'black',
+                        borderColor: '#777',
                     },
                 },
                 '& input': {
-                    color: 'black',
+                    color: '#777',
                 },
                 '& label': {
-                    color: 'black',
+                    color: '#777',
                 },
                 '& .MuiFormLabel-root.Mui-focused': {
-                    color: 'black',
+                    color: '#777',
                 },
-                backgroundColor: 'white',
+                backgroundColor: '#222',
             }}
         />
     );
@@ -55,9 +61,11 @@ interface CreateTextFieldProps {
     error?: boolean;
     helperText?: string;
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    sx?: object;
 }
 
-export const CreateTextField: React.FC<CreateTextFieldProps> = ({ name, label, type = "text", value, error, helperText, handleChange }) => (
+
+export const CreateTextField: React.FC<CreateTextFieldProps> = ({ name, label, type = "text", value, error, helperText, handleChange, sx }) => (
     <TextField
         variant="outlined"
         margin="normal"
@@ -70,28 +78,44 @@ export const CreateTextField: React.FC<CreateTextFieldProps> = ({ name, label, t
         required
         error={error}
         helperText={helperText}
+        InputProps={{
+            sx: {
+                backgroundColor: '#222',
+                '&:hover': {
+                    backgroundColor: '#222',
+                },
+                '&.Mui-focused': {
+                    backgroundColor: '#222',
+                },
+                '&[type="text"]': {
+                    backgroundColor: '#222',
+                },
+            }
+        }}
+        autoComplete="off"
         sx={{
+            ...sx,
             '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                    borderColor: 'black',
+                    borderColor: '#777',
                 },
                 '&:hover fieldset': {
-                    borderColor: 'black',
+                    borderColor: '#777',
                 },
                 '&.Mui-focused fieldset': {
-                    borderColor: 'black',
+                    borderColor: '#777',
                 },
             },
             '& input': {
-                color: 'black',
+                color: '#777',
             },
             '& label': {
-                color: 'black',
+                color: '#777',
             },
             '& .MuiFormLabel-root.Mui-focused': {
-                color: 'black',
+                color: '#777',
             },
-            backgroundColor: 'white',
+            backgroundColor: '#222',
         }}
     />
 );

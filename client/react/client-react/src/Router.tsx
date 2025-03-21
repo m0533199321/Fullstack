@@ -32,8 +32,9 @@ export const Router = createBrowserRouter([
             { path: 'recipe/:id', element: <DisplayRecipe /> },
             {
                 path: 'file-viewer', element: <FileViewer onClose={() => { }}
-                    fileUrl="https://malismartchef.s3.amazonaws.com/recipes/11742408587166.docx"
-                    details={['חלה מתוקה', '4', '0']} />
+                    fileUrl="https://malismartchef.s3.us-east-1.amazonaws.com/recipes/261742340504975.docx"
+                    // details={['חלה מתוקה', '4', '0']} />
+                    details={null}/>
             }
         ]
     }

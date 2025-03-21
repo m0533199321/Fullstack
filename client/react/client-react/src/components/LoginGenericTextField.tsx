@@ -4,15 +4,15 @@ const inputStyles = {
     required: true,
     fullWidth: true,
     sx: {
-        input: { color: 'black' },
-        label: { color: 'black' },
+        input: { color: '#777' },
+        label: { color: '#777' },
         '& .MuiOutlinedInput-root': {
-            '& fieldset': { borderColor: 'black' },
-            '&:hover fieldset': { borderColor: 'black' },
-            '&.Mui-focused fieldset': { borderColor: 'black' },
+            '& fieldset': { borderColor: '#777' },
+            '&:hover fieldset': { borderColor: '#777' },
+            '&.Mui-focused fieldset': { borderColor: '#777' },
         },
-        '& .MuiInputLabel-root': { color: 'black' }, // שינוי צבע הלייבלים
-        '& .MuiInputLabel-root.Mui-focused': { color: 'black' }, // צבע הלייבל במיקוד
+        '& .MuiInputLabel-root': { color: '#777' }, 
+        '& .MuiInputLabel-root.Mui-focused': { color: '#777' }, 
     },
 };
 
