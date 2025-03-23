@@ -4,7 +4,7 @@ import { AppDispatch } from "./Redux/Store";
 import { useDispatch } from 'react-redux';
 import { loginUser } from "./Redux/AuthSlice";
 import { UserLogin } from "../models/AuthType";
-import { TextField, Button, Typography, Container, Box } from '@mui/material';
+import { TextField, Button, Typography, Container, Box, Link } from '@mui/material';
 import inputStyles from "./LoginGenericTextField";
 
 const LoginForm: React.FC = () => {
@@ -52,15 +52,15 @@ const LoginForm: React.FC = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Box sx={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center', 
-                marginTop: 8, 
-                padding: 3, 
-                borderRadius: 2, 
-                boxShadow: 3, 
-                backgroundColor: '#333' 
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginTop: 8,
+                padding: 3,
+                borderRadius: 2,
+                boxShadow: 3,
+                backgroundColor: '#333'
             }}>
                 <Typography component="h1" variant="h5" sx={{ color: 'orange' }}>התחבר</Typography> {/* צבע טקסט כתום */}
                 <form onSubmit={handleSubmit} style={{ width: '100%', marginTop: 1 }}>
@@ -86,6 +86,12 @@ const LoginForm: React.FC = () => {
                         error={!!errors.password}
                         helperText={errors.password}
                     />
+                    <Typography variant="body2" sx={{ marginTop: 2, color: 'white', textAlign: 'center' }}>
+                        עדיין לא נרשמת?{''}
+                        <Link href="/register" sx={{ color: 'orange', marginRight: '1vw', textDecorationColor: 'gray' }}>
+                            להרשמה לחץ כאן
+                        </Link>
+                    </Typography>
                     <Button type="submit" fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff8800' } }}>
                         התחבר
                     </Button>
@@ -93,7 +99,7 @@ const LoginForm: React.FC = () => {
             </Box>
         </Container>
     );
-    
+
 };
 
 export default LoginForm;

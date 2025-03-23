@@ -55,3 +55,15 @@
     font-size: 50px;
     margin-right: 5vw;
 }
+
+.commentEdit-input {
+    color: white;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    border-bottom: 1px solid gray;
+    text-decoration: none;
+    box-shadow: none;
+    appearance: none; /* מסיר סגנונות ברירת מחדל */
+}

@@ -85,7 +85,7 @@ namespace Recipes.API.Controllers
         {
             var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var tokenId = int.Parse(HttpContext.User.Claims.First(claim => claim.Type == "id").Value);
-            var comment = await _iService.GetByIdAsync(tokenId);
+            var comment = await _iService.GetByIdAsync(id);
             if (comment == null || tokenId != comment.UserId)
                 return Forbid();
             return await _iService.DeleteAsync(id);

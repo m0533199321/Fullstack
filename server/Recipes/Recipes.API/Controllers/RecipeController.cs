@@ -38,6 +38,7 @@ namespace Recipes.API.Controllers
 
         // GET api/<Users>/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<RecipeDto>> Get(int id)
         {
             var recipeDto = await _iService.GetByIdAsync(id);

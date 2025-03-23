@@ -53,7 +53,7 @@ body {
 }
 
 
-.displayRecipe-buttons{
+.displayRecipe-buttons {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -61,13 +61,12 @@ body {
     justify-content: flex-end;
     margin-top: 20px;
     margin-left: 0;
-    margin-right: 24vw;
     padding: 0;
     left: 0 !important;
 }
 
-.add-comment-button,
-.display-recipe-button {
+.display-recipe-button,
+.add-comment-button {
     background-color: rgb(0, 0, 0);
     color: orange !important;
     padding: 8px 16px !important;
@@ -85,9 +84,10 @@ body {
     cursor: pointer !important;
     font-size: 20px !important;
     bottom: 1%;
-} 
+    left: 0 !important;
+}
 
-.add-comment-input{
+.add-comment-input {
     background-color: rgb(255, 255, 255) !important;
     color: rgb(0, 0, 0) !important;
     padding: 8px 16px !important;
@@ -109,6 +109,6 @@ body {
     position: absolute;
     left: 26%;
     top: 60%;
-    transform: translateY(-50%); 
+    transform: translateY(-50%);
     cursor: pointer;
 }

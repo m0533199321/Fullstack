@@ -8,6 +8,7 @@ import { fetchAddComment } from "./Services/CommentService";
 import { useParams } from "react-router-dom";
 import { fetchRecipeById } from "./Services/RecipeService";
 import FileViewer from "./FileViewer";
+import { useAppSelector } from "./Redux/Store";
 
 const DisplayRecipe = () => {
 
@@ -17,6 +18,7 @@ const DisplayRecipe = () => {
     const [addComment, setAddComment] = useState(false);
     const [commentValue, setCommentValue] = useState('');
     const [file, setFile] = useState(false);
+    const user = useAppSelector((state) => state.auth.user);
 
 
     useEffect(() => {
@@ -90,10 +92,14 @@ const DisplayRecipe = () => {
                             </div>
                             <div style={{ marginBottom: '10px' }}></div>
                             <div style={{ color: 'black' }}><strong className="displayRecipe-defenitions">תאריך יצירה:</strong> {new Date(recipe.createdAt).toLocaleDateString()}</div>
-                            <div className="displayRecipe-buttons">
-                                <Button className="add-comment-button" onClick={() => setAddComment(true)}>הוספת תגובה</Button>
-                                <Button className="display-recipe-button" onClick={() => setFile(true)}>הצגת המתכון</Button>
-                            </div>
+                            {user ? (<>
+                                <div className="displayRecipe-buttons" style={{ marginRight: '24vw'}}>
+                                    <Button className="add-comment-button" onClick={() => setAddComment(true)}>הוספת תגובה</Button>
+                                    <Button className="display-recipe-button" onClick={() => setFile(true)}>הצגת המתכון</Button></div></>) :
+                                (<>
+                                    <div className="displayRecipe-buttons"  style={{ marginRight: '28vw'}}>
+                                        <Button className="display-recipe-button" onClick={() => setFile(true)}>הצגת המתכון</Button>
+                                    </div></>)}
                         </div>
                     </div>
                     {addComment &&
