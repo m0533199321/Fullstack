@@ -3,7 +3,7 @@ import { Recipe } from "../models/RecipeType";
 import { useAppSelector } from "./Redux/Store";
 import '../styles/PrivateRecipes.css';
 import { Button, IconButton, InputAdornment, Menu, MenuItem, TextField, Tooltip } from "@mui/material";
-import { Delete, Download, Email, Search, Sort, Star, StarBorder, Visibility } from "@mui/icons-material";
+import { Delete, Download, Email, MoreVert, Search, Sort, Star, StarBorder, Visibility } from "@mui/icons-material";
 import { fetchDeletePrivateRecipe, fetchPrivateRecipes, fetchPrivateToPublic, fetchPublicRecipes } from "./Services/RecipeService";
 import { downloadRecipeFromUrl } from "./DownAndEmail";
 //import { useNavigate } from "react-router-dom";
@@ -22,14 +22,21 @@ const PrivateRecipes = () => {
     const [searchRecipe, setSearchRecipe] = useState('');
     const [file, setFile] = useState(false);
     const [recipeToDisplay, setRecipeToDisplay] = useState<Recipe | null>(null);
+    const [showVert, setShowVert] = useState<number | null>(null);
 
     const allPrivateRecipes = async () => {
         if (user?.id) {
-            try {
-                const fetchedRecipes = await fetchPrivateRecipes(user.id);
-                setPublicRecipes(await fetchPublicRecipes());
-                setSuccess(true);
-                setRecipes(fetchedRecipes);
+            try { 
+                await fetchPrivateRecipes(user.id).then(async fetchedRecipes => {
+                    setRecipes(fetchedRecipes);
+                    await fetchPublicRecipes().then(fetchedPublicRecipes => {
+                        setPublicRecipes(fetchedPublicRecipes);
+                        setSuccess(true);
+                        console.log(recipes);
+                        console.log(publicRecipes);
+                    })
+                });
+
             } catch (error) {
                 console.error('Failed to fetch recipes:', error);
             }
@@ -41,6 +48,8 @@ const PrivateRecipes = () => {
     }, [user]);
 
     const sortRecipes = (recipes: Recipe[], criterion: string) => {
+        console.log(recipes);
+
         switch (criterion) {
             case 'category':
                 return [...recipes].sort((a, b) => a.category - b.category);
@@ -112,45 +121,46 @@ const PrivateRecipes = () => {
                     <div style={{
                         position: "sticky", top: '0', zIndex: 1000, backgroundColor: 'black', direction: 'rtl', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', padding: '10px', paddingTop: '12vh', paddingRight: '5vh'
                     }}>
-                        <h1 style={{ color: 'white', margin: '0', textAlign: 'right', marginLeft: '20px', fontSize: '4vw' }}>ספר המתכונים שלי</h1>
+                        <h1 style={{ color: 'white', margin: '0', textAlign: 'right', marginLeft: '20px', fontSize: '3.6vw' }}>ספר המתכונים שלי</h1>
                         <div style={{
                             display: 'flex', alignItems: 'center', marginLeft: '20px'
                         }}>
-                            <p style={{width: '2vw'}}></p>
+                            <p style={{ width: '2vw' }}></p>
                             {showPrivate ? (<>
                                 <button style={{
-                                    color: 'white', margin: '0 10px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '30px', fontWeight: 'bold',
-                                    borderBottom: '1px solid orange', display: 'inlineBlock', paddingBottom: '5px'
-                                }} onClick={privateClick}>פרטי</button>
+                                    color: 'orange', margin: '0 10px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '30px', fontWeight: 'bold',
+                                    display: 'inlineBlock', paddingBottom: '5px'
+                                }} onClick={privateClick}>פרטיים</button>
                                 <div style={{ borderLeft: '2px solid orange', height: '20px', margin: '0 10px' }}></div>
                                 <button className={showPublic ? "private-title-with-underline" : ""} style={{
                                     color: 'white', margin: '0 10px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '30px', fontWeight: 'bold'
-                                }} onClick={publicClick}>ציבורי</button>
+                                }} onClick={publicClick}>מומלצים</button>
                             </>) : (<>
                                 {showPublic ? (<>
                                     <button style={{
                                         color: 'white', margin: '0 10px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '30px', fontWeight: 'bold',
-                                    }} onClick={privateClick}>פרטי</button>
+                                    }} onClick={privateClick}>פרטיים</button>
                                     <div style={{ borderLeft: '2px solid orange', height: '20px', margin: '0 10px' }}></div>
                                     <button className={showPublic ? "private-title-with-underline" : ""} style={{
-                                        color: 'white', margin: '0 10px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '30px', fontWeight: 'bold',
-                                        borderBottom: '1px solid orange', display: 'inlineBlock', paddingBottom: '5px'
-                                    }} onClick={publicClick}>ציבורי</button>
+                                        color: 'orange', margin: '0 10px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '30px', fontWeight: 'bold',
+                                        display: 'inlineBlock', paddingBottom: '5px'
+                                    }} onClick={publicClick}>מומלצים</button>
                                 </>) : (<>
                                     <button style={{
                                         color: 'white', margin: '0 10px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '30px', fontWeight: 'bold',
-                                    }} onClick={privateClick}>פרטי</button>
+                                    }} onClick={privateClick}>פרטיים</button>
                                     <div style={{ borderLeft: '2px solid orange', height: '20px', margin: '0 10px' }}></div>
                                     <button className={showPublic ? "private-title-with-underline" : ""} style={{
                                         color: 'white', margin: '0 10px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '30px', fontWeight: 'bold'
-                                    }} onClick={publicClick}>ציבורי</button>
+                                    }} onClick={publicClick}>מומלצים</button>
                                 </>)}
+
                             </>)}
                         </div>
                         <TextField
                             className="private-text-field"
                             variant="outlined"
-                            placeholder="    חפש מתכון..."
+                            placeholder="חפש מתכון..."
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -163,7 +173,8 @@ const PrivateRecipes = () => {
                                     color: 'orange',
                                     maxWidth: '12vw',
                                     maxHeight: '5.25vh',
-                                    borderRadius: '7px'
+                                    borderRadius: '7px',
+                                    paddingRight: '10px'
                                 }
                             }}
                             onChange={(e) => setSearchRecipe(e.target.value)}
@@ -171,7 +182,7 @@ const PrivateRecipes = () => {
                         <div className="private-sort-container" style={{ textAlign: 'left' }}>
                             <Tooltip title="מיון לפי">
                                 <Button
-                                    variant="outlined" 
+                                    variant="outlined"
                                     style={{
                                         backgroundColor: 'black',
                                         color: 'rgb(251, 222, 0)',
@@ -225,74 +236,90 @@ const PrivateRecipes = () => {
                     </div>
 
                     <div className="privateRecipes-container">
-                        {success && filteredRecipes.length > 0 && (
+                        {success && filteredRecipes.length > 0 && <p style={{ backgroundColor: 'red' }}>hello</p> && (
                             <>
                                 <div className="privateRecipe-grid">
                                     {filteredRecipes.map((recipe) => (
                                         (showPrivate && !recipe.isPublic) || (showPublic && recipe.isPublic) ?
-                                            (<div key={recipe.id} className="privateRecipe-card" onClick={() => handleDisplayRecipe(recipe)}>
-                                                <p>{recipe.id}</p>
-                                                {recipe.title.length < 16 &&
-                                                    <h3 className="privateRecipe-title" style={{ fontSize: '2em' }}>{recipe.title}</h3>}
+                                            (<div key={recipe.id} className="privateRecipe-card">
+                                                {/* <p>{recipe.id}</p> */}
+                                                <MoreVert style={{ marginTop: '3%', marginBottom: 0, fontSize: '30px' }} onClick={() => setShowVert(prev => prev === recipe.id ? null : recipe.id)} />
+                                                <h3 className="privateRecipe-title" style={{ fontSize: `${Math.max(0.8, 3 - recipe.title.length / 10)}em`, marginTop: '0vh' }}>{recipe.title}</h3>
+                                                {/* {recipe.title.length < 16 &&
+                                                    <h3 className="privateRecipe-title" style={{ fontSize: '2em', marginTop: '0vh' }}>{recipe.title}</h3>}
                                                 {recipe.title.length >= 16 &&
-                                                    <h3 className="privateRecipe-title" style={{ fontSize: '1.3em' }}>{recipe.title}</h3>}
-                                                <img src="../../images/back/recipes4.png" alt={recipe.title} className="privateRecipe-image" />
-                                                {recipe.title.length < 16 &&
-                                                    <div className="private-difficulty-rating" style={{ bottom: '15%' }}>
+                                                    <h3 className="privateRecipe-title" style={{ fontSize: '1.3em' }}>{recipe.title}</h3>} */}
+                                                <img src="../../images/back/recipes4.png" alt={recipe.title} className="privateRecipe-image" onClick={() => handleDisplayRecipe(recipe)}/>
+                                             
+                                                    <div className="private-difficulty-rating" style={{ bottom: '10%' }}>
                                                         <div className="private-stars">
                                                             {Array.from({ length: 5 }).reverse().map((_, index) => (
                                                                 index < (5 - recipe.degree) ? <StarBorder key={index} className="private-empty-star" /> : <Star key={index} className="private-filled-star" />
                                                             ))}
                                                         </div>
                                                     </div>
-                                                }
-                                                {recipe.title.length >= 16 &&
-                                                    <div className="private-difficulty-rating" style={{ bottom: '22%' }}>
-                                                        <div className="private-stars">
-                                                            {Array.from({ length: 5 }).map((_, index) => (
-                                                                index < recipe.degree ? <Star key={index} className="private-filled-star" /> : <StarBorder key={index} className="private-empty-star" />
-                                                            ))}
+                                                
+                                                {showVert === recipe.id && (
+                                                   <div style={{
+                                                    position: 'absolute',
+                                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                                    width: '15vw',
+                                                    height: '62%',
+                                                    bottom: '10%',
+                                                    left: '5%',
+                                                    zIndex: 100,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                }} onClick={() => setShowVert(null)}>
+                                                        <div style={{
+                                                            display: 'flex',
+                                                            flexDirection: 'row',
+                                                            flexWrap: 'wrap', // מאפשר לשורות להתקפל
+                                                            justifyContent: 'space-around', // מפזר את האייקונים עם רווחים שווים
+                                                            width: '100%', // קובע רוחב של 100% כך שהאייקונים יתפסו את כל השטח
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <div style={{ width: '50%', textAlign: 'center', marginBottom: '10px' }}>
+                                                                <Tooltip title="הצגת פרטי מתכון">
+                                                                    <IconButton className="privateRecipe-icons" style={{ color: 'white' }}>
+                                                                        <Visibility onClick={() => handleDisplayRecipe(recipe)} />
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                            </div>
+                                                            <div style={{ width: '50%', textAlign: 'center', marginBottom: '10px' }}>
+                                                                <Tooltip title="הורדה">
+                                                                    <IconButton style={{ color: 'white' }}>
+                                                                        <Download onClick={(event) => { event.stopPropagation(); DownLoadRecipe(recipe) }} />
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                            </div>
+                                                            <div style={{ width: '50%', textAlign: 'center', marginBottom: '10px' }}>
+                                                                <Tooltip title="שליחה למייל">
+                                                                    <IconButton style={{ color: 'white' }}>
+                                                                        <Email onClick={() => { }} />
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                            </div>
+                                                            <div style={{ width: '50%', textAlign: 'center', marginBottom: '10px' }}>
+                                                                <Tooltip title="מחיקה מספר המתכונים שלי">
+                                                                    <IconButton onClick={(event) => { event.stopPropagation(); handleDelete(recipe.id) }} style={{ color: 'white' }}>
+                                                                        <Delete />
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                            </div>
+                                                            <div style={{ width: '50%', textAlign: 'center', marginBottom: '10px' }}>
+                                                                {!existInPublic(recipe.id) && (
+                                                                    <Tooltip title="הוספה למומלצים">
+                                                                        <IconButton onClick={(event) => { event.stopPropagation(); handleAddToFavorites(recipe.id) }} style={{ color: 'white' }}>
+                                                                            <Star />
+                                                                        </IconButton>
+                                                                    </Tooltip>
+                                                                )}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                }
-                                                {/* <p><strong>קטגוריה:</strong> {recipe.category}</p>
-                                <p><strong>דרגת קושי:</strong> {recipe.degree}</p>
-                                <p><strong>תאריך יצירה:</strong> {new Date(recipe.createdAt).toLocaleDateString()}</p> */}
-                                                {/* <div className="difficulty-rating">
-                                    <div className="stars">
-                                        {Array.from({ length: 5 }).map((_, index) => (
-                                            index < recipe.degree ? <Star key={index} className="filled-star" /> : <StarBorder key={index} className="empty-star" />
-                                        ))}
-                                    </div>
-                                </div> */}
-                                                <div className="private-buttons-container" style={{ display: 'flex', alignItems: 'flex-end' }}>
-                                                    <Tooltip title="הצגת פרטי מתכון">
-                                                        <IconButton className="privateRecipe-icons" style={{ color: 'black' }}>
-                                                            <Visibility onClick={() => handleDisplayRecipe(recipe)} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip title="הורדה">
-                                                        <IconButton style={{ color: 'black' }}>
-                                                            <Download onClick={(event) => { event.stopPropagation(); DownLoadRecipe(recipe) }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip title="שליחה למייל">
-                                                        <IconButton style={{ color: 'black' }}>
-                                                            <Email />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    {!existInPublic(recipe.id) &&
-                                                        <Tooltip title="הוספה למומלצים">
-                                                            <IconButton onClick={(event) => { event.stopPropagation(); handleAddToFavorites(recipe.id) }} style={{ color: 'black' }}>
-                                                                <Star />
-                                                            </IconButton>
-                                                        </Tooltip>}
-                                                    <Tooltip title="מחיקה מספר המתכונים שלי">
-                                                        <IconButton onClick={(event) => { event.stopPropagation(); handleDelete(recipe.id) }} style={{ color: 'black' }}>
-                                                            <Delete />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                </div>
+                                                )}
                                             </div>) : (<>
                                             </>)
                                     ))}

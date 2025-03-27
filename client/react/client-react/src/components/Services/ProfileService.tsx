@@ -16,9 +16,10 @@ export const uploadProfilePictureService = async (file: File): Promise<string | 
             });
 
             const presignedUrl = res.data.url;
-            await axios.put(presignedUrl, file, { headers: { "Content-Type": file.type } });
-
-            return presignedUrl.split("?")[0];
+            console.log(presignedUrl);    
+            return presignedUrl;
+            // await axios.put(presignedUrl, file, { headers: { "Content-Type": file.type } });
+            // return presignedUrl.split("?")[0];
         } catch (error) {
             console.error("שגיאה בהעלאת הקובץ:", error);
             return null;

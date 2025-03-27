@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Button, Typography, Avatar, Popover, Box, IconButton, TextField } from "@mui/material";
+import { AppBar, Toolbar, Button, Typography, Avatar, Popover, Box, IconButton, TextField, Snackbar, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, useAppSelector } from "./Redux/Store";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -13,6 +13,9 @@ import { UpdateUserName, UpdateUserProfile } from "./Redux/AuthSlice";
 import ProfilePicture from "./ProfilePicture";
 import { uploadProfilePictureService } from "./Services/ProfileService";
 import { Book, Favorite, Receipt, Search } from "@mui/icons-material";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import EmailIcon from '@mui/icons-material/Email';
+import axios from "axios";
 
 const Header = () => {
     const user = useAppSelector((state) => state.auth.user);
@@ -24,6 +27,9 @@ const Header = () => {
     const [editingProfile, setEditingProflie] = useState(false);
     const [fName, setFName] = useState(user?.fName || '');
     const [lName, setLName] = useState(user?.lName || '');
+    const [snackOpen, setSnackOpen] = useState(false);
+    const [snackMessage, setSnackMessage] = useState('');
+    const [snackSeverity, setSnackSeverity] = useState<'success' | 'error'>('success');
 
     const goTo = (path: string) => {
         navigate(path);
@@ -37,6 +43,10 @@ const Header = () => {
         setAnchorEl(null);
         setEditingName(false);
         setEditingProflie(false);
+    };
+
+    const handleSnackClose = () => {
+        setSnackOpen(false);
     };
 
     const handleEditName = () => {
@@ -55,19 +65,36 @@ const Header = () => {
         window.location.reload();
     }
 
-    const handleSaveChanges = () => {
+    const handleSaveChanges = async () => {
         if (user && fName && lName && fName != "" && lName != "") {
-            dispatch(UpdateUserName({ id: user.id, fName, lName }));
+            await dispatch(UpdateUserName({ id: user.id, fName, lName })).then(result => {
+                if(!result){
+                    
+                    setSnackMessage('שגיאה בעדכון שם ');
+                    setSnackSeverity('error');
+                    setSnackOpen(true);
+                }
+            })
         }
         handleClosePopover();
     };
 
-    const handleSelectProfilePicture = (file: File | null) => {
+    const handleSelectProfilePicture = async (file: File | null) => {
         if (file) {
-            uploadProfilePictureService(file).then(path => {
-                if (user && path) {
-                    dispatch(UpdateUserProfile({ id: user.id, profile: path }));
-                    window.location.reload();
+            await uploadProfilePictureService(file).then(async presignedUrl => {
+                if (user && presignedUrl) {
+                    await axios.put(presignedUrl, file, { headers: { "Content-Type": file.type } });
+                    await dispatch(UpdateUserProfile({ id: user.id, profile: presignedUrl.split("?")[0] })).then(result => {
+                        if (result) {
+                            window.location.reload();
+                        }
+                        else {
+                            setSnackMessage('שגיאה בעדכון פרופיל');
+                            setSnackSeverity('error');
+                            setSnackOpen(true);
+                        }
+                    })
+
                 } else {
                     console.error("Failed to upload profile picture.");
                 }
@@ -85,23 +112,38 @@ const Header = () => {
 
     return (
         <>
+            <Snackbar
+                open={snackOpen}
+                autoHideDuration={6000}
+                onClose={handleSnackClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // מיקום בראש העמוד
+            >
+                <Alert onClose={handleSnackClose} severity={snackSeverity} sx={{ width: '100%' }}>
+                    {snackMessage}
+                </Alert>
+            </Snackbar>
             <AppBar position="fixed" sx={{ backgroundColor: "black", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)", marginBottom: '20%', }}>
                 <Toolbar>
-                    <img src="../../images/back/smartChef.png" alt="smart-chef" style={{width:'10vw', marginRight: '51vw'}}/>
-                    <IconButton color="inherit" onClick={() => goTo("/")} sx={{ ml: 2 }}>
-                        <HomeIcon style={{color: 'orange'}}/>
-                    </IconButton>
+                    <img src="../../images/back/smartChef.png" alt="smart-chef" style={{ width: '10vw', marginRight: '50vw' }} />
                     {!isAuthenticated ? (
                         <>
-                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/login")} startIcon={<LoginIcon />}>
-                                התחברות
-                            </Button>
-                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/register")} startIcon={<PersonAddIcon />}>
-                                הרשמה
-                            </Button>
+                            <div style={{ marginLeft: 'auto', display: 'flex' }}>
+                                <IconButton color="inherit" onClick={() => goTo("/")} sx={{ ml: 2 }}>
+                                    <HomeIcon style={{ color: 'orange' }} />
+                                </IconButton>
+                                <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/login")} startIcon={<LoginIcon />}>
+                                    התחברות
+                                </Button>
+                                <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/register")} startIcon={<PersonAddIcon />}>
+                                    הרשמה
+                                </Button>
+                            </div>
                         </>
                     ) : (
                         <>
+                            <IconButton color="inherit" onClick={() => goTo("/")} sx={{ ml: 2 }}>
+                                <HomeIcon style={{ color: 'orange' }} />
+                            </IconButton>
                             <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/public-recipes")} startIcon={<Favorite />}>
                                 המומלצים שלנו
                             </Button>
@@ -181,6 +223,20 @@ const Header = () => {
                 </Box>
                 {editingProfile && <ProfilePicture onSelect={handleSelectProfilePicture} onClose={handleCloseProfilePicture} />}
             </Popover>
+
+            {/* <footer style={{ position: 'fixed', bottom: '0', width: '100%', backgroundColor: 'black', color: 'white', textAlign: 'center', padding: '10px' }}>
+                <div>
+                    <IconButton color="inherit" onClick={() => window.open('https://github.com/your-repo', '_blank')}>
+                        <GitHubIcon />
+                    </IconButton>
+                    <IconButton color="inherit" onClick={() => window.location.href = 'mailto:your-email@example.com'}>
+                        <EmailIcon />
+                    </IconButton>
+                </div>
+                <Typography variant="body2">
+                    © 2025 Mali Hildessaimer. כל הזכויות שמורות.
+                </Typography>
+            </footer> */}
         </>
     );
 };

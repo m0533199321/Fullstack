@@ -10,7 +10,10 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    DialogActions
+    DialogActions,
+    Snackbar,
+    Alert,
+    LinearProgress
 } from '@mui/material';
 import { AppDispatch } from "./Redux/Store";
 import { useDispatch } from "react-redux";
@@ -20,6 +23,7 @@ import ProfilePicture from './ProfilePicture';
 import { uploadProfilePictureService } from "./Services/ProfileService";
 import { CustomTextField, CreateTextField } from "./RegisterGenericTextField";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import axios from "axios";
 
 interface FormData {
     firstName: string;
@@ -47,6 +51,12 @@ const RegisterForm: React.FC = () => {
     const [step, setStep] = useState<number>(1);
     const [showProfilePicture, setShowProfilePicture] = useState<boolean>(false);
     const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+    const [upProfile, setUpProfile] = useState(false);
+    const [finishProfile, setFinishProfile] = useState(false);
+    const [snackOpen, setSnackOpen] = useState(false);
+    const [snackMessage, setSnackMessage] = useState('');
+    const [snackSeverity, setSnackSeverity] = useState<'success' | 'error'>('success');
+    const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
@@ -57,6 +67,10 @@ const RegisterForm: React.FC = () => {
 
     const isPasswordValid = (password: string) => {
         return password.length >= 6;
+    };
+
+    const handleSnackClose = () => {
+        setSnackOpen(false);
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -80,9 +94,21 @@ const RegisterForm: React.FC = () => {
 
     const handleProfilePictureSelect = (file: File | null) => {
         if (file) {
-            uploadProfilePictureService(file).then(path => {
-                if (path) {
-                    setFormData(prev => ({ ...prev, profilePicture: path }));   
+            setUpProfile(true);
+            setFinishProfile(false);
+            uploadProfilePictureService(file).then(async presignedUrl => {
+                if (presignedUrl) {
+                    await axios.put(presignedUrl, file, {
+                        headers: { "Content-Type": file.type },
+                        onUploadProgress: (progressEvent) => {
+                            const percent = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
+                            setProgress(percent);
+                        },
+                    }).then(() => {
+                        setProgress(0);
+                        setFinishProfile(true);
+                        setUpProfile(false);
+                        setFormData(prev => ({ ...prev, profilePicture: presignedUrl.split('?')[0] })); });  
                 } else {
                     console.error("Failed to upload profile picture.");
                 }
@@ -91,7 +117,7 @@ const RegisterForm: React.FC = () => {
         setShowProfilePicture(false);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const emailError = isEmailValid(formData.email) ? '' : 'אימייל לא תקין';
@@ -104,20 +130,39 @@ const RegisterForm: React.FC = () => {
 
         setErrors({});
 
-        if (step === 2) {
+         if (!finishProfile) {
+            setSnackMessage('תמונה לא הועלתה');
+            setSnackSeverity('error');
+            setSnackOpen(true);
+            return;
+        }
+        // if (step === 2) {
             const user: UserRegister = {
                 fName: formData.firstName,
                 lName: formData.lastName,
                 email: formData.email,
                 password: formData.password,
                 profile: formData.profilePicture,
-                information: "sensitivities: " + formData.allergies.join(', ') + " preferences: " + formData.preferences + " additionalNotes: " + formData.additionalNotes
+                information: ""
+                // information: "sensitivities: " + formData.allergies.join(', ') + " preferences: " + formData.preferences + " additionalNotes: " + formData.additionalNotes
             };
-            dispatch(registerUser({ user }));
-            navigate('/');
-        } else {
-            setStep(2);
-        }
+            const result = await dispatch(registerUser({ user }));
+            console.log(result);
+            
+            if (result.meta.requestStatus === 'fulfilled') {
+            setSnackMessage('הרשמה בוצעה בהצלחה');
+            setSnackSeverity('success');
+            setSnackOpen(true);
+            setTimeout(() => {navigate('/');}, 1500);}
+            else{   
+            setSnackMessage('הרשמה נכשלה');
+            setSnackSeverity('error');
+            setSnackOpen(true);
+            }
+
+        // } else {
+        //     setStep(2);
+        // }
     };
 
     const handleNavigateToProfilePicture = () => {
@@ -129,12 +174,24 @@ const RegisterForm: React.FC = () => {
     };
 
     return (
-        <div style={{direction: 'rtl'}}>
+        <>
+         <Snackbar 
+                open={snackOpen} 
+                autoHideDuration={6000} 
+                onClose={handleSnackClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // מיקום בראש העמוד
+            >
+                <Alert onClose={handleSnackClose} severity={snackSeverity} sx={{ width: '100%' }}>
+                    {snackMessage}
+                </Alert>
+            </Snackbar>
+        <div style={{marginTop: '12vh', direction: 'rtl'}}>
         <Container component="main" maxWidth="xs">
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 8, padding: 3, borderRadius: 2, boxShadow: 3, backgroundColor: '#222' }}>
-                <Typography component="h1" variant="h5" sx={{ color: 'orange', marginBottom: 0 }}>
-                    {step === 1 ? 'שלב 1: פרטים אישיים' : 'שלב 2: רגישויות והערות'}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 8, padding: 3, borderRadius: 2, boxShadow: 3, backgroundColor: 'black' }}>
+                <Typography component="h1" variant="h4" sx={{ color: 'orange', marginBottom: 0 }}>
+                    טופס הרשמה{/* {step === 1 ? 'שלב 1: פרטים אישיים' : 'שלב 2: רגישויות והערות'} */}
                 </Typography>
+                <div style={{height: '2vh'}}></div>
                 <form onSubmit={handleSubmit} style={{ width: '100%', marginTop: 1 }}>
                 {step === 1 && (
                 <>
@@ -170,12 +227,16 @@ const RegisterForm: React.FC = () => {
                         helperText={errors.password}
                         handleChange={handleChange}
                     />
-                    <Button onClick={handleNavigateToProfilePicture} sx={{ color: 'orange' , marginRight: 14}}>
+                    <div style={{height: '2vh'}}></div>
+                    {!upProfile && !finishProfile && <Button onClick={handleNavigateToProfilePicture} sx={{ color: 'orange' , marginRight: 14}}>
                         בחר תמונת פרופיל
-                    </Button>
+                    </Button>}
+                    {!upProfile && finishProfile && <Button onClick={handleNavigateToProfilePicture} sx={{ color: 'orange' , marginRight: 14}}>
+                        עדכן תמונת פרופיל
+                    </Button>}
                 </>
             )}
-            {step === 2 && (
+            {/* {step === 2 && (
             <>
             <Button onClick={handleBackToStep1} variant="outlined" sx={{ marginBottom: 2, border: 'none', marginRight: '34vw' }}>
             <ArrowBackIcon sx={{ left: 0, color: 'orange' }}/>
@@ -213,7 +274,33 @@ const RegisterForm: React.FC = () => {
                     )}
                     <Button type="submit" fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff9800' } }}>
                         {step === 1 ? 'המשך לשלב 2' : 'שלח'}
+                    </Button> */}
+                    {upProfile && !finishProfile && (
+                            <Box sx={{ width: "100%", marginTop: "15px" }}>
+                                <LinearProgress
+                                    variant="determinate"
+                                    value={progress}
+                                    sx={{
+                                        height: "8px",
+                                        borderRadius: "4px",
+                                        backgroundColor: "#333",
+                                        "& .MuiLinearProgress-bar": {
+                                            backgroundColor: "#FFA500",
+                                        },
+                                    }}
+                                />
+                                <Typography sx={{ marginTop: "5px", fontSize: "14px", color: "#FFA726" }}>{progress}%</Typography>
+                            </Box>
+                        // <div style={{width:'100%',display:'flex', alignItems:'center'}}>
+                        // <img src="../../images/GIF/Spinner-2.gif"/>
+                        // <div>{progress}</div>
+                        // <p>תמונה בהעלאה</p>
+                        // </div>
+                    )}
+                    <Button type="submit" disabled={!finishProfile} fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff9800' }, '&.Mui-disabled': {  backgroundColor: '#e0e0e0', color: '#b0b0b0' } }}>
+                        להרשמה
                     </Button>
+
                 </form>
                 <Dialog open={showProfilePicture} onClose={() => setShowProfilePicture(false)}>
                     <DialogTitle sx={{ color: 'orange' }}>בחירת תמונת פרופיל</DialogTitle>
@@ -227,6 +314,7 @@ const RegisterForm: React.FC = () => {
             </Box>
         </Container>
         </div>
+        </>
     );
 };
 

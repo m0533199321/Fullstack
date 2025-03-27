@@ -12,6 +12,7 @@ import FileViewer from "./components/FileViewer"
 import Comments from "./components/Comments"
 import DisplayRecipe from "./components/DisplayRecipe"
 import About from "./components/About"
+import Python from "./components/Python"
 // import Home  from "./components/Home"
 
 
@@ -36,8 +37,10 @@ export const Router = createBrowserRouter([
                 path: 'file-viewer', element: <FileViewer onClose={() => { }}
                     fileUrl="https://malismartchef.s3.us-east-1.amazonaws.com/recipes/261742340504975.docx"
                     // details={['חלה מתוקה', '4', '0']} />
-                    details={null}/>
-            }
+                    details={null} />
+            },
+            {path: 'python', element: <Python request="אני צריכה מתכון ארוך מאד מאד ומסובך מאד ממש עם מלא רכיבים והוראות הכנה להכנת עוגת שכבות תאריך כמה שרק אפשר" onClose={() => {}}/>}
+
         ]
     }
 ])

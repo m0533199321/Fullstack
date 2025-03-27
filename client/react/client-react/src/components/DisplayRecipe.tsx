@@ -77,7 +77,7 @@ const DisplayRecipe = () => {
         <>
             {!file ? (
                 <>
-                    <div style={{ height: '8vh' }}></div>
+                    <div style={{ marginTop:'10vh', height: '8vh' }}></div>
                     <div className="displayRecipe-container">
                         <img className="displayRecipe-image" src="../../images/back/recipes4.png" alt={recipe.title} />
                         <div className="displayRecipe-details">

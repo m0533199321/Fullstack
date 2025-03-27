@@ -23,14 +23,18 @@ const Request = () => {
         if (user && inputValue != "") {
             setSend(true);
             console.log("Sent:", inputValue);
-            const url = await RequestService(inputValue + " difficulty: " + difficulty + " " + user.information, user.id);
-            console.log(url);
-            if (url) {
-                console.log(url);
-                setFileUrl(url);
+            const result = await RequestService(inputValue + " difficulty: " + difficulty + " " + user.information, user.id);
+            console.log(result);
+            if (result!=null && result!=undefined && result.length > 0) {
+                console.log(result[0]);
+                console.log(result[1]);
+                setFileUrl(result[1]);
                 setShowFileViewer(true);
+                console.log(result[0]);
+                const name = result[0].split("\"")[1];
+                console.log(name);
+                setDetails([name,3]);
             }
-            setDetails(await recipeDetailsService(inputValue));
             setInputValue("");
         }
     };
@@ -52,7 +56,7 @@ const Request = () => {
         const value = Number(event.target.value);
         setDifficulty(value);
         event.target.style.setProperty('--value', `${(value - 1) * (100 / 4)}%`); // עדכון הערך עבור הגרדיאנט
-    };    
+    };
 
     return (
         <>
@@ -80,7 +84,7 @@ const Request = () => {
                             max="5"
                             value={difficulty}
                             onChange={handleDifficultyChange}
-                            style={{ width: '100%' , borderRadius: '10px' }}
+                            style={{ width: '100%', borderRadius: '10px' }}
                         />
                     </div>
                     <span className="icon-container" onClick={handleSend}>

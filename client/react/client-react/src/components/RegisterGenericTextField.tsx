@@ -80,16 +80,19 @@ export const CreateTextField: React.FC<CreateTextFieldProps> = ({ name, label, t
         helperText={helperText}
         InputProps={{
             sx: {
-                backgroundColor: '#222',
+                backgroundColor: 'black',
                 '&:hover': {
-                    backgroundColor: '#222',
+                    border: '3px solid rgba(180, 120, 0, 0.7)',
+                    backgroundColor: 'black',
+                    boxShadow: '0 4px 10px rgba(180, 120, 0, 0.5)',
                 },
                 '&.Mui-focused': {
-                    backgroundColor: '#222',
+                    backgroundColor: 'black',
                 },
                 '&[type="text"]': {
-                    backgroundColor: '#222',
+                    backgroundColor: 'black',
                 },
+                borderRadius: '15px'
             }
         }}
         autoComplete="off"
@@ -116,6 +119,7 @@ export const CreateTextField: React.FC<CreateTextFieldProps> = ({ name, label, t
                 color: '#777',
             },
             backgroundColor: '#222',
+            borderRadius: '15px'
         }}
     />
 );

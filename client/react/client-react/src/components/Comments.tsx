@@ -104,6 +104,7 @@ const Comments = ({ recipeId }: { recipeId: number }) => {
                     </div>
                 </div>
             ))}
+            <div style={{height:'10vh'}}></div>
         </>
     );
 };

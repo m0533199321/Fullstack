@@ -8,6 +8,7 @@ import {
     Box,
     Typography
 } from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 interface ProfilePictureSelectorProps {
     onSelect: (file: File | null) => void;
@@ -33,6 +34,7 @@ const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClo
             const blob = await response.blob();
             const fileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
             const file = new File([blob], fileName, { type: 'image/jpeg' });
+            console.log(file);
             setSelectedImage(imageUrl);
             onSelect(file);
             onClose();
@@ -84,6 +86,7 @@ const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClo
                         marginBottom: 2
                     }}
                 >
+                    <CloudUploadIcon sx={{ fontSize: 50, color: "#FFA726" }} />
                     <Typography variant="body1" color="white" sx={{ margin: 0, padding: 0, fontSize: '20px' }}>
                         גרור לכאן
                     </Typography>
