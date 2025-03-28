@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router"
-// import Home from "./components/Home"
+import Home from "./components/Home"
 import LayOut from "./components/LayOut"
 import LoginForm from "./components/LoginForm"
 import RegisterForm from "./components/RegisterForm"
@@ -12,7 +12,9 @@ import FileViewer from "./components/FileViewer"
 import Comments from "./components/Comments"
 import DisplayRecipe from "./components/DisplayRecipe"
 import About from "./components/About"
-import Python from "./components/Python"
+import LastRecipes from "./components/LastRecipes"
+import ForgotPassword from "./components/ForgotPassword"
+// import Python from "./components/Python"
 // import Home  from "./components/Home"
 
 
@@ -22,7 +24,7 @@ export const Router = createBrowserRouter([
         path: '/', element: <LayOut />,
         errorElement: <div>error</div>,
         children: [
-            // { path: '', element: <Home /> },
+            { path: '', element: <Home /> },
             { path: 'about', element: <About /> },
             { path: 'register', element: <RegisterForm /> },
             { path: 'login', element: <LoginForm /> },
@@ -33,13 +35,15 @@ export const Router = createBrowserRouter([
             { path: 'request', element: <Request /> },
             { path: 'comments', element: <Comments recipeId={1} /> },
             { path: 'recipe/:id', element: <DisplayRecipe /> },
-            {
-                path: 'file-viewer', element: <FileViewer onClose={() => { }}
-                    fileUrl="https://malismartchef.s3.us-east-1.amazonaws.com/recipes/261742340504975.docx"
-                    // details={['חלה מתוקה', '4', '0']} />
-                    details={null} />
-            },
-            {path: 'python', element: <Python request="אני צריכה מתכון ארוך מאד מאד ומסובך מאד ממש עם מלא רכיבים והוראות הכנה להכנת עוגת שכבות תאריך כמה שרק אפשר" onClose={() => {}}/>}
+            { path: 'last', element: <LastRecipes /> },
+            { path: 'forgot-password', element: <ForgotPassword /> }
+            // {
+            //     path: 'file-viewer', element: <FileViewer onClose={() => { }}
+            //         fileUrl="https://malismartchef.s3.us-east-1.amazonaws.com/recipes/261742340504975.docx"
+            //         // details={['חלה מתוקה', '4', '0']} />
+            //         details={null} />
+            // },
+            // {path: 'python', element: <Python request="אני צריכה מתכון ארוך מאד מאד ומסובך מאד ממש עם מלא רכיבים והוראות הכנה להכנת עוגת שכבות תאריך כמה שרק אפשר" onClose={() => {}}/>}
 
         ]
     }

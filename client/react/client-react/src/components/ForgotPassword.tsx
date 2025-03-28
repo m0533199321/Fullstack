@@ -2,18 +2,22 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "./Redux/Store";
 import { useDispatch } from 'react-redux';
-import { loginUser, sendEmail } from "./Redux/AuthSlice";
+import { forgotPasswordUser, loginUser, sendEmail, sendEmailForgot } from "./Redux/AuthSlice";
 import { UserLogin } from "../models/AuthType";
-import { Button, Typography, Container, Box, Link, Alert, Snackbar } from '@mui/material';
+import { Button, Typography, Container, Box, Link, Alert, Snackbar, TextField } from '@mui/material';
 import { CreateTextField } from "./LoginGenericTextField";
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+    const [errors, setErrors] = useState<{ email?: string; password?: string; random?: string }>({});
     const [snackOpen, setSnackOpen] = useState(false);
     const [snackMessage, setSnackMessage] = useState('');
     const [snackSeverity, setSnackSeverity] = useState<'success' | 'error'>('success');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showSendToEmail, setShowSendToEmail] = useState(false);
+    const [randomServer, setRandomServer] = useState('');
+    const [random, setRandom] = useState('');
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -22,6 +26,7 @@ const LoginForm: React.FC = () => {
         const { name, value } = e.target;
         if (name === "email") setEmail(value);
         if (name === "password") setPassword(value);
+        if (name === "random") setRandom(value);
         setErrors({ ...errors, [name]: undefined });
     };
 
@@ -36,8 +41,12 @@ const LoginForm: React.FC = () => {
             setErrors(newErrors);
         } else {
             const user: UserLogin = { email, password };
-            const result = await dispatch(loginUser({ user }));
-            console.log(result);
+            const result = await dispatch(forgotPasswordUser({ user }));
+            if (result.meta.requestStatus === 'fulfilled') {
+                console.log(result.payload.token);
+                setRandomServer(result.payload.token);
+                setShowPassword(true)
+            }
 
             if (result.meta.requestStatus === 'fulfilled') {
                 setSnackMessage('התחברות בוצעה בהצלחה');
@@ -58,7 +67,37 @@ const LoginForm: React.FC = () => {
     };
 
     const handleForgotPassword = async () => {
-        navigate('/forgot-password');
+        setShowSendToEmail(true)
+        const newErrors: { email?: string; password?: string; random?: string } = {};
+
+        if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'אימייל לא תקין';
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+        }
+        else {
+            const result = await dispatch(sendEmailForgot({ to: email, subject: 'שחזור סיסמה', body: 'שחזור סיסמה' }));
+            console.log(result.payload);
+            setRandomServer(result.payload);
+        }
+    }
+
+    const handleCheckRandom = () => {
+        console.log(random);
+        console.log(randomServer);
+        console.log(typeof(random));
+        console.log(typeof(randomServer));
+
+        if (randomServer == random) {
+            setShowPassword(true)
+        }
+        else {
+            const newErrors: { email?: string; password?: string; random?: string } = {};
+
+            newErrors.random = 'מספר אימות לא תקין';
+            if (Object.keys(newErrors).length > 0) {
+                setErrors(newErrors);
+            }
+        }
     }
 
     return (
@@ -97,27 +136,36 @@ const LoginForm: React.FC = () => {
                         />
                         <div style={{ height: '2vh' }}></div>
                         <CreateTextField
-                            name="password"
-                            label="סיסמה"
-                            type="password"
-                            value={password}
+                            name="random"
+                            label="מספר אימות"
+                            type="text"
+                            value={random}
                             handleChange={handleChange}
-                            error={!!errors.password}
-                            helperText={errors.password}
+                            error={!!errors.random}
+                            helperText={errors.random}
                         />
-                        <Button onClick={() => handleForgotPassword()} sx={{ color: 'orange', marginLeft: '35%', textDecorationColor: 'gray' }}>
-                            ?שכחת סיסמה
-                        </Button>
+                        <div style={{ height: '2vh' }}></div>
+                        {showPassword &&
+                            <CreateTextField
+                                name="password"
+                                label="סיסמה"
+                                type="password"
+                                value={password}
+                                handleChange={handleChange}
+                                error={!!errors.password}
+                                helperText={errors.password}
+                            />}
+
                         <div style={{ height: '3vh' }}></div>
-                        <Button type="submit" fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff8800' } }}>
-                            התחבר
-                        </Button>
-                        <Typography variant="body2" sx={{ marginTop: 2, color: 'white', textAlign: 'center' }}>
-                            עדיין לא נרשמת?{''}
-                            <Link href="/register" sx={{ color: 'orange', marginRight: '1vw', textDecorationColor: 'gray' }}>
-                                להרשמה לחץ כאן
-                            </Link>
-                        </Typography>
+                        {!showSendToEmail && <Button onClick={handleForgotPassword} fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff8800' } }}>
+                            לקבלת מספר אימות
+                        </Button>}
+                        {showSendToEmail && !showPassword && <Button onClick={handleCheckRandom} fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff8800' } }}>
+                            אימות
+                        </Button>}
+                        {showPassword && <Button type="submit" fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff8800' } }}>
+                            כניסה
+                        </Button>}
                     </form>
                 </Box>
             </Container>

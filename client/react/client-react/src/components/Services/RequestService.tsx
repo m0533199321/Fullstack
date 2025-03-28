@@ -28,7 +28,9 @@ const requestService = async (
         });
         if (response.ok) {
             const blob = await response2.blob();
-            return [name, await uploadRecipeService(blob, userId)];
+            console.log(name);
+            return [name, blob]
+            // return [name, await uploadRecipeService(blob, userId)];
         }
         // const url = window.URL.createObjectURL(blob);
         // console.log(url);
@@ -43,7 +45,7 @@ const requestService = async (
 
 export default requestService;
 
-const uploadRecipeService = async (
+export const uploadRecipeService = async (
     blob: Blob,
     userId: number
 ) => {

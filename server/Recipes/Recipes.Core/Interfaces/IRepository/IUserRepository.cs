@@ -18,9 +18,13 @@ namespace Recipes.Core.Interfaces.IRepository
         
         public Task<User?> UpdateProfileAsync(int id, string profile);
 
+        public Task<User?> UpdatePasswordAsync(int id, string password);
+
         public User? GetUserFullRoles(string email);
 
         public IEnumerable<Role> GetRolesToUser(int id);
+
+        public Task<User?> GetByEmailAsync(string email);
     }
 }
 

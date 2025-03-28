@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { AppDispatch } from "./Redux/Store";
 import { useDispatch } from "react-redux";
-import { registerUser } from "./Redux/AuthSlice";
+import { registerUser, sendEmail } from "./Redux/AuthSlice";
 import { UserRegister } from "../models/AuthType";
 import ProfilePicture from './ProfilePicture';
 import { uploadProfilePictureService } from "./Services/ProfileService";
@@ -153,7 +153,32 @@ const RegisterForm: React.FC = () => {
             setSnackMessage('הרשמה בוצעה בהצלחה');
             setSnackSeverity('success');
             setSnackOpen(true);
-            setTimeout(() => {navigate('/');}, 1500);}
+            setTimeout(() => {navigate('/');}, 1500);
+            const subject = "ברוכים הבאים למשפחה שלנו!";
+            const body = `
+            היי ${user.fName},
+
+            איזה כיף שאת/ה כאן! אנחנו שמחים מאוד שהצטרפת לקהילה שלנו.
+
+            מעכשיו, תוכל/י ליהנות ממגוון רחב של פיצ'רים שישדרגו את חוויית הבישול שלך:
+
+            * **מתכונים טעימים ומגוונים:** קבל/י גישה למאגר עשיר של מתכונים, מכל הסוגים ולכל הטעמים.
+            * **ניהול מתכונים קל ונוח:** שמור/י את המתכונים האהובים עליך, צור/י רשימות קניות ושתף/י מתכונים עם חברים.
+            * **קהילה חמה ותומכת:** הצטרף/י לקהילה של אוהבי בישול, שתף/י מתכונים וטיפים, וקבל/י השראה.
+
+            אנו מזמינים אותך להתחיל לחקור את האפליקציה, לגלות מתכונים חדשים, ולשתף את היצירות שלך איתנו.
+
+            אם יש לך שאלות או בקשות, אנחנו כאן בשבילך.
+
+            בתיאבון,
+            צוות [שם האפליקציה]
+            `;
+            const result2 = await dispatch(sendEmail({ to: user.email, subject: subject, body: body }));
+            if(result2.meta.requestStatus === 'fulfilled'){
+                console.log("mail sent!");}
+            else{
+                console.log("mail not sent!");}
+            }
             else{   
             setSnackMessage('הרשמה נכשלה');
             setSnackSeverity('error');

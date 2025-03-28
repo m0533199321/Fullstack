@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Recipe } from "../models/RecipeType";
-import { useAppSelector } from "./Redux/Store";
+import { AppDispatch, useAppSelector } from "./Redux/Store";
 import '../styles/PrivateRecipes.css';
 import { Button, IconButton, InputAdornment, Menu, MenuItem, TextField, Tooltip } from "@mui/material";
 import { Delete, Download, Email, MoreVert, Search, Sort, Star, StarBorder, Visibility } from "@mui/icons-material";
@@ -8,8 +8,11 @@ import { fetchDeletePrivateRecipe, fetchPrivateRecipes, fetchPrivateToPublic, fe
 import { downloadRecipeFromUrl } from "./DownAndEmail";
 //import { useNavigate } from "react-router-dom";
 import FileViewer from "./FileViewer";
+import { sendEmail } from "./Redux/AuthSlice";
+import { useDispatch } from "react-redux";
 
 const PrivateRecipes = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const user = useAppSelector((state) => state.auth.user);
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [publicRecipes, setPublicRecipes] = useState<Recipe[]>([]);
@@ -26,7 +29,7 @@ const PrivateRecipes = () => {
 
     const allPrivateRecipes = async () => {
         if (user?.id) {
-            try { 
+            try {
                 await fetchPrivateRecipes(user.id).then(async fetchedRecipes => {
                     setRecipes(fetchedRecipes);
                     await fetchPublicRecipes().then(fetchedPublicRecipes => {
@@ -85,6 +88,20 @@ const PrivateRecipes = () => {
         downloadRecipeFromUrl(recipe);
     }
 
+    const EmailRecipe = async (recipe: Recipe) => {
+        if (user) {
+            const subject = "מתכון טעים במיוחד בשבילך!";
+            const body = `היי ${user.fName},\n\nהנה המתכון שביקשת: ${recipe.path}\n\nמקווה שתיהנה ממנו מאוד!\n\nבתיאבון,\nsmart-chef`;
+            const result2 = await dispatch(sendEmail({ to: user.email, subject: subject, body: body }));
+            if (result2.meta.requestStatus === 'fulfilled') {
+                console.log("mail sent!");
+            }
+            else {
+                console.log("mail not sent!");
+            }
+        }
+    }
+
     const handleDisplayRecipe = (recipe: Recipe) => {
         //navigate(`/recipe/${recipeId}`);
         setFile(true);
@@ -114,8 +131,28 @@ const PrivateRecipes = () => {
 
     return (
         <>
-            {file ? (
-                recipeToDisplay && <FileViewer fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
+            {file ? (<>
+                {recipeToDisplay && (
+                    <>
+                        <Button
+                            sx={{
+                                position: 'fixed',
+                                top: '16vw',
+                                marginLeft: '60vh',
+                                color: '#FFA500',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                transition: 'transform 0.2s',
+                                height: 'auto',
+                            }} onClick={() => setFile(false)}>חזרה לרשימת המתכונים
+                        </Button>
+                    </>
+                )}
+                {recipeToDisplay && (
+                    <FileViewer fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
+                )}
+            </>
             ) : (
                 <>
                     <div style={{
@@ -249,29 +286,29 @@ const PrivateRecipes = () => {
                                                     <h3 className="privateRecipe-title" style={{ fontSize: '2em', marginTop: '0vh' }}>{recipe.title}</h3>}
                                                 {recipe.title.length >= 16 &&
                                                     <h3 className="privateRecipe-title" style={{ fontSize: '1.3em' }}>{recipe.title}</h3>} */}
-                                                <img src="../../images/back/recipes4.png" alt={recipe.title} className="privateRecipe-image" onClick={() => handleDisplayRecipe(recipe)}/>
-                                             
-                                                    <div className="private-difficulty-rating" style={{ bottom: '10%' }}>
-                                                        <div className="private-stars">
-                                                            {Array.from({ length: 5 }).reverse().map((_, index) => (
-                                                                index < (5 - recipe.degree) ? <StarBorder key={index} className="private-empty-star" /> : <Star key={index} className="private-filled-star" />
-                                                            ))}
-                                                        </div>
+                                                <img src="../../images/back/recipes4.png" alt={recipe.title} className="privateRecipe-image" onClick={() => handleDisplayRecipe(recipe)} />
+
+                                                <div className="private-difficulty-rating" style={{ bottom: '10%' }}>
+                                                    <div className="private-stars">
+                                                        {Array.from({ length: 5 }).reverse().map((_, index) => (
+                                                            index < (5 - recipe.degree) ? <StarBorder key={index} className="private-empty-star" /> : <Star key={index} className="private-filled-star" />
+                                                        ))}
                                                     </div>
-                                                
+                                                </div>
+
                                                 {showVert === recipe.id && (
-                                                   <div style={{
-                                                    position: 'absolute',
-                                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                                    width: '15vw',
-                                                    height: '62%',
-                                                    bottom: '10%',
-                                                    left: '5%',
-                                                    zIndex: 100,
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                }} onClick={() => setShowVert(null)}>
+                                                    <div style={{
+                                                        position: 'absolute',
+                                                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                                        width: '15vw',
+                                                        height: '62%',
+                                                        bottom: '10%',
+                                                        left: '5%',
+                                                        zIndex: 100,
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                    }} onClick={() => setShowVert(null)}>
                                                         <div style={{
                                                             display: 'flex',
                                                             flexDirection: 'row',
@@ -297,7 +334,7 @@ const PrivateRecipes = () => {
                                                             <div style={{ width: '50%', textAlign: 'center', marginBottom: '10px' }}>
                                                                 <Tooltip title="שליחה למייל">
                                                                     <IconButton style={{ color: 'white' }}>
-                                                                        <Email onClick={() => { }} />
+                                                                        <Email onClick={() => EmailRecipe(recipe)} />
                                                                     </IconButton>
                                                                 </Tooltip>
                                                             </div>

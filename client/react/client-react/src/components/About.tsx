@@ -1,51 +1,92 @@
-import React from "react";
+import '../styles/About.css';
 
-const AboutSmartChef = () => {
+const About = () => {
+
   return (
-    <div className="bg-black text-white p-16 rounded-2xl shadow-2xl max-w-6xl mx-auto text-center space-y-12">
-      {/* כותרת ראשית */}
-      <h1 className="text-5xl text-orange-500 font-extrabold tracking-wide uppercase drop-shadow-lg">
-        SmartChef - המהפכה בעולם המתכונים
-      </h1>
-      
-      {/* פסקת פתיחה */}
-      <p className="text-xl text-gray-300 leading-relaxed max-w-4xl mx-auto">
-        ברוכים הבאים ל-<span className="text-orange-400 font-semibold">SmartChef</span>, אפליקציית הבישול שמשנה את כללי המשחק! במקום מאגר מתכונים קבוע, 
-        <span className="text-orange-400">ה-AI</span> שלנו יוצר מתכונים מותאמים אישית, כך שתמיד תקבלו משהו חדש וייחודי שמתאים בדיוק למה שיש לכם בבית.
-      </p>
-      
-      {/* יתרונות האפליקציה */}
-      <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-        <div className="bg-gray-900 p-8 rounded-lg shadow-lg border-l-4 border-orange-500">
-          <h2 className="text-2xl text-orange-400 font-semibold mb-4">AI במקום מאגר מתכונים</h2>
-          <p className="text-gray-300">כל מתכון ייחודי ונוצר במיוחד עבורך – אין מתכונים משוכפלים!</p>
-        </div>
-        <div className="bg-gray-900 p-8 rounded-lg shadow-lg border-l-4 border-orange-500">
-          <h2 className="text-2xl text-orange-400 font-semibold mb-4">חוויית משתמש מתקדמת</h2>
-          <p className="text-gray-300">עיצוב כהה, מודרני ואינטואיטיבי שנותן חוויית שימוש חלקה ונעימה.</p>
-        </div>
-      </div>
-      
-      {/* אזורי האפליקציה */}
-      <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-        <div className="bg-gray-900 p-8 rounded-lg shadow-lg border-l-4 border-orange-500">
-          <h3 className="text-xl text-orange-400 font-semibold mb-4">ספר המתכונים שלי</h3>
-          <p className="text-gray-300">שמרו את המתכונים שאתם הכי אוהבים באזור האישי שלכם לגישה מהירה.</p>
-        </div>
-        <div className="bg-gray-900 p-8 rounded-lg shadow-lg border-l-4 border-orange-500">
-          <h3 className="text-xl text-orange-400 font-semibold mb-4">אזור ציבורי למתכונים</h3>
-          <p className="text-gray-300">גילוי ושיתוף מתכונים עם קהילת משתמשים מכל העולם.</p>
-        </div>
-      </div>
-      
-      {/* קריאה לפעולה */}
-      <div className="mt-10">
-        <button className="bg-orange-500 hover:bg-orange-600 text-white text-lg font-semibold px-10 py-4 rounded-full shadow-lg uppercase tracking-wider">
-          הצטרפו עכשיו ל-SmartChef!
-        </button>
-      </div>
+    <div className="about-container">
+      <section className="about-section">
+        <h2>ברוכים הבאים ל-SmartChef!</h2>
+        <p>
+          ברוכים הבאים ל-SmartChef, האפליקציה שמשנה את כל מה שחשבתם על עולם הבישול והמתכונים! אין כאן מאגר מתכונים ישן ומוגבל – כאן כל מתכון שנוצר הוא חדש, ייחודי ומותאם בדיוק לך. בעזרת טכנולוגיית AI מתקדמת, SmartChef מאפשרת לכל משתמש לקבל מתכונים שנוצרו באופן אישי, בהתבסס על המצרכים שיש לו בבית, ההעדפות הקולינריות שלו, והצרכים האישיים שלו – הכל בלחיצת כפתור!
+        </p>
+      </section>
+
+      <section className="about-section">
+        <h2>בינה מלאכותית במקום מאגר מתכונים קבוע</h2>
+        <p>
+          בניגוד לכל האפליקציות שמציעות מאגרי מתכונים שמישהו הזין בעבר, SmartChef לא מחזיקה מאגר נתונים של מתכונים כלל! כל מתכון שמתקבל נוצר בזמן אמת, במיוחד עבור המשתמש, לפי הדרישות שלו. היתרונות בכך הם עצומים:
+        </p>
+        <ul>
+          <li>✅ גיוון אינסופי – אין מתכונים חוזרים ונשנים, כל מתכון הוא חדש!</li>
+          <li>✅ התאמה אישית מושלמת – לא תקבלו מתכונים עם מרכיבים שאין לכם או שאתם לא אוהבים.</li>
+          <li>✅ יצירתיות קולינרית – האפליקציה ממציאה שילובים חדשים ומרגשים בכל פעם מחדש.</li>
+        </ul>
+      </section>
+
+      <section className="about-section">
+        <h2>ספר המתכונים האישי שלך</h2>
+        <p>
+          כל משתמש ב-SmartChef מקבל אזור אישי ייחודי שנקרא "ספר המתכונים שלי". זהו המקום בו ניתן לשמור את המתכונים שהכי אהבתם, לחזור אליהם בכל זמן ולבשל אותם שוב ושוב. המערכת לומדת את ההעדפות שלך ובפעם הבאה שתבקש מתכון, היא תדע להציע לך משהו שתאהב אפילו יותר!
+        </p>
+      </section>
+
+
+      <section className="about-section">
+        <h2>מתכונים ציבוריים ושיתוף קהילתי</h2>
+        <p>
+          מעבר לספר המתכונים האישי, קיים גם אזור ציבורי של מתכונים. כאן ניתן לשתף מתכונים שנוצרו על ידי המשתמשים, לגלות רעיונות חדשים וללמוד מהקהילה.
+        </p>
+        <ul>
+          <li>✅ ניתן להעביר מתכון אישי לאזור הציבורי ולשתף אותו עם כולם.</li>
+          <li>✅ ניתן להוסיף מתכון ציבורי לספר האישי שלך ולשמור אותו לשימוש עתידי.</li>
+          <li>✅ לכל מתכון ציבורי אפשר להגיב, לדרג ולהציע שדרוגים.</li>
+        </ul>
+      </section>
+
+
+      <section className="about-section">
+        <h2>חיפוש מתוחכם שמבין אותך</h2>
+        <p>
+          כדי למצוא את המתכון המושלם, SmartChef עושה שימוש באלגוריתם חיפוש חכם שמבוסס על AI מתקדם.
+        </p>
+        <ul>
+          <li> ניתן להזין את המצרכים שיש לך בבית, ולקבל רק מתכונים שתוכל להכין בלי לצאת לקניות.</li>
+          <li> ניתן לציין אילו מאכלים אתה אוהב או לא אוהב, ולקבל תוצאות מותאמות אישית.</li>
+          <li> אפשר לחפש לפי סוג ארוחה, למשל ארוחת בוקר, ארוחת חג, קינוחים ועוד.</li>
+        </ul>
+      </section>
+
+      <section className="about-section">
+        <h2>חוויית משתמש ייחודית ומתקדמת</h2>
+        <p>
+          האפליקציה עוצבה בקפידה כדי לספק חוויית משתמש מושלמת.
+        </p>
+        <ul>
+          <li> עיצוב כהה ויוקרתי שמעניק תחושה מודרנית ונעימה לעין.</li>
+          <li> מהירות וביצועים גבוהים – קבלת מתכון תוך שניות!</li>
+          <li> ממשק ידידותי עם ניווט קליל ונוח לכל משתמש.</li>
+        </ul>
+      </section>
+
+
+      <section className="about-section">
+        <h2>למה לבחור ב-SmartChef?</h2>
+        <ul>
+          <li> אין מאגר נתונים קבוע – כל מתכון נוצר מאפס, במיוחד בשבילך.</li>
+          <li> AI מתקדם – יצירת מתכונים מותאמים אישית בלחיצת כפתור.</li>
+          <li> אזור אישי לשמירת מתכונים אהובים.</li>
+          <li> קהילה חיה ונושמת של בשלנים, שיתוף מתכונים ותגובות.</li>
+          <li> חיפוש חכם לפי מצרכים זמינים, סוג ארוחה והעדפות אישיות.</li>
+          <li> חוויית משתמש חדשנית עם עיצוב מודרני ומושך.</li>
+        </ul>
+      </section>
+
+      <footer className="about-footer">
+        <p> הצטרפו למהפכה עכשיו!</p>
+        <p>אם אתם מחפשים דרך חדשה, חכמה ומהנה לבשל, SmartChef היא הבחירה המושלמת עבורכם! אין צורך יותר לבזבז זמן בחיפוש מתכונים באינטרנט – פשוט תנו לאפליקציה לעשות את העבודה בשבילכם. הורידו את SmartChef עוד היום והתחילו לבשל כמו מקצוענים! </p>
+      </footer>
     </div>
   );
 };
 
-export default AboutSmartChef;
+export default About;

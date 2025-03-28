@@ -19,6 +19,8 @@ namespace Recipes.Core.Interfaces.IServices
 
         public Task<User?> GetFullByIdAsync(int id);
 
+        public Task<UserDto?> GetByEmailAsync(string email);
+
         public Task<Result<UserDto>> AddAsync(UserDto u);
 
         public Task<UserDto> UpdateAsync(int id, UserDto u);
@@ -26,6 +28,8 @@ namespace Recipes.Core.Interfaces.IServices
         public Task<UserDto> UpdateNameAsync(int id, string fName, string lName);
         
         public Task<UserDto> UpdateProfileAsync(int id, string profile);
+
+        public Task<UserDto> UpdatePasswordAsync(int id, string password);
         
         public Task<bool> DeleteAsync(int id);
     }

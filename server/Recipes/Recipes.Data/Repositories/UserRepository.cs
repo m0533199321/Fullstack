@@ -31,6 +31,12 @@ namespace Recipes.Data.Repository
                  .Include(u => u.RecipesList).FirstOrDefaultAsync();
         }
 
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            return await _dbset.Where(u => u.Email.Equals(email))
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<User?> UpdateNameAsync(int id, string fName, string lName)
         {
             var users = await GetAsync();
@@ -51,6 +57,18 @@ namespace Recipes.Data.Repository
             if (existUser != null)
             {
                 existUser.Profile = profile;
+                return existUser;
+            }
+            return null;
+        }
+
+        public async Task<User?> UpdatePasswordAsync(int id, string password)
+        {
+            var users = await GetAsync();
+            var existUser = users.FirstOrDefault(u => u.Id == id);
+            if (existUser != null)
+            {
+                existUser.Password = password;
                 return existUser;
             }
             return null;
@@ -82,6 +100,6 @@ namespace Recipes.Data.Repository
                 .Include(u => u.RolesList).FirstOrDefault();
             return user?.RolesList ?? Enumerable.Empty<Role>();
         }
-        
+
     }
 }

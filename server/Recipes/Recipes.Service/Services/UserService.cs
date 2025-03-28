@@ -16,8 +16,7 @@ namespace Recipes.Service.Services
     public class UserService(IRepositoryManager repositoryManager, IMapper mapper) : IUserService
     {
         private readonly IRepositoryManager _iManager = repositoryManager;
-        private readonly IMapper _mapper = mapper;
-
+        private readonly IMapper _mapper = mapper;   
         public async Task<IEnumerable<User>> GetFullAsync()
         {
             var users = await _iManager._userRepository.GetFullAsync();
@@ -44,6 +43,13 @@ namespace Recipes.Service.Services
             return userDto;
         }
 
+        public async Task<UserDto?> GetByEmailAsync(string email)
+        {
+            var user = await _iManager._userRepository.GetByEmailAsync(email);
+            var userDto = _mapper.Map<UserDto>(user);
+            return userDto;
+        }
+
         public async Task<Result<UserDto>> AddAsync(UserDto userDto)
         {
             if (!IsValidEmail(userDto.Email))
@@ -55,7 +61,7 @@ namespace Recipes.Service.Services
             {
                 return Result<UserDto>.BadRequest("Password is invalid.");
             }
-            
+
             var user = mapper.Map<User>(userDto);
 
             var users = await _iManager._userRepository.GetAsync();
@@ -63,8 +69,9 @@ namespace Recipes.Service.Services
             {
                 return Result<UserDto>.Failure("User already exists.");
             }
-
+            Console.WriteLine(user.Password);
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            Console.WriteLine(user.Password);
             var result = await _iManager._userRepository.AddAsync(user);
             if (result == null)
             {
@@ -80,7 +87,9 @@ namespace Recipes.Service.Services
 
         public async Task<UserDto> UpdateAsync(int id, UserDto userDto)
         {
+            Console.WriteLine(userDto.Password);
             userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+            Console.WriteLine(userDto.Password);
             var user = _mapper.Map<User>(userDto);
             user = await _iManager._userRepository.UpdateAsync(id, user);
             if (user != null)
@@ -110,6 +119,22 @@ namespace Recipes.Service.Services
             if (user != null)
             {
                 await _iManager.SaveAsync();
+                var userDto = _mapper.Map<UserDto>(user);
+                return userDto;
+            }
+            return null;
+        }
+
+        public async Task<UserDto> UpdatePasswordAsync(int id, string password)
+        {
+            Console.WriteLine(password);
+            password = BCrypt.Net.BCrypt.HashPassword(password);
+            Console.WriteLine(password);
+            var user = await _iManager._userRepository.UpdatePasswordAsync(id, password);
+            if (user != null)
+            {
+                await _iManager.SaveAsync();
+                Console.WriteLine(password);
                 var userDto = _mapper.Map<UserDto>(user);
                 return userDto;
             }

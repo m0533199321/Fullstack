@@ -106,9 +106,10 @@ import { RecipePostModel } from '../models/RecipeType';
 import { useAppSelector } from './Redux/Store';
 import mammoth from 'mammoth';
 import '../styles/FileViewer.css';
+import { uploadRecipeService } from './Services/RequestService';
 
 interface FileViewerProps {
-    fileUrl: string;
+    fileUrl: Blob | string;
     onClose: () => void | null;
     details: string[] | null;
 }
@@ -116,15 +117,22 @@ interface FileViewerProps {
 const FileViewer: React.FC<FileViewerProps> = ({ fileUrl, onClose, details }) => {
     const user = useAppSelector((state) => state.auth.user);
     const [htmlContent, setHtmlContent] = useState('');
-    const [direction, setDirection] = useState<'ltr' | 'rtl'>('ltr');
+    const [direction, setDirection] = useState<'ltr' | 'rtl'>('rtl');
 
     useEffect(() => {
         const fetchDocx = async () => {
-            const response = await fetch(fileUrl);
+            console.log(details);
+            let response;
+            if(typeof(fileUrl)==="string"){    
+                response = await fetch(fileUrl);
+            }
+            else{
+                response = fileUrl;
+            }
             const arrayBuffer = await response.arrayBuffer();
             const { value } = await mammoth.convertToHtml({ arrayBuffer });
             setHtmlContent(value);
-
+            
             // ספירת המילים בעברית
             const hebrewWords = value.match(/[א-ת]+/g);
             const hebrewWordCount = hebrewWords ? hebrewWords.reduce((count, word) => count + word.split(/\s+/).length, 0) : 0;
@@ -144,11 +152,12 @@ const FileViewer: React.FC<FileViewerProps> = ({ fileUrl, onClose, details }) =>
     console.log(details);
     const onSelect = async () => {
         console.log(details);
-        if (details) {
+        if (details && user && typeof(fileUrl) != 'string') {
+            const result = await uploadRecipeService(fileUrl, user.id)
             const recipePostModel: RecipePostModel = {
                 title: details[0],
                 degree: Number(details[2]),
-                path: fileUrl,
+                path: result,
                 category: Number(details[1]),
             }
             console.log(recipePostModel);

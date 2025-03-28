@@ -1,6 +1,7 @@
 import { Recipe } from "../models/RecipeType";
+import { sendEmail } from "./Redux/AuthSlice";
 
-export const downloadRecipeFromUrl = (recipe:Recipe) => {
+export const downloadRecipeFromUrl = (recipe: Recipe) => {
     fetch(recipe.path)
         .then(response => {
             if (!response.ok) {
@@ -21,9 +22,17 @@ export const downloadRecipeFromUrl = (recipe:Recipe) => {
         });
 };
 
-export const emailRecipeWithUrl = (url:string, email:string) => {
-    const subject = "קישור למתכון"; // נושא המייל
-    const body = `הנה הקישור למתכון שלך: ${url}`; // גוף המייל
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-};
+export const emailRecipeWithUrl = (url: string, email: string) => {
+    // const subject = "קישור למתכון";
+    // const body = `הנה הקישור למתכון שלך: ${url}`;
+    // const result2 = await dispatch(sendEmail({ to: user.email, subject, body }));
+    // if (result2.meta.requestStatus === 'fulfilled') {
+    //     console.log("mail sent!");
+    // }
+    // else {
+    //     console.log("mail not sent!");
+    // }
 
+// window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+}

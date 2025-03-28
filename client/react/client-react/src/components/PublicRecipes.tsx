@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import { Recipe } from "../models/RecipeType";
-import { useAppSelector } from "./Redux/Store";
+import { AppDispatch, useAppSelector } from "./Redux/Store";
 import { Button, IconButton, InputAdornment, Menu, MenuItem, TextField, Tooltip } from "@mui/material";
 import { Star, StarBorder, Visibility, Download, Email, Sort, Bookmark, Search, MoreVert } from "@mui/icons-material";
 import { fetchPublicRecipes, fetchPublicToPrivate, fetchPrivateRecipes } from "./Services/RecipeService";
 import "../styles/PublicRecipes.css";
-import { downloadRecipeFromUrl, emailRecipeWithUrl } from "./DownAndEmail";
+import { downloadRecipeFromUrl } from "./DownAndEmail";
 import { useNavigate } from "react-router-dom";
 import FileViewer from "./FileViewer";
+import { sendEmail } from "./Redux/AuthSlice";
+import { useDispatch } from "react-redux";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const PublicRecipes = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const user = useAppSelector((state) => state.auth.user);
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [privateRecipes, setPrivateRecipes] = useState<Recipe[]>([]);
@@ -89,9 +93,17 @@ const PublicRecipes = () => {
         downloadRecipeFromUrl(recipe);
     }
 
-    const EmailRecipe = (recipe: Recipe) => {
+    const EmailRecipe = async (recipe: Recipe) => {
         if (user) {
-            emailRecipeWithUrl(recipe.path, user.email);
+            const subject = "מתכון טעים במיוחד בשבילך!";
+            const body = `היי ${user.fName},\n\nהנה המתכון שביקשת: ${recipe.path}\n\nמקווה שתיהנה ממנו מאוד!\n\nבתיאבון,\nsmart-chef`;
+            const result2 = await dispatch(sendEmail({ to: user.email, subject: subject, body: body }));
+            if (result2.meta.requestStatus === 'fulfilled') {
+                console.log("mail sent!");
+            }
+            else {
+                console.log("mail not sent!");
+            }
         }
     }
 
@@ -121,8 +133,28 @@ const PublicRecipes = () => {
 
     return (
         <>
-            {file ? (
-                recipeToDisplay && <FileViewer fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
+            {file ? (<>
+                {recipeToDisplay && (
+                    <>
+                        <Button
+                            sx={{
+                                position: 'fixed',
+                                top: '16vw',
+                                marginLeft: '60vh',
+                                color: '#FFA500',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                transition: 'transform 0.2s',
+                                height: 'auto',
+                            }} onClick={() => setFile(false)}>חזרה לרשימת המתכונים
+                        </Button>
+                    </>
+                )}
+                {recipeToDisplay && (
+                    <FileViewer fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
+                )}
+            </>
             ) : (
                 <>
                     <div style={{
@@ -242,14 +274,14 @@ const PublicRecipes = () => {
                                                 {recipe.title.length >= 16 &&
                                                     <h3 className="recipe-title" style={{ fontSize: '1.3em' }}>{recipe.title}</h3>} */}
                                                 <img src="../../images/back/recipes4.png" alt={recipe.title} className="recipe-image" onClick={() => handleDisplayRecipeDetails(recipe.id)} />
-                                                    <div className="difficulty-rating" style={{ bottom: '10%' }}>
-                                                        <div className="stars">
-                                                            {Array.from({ length: 5 }).reverse().map((_, index) => (
-                                                                index < (5 - recipe.degree) ? <StarBorder key={index} className="private-empty-star" /> : <Star key={index} className="private-filled-star" />
-                                                            ))}
-                                                        </div>
-                                                        {/* <p style={{fontSize:'14px'}}>דרגת קושי</p> */}
+                                                <div className="difficulty-rating" style={{ bottom: '10%' }}>
+                                                    <div className="stars">
+                                                        {Array.from({ length: 5 }).reverse().map((_, index) => (
+                                                            index < (5 - recipe.degree) ? <StarBorder key={index} className="private-empty-star" /> : <Star key={index} className="private-filled-star" />
+                                                        ))}
                                                     </div>
+                                                    {/* <p style={{fontSize:'14px'}}>דרגת קושי</p> */}
+                                                </div>
                                                 {showVert === recipe.id && (
                                                     <div style={{
                                                         position: 'absolute',
@@ -317,4 +349,5 @@ const PublicRecipes = () => {
 }
 
 export default PublicRecipes;
+
 

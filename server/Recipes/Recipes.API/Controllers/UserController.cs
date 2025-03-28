@@ -124,6 +124,20 @@ namespace Recipes.API.Controllers
             return userDto;
         }
 
+        // PUT api/<Users>/5
+        [HttpPut("Password")]
+        [AllowAnonymous]
+        public async Task<ActionResult<UserDto?>> PutPassword([FromBody] EmailPassword emailPassword)
+        {
+            var user = await _iService.GetByEmailAsync(emailPassword.Email);
+            if (user == null)
+                return Forbid();
+            var userDto = await _iService.UpdatePasswordAsync(user.Id, emailPassword.Password);
+            if (userDto == null)
+                return NotFound();
+            return userDto;
+        }
+
 
         // DELETE api/<Users>/5
         [HttpDelete("{id}")]

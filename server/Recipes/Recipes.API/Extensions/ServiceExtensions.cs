@@ -29,6 +29,7 @@ namespace Recipes.Api.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IEmailService, EmailService>();
         }
 
 

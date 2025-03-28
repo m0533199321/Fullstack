@@ -9,7 +9,7 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { UpdateUserName, UpdateUserProfile } from "./Redux/AuthSlice";
+import { fetchUser, UpdateUserName, UpdateUserProfile } from "./Redux/AuthSlice";
 import ProfilePicture from "./ProfilePicture";
 import { uploadProfilePictureService } from "./Services/ProfileService";
 import { Book, Favorite, Receipt, Search } from "@mui/icons-material";
@@ -24,7 +24,7 @@ const Header = () => {
     const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [editingName, setEditingName] = useState(false);
-    const [editingProfile, setEditingProflie] = useState(false);
+    const [editingProfile, setEditingProfile] = useState(false);
     const [fName, setFName] = useState(user?.fName || '');
     const [lName, setLName] = useState(user?.lName || '');
     const [snackOpen, setSnackOpen] = useState(false);
@@ -41,8 +41,9 @@ const Header = () => {
 
     const handleClosePopover = () => {
         setAnchorEl(null);
-        setEditingName(false);
-        setEditingProflie(false);
+        console.log(editingProfile);
+        // setEditingName(false);
+        // setEditingProfile(false);
     };
 
     const handleSnackClose = () => {
@@ -56,7 +57,8 @@ const Header = () => {
     };
 
     const handleEditProfile = () => {
-        setEditingProflie(true);
+        setEditingProfile(true);
+        handleClosePopover(); 
     }
 
     const handleLogout = () => {
@@ -68,8 +70,8 @@ const Header = () => {
     const handleSaveChanges = async () => {
         if (user && fName && lName && fName != "" && lName != "") {
             await dispatch(UpdateUserName({ id: user.id, fName, lName })).then(result => {
-                if(!result){
-                    
+                if (!result) {
+
                     setSnackMessage('שגיאה בעדכון שם ');
                     setSnackSeverity('error');
                     setSnackOpen(true);
@@ -86,7 +88,7 @@ const Header = () => {
                     await axios.put(presignedUrl, file, { headers: { "Content-Type": file.type } });
                     await dispatch(UpdateUserProfile({ id: user.id, profile: presignedUrl.split("?")[0] })).then(result => {
                         if (result) {
-                            window.location.reload();
+                            dispatch(fetchUser() as any);
                         }
                         else {
                             setSnackMessage('שגיאה בעדכון פרופיל');
@@ -100,11 +102,11 @@ const Header = () => {
                 }
             });
         }
-        setEditingProflie(false);
+        setEditingProfile(false);
     };
 
     const handleCloseProfilePicture = () => {
-        setEditingProflie(false);
+        setEditingProfile(false);
     }
 
     const open = Boolean(anchorEl);
@@ -221,8 +223,9 @@ const Header = () => {
                         </>
                     )}
                 </Box>
-                {editingProfile && <ProfilePicture onSelect={handleSelectProfilePicture} onClose={handleCloseProfilePicture} />}
             </Popover>
+            {editingProfile && <ProfilePicture onSelect={handleSelectProfilePicture} onClose={handleCloseProfilePicture} />}
+
 
             {/* <footer style={{ position: 'fixed', bottom: '0', width: '100%', backgroundColor: 'black', color: 'white', textAlign: 'center', padding: '10px' }}>
                 <div>
