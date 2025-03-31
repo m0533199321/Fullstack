@@ -1,0 +1,66 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.emailToMe-form-container {
+    text-align: center;
+}
+
+.emailToMe-form-title {
+    font-size: 3rem;
+    margin: auto;
+    margin-bottom: 70px;
+    color: orange;
+}
+
+.emailToMe--form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.emailToMe-form-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.emailToMe-input-field {
+    width: 300px;
+    height: 50px;
+    border: 2px solid #777;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.2rem;
+    color: #777;
+    background-color: black;
+}
+
+.emailToMe-input-field:focus {
+    outline: none;
+    border-color: orange; /* שינוי צבע המסגרת כאשר השדה בפוקוס */
+}
+
+.emailToMe-error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+.emailToMe-submit-button {
+    width: 150px;
+    height: 50px;
+    background-color: orange;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.emailToMe-submit-button:hover {
+    background-color: darkorange; /* שינוי צבע הכפתור כאשר העכבר מעליו */
+}

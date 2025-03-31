@@ -1,0 +1,68 @@
+.file-buttonContainer {
+    position: absolute;
+    top: 35vh;
+    left: 13.5vw;
+    right: 9vw;
+    width: 70%;
+    display: flex;
+    justify-content:space-around;
+    padding: 0 20px;
+    z-index: 10;
+}
+
+.file-docx-viewer {
+    background-color: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    position: relative;
+}
+
+.file-docx-viewer .img {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: auto;
+}
+
+.file-docx-viewer img {
+    display: none;
+}
+
+.file-docx-viewer [style*="background-image"] {
+    background-image: none !important;
+}
+
+.file-recipe-container {
+    background-color: rgb(0, 0, 0);
+    border: 2px solid orange;
+    border-radius: 10px;
+    padding: 10px;
+    width: 50vw;
+    margin: 20px auto;
+    height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    position: relative;
+    margin-top: 12.5vh;
+}
+
+.file-recipe-image {
+    position: absolute;
+    bottom: 60%;
+    left: 50%; 
+    transform: translateX(-50%);
+    height: 30vh;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+
+.file-recipe-container::-webkit-scrollbar {
+    display: none;
+}
+

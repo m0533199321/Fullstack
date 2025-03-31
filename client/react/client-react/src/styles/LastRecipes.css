@@ -1,0 +1,98 @@
+.last-recipes-container {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    /* height: 40vh; */
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+}
+
+.last-recipe-grid {
+    display: flex;
+    animation: scroll 12s linear infinite;
+}
+
+.last-recipe-card {
+    flex: 0 0 auto;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    max-height: 32vh;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.last-recipes-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.last-recipe-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 4.5%;
+    padding: 0;
+    margin: 0;
+}
+
+.last-recipe-card {
+    border-radius: 8px;
+    overflow: hidden; 
+    position: relative;
+    padding: 0.8%;
+    padding-top: 1%;
+    padding-bottom: 2%;
+    height: 35vh;
+    width: 15vw;
+    background-color: #212121;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+    margin-top: 4%;
+    transition: transform 0.2s; 
+    cursor: pointer;
+    margin-bottom: 1%;
+}
+
+.last-recipe-card:hover {
+    transform: scale(1.005);
+}
+
+
+.last-recipe-image {
+    margin-bottom: 2%;
+    width: 95% !important;
+    height: auto;
+}
+
+.last-difficulty-rating {
+    position: absolute;
+    left: 0; 
+    right: 30%;
+    display: flex;
+    justify-content: center;
+    padding: 4px 0;
+}
+
+.last-filled-star{
+    color: gold !important;
+}
+
+.last-recipe-title {
+    color: orange;
+    top:0 !important;
+    margin-bottom: 1%;
+    text-align: center;
+}
+

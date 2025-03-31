@@ -1,0 +1,56 @@
+<div class="overlay">
+    <div id="root" class="form-container">
+        <h1>Sign In</h1>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
+
+            <mat-form-field appearance="outline" class="input-field full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="input-field full-width">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required />
+                <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+                    <mat-icon>{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <p class="signup-link">
+                Don't have an account? <a (click)="goToSignUp()">Sign Up</a>
+            </p>
+
+            <div class="button-group full-width">
+                <button mat-flat-button (click)="toggleForm()" color="primary" class="full-width">Cancel</button>
+                <button mat-flat-button type="submit" color="primary" class="full-width">Sign in</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<style>
+    .full-width {
+        width: 100%;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .signup-link {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .signup-link a {
+        color: #1976d2;
+        /* הצבע של הקישור */
+        text-decoration: none;
+    }
+
+    .signup-link a:hover {
+        text-decoration: underline;
+    }
+</style>

@@ -1,0 +1,38 @@
+.about-container {
+    background-color: transparent; /* רקע שקוף */
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    direction: rtl; /* כיוון טקסט מימין לשמאל */
+    display: flex; /* מאפשר למרכז את התוכן */
+    flex-direction: column; /* למרכז את התוכן אנכית */
+    align-items: center; /* למרכז את התוכן אופקית */
+    font-size: 30px;
+}
+
+.about-section {
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 0; /* ללא מסגרת */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* אנימציות של שקיפות והגדלה */
+    width: 100%; /* תופס את כל רוחב המיכל */
+    max-width: 100%; /* גובה מקסימלי לחלק */
+    background-color: transparent; /* רקע שקוף */
+    opacity: 1; /* שקיפות מלאה */
+}
+
+.about-section:hover {
+    transform: scale(1.005); /* הגדלה קלה כשמרחפים מעל */
+    opacity: 0.8; /* שקיפות חלקית כשמרחפים מעל */
+}
+
+.about-section h2 {
+    color: #ff9800; /* כתום */
+    text-align: center; /* למרכז את הכותרת */
+}
+
+.about-footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #ff9800; /* כתום */
+}

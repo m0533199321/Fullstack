@@ -1,0 +1,117 @@
+.privateRecipes-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.privateRecipe-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4.5%;
+    padding: 0;
+    margin: 0;
+    flex-direction: row-reverse;
+}
+
+.privateRecipe-card {
+    border-radius: 8px;
+    overflow: hidden; 
+    position: relative;
+    padding: 0.8%;
+    padding-top: 0;
+    padding-bottom: 4%;
+    height: 32vh;
+    width: 15vw;
+    background-color: #212121;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+    margin-top: 4%;
+    transition: transform 0.2s; 
+    cursor: pointer;
+    margin-bottom: 4%;
+}
+
+.privateRecipe-card:hover {
+    transform: scale(1.005);
+}
+
+
+.privateRecipe-image {
+    margin-bottom: 2%;
+    width: 100% !important;
+    height: auto;
+}
+
+.privateRecipe-title {
+    color: orange;
+    top:0 !important;
+    margin-bottom: 1%;
+    text-align: center;
+}
+
+.private-difficulty-rating {
+    position: absolute; 
+    left: 0;
+    right: 30%;
+    display: flex;
+    justify-content: center;
+    padding: 4px 0;
+}
+
+.private-filled-star{
+    color: gold !important;
+}
+
+.private-buttons-container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 1;
+}
+
+.private-recipe-icons {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.private-title-with-underline {
+    border-bottom: 2px solid orange;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+
+.private-text-field {
+    margin-right: 20vw !important;
+    height: 35px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: black;
+}
+
+.private-text-field .MuiOutlinedInput-notchedOutline {
+    border-color: #FFA500 !important; /* צבע המסגרת במצב רגיל */
+}
+
+.private-text-field:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #FFA500 !important; /* צבע המסגרת במצב ריחוף */
+}
+
+.private-text-field.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #FFA500 !important; /* צבע המסגרת במצב ממוקד */
+}
+
+.private-text-field input {
+    color: orange; /* צבע הטקסט */
+}
+
+.private-text-field::placeholder {
+    color: orange; /* צבע הטקסט של הפלייסהולדר */
+}

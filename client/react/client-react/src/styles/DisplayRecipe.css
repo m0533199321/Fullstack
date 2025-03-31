@@ -1,0 +1,113 @@
+body {
+    font-size: 15px;
+}
+
+.displayRecipe-container {
+    direction: rtl;
+    display: flex;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    padding-left: 0;
+    padding-bottom: 0;
+    border-radius: 10px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.displayRecipe-image {
+    right: 0;
+    height: 320px;
+    width: 'auto';
+    margin-left: 5vw;
+}
+
+.displayRecipe-title {
+    color: orange;
+    margin-top: 4vh;
+    right: 0;
+    font-size: 50px;
+    margin-bottom: 5vh;
+}
+
+.displayRecipe-details {
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    font-size: 2em;
+}
+
+.display-stars {
+    color: orange;
+    margin-top: 2vh;
+}
+
+.display-star.filled {
+    color: gold;
+}
+
+.displayRecipe-defenitions {
+    color: rgb(0, 0, 0);
+    margin-left: 10px;
+}
+
+
+.displayRecipe-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-left: 0;
+    padding: 0;
+    left: 0 !important;
+}
+
+.display-recipe-button,
+.add-comment-button {
+    background-color: rgb(0, 0, 0);
+    color: orange !important;
+    padding: 8px 16px !important;
+    cursor: pointer !important;
+    font-size: 20px !important;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+
+.display-recipe-button {
+    background-color: rgb(0, 0, 0);
+    color: orange !important;
+    padding: 8px 16px !important;
+    cursor: pointer !important;
+    font-size: 20px !important;
+    bottom: 1%;
+    left: 0 !important;
+}
+
+.add-comment-input {
+    background-color: rgb(255, 255, 255) !important;
+    color: rgb(0, 0, 0) !important;
+    padding: 8px 16px !important;
+    width: 40% !important;
+    height: 5vh !important;
+    border-radius: 8px !important;
+    margin-left: 25vw !important;
+    margin-top: 1% !important;
+    direction: rtl;
+    padding-right: 40px;
+}
+
+.input-container {
+    position: relative;
+}
+
+.send-icon {
+    color: black;
+    position: absolute;
+    left: 26%;
+    top: 60%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

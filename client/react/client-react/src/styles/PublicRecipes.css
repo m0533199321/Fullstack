@@ -1,0 +1,192 @@
+.public-recipes-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.recipe-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4.5%;
+    padding: 0;
+    margin: 0;
+    flex-direction: row-reverse;
+}
+
+.recipe-card {
+    border-radius: 8px;
+    overflow: hidden; 
+    position: relative;
+    padding: 0.8%;
+    padding-top: 0;
+    padding-bottom: 4%;
+    height: 32vh;
+    width: 15vw;
+    background-color: #212121;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+    margin-top: 4%;
+    transition: transform 0.2s; 
+    cursor: pointer;
+    margin-bottom: 4%;
+}
+
+.recipe-card:hover {
+    transform: scale(1.005);
+}
+
+.buttons-container {
+    position: absolute; /* מיקום האייקונים */
+    bottom: 0; /* מרחק מהתחתית של הכרטיס */
+    left: 50%; /* מיקום במרכז */
+    transform: translateX(-50%); /* מרכז את האייקונים */
+    display: flex; /* תצוגה של אייקונים בשורה */
+    gap: 8px; /* רווח בין האייקונים */
+    z-index: 1; /* מוודא שהאייקונים יהיו מעל התמונה */
+}
+
+.recipe-icons {
+    height: 40px; /* גובה האייקונים */
+    width: 40px; /* רוחב האייקונים */
+    display: flex; /* מאפשר למרכז את האייקונים */
+    justify-content: center; /* מרכז את התוכן בתוך האייקון */
+    align-items: center; /* מרכז את התוכן בתוך האייקון */
+}
+
+.recipe-image {
+    margin-bottom: 2%;
+    width: 100% !important; /* תמונה תתמלא את הכרטיס */
+    height: auto; /* גובה אוטומטי */
+}
+
+.difficulty-rating {
+    position: absolute; /* מיקום הדרגת קושי */
+    left: 0; /* מיקום מהצד השמאלי */
+    right: 30%;
+    display: flex; /* תצוגה של כוכבים בשורה */
+    justify-content: center; /* מרכז את הכוכבים */
+    padding: 4px 0; /* רווח פנימי */
+}
+
+.filled-star{
+    color: gold !important;
+}
+
+.recipe-title {
+    color: orange;
+    top:0 !important;
+    margin-bottom: 1%;
+    text-align: center;
+}
+
+.title-with-underline {
+    border-bottom: 2px solid orange;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+
+.text-field {
+    margin-right: 20vw !important;
+    height: 35px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: black;
+}
+
+.text-field .MuiOutlinedInput-notchedOutline {
+    border-color: #FFA500 !important; /* צבע המסגרת במצב רגיל */
+}
+
+.text-field:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #FFA500 !important; /* צבע המסגרת במצב ריחוף */
+}
+
+.text-field.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #FFA500 !important; /* צבע המסגרת במצב ממוקד */
+}
+
+.text-field input {
+    color: orange; /* צבע הטקסט */
+}
+
+.text-field::placeholder {
+    color: orange; /* צבע הטקסט של הפלייסהולדר */
+}
+
+
+/* .public-recipes-container {
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.recipe-card {
+    background: rgba(57, 62, 70, 0.9);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: right;
+}
+
+.recipe-title {
+    margin: 0;
+    font-size: 1.7rem;
+    color: #FF8C42;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.stars {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.filled-star {
+    color: gold;
+    font-size: 1.8rem;
+}
+
+.empty-star {
+    color: lightgray;
+    font-size: 1.8rem;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.sort-btn, .add-btn, .details-btn, .download-btn, .email-btn {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    background: #FF8C42;
+    color: #333;
+    border: none;
+}
+
+.sort-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.sort-container .MuiSvgIcon-root, 
+.buttons-container .MuiSvgIcon-root {
+    color: #001aff;
+} */

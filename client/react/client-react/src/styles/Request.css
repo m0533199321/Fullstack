@@ -1,0 +1,133 @@
+h1{
+    font-size: 70px;
+    margin-left: 27vw;
+    /* margin-top: 20vh; */
+}
+
+.input-with-icon {
+    direction: rtl;
+    margin-left: 18vw; 
+    margin-top: 5%; 
+    width: 60vw; 
+    height: 15vh; 
+    background-color: white; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border-radius: 10px; 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+    padding: 10px; 
+    font-size: larger;
+}
+
+.icon-container {
+    position: absolute;
+    right: 78%;
+    color: black;
+    top: 74%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/*  */
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px; /* גובה ה-track */
+    background: white;
+    border-radius: 10px; /* פינות מעוגלות */
+    outline: none; /* הסרת קו מתאר */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; /* רוחב ה-thumb */
+    height: 20px; /* גובה ה-thumb */
+    background: orange; /* צבע ה-thumb */
+    border-radius: 50%; /* פינות מעוגלות */
+    cursor: pointer; /* סמן יד כשמעבירים מעל */
+    margin-top: -6px; /* חצי מההפרש בין גובה ה-thumb לגובה ה-track */
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px; /* רוחב ה-thumb */
+    height: 20px; /* גובה ה-thumb */
+    background: orange; /* צבע ה-thumb */
+    border-radius: 50%; /* פינות מעוגלות */
+    cursor: pointer; /* סמן יד כשמעבירים מעל */
+}
+
+input[type="range"]::-ms-thumb {
+    width: 20px; /* רוחב ה-thumb */
+    height: 20px; /* גובה ה-thumb */
+    background: orange; /* צבע ה-thumb */
+    border-radius: 50%; /* פינות מעוגלות */
+    cursor: pointer; /* סמן יד כשמעבירים מעל */
+    margin-top: -6px; /* חצי מההפרש בין גובה ה-thumb לגובה ה-track */
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 8px; /* גובה ה-track */
+    background: linear-gradient(to right, orange var(--value), white var(--value));
+    border-radius: 10px; /* פינות מעוגלות */
+}
+
+input[type="range"]::-moz-range-track {
+    height: 8px; /* גובה ה-track */
+    background: linear-gradient(to right, orange var(--value), white var(--value));
+    border-radius: 10px; /* פינות מעוגלות */
+}
+
+input[type="range"]::-ms-track {
+    height: 8px; /* גובה ה-track */
+    background: transparent; /* רקע שקוף */
+    border-color: transparent;
+    color: transparent;
+}
+
+input[type="range"]::-ms-fill-lower {
+    background: orange; /* צבע עד הערך הנוכחי */
+    border-radius: 10px; /* פינות מעוגלות */
+}
+
+input[type="range"]::-ms-fill-upper {
+    background: white; /* צבע אחרי הערך הנוכחי */
+    border-radius: 10px; /* פינות מעוגלות */
+}
+
+
+/* .difficulty-slider {
+    margin: 20px 0;
+}
+
+.difficulty-slider input[type="range"] {
+    width: 100%;
+    height: 8px;
+    background: white; 
+    color: orange;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; 
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: orange;
+    color: orange;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px; 
+    height: 20px;
+    background: orange;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+input[type="range"]::-moz-range-track {
+    background: white;
+} */
