@@ -11,7 +11,6 @@ export interface UserRegister {
     email: string;
     password: string;
     profile: string | null;
-    information: string;
 }
 
 export interface AuthState {

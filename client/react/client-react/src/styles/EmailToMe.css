@@ -1,4 +1,4 @@
-body {
+.emailToMe-body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,7 +42,7 @@ body {
 
 .emailToMe-input-field:focus {
     outline: none;
-    border-color: orange; /* שינוי צבע המסגרת כאשר השדה בפוקוס */
+    border-color: orange;
 }
 
 .emailToMe-error-message {
@@ -62,5 +62,5 @@ body {
 }
 
 .emailToMe-submit-button:hover {
-    background-color: darkorange; /* שינוי צבע הכפתור כאשר העכבר מעליו */
+    background-color: darkorange;
 }

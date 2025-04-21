@@ -13,22 +13,6 @@ export class AuthService {
 
   constructor(private http: HttpClient, private userService: UserService) { }
 
-  register(user: UserRegister) {
-    console.log(user);   
-    this.http.post<any>(this.baseUrl + '/register', user).subscribe(
-      data => {
-        console.log(data.token);
-        console.log('Registration successful:', data);
-        sessionStorage.setItem('token', data.token);   
-        this.userService.getById(data.user.id);
-      },
-      error => {
-        console.error('Registration failed:', error);
-        alert('Registration failed');
-      }
-    );
-  }
-
   login(user: UserLogIn) {
     this.http.post<any>(this.baseUrl + '/login', user).subscribe(data => {
       if (data.token) {
@@ -44,4 +28,21 @@ export class AuthService {
       }
     );
   }
+
+  // register(user: UserRegister) {
+  //   console.log(user);   
+  //   this.http.post<any>(this.baseUrl + '/register', user).subscribe(
+  //     data => {
+  //       console.log(data.token);
+  //       console.log('Registration successful:', data);
+  //       sessionStorage.setItem('token', data.token);   
+  //       this.userService.getById(data.user.id);
+  //     },
+  //     error => {
+  //       console.error('Registration failed:', error);
+  //       alert('Registration failed');
+  //     }
+  //   );
+  // }
+
 }

@@ -24,7 +24,7 @@ namespace Recipes.Core.Entities
 
         public string Profile { get; set; }
 
-        public string Information { get; set; }
+        //public string Information { get; set; }
 
         public bool IsDeleted { get; set; }
 
@@ -51,7 +51,7 @@ namespace Recipes.Core.Entities
                        this.Email == user.Email &&
                        this.Password == user.Password &&
                        this.Profile == user.Profile &&
-                       this.Information == user.Information &&
+                       //this.Information == user.Information &&
                        this.CreatedAt == user.CreatedAt;
             }
             return false;
@@ -59,7 +59,8 @@ namespace Recipes.Core.Entities
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, FName, LName, Email, Password, Profile, Information, CreatedAt);
+            return HashCode.Combine(Id, FName, LName, Email, Password, Profile, CreatedAt);
+            //return HashCode.Combine(Id, FName, LName, Email, Password, Profile, Information, CreatedAt);
         }
     }
 }

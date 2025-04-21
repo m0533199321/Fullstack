@@ -5,9 +5,5 @@ export class User {
         public lName: string,
         public email: string,
         public password: string,
-        public profile: string,
-        public allergies: [],
-        public preferences: string,
-        public additionalNotes: string,
-        public information: string) { }; 
+        public profile: string) { }; 
 }

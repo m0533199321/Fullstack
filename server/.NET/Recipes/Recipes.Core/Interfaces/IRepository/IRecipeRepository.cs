@@ -17,7 +17,7 @@ namespace Recipes.Core.Interfaces.IRepository
 
         public Task<IEnumerable<Recipe>> GetPrivateRecipesAsync(int id);
          
-        public Task<IEnumerable<Recipe>> GetByCategoryAsync(string category);
+        //public Task<IEnumerable<Recipe>> GetByCategoryAsync(string category);
 
         public Task<Recipe> AddRecipeToUserAsync(User user, Recipe recipe);
 

@@ -62,12 +62,12 @@ namespace Recipes.API.Controllers
         }
 
         // GET-CATEGORY: api/<Users>
-        [HttpGet("Category/{category}")]
-        [AllowAnonymous]
-        public async Task<IEnumerable<RecipeDto>> GetCategory(string category)
-        {
-            return await _iService.GetByCategoryAsync(category);
-        }
+        //[HttpGet("Category/{category}")]
+        //[AllowAnonymous]
+        //public async Task<IEnumerable<RecipeDto>> GetCategory(string category)
+        //{
+        //    return await _iService.GetByCategoryAsync(category);
+        //}
 
         // GET-PUBLIC: api/<Users>
         [HttpGet("Public")]

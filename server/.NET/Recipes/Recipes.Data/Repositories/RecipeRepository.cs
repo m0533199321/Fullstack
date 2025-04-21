@@ -43,18 +43,18 @@ namespace Recipes.Data.Repositories
             return allRecipes.Where(r => r.UsersList.Find(u => u.Id == id) != null);
         }
 
-        public async Task<IEnumerable<Recipe>> GetByCategoryAsync(string category)
-        {
-            if (Enum.TryParse<CategoryType>(category, out var categoryType))
-            {
-                var categoryAll =  await _dbset.Where(c => c.Category == categoryType).ToListAsync();
-                return categoryAll.Where(c => c.IsPublic);
-            }
-            else
-            {
-                return null;
-            }
-        }
+        //public async Task<IEnumerable<Recipe>> GetByCategoryAsync(string category)
+        //{
+        //    if (Enum.TryParse<CategoryType>(category, out var categoryType))
+        //    {
+        //        var categoryAll =  await _dbset.Where(c => c.Category == categoryType).ToListAsync();
+        //        return categoryAll.Where(c => c.IsPublic);
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
 
         public async Task<Recipe> AddRecipeAsync(User user, Recipe r)
         {

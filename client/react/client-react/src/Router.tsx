@@ -5,10 +5,8 @@ import LoginForm from "./components/LoginForm"
 import RegisterForm from "./components/RegisterForm"
 import PublicRecipes from "./components/PublicRecipes"
 import PrivateRecipes from "./components/PrivateRecipes"
-import Categories from "./components/Categories"
-import OneCategory from "./components/OneCategory"
 import Request from "./components/Request"
-import FileViewer from "./components/FileViewer"
+// import FileViewer from "./components/FileViewer"
 import Comments from "./components/Comments"
 import DisplayRecipe from "./components/DisplayRecipe"
 import About from "./components/About"
@@ -29,8 +27,6 @@ export const Router = createBrowserRouter([
             { path: 'about', element: <About /> },
             { path: 'register', element: <RegisterForm /> },
             { path: 'login', element: <LoginForm /> },
-            { path: 'categories', element: <Categories /> },
-            { path: 'categories/:category', element: <OneCategory /> },
             { path: 'public-recipes', element: <PublicRecipes /> },
             { path: 'private-recipes', element: <PrivateRecipes /> },
             { path: 'request', element: <Request /> },

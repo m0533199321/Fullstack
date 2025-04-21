@@ -114,7 +114,7 @@ const Header = () => {
                 open={snackOpen}
                 autoHideDuration={6000}
                 onClose={handleSnackClose}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // מיקום בראש העמוד
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
                 <Alert onClose={handleSnackClose} severity={snackSeverity} sx={{ width: '100%' }}>
                     {snackMessage}
@@ -122,7 +122,7 @@ const Header = () => {
             </Snackbar>
             <AppBar position="fixed" sx={{ backgroundColor: "black", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)", marginBottom: '20%', }}>
                 <Toolbar>
-                    <img src="../../images/back/smartChef.png" alt="smart-chef" style={{ width: '10vw', marginRight: '50vw' }} />
+                    <img src="../../images/back/smartChef.png" alt="smart-chef" onClick={() => goTo("/email-to-me")} style={{ width: '10vw', marginRight: '50vw', cursor: 'pointer' }} />
                     {!isAuthenticated ? (
                         <>
                             <div style={{ marginLeft: 'auto', display: 'flex' }}>

@@ -54,8 +54,6 @@ const PrivateRecipes = () => {
         console.log(recipes);
 
         switch (criterion) {
-            case 'category':
-                return [...recipes].sort((a, b) => a.category - b.category);
             case 'degree':
                 return [...recipes].sort((a, b) => a.degree - b.degree);
             case 'name':
@@ -167,7 +165,7 @@ const PrivateRecipes = () => {
             ) : (
                 <>
                     <div style={{
-                        position: "sticky", top: 0, zIndex: 1000, direction: 'rtl', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', padding: '10px', paddingTop: '12vh', paddingRight: '5vh'
+                        position: "sticky", top: 0, zIndex: 1000, direction: 'rtl', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', padding: '10px', paddingTop: '12vh', paddingRight: '5vh', backgroundColor: 'black'
                     }}>
                         <h1 style={{ color: 'white', margin: '0', textAlign: 'right', marginLeft: '20px', fontSize: '3.6vw' }}>ספר המתכונים שלי</h1>
                         <div style={{
@@ -208,7 +206,7 @@ const PrivateRecipes = () => {
                         <TextField
                             className="private-text-field"
                             variant="outlined"
-                            placeholder="חפש מתכון..."
+                            placeholder=" חפש שם מתכון..."
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -262,7 +260,6 @@ const PrivateRecipes = () => {
                                     },
                                 }}
                             >
-                                {/* <MenuItem onClick={() => handleSortChange('category')}>קטגוריה</MenuItem> */}
                                 <MenuItem onClick={() => handleSortChange('degree')}>דרגת קושי</MenuItem>
                                 <MenuItem onClick={() => handleSortChange('name')}>שם</MenuItem>
                                 <MenuItem onClick={() => handleSortChange('date')}>תאריך יצירה</MenuItem>
@@ -292,7 +289,7 @@ const PrivateRecipes = () => {
                                             (<div key={recipe.id} className="privateRecipe-card">
                                                 {/* <MoreVert style={{ marginTop: '3%', marginBottom: 0, fontSize: '30px' }} onClick={() => setShowVert(prev => prev === recipe.id ? null : recipe.id)} />
                                                 <h3 className="privateRecipe-title" style={{ fontSize: `${Math.max(0.8, 2.6 - recipe.title.length / 10)}em`, marginTop: '0vh' }}>{recipe.title}</h3> */}
-                                               <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                                                <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                                                     <MoreVert style={{ marginTop: '3%', marginBottom: 0, fontSize: '30px' }} onClick={() => setShowVert(prev => prev === recipe.id ? null : recipe.id)} />
                                                     <h3 className="privateRecipe-title" style={{ fontSize: `${Math.max(1.2, 2.6 - recipe.title.length / 10)}em`, marginTop: 0, margin: 'auto' }}>{recipe.title}</h3>
                                                 </div>
@@ -374,7 +371,7 @@ const PrivateRecipes = () => {
                         )}
                     </div>
                 </>
-                )}
+            )}
         </>
     );
 };

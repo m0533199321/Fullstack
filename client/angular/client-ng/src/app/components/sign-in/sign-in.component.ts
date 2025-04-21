@@ -40,10 +40,6 @@ export class SignInComponent {
     this.hide = !this.hide;
   }
 
-  goToSignUp() {
-    this.router.navigate(['signUp']);
-  }
-
   onSubmit() {
     if (this.userForm.invalid) {
       console.log("inavlid");

@@ -1,0 +1,6 @@
+@for (user of (users$ | async); track user.id) {
+<div class="user-card">
+    <div class="user-name">{{ user.fName }} {{ user.lName }}</div>
+    <div class="user-email">{{ user.email }}</div>
+</div>
+}

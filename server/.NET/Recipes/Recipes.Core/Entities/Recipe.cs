@@ -28,7 +28,7 @@ namespace Recipes.Core.Entities
 
         public bool IsDeleted { get; set; }
 
-        public CategoryType Category { get; set; }
+        //public CategoryType Category { get; set; }
 
         public List<Comment> CommentsList { get; set; }
 

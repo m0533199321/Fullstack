@@ -47,8 +47,6 @@ const PublicRecipes = () => {
 
     const sortRecipes = (recipes: Recipe[], criterion: string) => {
         switch (criterion) {
-            case 'category':
-                return [...recipes].sort((a, b) => a.category - b.category);
             case 'degree':
                 return [...recipes].sort((a, b) => a.degree - b.degree);
             case 'name':
@@ -119,7 +117,6 @@ const PublicRecipes = () => {
 
 
     const handleDisplayRecipe = (recipe: Recipe) => {
-        //navigate(`/recipe/${recipeId}`);
         setFile(true);
         setRecipeToDisplay(recipe);
     }
@@ -208,9 +205,9 @@ const PublicRecipes = () => {
                             </>)}
                         </div>
                         <TextField
-                            className="private-text-field"
+                            className="text-field"
                             variant="outlined"
-                            placeholder="    חפש מתכון..."
+                            placeholder=" חפש שם מתכון..."
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -264,7 +261,6 @@ const PublicRecipes = () => {
                                     },
                                 }}
                             >
-                                {/* <MenuItem onClick={() => handleSortChange('category')}>קטגוריה</MenuItem> */}
                                 <MenuItem onClick={() => handleSortChange('degree')}>דרגת קושי</MenuItem>
                                 <MenuItem onClick={() => handleSortChange('name')}>שם</MenuItem>
                                 <MenuItem onClick={() => handleSortChange('date')}>תאריך יצירה</MenuItem>

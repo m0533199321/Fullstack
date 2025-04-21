@@ -3,15 +3,20 @@
     <span class="spacer"></span>
 
     @if(user.value.id==0) {
-    <button routerLink="/signUp" class="button">
+    <!-- <button routerLink="/signUp" class="button">
         <mat-icon class="icon">person_add</mat-icon>
         <span class="text">sign Up</span>
-    </button>
-
+    </button> -->
     <button routerLink="/signIn" class="button">
         <mat-icon class="icon">person</mat-icon>
         <span class="text"> sign In</span>
     </button>}
+
+    @else {
+        <button routerLink="/displayUsers" class="button">
+            <mat-icon class="icon">person</mat-icon>
+            <span class="text"> Display Users</span>
+        </button>}
 
     <button routerLink="/" class="button">
         <mat-icon class="icon">home</mat-icon>

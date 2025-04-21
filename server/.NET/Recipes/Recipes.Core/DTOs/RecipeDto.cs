@@ -23,6 +23,6 @@ namespace Recipes.Core.DTOs
 
         //public string Picture { get; set; }
 
-        public CategoryType Category { get; set; }
+        //public CategoryType Category { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import '../styles/EmailToMe.css';
+import '../styles/EmailToMe.css';
 import { sendEmail } from './Redux/AuthSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from './Redux/Store';
@@ -47,6 +47,7 @@ const EmailForm = () => {
 
     return (
         <>
+        <div className="emailToMe-body">
             <Snackbar
                 open={snackOpen}
                 autoHideDuration={6000}
@@ -88,6 +89,7 @@ const EmailForm = () => {
                     {error && <p className="emailToMe-error-message">{error}</p>}
                     <button type="submit" className="emailToMe-submit-button">שלח מייל</button>
                 </form>
+            </div>
             </div>
         </>
     );

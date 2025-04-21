@@ -5,14 +5,14 @@ export interface RecipeInterface {
     degree: number,
     createdAt: Date,
     path: string,
-    category: number
+    // category: number
 }
 
 export interface RecipePostModel {
     title: string,
     degree: number,
     path: string,
-    category: number
+    // category: number
 }
 
 export type Recipe = {
@@ -22,7 +22,7 @@ export type Recipe = {
     degree: number,
     createdAt: Date,
     path: string,
-    category: number
+    // category: number
 }
 
 export type RecipeWithOutId = {

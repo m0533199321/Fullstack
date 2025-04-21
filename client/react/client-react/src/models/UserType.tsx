@@ -5,7 +5,7 @@ export type User = {
     email: string;
     password: string;
     profile: string;
-    information: string;
+    // information: string;
     createdAt: Date;
     //recipesList: Recipe[]
     //rolesList: Role[]
@@ -18,6 +18,5 @@ export type UserDto = {
     email: string;
     password: string;
     profile: string;
-    information: string;
     createdAt: Date;
 }

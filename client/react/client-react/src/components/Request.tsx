@@ -82,7 +82,7 @@ const Request = () => {
                 setFileUrl(result[1]);
                 setShowFileViewer(true);
                 const name = result[0]
-                setDetails([name, '3']);
+                setDetails([name]);
             }
         }
         setInputValue("");

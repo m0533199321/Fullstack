@@ -1,105 +1,3 @@
-// import { useEffect, useState } from 'react';
-// import mammoth from 'mammoth';
-// import '../styles/FileViewer.css';
-
-// const DocxToHtml = ({ docxUrl }: { docxUrl: string }) => {
-//     const [htmlContent, setHtmlContent] = useState('');
-//     const [direction, setDirection] = useState<'ltr' | 'rtl'>('ltr');
-
-//     useEffect(() => {
-//         const fetchDocx = async () => {
-//             const response = await fetch(docxUrl);
-//             const arrayBuffer = await response.arrayBuffer();
-//             const { value } = await mammoth.convertToHtml({ arrayBuffer });
-//             setHtmlContent(value);
-
-//             // ספירת המילים בעברית
-//             const hebrewWords = value.match(/[א-ת]+/g);
-//             const hebrewWordCount = hebrewWords ? hebrewWords.reduce((count, word) => count + word.split(/\s+/).length, 0) : 0;
-
-//             // קביעת הכיוון
-//             if (hebrewWordCount >= 5) {
-//                 setDirection('rtl'); // אם יש לפחות 5 מילים בעברית
-//             } else {
-//                 setDirection('ltr'); // אחרת, טקסט באנגלית
-//             }
-//         };
-
-//         fetchDocx();
-//     }, [docxUrl]);
-
-//     return (
-//         <>
-//             <div style={{ marginRight: '5vw' }}>
-//                 <img src="../../images/back/recipes3.png" alt="image" className="img" />
-//                 <div className="background-img">
-//                     {direction === 'ltr' &&
-//                         <div className="docx-viewer" style={{ direction, marginLeft: '5vw' }}>
-//                             <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-//                         </div>}
-//                     {direction === 'rtl' &&
-//                         <div className="docx-viewer" style={{ direction, marginRight: '5vw' }}>
-//                             <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-//                         </div>}
-//                 </div>
-//             </div>
-//         </>
-//     );
-// };
-
-// export default DocxToHtml;
-
-
-// import React, { useEffect, useState } from 'react';
-// import mammoth from 'mammoth';
-
-// const DocxToHtml = ({ docxUrl }:{ docxUrl: string }) => {
-//     const [htmlContent, setHtmlContent] = useState('');
-
-//     useEffect(() => {
-//         const fetchDocx = async () => {
-//             const response = await fetch(docxUrl);
-//             const arrayBuffer = await response.arrayBuffer();
-//             const { value } = await mammoth.convertToHtml({ arrayBuffer });
-//             setHtmlContent(value);
-//         };
-
-//         fetchDocx();
-//     }, [docxUrl]);
-
-//     return (
-//         <div className="docx-viewer" dangerouslySetInnerHTML={{ __html: htmlContent }} />
-//     );
-// };
-
-// export default DocxToHtml;
-
-
-// import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
-// import '../styles/FileViewer.css';
-
-// const DocxViewer = ({ docxUrl }: { docxUrl: string }) => {
-//     const docs = [
-//         {
-//             uri: docxUrl,
-//             fileType: 'docx'
-//         }
-//     ];
-
-//     return (
-//         <div className="transparent-background">
-//             <DocViewer
-//                 documents={docs}
-//                 pluginRenderers={DocViewerRenderers}
-//             />
-//         </div>
-//     );
-// };
-
-// export default DocxViewer;
-
-
-
 import React, { useEffect, useState } from 'react';
 import { fetchAddToMyBook } from './Services/RecipeService';
 import { RecipePostModel } from '../models/RecipeType';
@@ -156,9 +54,9 @@ const FileViewer: React.FC<FileViewerProps> = ({ fileUrl, onClose, details }) =>
             const result = await uploadRecipeService(fileUrl, user.id)
             const recipePostModel: RecipePostModel = {
                 title: details[0],
-                degree: Number(details[2]),
+                degree: Number(details[1]),
                 path: result,
-                category: Number(details[1]),
+                // category: Number(details[1]),
             }
             console.log(recipePostModel);
             if (user) {
@@ -264,3 +162,107 @@ const FileViewer: React.FC<FileViewerProps> = ({ fileUrl, onClose, details }) =>
 };
 
 export default FileViewer;
+
+
+// import { useEffect, useState } from 'react';
+// import mammoth from 'mammoth';
+// import '../styles/FileViewer.css';
+
+// const DocxToHtml = ({ docxUrl }: { docxUrl: string }) => {
+//     const [htmlContent, setHtmlContent] = useState('');
+//     const [direction, setDirection] = useState<'ltr' | 'rtl'>('ltr');
+
+//     useEffect(() => {
+//         const fetchDocx = async () => {
+//             const response = await fetch(docxUrl);
+//             const arrayBuffer = await response.arrayBuffer();
+//             const { value } = await mammoth.convertToHtml({ arrayBuffer });
+//             setHtmlContent(value);
+
+//             // ספירת המילים בעברית
+//             const hebrewWords = value.match(/[א-ת]+/g);
+//             const hebrewWordCount = hebrewWords ? hebrewWords.reduce((count, word) => count + word.split(/\s+/).length, 0) : 0;
+
+//             // קביעת הכיוון
+//             if (hebrewWordCount >= 5) {
+//                 setDirection('rtl'); // אם יש לפחות 5 מילים בעברית
+//             } else {
+//                 setDirection('ltr'); // אחרת, טקסט באנגלית
+//             }
+//         };
+
+//         fetchDocx();
+//     }, [docxUrl]);
+
+//     return (
+//         <>
+//             <div style={{ marginRight: '5vw' }}>
+//                 <img src="../../images/back/recipes3.png" alt="image" className="img" />
+//                 <div className="background-img">
+//                     {direction === 'ltr' &&
+//                         <div className="docx-viewer" style={{ direction, marginLeft: '5vw' }}>
+//                             <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+//                         </div>}
+//                     {direction === 'rtl' &&
+//                         <div className="docx-viewer" style={{ direction, marginRight: '5vw' }}>
+//                             <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+//                         </div>}
+//                 </div>
+//             </div>
+//         </>
+//     );
+// };
+
+// export default DocxToHtml;
+
+
+// import React, { useEffect, useState } from 'react';
+// import mammoth from 'mammoth';
+
+// const DocxToHtml = ({ docxUrl }:{ docxUrl: string }) => {
+//     const [htmlContent, setHtmlContent] = useState('');
+
+//     useEffect(() => {
+//         const fetchDocx = async () => {
+//             const response = await fetch(docxUrl);
+//             const arrayBuffer = await response.arrayBuffer();
+//             const { value } = await mammoth.convertToHtml({ arrayBuffer });
+//             setHtmlContent(value);
+//         };
+
+//         fetchDocx();
+//     }, [docxUrl]);
+
+//     return (
+//         <div className="docx-viewer" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+//     );
+// };
+
+// export default DocxToHtml;
+
+
+// import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+// import '../styles/FileViewer.css';
+
+// const DocxViewer = ({ docxUrl }: { docxUrl: string }) => {
+//     const docs = [
+//         {
+//             uri: docxUrl,
+//             fileType: 'docx'
+//         }
+//     ];
+
+//     return (
+//         <div className="transparent-background">
+//             <DocViewer
+//                 documents={docs}
+//                 pluginRenderers={DocViewerRenderers}
+//             />
+//         </div>
+//     );
+// };
+
+// export default DocxViewer;
+
+
+

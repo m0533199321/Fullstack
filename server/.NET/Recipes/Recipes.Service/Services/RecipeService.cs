@@ -42,12 +42,12 @@ namespace Recipes.Service.Services
             return recipeDto;
         }
 
-        public async Task<IEnumerable<RecipeDto>> GetByCategoryAsync(string category)
-        {
-            var recipes = await _iManager._recipeRepository.GetByCategoryAsync(category);
-            var recipesDto = _mapper.Map<IEnumerable<RecipeDto>>(recipes);
-            return recipesDto;
-        }
+        //public async Task<IEnumerable<RecipeDto>> GetByCategoryAsync(string category)
+        //{
+        //    var recipes = await _iManager._recipeRepository.GetByCategoryAsync(category);
+        //    var recipesDto = _mapper.Map<IEnumerable<RecipeDto>>(recipes);
+        //    return recipesDto;
+        //}
 
         public async Task<IEnumerable<RecipeDto>> GetPublicRecipesAsync()
         {

@@ -1,0 +1,21 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { User } from '../models/user.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DisplayUsersService {
+
+  private baseUrl = 'https://localhost:7005/api/User';
+
+  public users: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
+  constructor(private http: HttpClient) { }
+
+  getUsers() {
+    this.http.get<User[]>(this.baseUrl).subscribe(data => {
+      this.users.next(data);
+    })
+  }
+}

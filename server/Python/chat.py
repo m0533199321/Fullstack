@@ -7,6 +7,8 @@ from flask_cors import CORS
 import openai
 import requests
 from dotenv import load_dotenv
+import re
+
 
 load_dotenv()
 my_key = os.getenv('OPENAI_API_KEY')
@@ -46,14 +48,14 @@ def get_recipe_file():
             messages=[
                 {
                     "role": "system",
-                    "content": f"""Give me a kosher recipe for the request.the language must be only in the user's request language. Include the recipe name: {recipe_name}, full ingredient list, and step-by-step instructions. Use line breaks only.The format must be:
+                    "content": f"""Give me a kosher recipe for the request.the language must be only in the user's request language. Include the recipe name: {recipe_name}, full ingredient list, and step-by-step instructions.The quantity of the ingredient will not be represented by numbers but by writing the quantity in words. Use line breaks only.The format must be:
                                 Ingredients:
                                 - ingredient 1
                                 - ingredient 2
                                 - ...
                                 Instructions:
-                                1. Step 1
-                                2. Step 2
+                                Step 1
+                                Step 2
                                 ...
                                 """
                 },
@@ -85,7 +87,8 @@ def get_recipe_file():
         line = line.strip()
         if line.startswith("-"):
             ingredients.append(line)
-        elif line and line.split('.')[0].isdigit():
+        # elif line and line.split('.')[0].isdigit():
+        else:
             instructions.append(line)
 
     ingredients_text = "\n".join(ingredients)
@@ -98,6 +101,30 @@ def get_recipe_file():
             para.text = para.text.replace("{{ingredients}}", ingredients_text)
         if "{{instructions}}" in para.text:
             para.text = para.text.replace("{{instructions}}", instructions_text)
+
+    # for ingredient_line in ingredients:
+    #     # הסרת מקף ורווחים מיותרים מההתחלה
+    #     cleaned_line = ingredient_line.lstrip('- ').strip()
+    #     match = re.match(r'^(\d+(?:/\d+)?)\s*(.*)', cleaned_line)
+    #     if match:
+    #         quantity = match.group(1).strip()
+    #         item = match.group(2).strip()
+    #         print(f"{quantity} {item}\n {item} {quantity}")
+    #         ingredient_text = f"- {quantity} {item}"
+    #     else:
+    #         # אם לא נמצאה כמות בהתחלה אחרי הסרת המקף, נוסיף מקף והשורה המקורית
+    #         ingredient_text = "- " + cleaned_line
+    #     doc.add_paragraph(ingredient_text)
+
+    # # הוספת הוראות
+    # for instruction_line in instructions:
+    #     match = re.match(r'^(.*?)(\d+)\.(.*)$', instruction_line)
+    #     if match:
+    #         instruction_text = f"{match.group(2)}. {match.group(1).strip()} {match.group(3).strip()}"
+    #     else:
+    #         instruction_text = instruction_line.strip()
+    #     doc.add_paragraph(instruction_text)
+    
 
     output_stream = BytesIO()
     doc.save(output_stream)

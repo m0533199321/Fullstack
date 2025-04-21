@@ -25,17 +25,17 @@ export const fetchPublicRecipes = async (): Promise<Recipe[]> => {
     }
 };
 
-export const fetchCategoryRecipes = async (
-    category: string
-): Promise<Recipe[]> => {
-    try {
-        const response = await axios.get(`${API_URL}/Category/${category}`);
-        return response.data;
-    } catch (e: any) {
-        Swal.fire("Error!", "Failed to fetch category's recipes. Please try again.", "error");
-        throw new Error(e.message);
-    }
-};
+// export const fetchCategoryRecipes = async (
+//     category: string
+// ): Promise<Recipe[]> => {
+//     try {
+//         const response = await axios.get(`${API_URL}/Category/${category}`);
+//         return response.data;
+//     } catch (e: any) {
+//         Swal.fire("Error!", "Failed to fetch category's recipes. Please try again.", "error");
+//         throw new Error(e.message);
+//     }
+// };
 
 export const fetchRecipeById = async (
     recipeId: number
@@ -95,6 +95,7 @@ export const fetchAddToMyBook = async (
     userId: number,
     recipe: RecipePostModel
 ): Promise<any> => {
+    console.log(recipe);
     try {
         const response2 = await api.post(`${API_URL}/AddNewToUser`, recipe, {
             params: {
