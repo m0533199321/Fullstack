@@ -22,6 +22,7 @@ namespace Recipes.Api.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
 
             // Register services
             services.AddScoped<IAuthService, AuthService>();

@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { fetchUser, UpdateUserName, UpdateUserProfile } from "./Redux/AuthSlice";
 import ProfilePicture from "./ProfilePicture";
 import { uploadProfilePictureService } from "./Services/ProfileService";
-import { Favorite, Receipt, Search } from "@mui/icons-material";
+import { Favorite, NewReleases, Receipt } from "@mui/icons-material";
 import axios from "axios";
 
 const Header = () => {
@@ -145,8 +145,8 @@ const Header = () => {
                             <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/public-recipes")} startIcon={<Favorite />}>
                                 המומלצים שלנו
                             </Button>
-                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/request")} startIcon={<Search />}>
-                                חיפוש מתכון
+                            <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/request")} startIcon={<NewReleases />}>
+                                מתכון חדש
                             </Button>
                             <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/private-recipes")} startIcon={<Receipt />}>
                                 ספר המתכונים שלי

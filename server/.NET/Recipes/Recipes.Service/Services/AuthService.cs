@@ -96,6 +96,16 @@ namespace Recipes.Service.Services
 
             if (result.IsSuccess)
             {
+                var defaultRole = await _iManager._roleRepository.GetByNameAsync("user");
+
+                if (defaultRole == null)
+                {
+                    return Result<LoginResponseDto>.BadRequest("Default role 'user' not found.");
+                }
+
+                user.RolesList.Add(defaultRole);
+                await _iManager.SaveAsync();
+
                 var token = GenerateJwtToken(user);
                 var response = new LoginResponseDto
                 {

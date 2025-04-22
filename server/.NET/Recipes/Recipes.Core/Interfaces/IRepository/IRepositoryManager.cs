@@ -13,6 +13,7 @@ namespace Recipes.Core.Interfaces.IRepository
         IRecipeRepository _recipeRepository { get; set; }
 
         ICommentRepository _commentRepository { get; set; }
+        IRoleRepository _roleRepository { get; set; }
 
         Task SaveAsync();
     }

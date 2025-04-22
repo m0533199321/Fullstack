@@ -12,7 +12,7 @@ export const downloadRecipeFromUrl = (recipe: Recipe) => {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'recipe.docx';
+            a.download = recipe.title+'.docx';
             a.click();
             window.URL.revokeObjectURL(url);
         })

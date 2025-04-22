@@ -15,16 +15,19 @@ namespace Recipes.Data.Repositories
         public IRecipeRepository _recipeRepository { get; set; }
 
         public ICommentRepository _commentRepository { get; set; }
+        public IRoleRepository _roleRepository { get; set; }
 
         public RepositoryManager(DataContext dataContext,
                                  IUserRepository userRepository,
                                  IRecipeRepository recipeRepository,
-                                 ICommentRepository commentRepository)
+                                 ICommentRepository commentRepository,
+                                 IRoleRepository roleRepository)
         {
             _dataContext = dataContext;
             _userRepository = userRepository;
             _recipeRepository = recipeRepository;
             _commentRepository = commentRepository;
+            _roleRepository = roleRepository;
         }
         public async Task SaveAsync()
         {

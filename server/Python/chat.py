@@ -8,6 +8,9 @@ import openai
 import requests
 from dotenv import load_dotenv
 import re
+from docx.shared import Pt
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.shared import RGBColor
 
 
 load_dotenv()
@@ -54,9 +57,9 @@ def get_recipe_file():
                                 - ingredient 2
                                 - ...
                                 Instructions:
-                                Step 1
-                                Step 2
-                                ...
+                                • Step 1
+                                • Step 2
+                                • ...
                                 """
                 },
                 {
@@ -70,7 +73,7 @@ def get_recipe_file():
 
     recipe_text = completion.choices[0].message.content
 
-    url = 'https://malismartchef.s3.us-east-1.amazonaws.com/recipes/template.docx'
+    url = 'https://malismartchef.s3.us-east-1.amazonaws.com/recipes/template3.docx'
 
     response = requests.get(url)
     if response.status_code == 200:
@@ -79,6 +82,13 @@ def get_recipe_file():
 
     doc = Document('template.docx')
 
+    title = doc.add_paragraph(recipe_name)
+    title.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    run = title.runs[0]
+    run.font.size = Pt(26)
+    run.font.color.rgb = RGBColor(255, 255, 255)
+    run.bold = True 
+
     lines = recipe_text.split("\n")
     ingredients = []
     instructions = []
@@ -86,21 +96,55 @@ def get_recipe_file():
     for line in lines:
         line = line.strip()
         if line.startswith("-"):
-            ingredients.append(line)
+            ingredients.append(line[1:])
         # elif line and line.split('.')[0].isdigit():
-        else:
-            instructions.append(line)
+        elif line.startswith("•") and line.endswith("."):
+            instructions.append(line[1:-1])
+        elif line.startswith("•"):
+            instructions.append(line[1:])
 
     ingredients_text = "\n".join(ingredients)
     instructions_text = "\n".join(instructions)
 
-    for para in doc.paragraphs:
-        if "{{recipe_name}}" in para.text:
-            para.text = para.text.replace("{{recipe_name}}", recipe_name)
-        if "{{ingredients}}" in para.text:
-            para.text = para.text.replace("{{ingredients}}", ingredients_text)
-        if "{{instructions}}" in para.text:
-            para.text = para.text.replace("{{instructions}}", instructions_text)
+    ingredients_name = doc.add_paragraph("רכיבים")
+    ingredients_name.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    run2 = ingredients_name.runs[0]
+    run2.font.size = Pt(23)
+    run2.font.color.rgb = RGBColor(255, 255, 255)
+    run2.bold = True
+
+    ingredients_list = doc.add_paragraph(ingredients_text)
+    ingredients_list.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    run3 = ingredients_list.runs[0]
+    run3.font.size = Pt(16)
+    run3.font.color.rgb = RGBColor(255, 255, 255) 
+
+    instructions_name = doc.add_paragraph("הוראות הכנה")
+    instructions_name.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    run4 = instructions_name.runs[0]
+    run4.font.size = Pt(23)
+    run4.font.color.rgb = RGBColor(255, 255, 255)
+    run4.bold = True
+
+    instructions_list = doc.add_paragraph(instructions_text)
+    instructions_list.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    run5 = instructions_list.runs[0]
+    run5.font.size = Pt(16)
+    run5.font.color.rgb = RGBColor(255, 255, 255) 
+
+    # doc.add_paragraph(recipe_name)
+    # doc.add_paragraph("רכיבים:")
+    # doc.add_paragraph(ingredients_text)
+    # doc.add_paragraph("הוראות הכנה:")
+    # doc.add_paragraph(instructions_text)
+
+    # for para in doc.paragraphs:
+    #     if "{{recipe_name}}" in para.text:
+    #         para.text = para.text.replace("{{recipe_name}}", recipe_name)
+    #     if "{{ingredients}}" in para.text:
+    #         para.text = para.text.replace("{{ingredients}}", ingredients_text)
+    #     if "{{instructions}}" in para.text:
+    #         para.text = para.text.replace("{{instructions}}", instructions_text)
 
     # for ingredient_line in ingredients:
     #     # הסרת מקף ורווחים מיותרים מההתחלה

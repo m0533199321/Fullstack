@@ -17,6 +17,8 @@ namespace Recipes.Data
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Role> Roles { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=recipes_db");
