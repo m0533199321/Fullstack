@@ -97,21 +97,21 @@
 }
 
 .private-text-field .MuiOutlinedInput-notchedOutline {
-    border-color: #FFA500 !important; /* צבע המסגרת במצב רגיל */
+    border-color: #FFA500 !important;
 }
 
 .private-text-field:hover .MuiOutlinedInput-notchedOutline {
-    border-color: #FFA500 !important; /* צבע המסגרת במצב ריחוף */
+    border-color: #FFA500 !important;
 }
 
 .private-text-field.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: #FFA500 !important; /* צבע המסגרת במצב ממוקד */
+    border-color: #FFA500 !important;
 }
 
 .private-text-field input {
-    color: orange; /* צבע הטקסט */
+    color: orange;
 }
 
 .private-text-field::placeholder {
-    color: orange; /* צבע הטקסט של הפלייסהולדר */
+    color: orange;
 }

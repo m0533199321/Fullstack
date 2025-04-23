@@ -1,16 +1,16 @@
 html, body {
-    height: 100%; /* לוודא שה-GLOBAL תופס את כל הגובה */
-    margin: 0; /* לא להוסיף מרג'ין */
+    height: 100%;
+    margin: 0;
 }
 
 .background-container {
     position: relative;
     overflow: hidden;
-    background-image: url('../../images/form.jpg'); /* הכנס כאן את כתובת התמונה */
+    background-image: url('../../images/form.jpg'); 
     background-size: cover;
     background-position: center;
-    height: 100%; /* גובה 100% של ה-DOM */
-    width: 100%; /* רוחב 100% של ה-DOM */
+    height: 100%;
+    width: 100%;
 }
 
 .background-container::before {
@@ -21,6 +21,5 @@ html, body {
     right: 0;
     bottom: 0;
     background: rgba(255, 255, 255, 0.5);
-    /* backdrop-filter: blur(10px); /* טשטוש * */
-    z-index: 1; /* לוודא שזה מתחת לתוכן */
+    z-index: 1;
 }

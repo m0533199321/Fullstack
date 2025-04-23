@@ -37,36 +37,36 @@
 }
 
 .buttons-container {
-    position: absolute; /* מיקום האייקונים */
-    bottom: 0; /* מרחק מהתחתית של הכרטיס */
-    left: 50%; /* מיקום במרכז */
-    transform: translateX(-50%); /* מרכז את האייקונים */
-    display: flex; /* תצוגה של אייקונים בשורה */
-    gap: 8px; /* רווח בין האייקונים */
-    z-index: 1; /* מוודא שהאייקונים יהיו מעל התמונה */
+    position: absolute;
+    bottom: 0;
+    left: 50%; 
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 1; 
 }
 
 .recipe-icons {
-    height: 40px; /* גובה האייקונים */
-    width: 40px; /* רוחב האייקונים */
-    display: flex; /* מאפשר למרכז את האייקונים */
-    justify-content: center; /* מרכז את התוכן בתוך האייקון */
-    align-items: center; /* מרכז את התוכן בתוך האייקון */
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
 }
 
 .recipe-image {
     margin-bottom: 2%;
-    width: 100% !important; /* תמונה תתמלא את הכרטיס */
-    height: auto; /* גובה אוטומטי */
+    width: 100% !important;
+    height: auto;
 }
 
 .difficulty-rating {
-    position: absolute; /* מיקום הדרגת קושי */
-    left: 0; /* מיקום מהצד השמאלי */
+    position: absolute;
+    left: 0; 
     right: 30%;
-    display: flex; /* תצוגה של כוכבים בשורה */
-    justify-content: center; /* מרכז את הכוכבים */
-    padding: 4px 0; /* רווח פנימי */
+    display: flex;
+    justify-content: center; 
+    padding: 4px 0;
 }
 
 .filled-star{
@@ -96,24 +96,37 @@
 }
 
 .text-field .MuiOutlinedInput-notchedOutline {
-    border-color: #FFA500 !important; /* צבע המסגרת במצב רגיל */
+    border-color: #FFA500 !important;
 }
 
 .text-field:hover .MuiOutlinedInput-notchedOutline {
-    border-color: #FFA500 !important; /* צבע המסגרת במצב ריחוף */
+    border-color: #FFA500 !important; 
 }
 
 .text-field.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: #FFA500 !important; /* צבע המסגרת במצב ממוקד */
+    border-color: #FFA500 !important;
 }
 
 .text-field input {
-    color: orange; /* צבע הטקסט */
+    color: orange; 
 }
 
 .text-field::placeholder {
-    color: orange; /* צבע הטקסט של הפלייסהולדר */
+    color: orange; 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* .public-recipes-container {

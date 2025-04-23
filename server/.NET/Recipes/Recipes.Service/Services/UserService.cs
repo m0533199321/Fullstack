@@ -72,6 +72,15 @@ namespace Recipes.Service.Services
             Console.WriteLine(user.Password);
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             Console.WriteLine(user.Password);
+            var defaultRole = await _iManager._roleRepository.GetByNameAsync("user");
+
+            if (defaultRole == null)
+            {
+                return Result<UserDto>.BadRequest("Default role 'user' not found.");
+            }
+
+            user.RolesList.Add(defaultRole);
+
             var result = await _iManager._userRepository.AddAsync(user);
             if (result == null)
             {

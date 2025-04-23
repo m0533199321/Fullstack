@@ -1,7 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Box, Button, Typography, Dialog, DialogTitle, DialogContent,
-         DialogActions, Snackbar, Alert, LinearProgress} from '@mui/material';
+         DialogActions, Snackbar, Alert, LinearProgress,
+         Divider} from '@mui/material';
 import { AppDispatch } from "./Redux/Store";
 import { useDispatch } from "react-redux";
 import { fetchUser, registerUser, sendEmail } from "./Redux/AuthSlice";
@@ -10,6 +11,7 @@ import ProfilePicture from './ProfilePicture';
 import { uploadProfilePictureService } from "./Services/ProfileService";
 import { CreateTextField } from "./RegisterGenericTextField";
 import axios from "axios";
+import Google from "./Google";
 
 interface FormData {
     firstName: string;
@@ -187,9 +189,9 @@ const RegisterForm: React.FC = () => {
                     {snackMessage}
                 </Alert>
             </Snackbar>
-        <div style={{marginTop: '12vh', direction: 'rtl'}}>
+        <div style={{marginTop: '3vh', direction: 'rtl'}}>
         <Container component="main" maxWidth="xs">
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 8, padding: 3, borderRadius: 2, boxShadow: 3, backgroundColor: 'black' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 4, padding: 3, borderRadius: 2, boxShadow: 3, backgroundColor: 'black' }}>
                 <Typography component="h1" variant="h4" sx={{ color: 'orange', marginBottom: 0 }}>
                     טופס הרשמה
                 </Typography>
@@ -227,7 +229,7 @@ const RegisterForm: React.FC = () => {
                         helperText={errors.password}
                         handleChange={handleChange}
                     />
-                    <div style={{height: '2vh'}}></div>
+                    <div style={{height: '0.2vh'}}></div>
                     {!upProfile && !finishProfile && <Button onClick={handleNavigateToProfilePicture} sx={{ color: 'orange' , marginRight: 14}}>
                         בחר תמונת פרופיל
                     </Button>}
@@ -254,6 +256,16 @@ const RegisterForm: React.FC = () => {
                     <Button type="submit" disabled={!finishProfile} fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff9800' }, '&.Mui-disabled': {  backgroundColor: '#e0e0e0', color: '#b0b0b0' } }}>
                         להרשמה
                     </Button>
+                    <Box sx={{ display: 'flex', alignItems: 'center', my: 4 }}>
+                            <Divider sx={{ flexGrow: 1, borderColor: 'grey.500' }} />
+                            <Typography variant="body2" sx={{ mx: 2, color: 'grey.500' }}>
+                                OR
+                            </Typography>
+                            <Divider sx={{ flexGrow: 1, borderColor: 'grey.500' }} />
+                        </Box>
+                        <Box sx={{ direction: 'ltr' }}>
+                        <Google />
+                        </Box>
 
                 </form>
                 <Dialog open={showProfilePicture} onClose={() => setShowProfilePicture(false)}>

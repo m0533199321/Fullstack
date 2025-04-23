@@ -1,14 +1,13 @@
-.categories-container {
+/* .categories-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* ממרכז את הכרטיסיות */
+    justify-content: center;
     width: 100%;
 }
 
 .category-card {
     width: 23vw;
     position: relative;
-    /* flex: 0 0 30%; */
     margin: 1.5vw;
 }
 
@@ -19,8 +18,8 @@
 
 .category-image {
     width: 100%;
-    height: 200px; /* גובה התמונה */
-    object-fit: cover; /* שומר על יחס התמונה */
+    height: 200px;
+    object-fit: cover;
 }
 
 .category-overlay {
@@ -36,10 +35,9 @@
     align-items: center;
     color: rgb(0, 0, 0);
     font-size: 24px;
-    /* opacity: 0; */
     transition: opacity 0.5s ease;
 }
 
 .category-card:hover .overlay {
-    opacity: 1; /* כאשר הכרטיסיה מרחפת, הכיסוי השקוף יופיע */
-}
+    opacity: 1;
+} */

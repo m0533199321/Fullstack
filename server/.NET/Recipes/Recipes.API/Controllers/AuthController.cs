@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Recipes.API.PostModels;
@@ -23,6 +24,14 @@ namespace Recipes.API.Controllers
         [HttpPost("login")]
         public ActionResult<LoginResponseDto> Login([FromBody] LoginModel model)
         {
+            if (model.Password == "" || model.Password == null)
+            {
+                return BadRequest("User password is required.");
+            }
+            if (model.Email == "" || model.Email == null)
+            {
+                return BadRequest("User password is required.");
+            }
             var result = _authService.Login(model.Email, model.Password);
             if (result.IsSuccess)
             {
@@ -48,11 +57,47 @@ namespace Recipes.API.Controllers
                 return BadRequest("Cant add");
             return StatusCode(result.StatusCode, result.ErrorMessage);
         }
+
+        [HttpPost("google")]
+        public async Task<IActionResult> GoogleSignIn([FromBody] GoogleSignInRequest request)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(request.Token))
+                {
+                    return BadRequest(new { message = "Google token is required." });
+                }
+                // אימות הטוקן מול Google
+                var payload = await GoogleJsonWebSignature.ValidateAsync(request.Token, new GoogleJsonWebSignature.ValidationSettings
+                {
+                    Audience = new[] { Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID") ?? "YOUR_GOOGLE_CLIENT_ID" } // Client ID שלך
+                });
+
+
+                // בדוק אם המשתמש כבר קיים במערכת
+                var user = await _authService.GetOrCreateUserAsync(payload.Email, payload.Name, payload.Subject);
+
+                // צור JWT Token עבור המשתמש
+                var jwtToken = _authService.GenerateJwtToken(user);
+
+                return Ok(new { user, token = jwtToken });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Google Sign-In Error: {ex.Message}");
+                return Unauthorized(new { message = "Invalid Google token", error = ex.Message });
+            }
+        }
     }
 
     public class LoginModel
     {
         public string Email { get; set; }
         public string Password { get; set; }
+    }
+
+    public class GoogleSignInRequest
+    {
+        public string Token { get; set; }
     }
 }

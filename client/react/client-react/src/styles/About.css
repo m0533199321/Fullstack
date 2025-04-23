@@ -1,38 +1,38 @@
 .about-container {
-    background-color: transparent; /* רקע שקוף */
+    background-color: transparent;
     color: white;
     font-family: Arial, sans-serif;
     padding: 20px;
-    direction: rtl; /* כיוון טקסט מימין לשמאל */
-    display: flex; /* מאפשר למרכז את התוכן */
-    flex-direction: column; /* למרכז את התוכן אנכית */
-    align-items: center; /* למרכז את התוכן אופקית */
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: 30px;
 }
 
 .about-section {
     padding: 20px;
     margin-bottom: 20px;
-    border-radius: 0; /* ללא מסגרת */
-    transition: transform 0.3s ease, opacity 0.3s ease; /* אנימציות של שקיפות והגדלה */
-    width: 100%; /* תופס את כל רוחב המיכל */
-    max-width: 100%; /* גובה מקסימלי לחלק */
-    background-color: transparent; /* רקע שקוף */
-    opacity: 1; /* שקיפות מלאה */
+    border-radius: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    background-color: transparent;
+    opacity: 1; 
 }
 
 .about-section:hover {
-    transform: scale(1.005); /* הגדלה קלה כשמרחפים מעל */
-    opacity: 0.8; /* שקיפות חלקית כשמרחפים מעל */
+    transform: scale(1.005);
+    opacity: 0.8;
 }
 
 .about-section h2 {
-    color: #ff9800; /* כתום */
-    text-align: center; /* למרכז את הכותרת */
+    color: #ff9800;
+    text-align: center;
 }
 
 .about-footer {
     text-align: center;
     margin-top: 30px;
-    color: #ff9800; /* כתום */
+    color: #ff9800;
 }

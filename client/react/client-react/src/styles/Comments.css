@@ -65,5 +65,5 @@
     border-bottom: 1px solid gray;
     text-decoration: none;
     box-shadow: none;
-    appearance: none; /* מסיר סגנונות ברירת מחדל */
+    appearance: none;
 }

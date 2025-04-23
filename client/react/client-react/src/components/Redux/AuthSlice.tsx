@@ -4,6 +4,7 @@ import axios from "axios";
 // import Swal from "sweetalert2";
 import { AuthState, UserLogin, UserRegister } from "../../models/AuthType";
 import api from "../api";
+import { User } from "../../models/UserType";
 
 const API_URL = "https://localhost:7005/api";
 
@@ -116,7 +117,7 @@ export const forgotPasswordUser = createAsyncThunk(
     "forgotPassword",
     async ({ user }: { user: UserLogin }, thunkAPI) => {
         try {
-            await axios.put(`${API_URL}/User/Password`, user);    
+            await axios.put(`${API_URL}/User/Password`, user);
             const response = await axios.post(`${API_URL}/Auth/login`, user)
 
             localStorage.setItem("token", response.data.token);
@@ -156,6 +157,29 @@ export const UpdateUserProfile = createAsyncThunk(
         } catch (e: any) {
             // Swal.fire("Error!", "Updated failed. Please try later.", "error");
             return thunkAPI.rejectWithValue(e.message);
+        }
+    }
+);
+
+export const connectWithGoogle = createAsyncThunk(
+    'auth/connectWithGoogle',
+    async ({ token }: { token: string; }, thunkAPI) => {
+        try {
+            const response = await axios.post<{ user: User; token: string }>(
+                `${API_URL}/Auth/google`,
+                { token });
+            localStorage.setItem("token", response.data.token);
+            const res = { response: response.data, name: response.data.user.fName, email: response.data.user.email };
+            return res;
+
+        } catch (error: any) {
+            if (error.response && typeof error.response.data === 'string') {
+                return thunkAPI.rejectWithValue(error.response.data);
+            }
+            if (error.response && error.response.data && error.response.data.message) {
+                return thunkAPI.rejectWithValue(error.response.data.message);
+            }
+            return thunkAPI.rejectWithValue('An unknown error occurred');
         }
     }
 );

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Recipes.Core.Interfaces.IRepository
 {
-    public interface IRoleRepository
+    public interface IRoleRepository : IRepository<Role>
     {
         Task<Role> GetByNameAsync(string role);
     }

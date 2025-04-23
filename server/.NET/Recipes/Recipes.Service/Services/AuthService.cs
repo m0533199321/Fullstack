@@ -96,15 +96,15 @@ namespace Recipes.Service.Services
 
             if (result.IsSuccess)
             {
-                var defaultRole = await _iManager._roleRepository.GetByNameAsync("user");
+                //var defaultRole = await _iManager._roleRepository.GetByNameAsync("user");
 
-                if (defaultRole == null)
-                {
-                    return Result<LoginResponseDto>.BadRequest("Default role 'user' not found.");
-                }
+                //if (defaultRole == null)
+                //{
+                //    return Result<LoginResponseDto>.BadRequest("Default role 'user' not found.");
+                //}
 
-                user.RolesList.Add(defaultRole);
-                await _iManager.SaveAsync();
+                //user.RolesList.Add(defaultRole);
+                //await _iManager.SaveAsync();
 
                 var token = GenerateJwtToken(user);
                 var response = new LoginResponseDto
@@ -116,6 +116,30 @@ namespace Recipes.Service.Services
             }
 
             return Result<LoginResponseDto>.NotFound("User registration failed.");
+        }
+
+        public async Task<User> GetOrCreateUserAsync(string email, string name, string googleId)
+        {
+            var user = await _iManager._userRepository.GetByEmailAsync(email);
+            if (user == null)
+            {
+                var role = await _iManager._roleRepository.GetByIdAsync(2);
+                user = new User
+                {
+                    Email = email,
+                    FName = name,
+                    LName = "",
+                    Password = "",
+                    Profile = "https://malismartchef.s3.amazonaws.com/images/smartSource.png1745431201931",
+                    CreatedAt = DateTime.UtcNow,
+                    IsDeleted = false,
+                    RolesList = new List<Role> { role },
+                    //GoogleId = googleId
+                };
+                await _iManager._userRepository.AddAsync(user);
+                await _iManager.SaveAsync();
+            }
+            return user;
         }
 
     }

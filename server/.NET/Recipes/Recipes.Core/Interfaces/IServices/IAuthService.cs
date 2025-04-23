@@ -18,5 +18,7 @@ namespace Recipes.Core.Interfaces.IServices
         public Result<LoginResponseDto?> Login(string email, string password);
         
         public Task<Result<LoginResponseDto?>> Register(UserDto userDto);
+
+        public Task<User> GetOrCreateUserAsync(string email, string name, string googleId);
     }
 }
