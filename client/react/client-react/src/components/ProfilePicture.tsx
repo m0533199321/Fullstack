@@ -126,7 +126,6 @@ const ProfilePicture: React.FC<ProfilePictureSelectorProps> = ({ onSelect, onClo
                                 variant="contained"
                                 component="span"
                                 style={{ backgroundColor: '#999', color: 'white', borderRadius: '50%', width: '83px', height: '83px', fontSize: '30px' }}
-                            // startIcon={<PhotoCamera />}
                             >
                                 +
                             </Button>

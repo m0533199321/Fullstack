@@ -1,11 +1,10 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./Redux/Store";
-import { connectWithGoogle, fetchUser, sendEmail } from "./Redux/AuthSlice";
-import { User } from "../models/UserType";
+import { connectWithGoogle, fetchUser } from "./Redux/AuthSlice";
 import { GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { Box, Divider, Typography } from "@mui/material";
 
 const Google = () => {
 
@@ -44,27 +43,36 @@ const Google = () => {
     }
 
     return (<>
-        <GoogleLogin
-            locale='en'
-            text="signin_with"
-            onSuccess={(credentialResponse) => {
-                console.log('Google Sign-In Success:', credentialResponse);
-                const token = credentialResponse.credential;
-                if (token) {
-                    handleGoogleSignIn(token);
-                } else {
-                    console.error('Google Sign-In failed: Token is undefined');
+        <Box sx={{ display: 'flex', alignItems: 'center', my: 4 }}>
+            <Divider sx={{ flexGrow: 1, borderColor: 'grey.500' }} />
+            <Typography variant="body2" sx={{ mx: 2, color: 'grey.500' }}>
+                OR
+            </Typography>
+            <Divider sx={{ flexGrow: 1, borderColor: 'grey.500' }} />
+        </Box>
+        <Box sx={{ direction: 'ltr' }}>
+            <GoogleLogin
+                locale='en'
+                text="signin_with"
+                onSuccess={(credentialResponse) => {
+                    console.log('Google Sign-In Success:', credentialResponse);
+                    const token = credentialResponse.credential;
+                    if (token) {
+                        handleGoogleSignIn(token);
+                    } else {
+                        console.error('Google Sign-In failed: Token is undefined');
+                        //setErrorMessage('Google Sign-In failed. Please try again.');
+                    }
+                }}
+                onError={() => {
+                    console.error('Google Sign-In Failed');
                     // setErrorMessage('Google Sign-In failed. Please try again.');
-                }
-            }}
-            onError={() => {
-                console.error('Google Sign-In Failed');
-                // setErrorMessage('Google Sign-In failed. Please try again.');
-            }}
-            useOneTap
-            theme="outline"
-            size="large"
-        />
+                }}
+                useOneTap
+                theme="outline"
+                size="large"
+            />
+        </Box>
     </>)
 }
 

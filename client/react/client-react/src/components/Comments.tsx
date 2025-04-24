@@ -47,6 +47,11 @@ const Comments = ({ recipeId }: { recipeId: number }) => {
         }
     }
 
+    const handleCancelEdit = () => {
+        setEditingCommentId(null);
+        setContent(originalContent);
+    }
+
     useEffect(() => {
         allComments();
     }, [recipeId]);
@@ -95,10 +100,13 @@ const Comments = ({ recipeId }: { recipeId: number }) => {
                         {user && user.id === comment.userId && (
                             <div style={{ display: 'flex' }}>
                                 {editingCommentId === comment.id && content !== originalContent && (
-                                    <Button style={{ color: 'orange', marginLeft: '10px', fontSize: '1.1em' }} onClick={() => handleSaveEdit(comment)}>שמור</Button>
+                                    <Button style={{ color: 'orange', marginLeft: '10px', fontSize: '1.1em' }} onClick={() => handleSaveEdit(comment)}>שמירה</Button>
                                 )}
-                                <Button style={{ color: 'orange', marginLeft: '10px', fontSize: '1.1em' }} onClick={handleRemove(comment)}>מחק תגובה</Button>
-                                <Button style={{ color: 'orange', marginLeft: '10px', fontSize: '1.1em' }} onClick={() => handleEdit(comment)}>עדכן תגובה</Button>
+                                {editingCommentId === comment.id && content === originalContent && (
+                                    <Button style={{ color: 'orange', marginLeft: '10px', fontSize: '1.1em' }} onClick={() => handleCancelEdit()}>ביטול</Button>
+                                )}
+                                <Button style={{ color: 'orange', marginLeft: '10px', fontSize: '1.1em' }} onClick={handleRemove(comment)}>מחיקת תגובה</Button>
+                                <Button style={{ color: 'orange', marginLeft: '10px', fontSize: '1.1em' }} onClick={() => handleEdit(comment)}>עדכון תגובה</Button>
                             </div>
                         )}
                     </div>
@@ -110,72 +118,3 @@ const Comments = ({ recipeId }: { recipeId: number }) => {
 };
 
 export default Comments;
-
-
-// import { useEffect, useState } from "react";
-// import { CommentType } from "../models/CommentType";
-// import { fetchComments } from "./Services/CommentService";
-// import { Avatar, Button } from "@mui/material";
-// import '../styles/Comments.css'
-// import { useAppSelector } from "./Redux/Store";
-
-// const Comments = ({ recipeId }: { recipeId: number }) => {
-//     const [comments, setComments] = useState<CommentType[]>([]);
-//     const [success, setSuccess] = useState(false);
-//     const [constent, setContent] = useState('');
-//     const user = useAppSelector((state) => state.auth.user);
-
-//     const allComments = async () => {
-//         try {
-//             setComments(await fetchComments(recipeId));
-//             setSuccess(true);
-//         } catch (error) {
-//             console.error('Failed to fetch recipes:', error);
-//         }
-//     }
-
-//     const handleRemove = (comment: CommentType) => async () => {
-//         try {
-//             await fetchRemoveComment(comment.id);
-//             allComments();
-//         } catch (error) {
-//             console.error('Failed to fetch recipes:', error);
-//         }
-//     }
-
-//     const handleEdit = (comment: CommentType) => async () => {
-//         try {
-//             await fetchEditComment(comment.id, content);
-//             allComments();
-//         } catch (error) {
-//             console.error('Failed to fetch recipes:', error);
-//         }
-//     }
-
-//     useEffect(() => {
-//         allComments();
-//     }, [recipeId]);
-
-//     return (
-//         <>
-//             {success && comments.length !== 0 &&
-//                 <div className="comments-container">
-//                     <h1 className="comments-title">תגובות:</h1>
-//                 </div>}
-//             {success && comments.map(comment => (
-//                 <div key={comment.id} className="comment-container">
-//                     <div className="comment-header">
-//                         <Avatar src={comment.user.profile} className="avatar" />
-//                         <span className="user-name">{comment.user.fName + " " + comment.user.lName}</span>
-//                     </div>
-//                     <p className="comment-content"> {comment.content}</p>
-//                     <p className="comment-date"><strong>תאריך:</strong> {new Date(comment.createdAt).toLocaleDateString()}</p>
-//                     {user && user.id === comment.userId && <Button onClick={handleRemove(comment)}>מחק תגובה</Button>}
-//                     {user && user.id === comment.userId && <Button onClick={handleEdit(comment)}>עדכן תגובה</Button>}
-//                 </div>
-//             ))}
-//         </>
-//     );
-// };
-
-// export default Comments;

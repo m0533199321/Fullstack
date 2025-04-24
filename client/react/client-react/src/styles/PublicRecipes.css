@@ -4,6 +4,38 @@
     justify-content: center;
 }
 
+.public-showVert {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 15vw;
+    height: 80%;
+    left: 5%;
+    top: 15%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.public-inShowVert {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 100%;
+        align-items: center;
+}
+
+.shows {
+    color: orange;
+    margin: 0 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 30px;
+    font-weight: bold;
+}
+
 .recipe-grid {
     display: flex;
     flex-wrap: wrap;
@@ -16,7 +48,7 @@
 
 .recipe-card {
     border-radius: 8px;
-    overflow: hidden; 
+    overflow: hidden;
     position: relative;
     padding: 0.8%;
     padding-top: 0;
@@ -27,7 +59,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease-in-out;
     margin-top: 4%;
-    transition: transform 0.2s; 
+    transition: transform 0.2s;
     cursor: pointer;
     margin-bottom: 4%;
 }
@@ -39,18 +71,18 @@
 .buttons-container {
     position: absolute;
     bottom: 0;
-    left: 50%; 
+    left: 50%;
     transform: translateX(-50%);
     display: flex;
     gap: 8px;
-    z-index: 1; 
+    z-index: 1;
 }
 
 .recipe-icons {
     height: 40px;
     width: 40px;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
 }
 
@@ -62,20 +94,20 @@
 
 .difficulty-rating {
     position: absolute;
-    left: 0; 
+    left: 0;
     right: 30%;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     padding: 4px 0;
 }
 
-.filled-star{
+.filled-star {
     color: gold !important;
 }
 
 .recipe-title {
     color: orange;
-    top:0 !important;
+    top: 0 !important;
     margin-bottom: 1%;
     text-align: center;
 }
@@ -100,7 +132,7 @@
 }
 
 .text-field:hover .MuiOutlinedInput-notchedOutline {
-    border-color: #FFA500 !important; 
+    border-color: #FFA500 !important;
 }
 
 .text-field.Mui-focused .MuiOutlinedInput-notchedOutline {
@@ -108,98 +140,9 @@
 }
 
 .text-field input {
-    color: orange; 
+    color: orange;
 }
 
 .text-field::placeholder {
-    color: orange; 
+    color: orange;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .public-recipes-container {
-    padding: 20px;
-    min-height: 100vh;
-}
-
-.recipe-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
-
-.recipe-card {
-    background: rgba(57, 62, 70, 0.9);
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    text-align: right;
-}
-
-.recipe-title {
-    margin: 0;
-    font-size: 1.7rem;
-    color: #FF8C42;
-}
-
-p {
-    margin: 10px 0;
-    font-size: 1.1rem;
-}
-
-.stars {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 10px;
-}
-
-.filled-star {
-    color: gold;
-    font-size: 1.8rem;
-}
-
-.empty-star {
-    color: lightgray;
-    font-size: 1.8rem;
-}
-
-.buttons-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.sort-btn, .add-btn, .details-btn, .download-btn, .email-btn {
-    flex: 1;
-    padding: 12px 0;
-    font-size: 1.2rem;
-    border-radius: 8px;
-    background: #FF8C42;
-    color: #333;
-    border: none;
-}
-
-.sort-container {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px;
-}
-
-.sort-container .MuiSvgIcon-root, 
-.buttons-container .MuiSvgIcon-root {
-    color: #001aff;
-} */

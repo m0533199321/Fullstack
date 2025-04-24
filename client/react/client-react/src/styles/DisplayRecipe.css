@@ -18,8 +18,10 @@ body {
 .displayRecipe-image {
     right: 0;
     height: 320px;
-    width: 'auto';
+    width: auto;
     margin-left: 5vw;
+    margin-bottom: 3vh;
+    margin-top: auto;
 }
 
 .displayRecipe-title {

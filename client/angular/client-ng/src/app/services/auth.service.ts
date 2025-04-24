@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../models/user.model';
 import { UserService } from './user.service';
 import { UserLogIn, UserRegister } from '../models/auth.model';
 
@@ -16,33 +15,25 @@ export class AuthService {
   login(user: UserLogIn) {
     this.http.post<any>(this.baseUrl + '/login', user).subscribe(data => {
       if (data.token) {
-        alert('Login successful');
-        sessionStorage.setItem('token', data.token);
-        console.log(data.user.id);
-        this.userService.getById(data.user.id);
+
+        console.log(data.user.rolesList);
+        
+        if (data.user.rolesList && data.user.rolesList.some((r: any) => r.roleName.toLowerCase() === 'admin')) {
+          alert('Login successful');
+          sessionStorage.setItem('token', data.token);
+          console.log(data.user.id);
+          this.userService.getById(data.user.id);
+        } else {
+          alert('Login failed: You do not have admin privileges.');
+        }
+      } else {
+        alert(data.error || 'Login failed');
       }
     },
       (error) => {
         console.error('Login failed', error);
         alert('Login failed');
-      }
-    );
+      });
   }
-
-  // register(user: UserRegister) {
-  //   console.log(user);   
-  //   this.http.post<any>(this.baseUrl + '/register', user).subscribe(
-  //     data => {
-  //       console.log(data.token);
-  //       console.log('Registration successful:', data);
-  //       sessionStorage.setItem('token', data.token);   
-  //       this.userService.getById(data.user.id);
-  //     },
-  //     error => {
-  //       console.error('Registration failed:', error);
-  //       alert('Registration failed');
-  //     }
-  //   );
-  // }
 
 }

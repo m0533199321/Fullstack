@@ -28,7 +28,7 @@ h1{
     cursor: pointer;
 }
 
-/*  */
+
 
 input[type="range"] {
     -webkit-appearance: none;
@@ -95,43 +95,3 @@ input[type="range"]::-ms-fill-upper {
     border-radius: 10px;
 }
 
-
-
-
-
-
-
-/* .difficulty-slider {
-    margin: 20px 0;
-}
-
-.difficulty-slider input[type="range"] {
-    width: 100%;
-    height: 8px;
-    background: white; 
-    color: orange;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none; 
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: orange;
-    color: orange;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-input[type="range"]::-moz-range-thumb {
-    width: 20px; 
-    height: 20px;
-    background: orange;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-
-input[type="range"]::-moz-range-track {
-    background: white;
-} */

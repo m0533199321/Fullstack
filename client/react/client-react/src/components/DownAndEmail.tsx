@@ -21,16 +21,3 @@ export const downloadRecipeFromUrl = (recipe: Recipe) => {
         });
 };
  
-// export const emailRecipeWithUrl = (url: string, email: string) => {
-    // const subject = "קישור למתכון";
-    // const body = `הנה הקישור למתכון שלך: ${url}`;
-    // const result2 = await dispatch(sendEmail({ to: user.email, subject, body }));
-    // if (result2.meta.requestStatus === 'fulfilled') {
-    //     console.log("mail sent!");
-    // }
-    // else {
-    //     console.log("mail not sent!");
-    // }
-
-// window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-// }

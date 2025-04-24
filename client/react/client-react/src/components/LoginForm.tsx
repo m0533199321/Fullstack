@@ -4,9 +4,8 @@ import { AppDispatch } from "./Redux/Store";
 import { useDispatch } from 'react-redux';
 import { loginUser } from "./Redux/AuthSlice";
 import { UserLogin } from "../models/AuthType";
-import { Button, Typography, Container, Box, Link, Alert, Snackbar, Divider } from '@mui/material';
+import { Button, Typography, Container, Box, Link, Alert, Snackbar } from '@mui/material';
 import { CreateTextField } from "./LoginGenericTextField";
-import { GoogleLogin } from "@react-oauth/google";
 import Google from "./Google";
 
 const LoginForm: React.FC = () => {
@@ -114,13 +113,6 @@ const LoginForm: React.FC = () => {
                         <Button type="submit" fullWidth variant="contained" sx={{ marginTop: 2, backgroundColor: 'orange', color: 'black', '&:hover': { backgroundColor: '#ff8800' } }}>
                             התחבר
                         </Button>
-                        <Box sx={{ display: 'flex', alignItems: 'center', my: 4 }}>
-                            <Divider sx={{ flexGrow: 1, borderColor: 'grey.500' }} />
-                            <Typography variant="body2" sx={{ mx: 2, color: 'grey.500' }}>
-                                OR
-                            </Typography>
-                            <Divider sx={{ flexGrow: 1, borderColor: 'grey.500' }} />
-                        </Box>
                         <Google />
                         <Typography variant="body2" sx={{ marginTop: 2, color: 'white', textAlign: 'center' }}>
                             עדיין לא נרשמת?{''}

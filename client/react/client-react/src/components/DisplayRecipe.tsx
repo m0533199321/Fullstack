@@ -44,21 +44,6 @@ const DisplayRecipe = () => {
         return <div>No recipe found.</div>;
     }
 
-    const category = (categoryId: number) => {
-        switch (categoryId) {
-            case 1: return "ארוחות בוקר";
-            case 2: return "מנות פתיחה";
-            case 3: return "מנות עיקריות";
-            case 4: return "תוספות";
-            case 5: return "מרקים";
-            case 6: return "סלטים";
-            case 7: return "מאפים ולחמים";
-            case 8: return "קינוחים";
-            case 9: return "משקאות";
-            default: return "שונות";
-        }
-    };
-
     const handleAddCommentClick = async () => {
         if (commentValue === '') return;
         await fetchAddComment(recipe.id, commentValue);
@@ -82,7 +67,6 @@ const DisplayRecipe = () => {
                         <img className="displayRecipe-image" src="../../images/back/smartSource2.png" alt={recipe.title} />
                         <div className="displayRecipe-details">
                             <h3 className="displayRecipe-title">{recipe.title}</h3>
-                            <div style={{ color: 'black' }}><strong className="displayRecipe-defenitions">קטגוריה:</strong> {category(recipe.category)}</div>
                             <div style={{ marginBottom: '10px' }}></div>
                             <div className="stars">
                                 <strong className="displayRecipe-defenitions">דרגת קושי:</strong>
@@ -93,7 +77,7 @@ const DisplayRecipe = () => {
                             <div style={{ marginBottom: '10px' }}></div>
                             <div style={{ color: 'black' }}><strong className="displayRecipe-defenitions">תאריך יצירה:</strong> {new Date(recipe.createdAt).toLocaleDateString()}</div>
                             {user ? (<>
-                                <div className="displayRecipe-buttons" style={{ marginRight: '24vw'}}>
+                                <div className="displayRecipe-buttons" style={{ marginRight: '24vw', marginTop: '8vh' }}>
                                     <Button className="add-comment-button" onClick={() => setAddComment(true)}>הוספת תגובה</Button>
                                     <Button className="display-recipe-button" onClick={() => setFile(true)}>הצגת המתכון</Button></div></>) :
                                 (<>

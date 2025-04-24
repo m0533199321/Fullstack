@@ -38,8 +38,6 @@ const Header = () => {
     const handleClosePopover = () => {
         setAnchorEl(null);
         console.log(editingProfile);
-        // setEditingName(false);
-        // setEditingProfile(false);
     };
 
     const handleSnackClose = () => {
@@ -67,7 +65,6 @@ const Header = () => {
         if (user && fName && lName && fName != "" && lName != "") {
             await dispatch(UpdateUserName({ id: user.id, fName, lName })).then(result => {
                 if (!result) {
-
                     setSnackMessage('שגיאה בעדכון שם ');
                     setSnackSeverity('error');
                     setSnackOpen(true);

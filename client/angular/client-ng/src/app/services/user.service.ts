@@ -9,7 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 export class UserService {
 
   private baseUrl = 'https://localhost:7005/api/User'
-  public user: BehaviorSubject<User> = new BehaviorSubject<User>(new User(0, '', '', '', '','',[],'','',''));
+  public user: BehaviorSubject<User> = new BehaviorSubject<User>(new User(0, '', '', '', '',''));
 
   constructor(private http: HttpClient) { }
 

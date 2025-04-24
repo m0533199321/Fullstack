@@ -130,7 +130,7 @@ namespace Recipes.Service.Services
                     FName = name,
                     LName = "",
                     Password = "",
-                    Profile = "https://malismartchef.s3.amazonaws.com/images/smartSource.png1745431201931",
+                    Profile = "https://malismartchef.s3.amazonaws.com/images/profile-smartChef.png1745511305206",
                     CreatedAt = DateTime.UtcNow,
                     IsDeleted = false,
                     RolesList = new List<Role> { role },

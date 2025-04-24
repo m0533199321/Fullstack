@@ -23,7 +23,7 @@ namespace Recipes.API.Controllers
 
         // GET: api/<Users>
         [HttpGet]
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         public async Task<IEnumerable<UserDto>> Get()
         {
             return await _iService.GetAsync();

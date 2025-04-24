@@ -16,7 +16,7 @@
 
 .privateRecipe-card {
     border-radius: 8px;
-    overflow: hidden; 
+    overflow: hidden;
     position: relative;
     padding: 0.8%;
     padding-top: 0;
@@ -27,7 +27,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease-in-out;
     margin-top: 4%;
-    transition: transform 0.2s; 
+    transition: transform 0.2s;
     cursor: pointer;
     margin-bottom: 4%;
 }
@@ -45,13 +45,13 @@
 
 .privateRecipe-title {
     color: orange;
-    top:0 !important;
+    top: 0 !important;
     margin-bottom: 1%;
     text-align: center;
 }
 
 .private-difficulty-rating {
-    position: absolute; 
+    position: absolute;
     left: 0;
     right: 30%;
     display: flex;
@@ -59,7 +59,7 @@
     padding: 4px 0;
 }
 
-.private-filled-star{
+.private-filled-star {
     color: gold !important;
 }
 
@@ -71,6 +71,28 @@
     display: flex;
     gap: 8px;
     z-index: 1;
+}
+
+.private-showVert {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 15vw;
+    height: 80%;
+    top: 15%;
+    left: 5%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.private-inShowVert {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
 }
 
 .private-recipe-icons {
