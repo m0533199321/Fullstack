@@ -9,9 +9,13 @@ import { jwtDecode } from 'jwt-decode';
 export class UserService {
 
   private baseUrl = 'https://localhost:7005/api/User'
-  public user: BehaviorSubject<User> = new BehaviorSubject<User>(new User(0, '', '', '', '',''));
+  public user: BehaviorSubject<User> = new BehaviorSubject<User>(new User(0, '', '', '', '','',new Date(),[]));
 
   constructor(private http: HttpClient) { }
+
+  getFull() {
+    return this.http.get<User[]>(`${this.baseUrl}/Full`);
+  }
 
   getById(id: number) {
     console.log(id);
@@ -28,7 +32,7 @@ export class UserService {
       try {
         const decodedToken: any = jwtDecode(token)
         console.log(decodedToken)
-        this.getById(decodedToken.userId)
+        this.getById(decodedToken.id)
         console.log(this.user.value)
       }
       catch (error) {

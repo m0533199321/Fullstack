@@ -5,11 +5,11 @@ import { DisplayUsersService } from '../../services/display-users.service';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-display-users',
-  standalone: true,
-  imports: [AsyncPipe],
-  templateUrl: './display-users.component.html',
-  styleUrl: './display-users.component.css'
+    selector: 'app-display-users',
+    standalone: true,
+    imports: [AsyncPipe],
+    templateUrl: './display-users.component.html',
+    styleUrl: './display-users.component.css'
 })
 export class DisplayUsersComponent {
   constructor(private usersService: DisplayUsersService) { }

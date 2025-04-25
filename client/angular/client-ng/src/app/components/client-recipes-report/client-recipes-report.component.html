@@ -1,0 +1,10 @@
+<div class="chart-container">
+  <h2>Client Recipes Report</h2>
+  @for(data of clientRecipesData; track data.client) {
+  <div class="chart-bar">
+    <span>{{ data.client }}</span>
+    <div class="bar" [style.width.%]="data.recipes * 2">
+      {{ data.recipes }} recipes
+    </div>
+  </div>}
+</div>

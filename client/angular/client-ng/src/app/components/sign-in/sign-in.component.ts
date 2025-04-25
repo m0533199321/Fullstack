@@ -4,10 +4,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
-import { User } from '../../models/user.model';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -16,11 +15,11 @@ import { UserLogIn } from '../../models/auth.model';
 
 
 @Component({
-  selector: 'app-sign-in',
-  standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, MatInputModule, MatIconModule, MatCardModule, MatStepperModule, MatSelectModule, MatButtonModule, MatFormFieldModule, MatDialogModule],
-  templateUrl: './sign-in.component.html',
-  styleUrl: './sign-in.component.css'
+    selector: 'app-sign-in',
+    standalone: true,
+    imports: [ReactiveFormsModule, FormsModule, MatInputModule, MatIconModule, MatCardModule, MatStepperModule, MatSelectModule, MatButtonModule, MatFormFieldModule, MatDialogModule],
+    templateUrl: './sign-in.component.html',
+    styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
   userForm: FormGroup;

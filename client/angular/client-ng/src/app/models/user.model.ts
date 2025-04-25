@@ -5,5 +5,7 @@ export class User {
         public lName: string,
         public email: string,
         public password: string,
-        public profile: string) { }; 
+        public profile: string,
+        public createdAt: Date,
+        public recipesList: []) { };
 }

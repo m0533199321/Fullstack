@@ -1,0 +1,31 @@
+.chart-container {
+    background: linear-gradient(to bottom, #1a1a1a, #000);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.chart-bar {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.bar {
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    height: 20px;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+span {
+    min-width: 100px; /* Adjusted for client names */
+    color: #ccc;
+    margin-right: 10px;
+}
