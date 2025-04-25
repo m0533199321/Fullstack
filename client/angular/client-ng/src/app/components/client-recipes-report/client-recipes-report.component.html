@@ -1,10 +1,52 @@
-<div class="chart-container">
-  <h2>Client Recipes Report</h2>
-  @for(data of clientRecipesData; track data.client) {
-  <div class="chart-bar">
-    <span>{{ data.client }}</span>
-    <div class="bar" [style.width.%]="data.recipes * 2">
-      {{ data.recipes }} recipes
+<div class="client-container-all"></div>
+<div class="client-container">
+
+  <h2>Clients Recipes Distribution</h2>
+
+  <div class="chart-container">
+    @if(getSortedRecipeCounts().length > 0) {
+    <div class="chart">
+      @for(count of getSortedRecipeCounts(); track count ){
+      <div class="chart-column">
+        <div class="bar-container">
+          <div class="bar" [style.height.%]="getBarHeight(count)">
+            <span class="client-count">{{ clientsByRecipeCount[count] }}</span>
+          </div>
+        </div>
+        <div class="label">
+          <span class="recipe-count">{{ count }}</span>
+          <span class="recipe-text">{{ count === 1 ? 'Recipe' : 'Recipes' }}</span>
+        </div>
+      </div>}
     </div>
-  </div>}
+
+    <div class="stats-cards">
+      <div class="stat-card">
+        <div class="stat-value">{{ getTotalClients() }}</div>
+        <div class="stat-label">Total Clients</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ getMostRecipesCount() }}</div>
+        <div class="stat-label">Most Recipes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ getAverageRecipes() | number:'1.1-1' }}</div>
+        <div class="stat-label">Avg Recipes</div>
+      </div>
+    </div>
+  } @else {
+    <div class="no-data">
+      <div class="no-data-icon">📊</div>
+      <p>No recipe data available</p>
+    </div>
+  }
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color"></div>
+      <div class="legend-text">Number of clients with specific recipe count</div>
+    </div>
+  </div>
+
 </div>

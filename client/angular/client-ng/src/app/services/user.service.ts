@@ -43,4 +43,5 @@ export class UserService {
   ngOnInit() {
     this.getUserFromToken()
   }
+
 }

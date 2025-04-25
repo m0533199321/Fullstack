@@ -1,9 +1,0 @@
-<div class="home-container">
-  <h1>Welcome to the Reports Dashboard</h1>
-  @for(report of reports; track report.title) {
-    {{ report.title }}
-  <div class="card" (click)="navigateToReport(report.route)">
-    <h2>{{ report.title }}</h2>
-  </div>}
-</div>
-

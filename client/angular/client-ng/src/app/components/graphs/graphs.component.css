@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #ff6b00;
+  --primary-light: #ff8c3f;
+  --dark: #121212;
+  --dark-gray: #1e1e1e;
+  --medium-gray: #333333;
+  --light-gray: #555555;
+  --lighter-gray: #888888;
+  --white: #ffffff;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --hover-shadow: 0 15px 35px rgba(255, 106, 0, 0.832);
+}
+
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.graphs-container {
+  text-align: center;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #121212;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: #ffffff;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 1rem;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff6b00, #ff8c3f);
+  border-radius: 2px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.card {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  background: linear-gradient(145deg, #1e1e1e, #333333);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #555555;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #ff6b00, #ff8c3f);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-15px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(255, 107, 0, 0.2);
+  border-color: #ff8c3f;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  transition: color 0.3s ease;
+  z-index: 1;
+  text-align: center;
+}
+
+.card:hover h2 {
+  color: #ff6b00;
+}
+
+.card-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  color: #888888;
+  transition: color 0.3s ease, transform 0.5s ease;
+}
+
+.card:hover .card-icon {
+  color: #ff6b00;
+  transform: scale(1.1);
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(to top, rgba(30, 30, 30, 0.9), transparent);
+  transition: height 0.3s ease;
+  z-index: 0;
+}
+
+.card:hover .card-overlay {
+  height: 50%;
+}
+
+.card-description {
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  width: 100%;
+  padding: 0 2rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+  text-align: center;
+  z-index: 1;
+}
+
+.card:hover .card-description {
+  bottom: 20px;
+  opacity: 1;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 94, 0, 0.895);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 107, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 0, 0);
+  }
+}
+
+.card:nth-child(1) {
+  animation: pulse 2s infinite;
+  animation-delay: 0.5s;
+}
+
+.card:nth-child(2) {
+  animation: pulse 2s infinite;
+  animation-delay: 1s;
+}
+
+.card:nth-child(3) {
+  animation: pulse 2s infinite;
+  animation-delay: 1.5s;
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 2rem 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 320px;
+    height: 180px;
+  }
+  
+  .card h2 {
+    font-size: 1.5rem;
+  }
+  
+  .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.graphs-container {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+/*
+.card {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.card:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.card:nth-child(3) {
+  animation-delay: 0.6s;
+}*/

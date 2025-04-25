@@ -1,6 +1,33 @@
+<div class="list-container">
 @for (user of (users$ | async); track user.id) {
 <div class="user-card">
     <div class="user-name">{{ user.fName }} {{ user.lName }}</div>
     <div class="user-email">{{ user.email }}</div>
+    <div class="user-actions">
+        <button class="delete-button" (click)="deleteUser(user.id)">
+            <span class="icon">garbage</span>
+        </button>
+    </div>
 </div>
 }
+
+@if(add==false) {<button class="add-button" (click)="addForm()">
+    <span class="icon">+</span>
+</button>}
+
+@if(add==true) {
+<div class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="cancelAdd()">&times;</span>
+        <h2 class="add-title">Add User</h2>
+        <div class="add-form">
+            <input type="text" [(ngModel)]="newUser.fName" placeholder="First Name" required />
+            <input type="text" [(ngModel)]="newUser.lName" placeholder="Last Name" required />
+            <input type="email" [(ngModel)]="newUser.email" placeholder="Email" required />
+            <input type="password" [(ngModel)]="newUser.password" placeholder="Password" required />
+            <button (click)="addUser()">Add User</button>
+        </div>
+    </div>
+</div>}
+
+</div>

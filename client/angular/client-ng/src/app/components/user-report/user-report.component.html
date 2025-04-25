@@ -1,10 +1,59 @@
 <div class="chart-container">
-    <h2>User Registration Report (2020-2030)</h2>
-    @for(year of getYearsRange(2020, 2030); track year) {
-    <div class="chart-bar">
-        <span>{{ year }}</span>
-        <div class="bar" [style.width.%]="getUsersForYear(year) * 2">
-            {{ getUsersForYear(year) || 0 }} users
+    <div class="chart-header">
+        <h2>User Registration Trends</h2>
+        <div class="year-range">2020-2030</div>
+    </div>
+
+    <div class="chart-area">
+        <div class="y-axis">
+            @for(tick of getYAxisTicks(); track tick) {
+                <div class="y-tick">
+                    <span class="y-label">{{ tick }}</span>
+                    <div class="grid-line"></div>
+                </div>
+            }
         </div>
-    </div>}
+
+        <div class="chart-content">
+            @for(year of getYearsRange(2020, 2030); track year) {
+                <div class="bar-column">
+                    <div class="bar-wrapper">
+                        <div class="bar" [style.height.%]="getBarHeight(year)">
+                            <div class="bar-glow"></div>
+                            <div class="bar-tooltip">{{ getUsersForYear(year) }} users</div>
+                        </div>
+                    </div>
+                    <div class="x-label">{{ year }}</div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="stats-cards">
+        <div class="stat-card">
+            <div class="stat-value">{{ getTotalUsers() }}</div>
+            <div class="stat-label">Total Users</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ getMaxYear().year || '-' }}</div>
+            <div class="stat-label">Peak Year</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ getMaxYear().users || 0 }}</div>
+            <div class="stat-label">Max Users</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ getAverageUsers() }}</div>
+            <div class="stat-label">Average Users</div>
+        </div>
+    </div>
+
+    <div class="chart-footer">
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color"></div>
+                <div class="legend-text">Registered Users</div>
+            </div>
+        </div>
+    </div>
 </div>

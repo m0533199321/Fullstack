@@ -18,4 +18,19 @@ export class DisplayUsersService {
       this.users.next(data);
     })
   }
+
+  deleteUser(userId: number) {
+    console.log(`${this.baseUrl}/${userId}`);
+    return this.http.delete(`${this.baseUrl}/${userId}`).subscribe(() => {
+      this.getUsers();
+    }
+    );
+  }
+
+  addUser(user: User) {
+    return this.http.post<User>(`${this.baseUrl}`, user).subscribe(() => {
+      this.getUsers();
+    }
+    );
+  }
 }

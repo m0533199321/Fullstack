@@ -1,31 +1,258 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+:root {
+    --primary-color: #ff6b00;
+    --primary-gradient: linear-gradient(to top, #ff6b00, #ff9d4d);
+    --secondary-color: #ffffff;
+    --dark-bg: #1a1a1a;
+    --chart-bg: #2a2a2a;
+    --card-bg: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+    --grid-line: rgba(255, 255, 255, 0.1);
+}
+
+.client-container-all {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    font-family: "Montserrat", sans-serif;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.client-container {
+    padding: 2rem;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    color: #f5f5f5;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
 .chart-container {
-    background: linear-gradient(to bottom, #1a1a1a, #000);
+    background-color: #2a2a2a;
     border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.chart-bar {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.bar {
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    height: 20px;
-    border-radius: 5px;
-    transition: width 0.5s ease;
-}
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+  }
 
 h2 {
     text-align: center;
-    color: white;
-    margin-bottom: 20px;
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 1rem;
 }
 
-span {
-    min-width: 100px; /* Adjusted for client names */
-    color: #ccc;
+h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #ff6b00;
+    border-radius: 2px;
+}
+
+.chart-container {
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+}
+
+.chart {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 300px;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.chart-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 100px;
+    margin: 0 0.5rem;
+}
+
+.bar-container {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.bar {
+    width: 100%;
+    background: linear-gradient(to top, #ff6b00, #ff9d4d);
+    border-radius: 6px 6px 0 0;
+    position: relative;
+    transition: height 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+    min-height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.client-count {
+    position: absolute;
+    top: -25px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    background-color: #ff6b00;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.label {
+    margin-top: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recipe-count {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff6b00;
+}
+
+.recipe-text {
+    font-size: 0.8rem;
+    color: #aaaaaa;
+    margin-top: 0.2rem;
+}
+
+.stats-cards {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+
+.stat-card {
+    background-color: #333333;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    flex: 1;
+    margin: 0 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    border-bottom: 3px solid #ff6b00;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #aaaaaa;
+    font-size: 0.9rem;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(to top, #ff6b00, #ff9d4d);
+    border-radius: 4px;
     margin-right: 10px;
+}
+
+.legend-text {
+    color: #cccccc;
+    font-size: 0.9rem;
+}
+
+.no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    color: #777777;
+}
+
+.no-data-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .recipe-container {
+        padding: 1rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .chart {
+        height: 200px;
+    }
+
+    .bar-container {
+        height: 150px;
+    }
+
+    .stats-cards {
+        flex-direction: column;
+    }
+
+    .stat-card {
+        margin: 0.5rem 0;
+    }
+}
+
+@keyframes barGrow {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.bar {
+    animation: barGrow 1s forwards;
 }

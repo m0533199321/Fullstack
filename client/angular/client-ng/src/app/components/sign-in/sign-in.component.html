@@ -1,6 +1,6 @@
 <div class="overlay">
     <div id="root" class="form-container">
-        <h1>Sign In</h1>
+        <!-- <h1>Sign In</h1>
         <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
 
             <mat-form-field appearance="outline" class="input-field full-width">
@@ -20,9 +20,31 @@
                 <button mat-flat-button (click)="toggleForm()" color="primary" class="full-width">Cancel</button>
                 <button mat-flat-button type="submit" color="primary" class="full-width">Sign in</button>
             </div>
-        </form>
+        </form> -->
 
+        <div class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
+
+                    <mat-form-field appearance="outline" class="input-field full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email" required />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="input-field full-width">
+                        <mat-label>Password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required />
+                        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+                            <mat-icon>{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </form>
+                <button>Sign in</button>
+            </div>
+        </div>
     </div>
+
 </div>
 
 <style>

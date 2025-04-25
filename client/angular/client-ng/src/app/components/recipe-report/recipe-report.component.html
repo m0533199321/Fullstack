@@ -1,0 +1,51 @@
+<div class="recipe-container">
+    <h2>Recipe Comments Distribution</h2>
+    
+    <div class="chart-container">
+      @if(getSortedCommentCounts().length > 0) {
+        <div class="chart">
+          @for(count of getSortedCommentCounts(); track count) {
+            <div class="chart-column">
+              <div class="bar-container">
+                <div class="bar" [style.height.%]="getBarHeight(count)">
+                  <span class="recipe-count">{{ recipesByComments[count].length }}</span>
+                </div>
+              </div>
+              <div class="label">
+                <span class="comment-count">{{ count }}</span>
+                <span class="comment-text">{{ count === 1 ? 'Comment' : 'Comments' }}</span>
+              </div>
+            </div>
+          }
+        </div>
+        
+        <div class="stats-cards">
+          <div class="stat-card">
+            <div class="stat-value">{{ getTotalRecipes() }}</div>
+            <div class="stat-label">Total Recipes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">{{ getMostCommentedCount() }}</div>
+            <div class="stat-label">Most Comments</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">{{ getAverageComments() | number:'1.1-1' }}</div>
+            <div class="stat-label">Avg Comments</div>
+          </div>
+        </div>
+      } @else {
+        <div class="no-data">
+          <div class="no-data-icon">📊</div>
+          <p>No recipe data available</p>
+        </div>
+      }
+    </div>
+    
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color"></div>
+        <div class="legend-text">Number of recipes with specific comment count</div>
+      </div>
+    </div>
+  </div>
+  
