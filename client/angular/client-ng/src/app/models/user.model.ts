@@ -7,5 +7,6 @@ export class User {
         public password: string,
         public profile: string,
         public createdAt: Date,
+        public rolesList: [],
         public recipesList: []) { };
 }

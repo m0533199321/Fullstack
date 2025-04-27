@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { UserLogIn, UserRegister } from '../models/auth.model';
+import { catchError, map, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,27 +14,31 @@ export class AuthService {
   constructor(private http: HttpClient, private userService: UserService) { }
 
   login(user: UserLogIn) {
-    this.http.post<any>(this.baseUrl + '/login', user).subscribe(data => {
-      if (data.token) {
+    return this.http.post<any>(this.baseUrl + '/login', user).pipe(
+      map(response => {
+        console.log(response);
+        if (response && response.user.rolesList.length > 0) {
+          const hasAdminRole = response.user.rolesList.some((role: { roleName: string; }) => {
+            console.log(role.roleName);
+            return role.roleName.toLowerCase() === 'admin';
+          });
 
-        console.log(data.user.rolesList);
-        
-        if (data.user.rolesList && data.user.rolesList.some((r: any) => r.roleName.toLowerCase() === 'admin')) {
-          alert('Login successful');
-          sessionStorage.setItem('token', data.token);
-          console.log(data.user.id);
-          this.userService.getById(data.user.id);
+          if (hasAdminRole) {
+            sessionStorage.setItem('token', response.token);
+            this.userService.getUserFromToken();
+            return true;
+          } else {
+            throw new Error('User does not have admin role');
+          }
         } else {
-          alert('Login failed: You do not have admin privileges.');
+          throw new Error('User does not have admin role');
         }
-      } else {
-        alert(data.error || 'Login failed');
-      }
-    },
-      (error) => {
-        console.error('Login failed', error);
-        alert('Login failed');
-      });
+      }),
+      catchError(error => {
+        console.error(error);
+        return throwError(error);
+      })
+    );
   }
 
 }

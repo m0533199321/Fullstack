@@ -1,6 +1,48 @@
-@for (user of (users$ | async); track user.id) {
-<div class="user-card">
-    <div class="user-name">{{ user.fName }} {{ user.lName }}</div>
-    <div class="user-email">{{ user.email }}</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="list-container">
+    <div class="title-container">
+        <a href="javascript:history.back()" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" fill="white"
+                viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+        </a>
+        <h1 class="title">Users</h1>
+    </div>
+    @for (user of (users$ | async); track user.id) {
+    <div class="user-card">
+        <div class="user-name">{{ user.fName }} {{ user.lName }}</div>
+        <div class="user-email">{{ user.email }}</div>
+        <div class="user-actions">
+            <button class="delete-button" (click)="deleteUser(user.id)">
+                <i class="fas fa-trash icon-trash"></i>
+            </button>
+        </div>
+    </div>
+    }
+
+    @if(add==false) {<button class="add-button" (click)="addForm()">
+        <span class="icon">+</span>
+    </button>}
+
+    @if(add==true) {
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close" (click)="cancelAdd()">&times;</span>
+            <h2 class="add-title">Add User</h2>
+            <div class="add-form">
+                <input type="text" [(ngModel)]="newUser.fName" placeholder="First Name" required (ngModelChange)="clearError('fName')"/>
+                <div class="error-message">{{ errorMessages['fName'] }}</div>
+                <input type="text" [(ngModel)]="newUser.lName" placeholder="Last Name" required (ngModelChange)="clearError('lName')"/>
+                <div class="error-message">{{ errorMessages['lName'] }}</div>
+                <input type="email" [(ngModel)]="newUser.email" placeholder="Email" required (ngModelChange)="clearError('email')"/>
+                <div class="error-message">{{ errorMessages['email'] }}</div>
+                <input type="password" [(ngModel)]="newUser.password" placeholder="Password" required (ngModelChange)="clearError('password')"/>
+                <div class="error-message">{{ errorMessages['password'] }}</div>
+                <button (click)="addUser()">Add User</button>
+            </div>
+        </div>
+    </div>}
+
 </div>
-}

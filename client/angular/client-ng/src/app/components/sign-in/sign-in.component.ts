@@ -12,20 +12,20 @@ import { MatCardModule } from '@angular/material/card';
 import { MatStepperModule } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { UserLogIn } from '../../models/auth.model';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @Component({
     selector: 'app-sign-in',
     standalone: true,
-    imports: [ReactiveFormsModule, FormsModule, MatInputModule, MatIconModule, MatCardModule, MatStepperModule, MatSelectModule, MatButtonModule, MatFormFieldModule, MatDialogModule],
+    imports: [ReactiveFormsModule, FormsModule, MatInputModule, MatIconModule, MatCardModule, MatStepperModule, MatSelectModule, MatButtonModule, MatFormFieldModule, MatDialogModule, MatSnackBarModule],
     templateUrl: './sign-in.component.html',
     styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
   userForm: FormGroup;
   hide: boolean = true;
-  constructor(private fb: FormBuilder, private authService: AuthService,
-    private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -39,10 +39,9 @@ export class SignInComponent {
     this.hide = !this.hide;
   }
 
-  onSubmit() {
+  signIn() {
     if (this.userForm.invalid) {
       console.log("inavlid");
-
       this.userForm.markAllAsTouched();
       return;
     }
@@ -51,7 +50,31 @@ export class SignInComponent {
       this.userForm.get('email')?.value,
       this.userForm.get('password')?.value);
 
-    this.authService.login(userLoginIn);
+      this.authService.login(userLoginIn).subscribe({
+      next: (response) => {
+        console.log(response);
+        
+        this.snackBar.open('sign in successfully!', 'Close', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center'
+        });
+        this.router.navigate(['']);
+      },
+      error: (error) => {
+        console.log(error); 
+        this.snackBar.open('User does not have admin role', 'Close', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center'
+        });
+        this.userForm.reset();
+      }
+    });
+
+  }
+  
+  cancelSignIn() {
     this.router.navigate(['']);
   }
 }

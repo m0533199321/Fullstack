@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 @Injectable({
@@ -9,7 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 export class UserService {
 
   private baseUrl = 'https://localhost:7005/api/User'
-  public user: BehaviorSubject<User> = new BehaviorSubject<User>(new User(0, '', '', '', '','',new Date(),[]));
+  public user: BehaviorSubject<User> = new BehaviorSubject<User>(new User(0, '', '', '', '', '', new Date(), [], []));
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +20,7 @@ export class UserService {
   getById(id: number) {
     console.log(id);
     this.http.get<User>(`${this.baseUrl}/Full/${id}`).subscribe(data => {
+      console.log(data);   
       this.user.next(data as User);
       console.log(this.user.value);
     }
@@ -43,4 +44,5 @@ export class UserService {
   ngOnInit() {
     this.getUserFromToken()
   }
+
 }
