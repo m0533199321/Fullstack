@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import { DisplayUsersService } from '../../services/display-users.service';
 import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user-report',
     standalone: true,
-    imports: [AsyncPipe],
+    imports: [],
     templateUrl: './user-report.component.html',
     styleUrls: ['./user-report.component.css']
 })
@@ -16,7 +14,7 @@ export class UserReportComponent implements OnInit {
     userRegistrationData: { year: number; users: number }[] = []
     maxUsers = 0
   
-    constructor(private usersService: DisplayUsersService, private router: Router) {}
+    constructor(private usersService: DisplayUsersService) {}
     users$: Observable<User[]> = this.usersService.users
   
     ngOnInit(): void {
@@ -101,6 +99,6 @@ export class UserReportComponent implements OnInit {
     }
 
     goBack = () => {
-      this.router.navigate([-1]);
+      window.history.back();
     }
   }

@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, AsyncPipe],
+  imports: [CommonModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -45,7 +47,7 @@ export class HomeComponent implements OnInit {
     // })
   }
 
-  navigateToRoute(route:string): void {
+  navigateToRoute(route: string): void {
     this.router.navigate([route]);
   }
 }

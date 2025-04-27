@@ -77,5 +77,6 @@ export class SignInComponent {
   cancelSignIn() {
     this.router.navigate(['']);
   }
+
 }
 
