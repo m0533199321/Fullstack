@@ -24,15 +24,35 @@ body {
 .graphs-container {
   text-align: center;
   padding: 3rem 2rem;
-  max-width: 1200px;
   margin: 0 auto;
   background-color: #121212;
   min-height: 100vh;
 }
 
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.back-button svg {
+  fill: white;
+}
+
+.back-button:hover svg {
+  fill: #e05d00;
+}
+
+.title-container{
+  display: flex;
+}
+
 h1 {
   font-size: 2.5rem;
   font-weight: 700;
+  margin-left: 24vw;
   margin-bottom: 3rem;
   color: #ffffff;
   position: relative;

@@ -34,13 +34,55 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     background-color: #1e1e1e;
     /* var(--dark-gray) */
     border-radius: 12px;
     box-shadow: var(--card-shadow);
+}
+
+h1 {
+    text-align: center;
+    margin-left: 40vw;
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #ff6b00;
+    border-radius: 2px;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.back-button svg {
+    fill: white;
+}
+
+.back-button:hover svg {
+    fill: #e05d00;
+}
+
+.title-container{
+    display: flex;
 }
 
 .modal {
@@ -62,6 +104,12 @@ body {
     padding: 20px;
     width: 400px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 2px;
 }
 
 .add-title {
@@ -93,7 +141,7 @@ body {
     flex-direction: column;
     gap: 8px;
     overflow: hidden;
-    border-left: 4px solid #ff6b00;
+    /* border-left: 4px solid #ff6b00; */
     border-bottom: 2px solid #ff6b00;
 }
 
@@ -159,6 +207,11 @@ button {
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     font-weight: 500;
+}
+
+.icon-trash{
+    color: #ff6b00;
+    font-size: 1.5rem;
 }
 
 .delete-button {

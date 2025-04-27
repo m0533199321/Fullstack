@@ -1,30 +1,39 @@
 <div class="chart-container">
-    <div class="chart-header">
-        <h2>User Registration Trends</h2>
-        <div class="year-range">2020-2030</div>
+
+    <div class="title-container">
+        <a href="javascript:history.back()" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" fill="white"
+                viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+        </a>
+        <div class="chart-header">
+            <h2>User Registration Trends</h2>
+            <div class="year-range">2020-2030</div>
+        </div>
     </div>
 
     <div class="chart-area">
         <div class="y-axis">
             @for(tick of getYAxisTicks(); track tick) {
-                <div class="y-tick">
-                    <span class="y-label">{{ tick }}</span>
-                    <div class="grid-line"></div>
-                </div>
+            <div class="y-tick">
+                <span class="y-label">{{ tick }}</span>
+                <div class="grid-line"></div>
+            </div>
             }
         </div>
 
         <div class="chart-content">
             @for(year of getYearsRange(2020, 2030); track year) {
-                <div class="bar-column">
-                    <div class="bar-wrapper">
-                        <div class="bar" [style.height.%]="getBarHeight(year)">
-                            <div class="bar-glow"></div>
-                            <div class="bar-tooltip">{{ getUsersForYear(year) }} users</div>
-                        </div>
+            <div class="bar-column">
+                <div class="bar-wrapper">
+                    <div class="bar" [style.height.%]="getBarHeight(year)">
+                        <div class="bar-glow"></div>
+                        <div class="bar-tooltip">{{ getUsersForYear(year) }} users</div>
                     </div>
-                    <div class="x-label">{{ year }}</div>
                 </div>
+                <div class="x-label">{{ year }}</div>
+            </div>
             }
         </div>
     </div>

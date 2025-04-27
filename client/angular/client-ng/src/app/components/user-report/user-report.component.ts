@@ -3,6 +3,7 @@ import { User } from '../../models/user.model';
 import { DisplayUsersService } from '../../services/display-users.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user-report',
@@ -15,7 +16,7 @@ export class UserReportComponent implements OnInit {
     userRegistrationData: { year: number; users: number }[] = []
     maxUsers = 0
   
-    constructor(private usersService: DisplayUsersService) {}
+    constructor(private usersService: DisplayUsersService, private router: Router) {}
     users$: Observable<User[]> = this.usersService.users
   
     ngOnInit(): void {
@@ -97,5 +98,9 @@ export class UserReportComponent implements OnInit {
         const totalUsers = this.getTotalUsers();
         const totalYears = this.userRegistrationData.length;
         return totalYears > 0 ? parseFloat((totalUsers / totalYears).toFixed(2)) : 0;
+    }
+
+    goBack = () => {
+      this.router.navigate([-1]);
     }
   }

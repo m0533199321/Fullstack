@@ -9,14 +9,18 @@ import { Router } from '@angular/router';
 })
 export class GraphsComponent {
   reports = [
-    { title: 'User Registration Report', route: '/user-report' },
-    { title: 'Client Recipes Report', route: '/client-recipes-report' },
-    { title: 'Recipes Sorted by Comments', route: '/recipe-report' }
+    { title: 'User Registration Report', route: 'graphs/user-report' },
+    { title: 'Client Recipes Report', route: 'graphs/client-recipes-report' },
+    { title: 'Recipes Sorted by Comments', route: 'graphs/recipe-report' }
   ];
 
   constructor(private router: Router) {}
 
   navigateToReport(route: string): void {
     this.router.navigate([route]);
+  }
+
+  goBack = () => {
+    this.router.navigate([-1]);
   }
 }

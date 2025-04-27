@@ -39,10 +39,9 @@ export class SignInComponent {
     this.hide = !this.hide;
   }
 
-  onSubmit() {
+  signIn() {
     if (this.userForm.invalid) {
       console.log("inavlid");
-
       this.userForm.markAllAsTouched();
       return;
     }
@@ -52,6 +51,10 @@ export class SignInComponent {
       this.userForm.get('password')?.value);
 
     this.authService.login(userLoginIn);
+    this.router.navigate(['']);
+  }
+  
+  cancelSignIn() {
     this.router.navigate(['']);
   }
 }

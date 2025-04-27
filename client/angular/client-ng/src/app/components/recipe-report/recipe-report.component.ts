@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../../models/recipe.model';
 import { RecipeService } from '../../services/recipe.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-report',
@@ -14,7 +15,7 @@ export class RecipeReportComponent implements OnInit {
   recipesByComments: { [key: number]: Recipe[] } = {}
   maxRecipeCount = 0
 
-  constructor(private recipeService: RecipeService) {}
+  constructor(private recipeService: RecipeService, private router:Router) {}
 
   ngOnInit(): void {
     this.recipeService.getFull().subscribe((recipes: Recipe[]) => {
@@ -80,5 +81,9 @@ export class RecipeReportComponent implements OnInit {
     }
 
     return totalRecipes > 0 ? totalComments / totalRecipes : 0
+  }
+
+  goBack = () => {
+    this.router.navigate([-1]);
   }
 }

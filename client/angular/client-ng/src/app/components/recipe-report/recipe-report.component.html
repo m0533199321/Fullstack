@@ -1,51 +1,59 @@
 <div class="recipe-container">
+
+  <div class="title-container">
+    <a href="javascript:history.back()" class="back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" fill="white"
+        viewBox="0 0 24 24">
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+      </svg>
+    </a>
     <h2>Recipe Comments Distribution</h2>
-    
-    <div class="chart-container">
-      @if(getSortedCommentCounts().length > 0) {
-        <div class="chart">
-          @for(count of getSortedCommentCounts(); track count) {
-            <div class="chart-column">
-              <div class="bar-container">
-                <div class="bar" [style.height.%]="getBarHeight(count)">
-                  <span class="recipe-count">{{ recipesByComments[count].length }}</span>
-                </div>
-              </div>
-              <div class="label">
-                <span class="comment-count">{{ count }}</span>
-                <span class="comment-text">{{ count === 1 ? 'Comment' : 'Comments' }}</span>
-              </div>
-            </div>
-          }
-        </div>
-        
-        <div class="stats-cards">
-          <div class="stat-card">
-            <div class="stat-value">{{ getTotalRecipes() }}</div>
-            <div class="stat-label">Total Recipes</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">{{ getMostCommentedCount() }}</div>
-            <div class="stat-label">Most Comments</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">{{ getAverageComments() | number:'1.1-1' }}</div>
-            <div class="stat-label">Avg Comments</div>
+  </div>
+
+  <div class="chart-container">
+    @if(getSortedCommentCounts().length > 0) {
+    <div class="chart">
+      @for(count of getSortedCommentCounts(); track count) {
+      <div class="chart-column">
+        <div class="bar-container">
+          <div class="bar" [style.height.%]="getBarHeight(count)">
+            <span class="recipe-count">{{ recipesByComments[count].length }}</span>
           </div>
         </div>
-      } @else {
-        <div class="no-data">
-          <div class="no-data-icon">📊</div>
-          <p>No recipe data available</p>
+        <div class="label">
+          <span class="comment-count">{{ count }}</span>
+          <span class="comment-text">{{ count === 1 ? 'Comment' : 'Comments' }}</span>
         </div>
+      </div>
       }
     </div>
-    
-    <div class="legend">
-      <div class="legend-item">
-        <div class="legend-color"></div>
-        <div class="legend-text">Number of recipes with specific comment count</div>
+
+    <div class="stats-cards">
+      <div class="stat-card">
+        <div class="stat-value">{{ getTotalRecipes() }}</div>
+        <div class="stat-label">Total Recipes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ getMostCommentedCount() }}</div>
+        <div class="stat-label">Most Comments</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ getAverageComments() | number:'1.1-1' }}</div>
+        <div class="stat-label">Avg Comments</div>
       </div>
     </div>
+    } @else {
+    <div class="no-data">
+      <div class="no-data-icon">📊</div>
+      <p>No recipe data available</p>
+    </div>
+    }
   </div>
-  
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color"></div>
+      <div class="legend-text">Number of recipes with specific comment count</div>
+    </div>
+  </div>
+</div>

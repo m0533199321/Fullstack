@@ -12,7 +12,7 @@ export const appRoutes: Routes = [
   { path: 'signIn', component: SignInComponent },
   { path: 'displayUsers', component: DisplayUsersComponent },
   { path: 'graphs', component: GraphsComponent },
-  { path: 'user-report', component: UserReportComponent },
-  { path: 'client-recipes-report', component: ClientReportComponent },
-  { path: 'recipe-report', component: RecipeReportComponent }
+  { path: 'graphs/user-report', component: UserReportComponent },
+  { path: 'graphs/client-recipes-report', component: ClientReportComponent },
+  { path: 'graphs/recipe-report', component: RecipeReportComponent }
 ];

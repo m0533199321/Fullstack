@@ -1,7 +1,15 @@
-<div class="client-container-all"></div>
 <div class="client-container">
 
-  <h2>Clients Recipes Distribution</h2>
+  <div class="title-container">
+    <a href="javascript:history.back()" class="back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" fill="white"
+        viewBox="0 0 24 24">
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+      </svg>
+    </a>
+
+    <h2>Clients Recipes Distribution</h2>
+  </div>
 
   <div class="chart-container">
     @if(getSortedRecipeCounts().length > 0) {
@@ -34,12 +42,12 @@
         <div class="stat-label">Avg Recipes</div>
       </div>
     </div>
-  } @else {
+    } @else {
     <div class="no-data">
       <div class="no-data-icon">📊</div>
       <p>No recipe data available</p>
     </div>
-  }
+    }
   </div>
 
   <div class="legend">
@@ -48,5 +56,3 @@
       <div class="legend-text">Number of clients with specific recipe count</div>
     </div>
   </div>
-
-</div>

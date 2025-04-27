@@ -1,5 +1,5 @@
-<div class="overlay">
-    <div id="root" class="form-container">
+<!-- <div class="overlay"> -->
+    <!-- <div id="root" class="form-container"> -->
         <!-- <h1>Sign In</h1>
         <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
 
@@ -22,10 +22,10 @@
             </div>
         </form> -->
 
-        <div class="modal">
+        <!-- <div class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
+                <form [formGroup]="userForm" (ngSubmit)="onSignIn()" class="signIn-form">
 
                     <mat-form-field appearance="outline" class="input-field full-width">
                         <mat-label>Email</mat-label>
@@ -40,14 +40,14 @@
                         </button>
                     </mat-form-field>
                 </form>
-                <button>Sign in</button>
+                <button (click)="onSignIn()">Sign in</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
-</div>
+<!-- </div> -->
 
-<style>
+<!-- <style>
     .full-width {
         width: 100%;
     }
@@ -71,4 +71,20 @@
     .signup-link a:hover {
         text-decoration: underline;
     }
-</style>
+</style> -->
+
+
+<div class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="cancelSignIn()">&times;</span>
+        <h2 class="signIn-title">Sign In</h2>
+        <form [formGroup]="userForm" (ngSubmit)="signIn()" class="signIn-form">
+        <div class="signIn-form">
+                <input matInput type="email" formControlName="email" required placeholder="Email" />
+                <input matInput type="password" formControlName="password" required placeholder="Password" />
+            <button (click)="signIn()">Sign In</button>
+        </div>
+    </form>
+    </div>
+</div>
+

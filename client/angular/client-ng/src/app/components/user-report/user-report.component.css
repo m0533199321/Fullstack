@@ -12,6 +12,26 @@
     --grid-line: rgba(255, 255, 255, 0.1);
 }
 
+.back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.back-button svg {
+    fill: white;
+}
+
+.back-button:hover svg {
+    fill: #e05d00;
+}
+
+.title-container {
+    display: flex;
+}
+
 .chart-container {
     background-color: #1a1a1a;
     border-radius: 12px;
@@ -21,7 +41,6 @@
     color: #ffffff;
     position: relative;
     overflow: hidden;
-    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -36,7 +55,8 @@ h2 {
     text-align: center;
     color: #ffffff;
     font-size: 2rem;
-    margin-bottom: 2.5rem;
+    margin-left: 30vw;
+    margin-bottom: 1.7rem;
     font-weight: 600;
     position: relative;
     padding-bottom: 1rem;
@@ -56,8 +76,9 @@ h2::after {
 
 .year-range {
     font-size: 1.5rem;
-    color: var(--text-secondary);
-    margin-top: 0.5rem;
+    color: #aaaaaa;
+    top: 0;
+    margin-left: 30vw;
     font-weight: 500;
 }
 
@@ -172,7 +193,8 @@ h2::after {
     background: #ff6b00;
     border-radius: 6px 6px 0 0;
     position: relative;
-    transition: height 1s cubic-bezier(0.2, 0.8, 0.2, 1);;
+    transition: height 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    ;
     min-height: 4px;
     animation: barGrow 1s forwards;
 }
@@ -226,25 +248,25 @@ h2::after {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
-  }
-  
-  .legend-item {
+}
+
+.legend-item {
     display: flex;
     align-items: center;
-  }
-  
-  .legend-color {
+}
+
+.legend-color {
     width: 20px;
     height: 20px;
     background: linear-gradient(to top, #ff6b00, #ff9d4d);
     border-radius: 4px;
     margin-right: 10px;
-  }
-  
-  .legend-text {
+}
+
+.legend-text {
     color: #cccccc;
     font-size: 0.9rem;
-  }
+}
 
 @media (max-width: 768px) {
     .chart-container {

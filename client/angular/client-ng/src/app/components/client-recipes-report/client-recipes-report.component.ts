@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-recipes-report',
@@ -15,7 +16,7 @@ export class ClientReportComponent implements OnInit {
   clientsByRecipeCount: { [key: number]: number } = {};
   maxClientCount = 0;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.userService.getFull().subscribe((clients) => {
@@ -57,5 +58,9 @@ export class ClientReportComponent implements OnInit {
     );
     const totalClients = this.getTotalClients();
     return totalClients > 0 ? totalRecipes / totalClients : 0;
+  }
+
+  goBack = () => {
+    this.router.navigate([-1]);
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -28,9 +28,14 @@ export class DisplayUsersService {
   }
 
   addUser(user: User) {
-    return this.http.post<User>(`${this.baseUrl}`, user).subscribe(() => {
-      this.getUsers();
-    }
+    // return this.http.post<User>(`${this.baseUrl}`, user).subscribe(() => {
+    //   this.getUsers();
+    // }
+    // );
+    return this.http.post<User>(`${this.baseUrl}`, user).pipe(
+      tap(() => {
+        this.getUsers();
+      })
     );
   }
 }
