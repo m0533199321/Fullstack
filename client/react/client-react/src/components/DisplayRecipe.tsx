@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { fetchRecipeById } from "./Services/RecipeService";
 import FileViewer from "./FileViewer";
 import { useAppSelector } from "./Redux/Store";
+import File2 from "./File";
 
 const DisplayRecipe = () => {
 
@@ -62,7 +63,7 @@ const DisplayRecipe = () => {
         <>
             {!file ? (
                 <>
-                    <div style={{ marginTop:'10vh', height: '8vh' }}></div>
+                    <div style={{ marginTop: '10vh', height: '8vh' }}></div>
                     <div className="displayRecipe-container">
                         <img className="displayRecipe-image" src="../../images/back/smartSource2.png" alt={recipe.title} />
                         <div className="displayRecipe-details">
@@ -81,7 +82,7 @@ const DisplayRecipe = () => {
                                     <Button className="add-comment-button" onClick={() => setAddComment(true)}>הוספת תגובה</Button>
                                     <Button className="display-recipe-button" onClick={() => setFile(true)}>הצגת המתכון</Button></div></>) :
                                 (<>
-                                    <div className="displayRecipe-buttons"  style={{ marginRight: '28vw'}}>
+                                    <div className="displayRecipe-buttons" style={{ marginRight: '28vw' }}>
                                         <Button className="display-recipe-button" onClick={() => setFile(true)}>הצגת המתכון</Button>
                                     </div></>)}
                         </div>
@@ -101,7 +102,8 @@ const DisplayRecipe = () => {
                     {recipe && <Comments recipeId={recipe.id} />}
                 </>) :
                 (<>
-                    <FileViewer fileUrl={recipe.path} onClose={() => null} details={null} />
+                    <File2 recipe={recipe} fileUrl={recipe.path} onClose={() => null} details={null} />
+                    {/* <FileViewer fileUrl={recipe.path} onClose={() => null} details={null} /> */}
                 </>)
             }
         </>

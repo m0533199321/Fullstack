@@ -11,6 +11,10 @@ import re
 from docx.shared import Pt
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import RGBColor
+import requests
+from PIL import Image
+import boto3
+import time
 
 
 load_dotenv()
@@ -85,7 +89,7 @@ def get_recipe_file():
     title = doc.add_paragraph(recipe_name)
     title.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
     run = title.runs[0]
-    run.font.size = Pt(26)
+    run.font.size = Pt(29)
     run.font.color.rgb = RGBColor(255, 255, 255)
     run.bold = True 
 
@@ -109,7 +113,7 @@ def get_recipe_file():
     ingredients_name = doc.add_paragraph("רכיבים")
     ingredients_name.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
     run2 = ingredients_name.runs[0]
-    run2.font.size = Pt(23)
+    run2.font.size = Pt(26)
     run2.font.color.rgb = RGBColor(255, 255, 255)
     run2.bold = True
 
@@ -122,8 +126,8 @@ def get_recipe_file():
     instructions_name = doc.add_paragraph("הוראות הכנה")
     instructions_name.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
     run4 = instructions_name.runs[0]
-    run4.font.size = Pt(23)
-    run4.font.color.rgb = RGBColor(255, 255, 255)
+    run4.font.size = Pt(26)
+    run4.font.color.rgb = RGBColor(255, 255, 0)
     run4.bold = True
 
     instructions_list = doc.add_paragraph(instructions_text)
@@ -201,6 +205,64 @@ def name_recipe_with_ai(user_request):
 
     except Exception as e:
         return f"Error: {e}"
+    
+# @app.route('/api/recipe/image', methods=['POST'])
+# def generate_image_with_dalle():
+#     data = request.get_json()
+#     prompt = data.get('prompt') 
+
+#     if not prompt:
+#         return {"error": "Prompt is required"}, 400 
+
+#     output_path = "dalle_output.png"
+#     headers = {
+#         "Authorization": f"Bearer {my_key}",
+#         "Content-Type": "application/json",
+#     }
+#     data = {
+#         "prompt": prompt,
+#         "n": 1,
+#         "size": "512x512"
+#     }
+#     response = requests.post("https://api.openai.com/v1/images/generations", headers=headers, json=data)
+#     response.raise_for_status()
+#     image_url = response.json()["data"][0]["url"]
+#     print(image_url)
+#     image_data = requests.get(image_url).content
+#     image = Image.open(BytesIO(image_data))
+#     image.save(output_path)
+#     return output_path
+
+
+@app.route('/api/recipe/image', methods=['POST'])
+def generate_image_with_dalle():
+    data = request.get_json()
+    prompt = data.get('prompt')
+
+    if not prompt:
+        return {"error": "Prompt is required"}, 400
+
+    headers = {
+        "Authorization": f"Bearer {my_key}",
+        "Content-Type": "application/json",
+    }
+    data = {
+        "prompt": prompt,
+        "n": 1,
+        "size": "512x512"
+    }
+    response = requests.post("https://api.openai.com/v1/images/generations", headers=headers, json=data)
+    response.raise_for_status()
+    image_url = response.json()["data"][0]["url"]
+    print(image_url)
+    image_data = requests.get(image_url).content
+    image = Image.open(BytesIO(image_data))
+
+    img_byte_arr = BytesIO()
+    image.save(img_byte_arr, format='PNG')
+    img_byte_arr.seek(0)
+
+    return send_file(img_byte_arr, mimetype='image/png')
 
 
 if __name__ == '__main__':

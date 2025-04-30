@@ -3,7 +3,9 @@ import { Send } from "@mui/icons-material";
 import "../styles/Request.css";
 import FileViewer from "./FileViewer";
 import RequestService from "./Services/RequestService";
+import { recipeImg } from "./Services/RecipeImgService";
 import { useAppSelector } from "./Redux/Store";
+import File2 from "./File";
 
 const Request = () => {
     const user = useAppSelector((state) => state.auth.user);
@@ -74,16 +76,31 @@ const Request = () => {
         setInputValue(event.target.value);
     };
 
+    // const handleSend = async () => {
+    //     if (user && inputValue != "") {
+    //         setSend(true);
+    //         const result = await RequestService(inputValue + " difficulty: " + difficulty);
+    //         if (result != null && result != undefined && result.length > 0) {
+    //             setFileUrl(result[1]);
+    //             setShowFileViewer(true);
+    //             const name = result[0]
+    //             setDetails([name]);
+    //         }
+    //     }
+    //     setInputValue("");
+    // };
+
     const handleSend = async () => {
         if (user && inputValue != "") {
             setSend(true);
-            const result = await RequestService(inputValue + " difficulty: " + difficulty);
-            if (result != null && result != undefined && result.length > 0) {
-                setFileUrl(result[1]);
-                setShowFileViewer(true);
-                const name = result[0]
-                setDetails([name]);
-            }
+            const result = await recipeImg(inputValue);
+            console.log(result);
+            // if (result != null && result != undefined && result.length > 0) {
+            //     setFileUrl(result[1]);
+            //     setShowFileViewer(true);
+            //     const name = result[0]
+            //     setDetails([name]);
+            // }
         }
         setInputValue("");
     };
@@ -124,12 +141,13 @@ const Request = () => {
                     style={{ marginLeft: '19vw' }}
                 />}
                 {send &&
-                   <input
-                   type="text"
-                   className="input-with-icon"
-                   value={"אני מכין לך מתכון מושלם, בתאבון..."}
-                   style={{ marginLeft: '19vw' }}
-               />}
+                    <input
+                        type="text"
+                        className="input-with-icon"
+                        value={"אני מכין לך מתכון מושלם, בתאבון..."}
+                        onChange={() => { }}
+                        style={{ marginLeft: '19vw' }}
+                    />}
                 {!send && <div style={{ width: '20%', marginLeft: '20vw' }}>
                     <div className="difficulty-slider">
                         <label>דרגת קושי: {difficulty}</label>
@@ -149,7 +167,8 @@ const Request = () => {
             </>) : (
                 <>
                     {showFileViewer && fileUrl && (
-                        <FileViewer fileUrl={fileUrl} onClose={handleClose} details={[...details, '' + difficulty]} />
+                        <File2 recipe={null} fileUrl={fileUrl} onClose={handleClose} details={[...details, '' + difficulty]} />
+                        // <FileViewer fileUrl={fileUrl} onClose={handleClose} details={[...details, '' + difficulty]} />
                     )}
                 </>
             )}

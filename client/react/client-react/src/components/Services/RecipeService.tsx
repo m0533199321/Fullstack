@@ -110,6 +110,23 @@ export const fetchAddToMyBook = async (
     }
 };
 
+export const fetchUpdateRecipeImg = async (
+    recipeId: number,
+    title: string
+): Promise<any> => {
+    try {
+        const response2 = await api.put(`${API_URL}/UpdateImg/${recipeId}`, {
+            RecipeId: recipeId,
+            Url: title
+        });
+        console.log(response2);
+    } catch (e: any) {
+        Swal.fire("Error!", "Failed to edit recipe image. Please try again.", "error");
+        throw new Error(e.message);
+    }
+};
+
+
 export const recipeDetailsService = async (
     request: string
 ) => {

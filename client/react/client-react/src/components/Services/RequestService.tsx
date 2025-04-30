@@ -48,36 +48,67 @@ import api from "../api";
 const requestService = async (
     request: string
 ) => {
-    const API_URL = "https://localhost:7005/api/Request";
+    // const API_URL = "https://localhost:7005/api/Request";
+    const API_URL = "http://localhost:5000/api/recipe";
 
     try {
-        const response = await api.post(`${API_URL}/Request`,
-            request,
-            { headers: { 'Content-Type': 'application/json' } }
-        );
+        const response = await api.post(`${API_URL}/name`, { request: request }, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (response) {
+            const data = response.data;
+            const name = data.recipe_name;
+            console.log(name);
+            const response2 = await api.post(`${API_URL}/file`, { request: request, recipe_name: name }, {
+                headers: { 'Content-Type': 'application/json' },
+                responseType: 'arraybuffer'
+            });
+
+            if (response2) {
+                const fileData = new Uint8Array(response2.data);
+                const base64File = btoa(String.fromCharCode(...fileData));
+
+                const byteCharacters = atob(base64File);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: 'application/zip' });
+                const file = new File([blob], name, { type: 'application/zip' });
+                return [name, file];
+            }
+        }
+
+        // const response = await api.post(`${API_URL}/Request`,
+        // request,
+        // { headers: { 'Content-Type': 'application/json' } }
+        // );
+
         // if (response) {
         // const data = response.data;
         // console.log(data);
         // return data;
         // }
-        if (response) {
-            const data = response.data;
-            const fileName = data[0];
-            const base64Data = data[1];
+        // if (response) {
+        //     const data = response.data;
+        //     const fileName = data[0];
+        //     const base64Data = data[1];
 
-            const byteCharacters = atob(base64Data);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray], { type: 'application/zip' });
-            const file = new File([blob], fileName, { type: 'application/zip' });
-            return [fileName, file];
-        }
-        else {
-            return null;
-        }
+        //     const byteCharacters = atob(base64Data);
+        //     const byteNumbers = new Array(byteCharacters.length);
+        //     for (let i = 0; i < byteCharacters.length; i++) {
+        //         byteNumbers[i] = byteCharacters.charCodeAt(i);
+        //     }
+        //     const byteArray = new Uint8Array(byteNumbers);
+        //     const blob = new Blob([byteArray], { type: 'application/zip' });
+        //     const file = new File([blob], fileName, { type: 'application/zip' });
+        //     return [fileName, file];
+        // }
+        // else {
+        //     return null;
+        // }
     }
     catch (e) {
         console.error('Error:', e);

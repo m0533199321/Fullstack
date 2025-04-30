@@ -14,6 +14,8 @@ import { recipeEmailBody } from "./RecipeEmailBody";
 import PrivateShows from "./PrivateShows";
 import RecipeSearch from "./RecipeSearch";
 import RecipeSortBy, { sortRecipes } from "./RecipeSortBy";
+import File2 from "./File";
+import { recipeImg } from "./Services/RecipeImgService";
 
 const PrivateRecipes = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -128,7 +130,8 @@ const PrivateRecipes = () => {
                     </>
                 )}
                 {recipeToDisplay && (
-                    <FileViewer fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
+                    <File2 recipe={recipeToDisplay} fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
+                    // <FileViewer fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
                 )}
             </>
             ) : (

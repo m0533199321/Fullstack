@@ -22,6 +22,9 @@ namespace Recipes.Core.Interfaces.IRepository
         public Task<Recipe> AddRecipeToUserAsync(User user, Recipe recipe);
 
         public Task<bool> UpdatePublicAsync(int id);
+
+        public Task<Recipe?> UpdateImgAsync(int recipeId, string url);
+
     }
 }
 

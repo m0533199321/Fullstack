@@ -24,7 +24,7 @@ namespace Recipes.Core.Entities
 
         public string Path { get; set; }
 
-        //public string Picture { get; set; }
+        public string Picture { get; set; }
 
         public bool IsDeleted { get; set; }
 

@@ -105,5 +105,17 @@ namespace Recipes.Data.Repositories
             return false;
         }
 
+        public async Task<Recipe?> UpdateImgAsync(int recipeId, string url)
+        {
+            var recipe = await GetByIdAsync(recipeId);
+            if (recipe != null)
+            {
+                recipe.Picture = url;
+                return recipe;
+            }
+            return null;
+        }
+
+
     }
 }

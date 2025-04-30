@@ -131,6 +131,21 @@ namespace Recipes.API.Controllers
             return await _iService.UpdatePublicAsync(id);
         }
 
+        // PUT-PUBLIC api/<Users>/5
+        [HttpPut("UpdateImg/{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<RecipeDto?>> PutImg([FromBody] UpdateRecipeImg request)
+        {
+            if (request == null || request.RecipeId <= 0 || string.IsNullOrEmpty(request.Url))
+            {
+                return BadRequest("Missing userId or title");
+            }
+            var recipeDto = await _iService.UpdateImgAsync(request.RecipeId, request.Url);
+            if (recipeDto == null)
+                return NotFound();
+            return recipeDto;
+        }
+
         // DELETE api/<Users>/5
         [HttpDelete("{id}")]
         [Authorize(Policy = "Admin")]
@@ -169,7 +184,9 @@ namespace Recipes.API.Controllers
             var url = await _s3Service.GetDownloadUrlAsync(fileName);
             return Ok(new { downloadUrl = url });
         }
+
     }
+
 }
 
 

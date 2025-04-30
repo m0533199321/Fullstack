@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Org.BouncyCastle.Asn1.Ocsp;
 using Recipes.Core.DTOs;
 using Recipes.Core.Entities;
 using Recipes.Core.Interfaces.IRepository;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Recipes.Service.Services
 {
@@ -128,6 +130,18 @@ namespace Recipes.Service.Services
                 return recipeDto;
             }
             return null;
+        }
+        public async Task<RecipeDto> UpdateImgAsync(int recipeId, string url)
+        {
+            var recipe = await _iManager._recipeRepository.UpdateImgAsync(recipeId, url);
+            if (recipe != null)
+            {
+                await _iManager.SaveAsync();
+                var recipeDto = _mapper.Map<RecipeDto>(recipe);
+                return recipeDto;
+            }
+            return null;
+
         }
 
         public async Task<bool> UpdatePublicAsync(int id)

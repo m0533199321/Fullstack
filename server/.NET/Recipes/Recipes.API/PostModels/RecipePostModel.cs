@@ -10,7 +10,7 @@ namespace Recipes.API.PostModels
 
         public string Path { get; set; }
 
-        //public string Picture { get; set; }
+        public string Picture { get; set; }
 
         //public CategoryType Category { get; set; }
     }

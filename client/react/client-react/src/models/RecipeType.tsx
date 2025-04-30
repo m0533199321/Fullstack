@@ -5,6 +5,7 @@ export interface RecipeInterface {
     degree: number,
     createdAt: Date,
     path: string,
+    picture: string,
     // category: number
 }
 
@@ -22,6 +23,7 @@ export type Recipe = {
     degree: number,
     createdAt: Date,
     path: string,
+    picture: string,
     // category: number
 }
 

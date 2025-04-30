@@ -15,6 +15,7 @@ import PublicShows from "./PublicShows";
 import RecipeSearch from "./RecipeSearch";
 import RecipeSortBy, { sortRecipes } from "./RecipeSortBy";
 import PublicOptions from "./PublicOptions";
+import File2 from "./File";
 
 const PublicRecipes = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -130,7 +131,8 @@ const PublicRecipes = () => {
                     </>
                 )}
                 {recipeToDisplay && (
-                    <FileViewer fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
+                    <File2 recipe={recipeToDisplay} fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
+                    // <FileViewer fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
                 )}
             </>
             ) : (
