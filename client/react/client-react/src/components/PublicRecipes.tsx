@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Recipe } from "../models/RecipeType";
 import { AppDispatch, useAppSelector } from "./Redux/Store";
 import { Button } from "@mui/material";
-import { Star, StarBorder, MoreVert } from "@mui/icons-material";
+import { StarBorder, MoreVert } from "@mui/icons-material";
 import { fetchPublicRecipes, fetchPublicToPrivate, fetchPrivateRecipes } from "./Services/RecipeService";
 import "../styles/PublicRecipes.css";
 import { downloadRecipeFromUrl } from "./DownAndEmail";
@@ -16,6 +16,7 @@ import RecipeSearch from "./RecipeSearch";
 import RecipeSortBy, { sortRecipes } from "./RecipeSortBy";
 import PublicOptions from "./PublicOptions";
 import File2 from "./File";
+import { Star } from "lucide-react"
 
 const PublicRecipes = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -131,7 +132,7 @@ const PublicRecipes = () => {
                     </>
                 )}
                 {recipeToDisplay && (
-                    <File2 recipe={recipeToDisplay} fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
+                    <File2 recipe={recipeToDisplay} fileUrl={recipeToDisplay.path} onClose={() => setFile(false)} details={null} />
                     // <FileViewer fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
                 )}
             </>
@@ -164,16 +165,33 @@ const PublicRecipes = () => {
                                             <div key={recipe.id} className="recipe-card">
 
                                                 <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                                                    <MoreVert style={{ marginTop: '3%', marginBottom: 0, fontSize: '30px' }} onClick={() => setShowVert(prev => prev === recipe.id ? null : recipe.id)} />
+                                                    <MoreVert style={{ marginTop: '3%', marginBottom: 0, fontSize: '30px', cursor: 'pointer', color: 'white' }} onClick={() => setShowVert(prev => prev === recipe.id ? null : recipe.id)} />
                                                     <h3 className="recipe-title" style={{ fontSize: `${Math.max(1.2, 2.6 - recipe.title.length / 10)}em`, marginTop: 0, margin: 'auto' }}>{recipe.title}</h3>
                                                 </div>
-                                                <img src="../../images/back/smartSource2.png" alt={recipe.title} className="recipe-image" onClick={() => handleDisplayRecipeDetails(recipe.id)} />
-                                                <div className="difficulty-rating" style={{ bottom: '8%' }}>
-                                                    <div className="stars">
-                                                        {Array.from({ length: 5 }).reverse().map((_, index) => (
-                                                            index < (5 - recipe.degree) ? <StarBorder key={index} className="private-empty-star" /> : <Star key={index} className="private-filled-star" />
-                                                        ))}
-                                                    </div>
+                                                {recipe.picture && recipe.picture !== "" && <img src={recipe.picture} alt={recipe.title} className="recipe-image" onClick={() => handleDisplayRecipe(recipe)} />}
+                                                {(!recipe.picture || recipe.picture == "") && <img src="../../images/back/chef.png" alt={recipe.title} className="recipe-image" onClick={() => handleDisplayRecipe(recipe)} />}                                                <div className="difficulty-rating" style={{ bottom: '8%' }}>
+                                                    {/* <div className="difficulty-rating" style={{ bottom: '8%' }}>
+                                                        <div className="stars">
+                                                            {Array.from({ length: 5 }).reverse().map((_, index) => (
+                                                                index < (5 - recipe.degree) ? <StarBorder key={index} className="public-empty-star" /> : <Star key={index} className="public-filled-star" />
+                                                            ))}
+                                                        </div>
+                                                    </div> */}
+                                                    {(!recipe.picture || recipe.picture == "") && <div className="public-recipe-difficulty">
+                                                        <div className="public-stars-container">
+                                                            {[...Array(5)].map((_, i) => (
+                                                                <Star key={i} className={`public-star ${i < Number(recipe.degree) ? "active" : ""}`} size={24} />
+                                                            ))}
+                                                        </div>
+                                                    </div>}
+
+                                                    { recipe.picture != "" && <div className="public-recipe-difficulty2">
+                                                        <div className="public-stars-container">
+                                                            {[...Array(5)].map((_, i) => (
+                                                                <Star key={i} className={`public-star ${i < Number(recipe.degree) ? "active" : ""}`} size={24} />
+                                                            ))}
+                                                        </div>
+                                                    </div>}
                                                 </div>
                                                 {showVert === recipe.id && (
                                                     <div className="public-showVert" onClick={() => setShowVert(null)}>

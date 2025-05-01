@@ -4,7 +4,7 @@ const API_URL = "https://localhost:7005/api/User";
 export const uploadProfilePictureService = async (file: File): Promise<string | null> => {
     if (file) {
         try {
-            const imageName = '' + file.name + new Date().getTime()
+            const imageName = '' + new Date().getTime() + file.name
             console.log(imageName);
             console.log(file.type);
 

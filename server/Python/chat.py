@@ -261,6 +261,10 @@ def generate_image_with_dalle():
     img_byte_arr = BytesIO()
     image.save(img_byte_arr, format='PNG')
     img_byte_arr.seek(0)
+    img_byte_arr.seek(0)
+    with open("temp_image.png", "wb") as f:
+        f.write(img_byte_arr.getvalue())
+    print(type(img_byte_arr))
 
     return send_file(img_byte_arr, mimetype='image/png')
 

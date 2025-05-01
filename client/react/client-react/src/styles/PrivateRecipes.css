@@ -21,8 +21,8 @@
     padding: 0.8%;
     padding-top: 0;
     padding-bottom: 4%;
-    height: 32vh;
-    width: 15vw;
+    height: 38vh;
+    width: 16vw;
     background-color: #212121;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease-in-out;
@@ -39,7 +39,7 @@
 
 .privateRecipe-image {
     margin-bottom: 2%;
-    width: 100% !important;
+    width: 90% !important;
     height: auto;
 }
 
@@ -50,18 +50,84 @@
     text-align: center;
 }
 
-.private-difficulty-rating {
+.private-logo-text {
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--light);
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    background: linear-gradient(to right, #ffffff, #ffb74d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    /* letter-spacing: -1px; */
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    position: absolute;
+    top: 53%;
+    left: 4%;
+    z-index: 100;
+}
+
+.private-recipe-difficulty {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-right: 92%;
+    margin-top: -55%;
+}
+
+.private-recipe-difficulty2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-right: 92%;
+    margin-top: -65%;
+}
+
+.private-stars-container {
+    display: flex;
+    gap: 0.25rem;
+    flex-direction: column; 
+}
+
+.private-star {
+    color: rgba(255, 165, 0, 0.3);
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.private-star.active {
+    color: #ffa500;
+    filter: drop-shadow(0 0 3px rgba(255, 165, 0, 0.5));
+}
+
+/* .private-difficulty-rating {
     position: absolute;
     left: 0;
     right: 30%;
     display: flex;
     justify-content: center;
     padding: 4px 0;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    height: 30vh;
+    top: 20%;
+    left: 2%;
+    z-index: 100;
+}
+
+.private-stars{
+    display: flex;
+    gap: 5px;
+    margin: 0;
+    margin-left: 90%;
+    margin-bottom: 27%;
 }
 
 .private-filled-star {
     color: gold !important;
-}
+} */
 
 .private-buttons-container {
     position: absolute;
@@ -76,10 +142,9 @@
 .private-showVert {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.5);
-    width: 15vw;
-    height: 80%;
+    width: 13.5vw;
+    height: 73%;
     top: 15%;
-    left: 5%;
     z-index: 100;
     display: flex;
     align-items: center;

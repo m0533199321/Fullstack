@@ -119,22 +119,8 @@ const Header = () => {
             </Snackbar>
             <AppBar position="fixed" sx={{ backgroundColor: "black", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.5)", marginBottom: '20%', }}>
                 <Toolbar>
-                    <img src="../../images/back/smartChef.png" alt="smart-chef" onClick={() => goTo("/email-to-me")} style={{ width: '10vw', marginRight: '50vw', cursor: 'pointer' }} />
-                    {!isAuthenticated ? (
-                        <>
-                            <div style={{ marginLeft: 'auto', display: 'flex' }}>
-                                <IconButton color="inherit" onClick={() => goTo("/")} sx={{ ml: 2 }}>
-                                    <HomeIcon style={{ color: 'orange' }} />
-                                </IconButton>
-                                <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/login")} startIcon={<LoginIcon />}>
-                                    התחברות
-                                </Button>
-                                <Button sx={{ ml: 2, color: "#FFA500" }} onClick={() => goTo("/register")} startIcon={<PersonAddIcon />}>
-                                    הרשמה
-                                </Button>
-                            </div>
-                        </>
-                    ) : (
+                    {/* <img src="../../images/back/smartChef.png" alt="smart-chef" onClick={() => goTo("/email-to-me")} style={{ width: '10vw', marginRight: '50vw', cursor: 'pointer' }} /> */}
+                    {!isAuthenticated &&
                         <>
                             <IconButton color="inherit" onClick={() => goTo("/")} sx={{ ml: 2 }}>
                                 <HomeIcon style={{ color: 'orange' }} />
@@ -154,7 +140,7 @@ const Header = () => {
                                 sx={{ cursor: 'pointer', ml: 2 }}
                             />
                         </>
-                    )}
+                    }
                 </Toolbar>
             </AppBar>
 

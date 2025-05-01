@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap');
 
 body {
   background-color: #000000;
@@ -6,4 +6,272 @@ body {
   font-family: 'Assistant', sans-serif;
   margin: 0;
   padding: 0;
+} */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Assistant:wght@300;400;500;600&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 30 100% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 30 100% 50%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-assistant;
+  }
+}
+
+@layer components {
+  .chef-title {
+    @apply font-playfair font-bold text-4xl md:text-5xl lg:text-6xl text-primary;
+  }
+  
+  .page-container {
+    @apply min-h-screen bg-black;
+  }
+  
+  .video-container {
+    @apply relative h-screen overflow-hidden;
+  }
+  
+  .video-overlay {
+    @apply absolute inset-0 bg-black bg-opacity-50;
+  }
+  
+  .overlay-content {
+    @apply absolute inset-0 flex items-center justify-center flex-col px-6 text-center z-10;
+  }
+  
+  .hero-subtitle {
+    @apply text-white text-xl md:text-2xl mt-4 max-w-3xl mx-auto opacity-0 animate-fade-up;
+    animation-delay: 0.6s;
+    animation-fill-mode: forwards;
+  }
+  
+  .hero-cta {
+    @apply mt-8 opacity-0 animate-fade-up;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+  }
+  
+  .section-title {
+    @apply font-playfair text-3xl md:text-4xl text-primary mb-8 text-center;
+  }
+  
+  .recipe-card {
+    @apply relative rounded-lg overflow-hidden shadow-2xl transition-all duration-500 hover:scale-105;
+  }
+  
+  .recipe-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80 transition-opacity duration-300;
+  }
+  
+  .recipe-content {
+    @apply absolute bottom-0 left-0 p-4 w-full text-white;
+  }
+  
+  .recipe-title {
+    @apply font-playfair text-xl font-bold;
+  }
+  
+  .about-section {
+    @apply py-16 px-4 md:px-8 text-white max-w-6xl mx-auto;
+  }
+  
+  .about-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-8;
+  }
+  
+  .about-card {
+    @apply bg-black bg-opacity-60 p-6 rounded-lg border border-primary/20 hover:border-primary/40 transition-all;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 1s ease forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.8s ease forwards;
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animate-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animate-delay-600 {
+  animation-delay: 600ms;
+}
+
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-assistant {
+  font-family: 'Assistant', sans-serif;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  width: 100%;
+}
+
+.marquee-content {
+  display: flex;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-reverse .marquee-content {
+  animation-direction: reverse;
+}
+
+.marquee-content > * {
+  flex: 0 0 auto;
 }

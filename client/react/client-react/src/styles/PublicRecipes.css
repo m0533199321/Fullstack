@@ -53,8 +53,8 @@
     padding: 0.8%;
     padding-top: 0;
     padding-bottom: 4%;
-    height: 32vh;
-    width: 15vw;
+    height: 38vh;
+    width: 16vw;
     background-color: #212121;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease-in-out;
@@ -88,22 +88,69 @@
 
 .recipe-image {
     margin-bottom: 2%;
-    width: 100% !important;
+    width: 90% !important;
     height: auto;
 }
 
-.difficulty-rating {
+.public-recipe-difficulty {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-right: 92%;
+    margin-top: -55%;
+}
+
+.public-recipe-difficulty2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-right: 92%;
+    margin-top: -65%;
+}
+
+.public-stars-container {
+    display: flex;
+    gap: 0.25rem;
+    flex-direction: column; 
+}
+
+.public-star {
+    color: rgba(255, 165, 0, 0.3);
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.public-star.active {
+    color: #ffa500;
+    filter: drop-shadow(0 0 3px rgba(255, 165, 0, 0.5));
+}
+
+/* .difficulty-rating {
     position: absolute;
     left: 0;
     right: 30%;
     display: flex;
     justify-content: center;
     padding: 4px 0;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    height: 30vh;
+    top: 20%;
+    left: 2%;
+    z-index: 100;
 }
 
-.filled-star {
-    color: gold !important;
+.stars{
+    display: flex;
+    gap: 5px;
+    margin: 0;
+    margin-right: 70%;
+    margin-top: 15%;
 }
+
+.public-filled-star {
+    color: gold !important;
+} */
 
 .recipe-title {
     color: orange;

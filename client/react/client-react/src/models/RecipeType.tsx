@@ -13,6 +13,7 @@ export interface RecipePostModel {
     title: string,
     degree: number,
     path: string,
+    picture: string,
     // category: number
 }
 
@@ -30,6 +31,9 @@ export type Recipe = {
 export type RecipeWithOutId = {
     title: string,
     degree: number,
-    createdAt: Date
+    createdAt: Date,
+    path: string,
+    picture: string,
+    // category: number
 }
 

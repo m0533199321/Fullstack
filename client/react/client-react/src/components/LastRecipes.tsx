@@ -27,7 +27,6 @@ const LastRecipes = () => {
 
     return (
         <>
-            <h1 style={{ color: 'orange', marginLeft: '32%', marginTop: '10vh' }}>:חדשים במערכת</h1>
             <div className="last-recipes-container">
                 {success && recipes.length > 0 && (
                     <div className="last-recipe-grid">

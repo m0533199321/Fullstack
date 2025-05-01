@@ -8,17 +8,27 @@ export const recipeImg = async (request: string) => {
 
     try {
         const response = await api.post(`${API_URL}/image`, { prompt: request }, {
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            responseType: 'blob'
         });
+        console.log("תגובה מלאה מהשרת:", response);
+
         if (response) {
-            const blob = new Blob([response.data], { type: 'image/png' });
+            console.log("נתוני התגובה:", response.data);
+            console.log("סוג נתוני התגובה:", typeof response.data);
+            console.log("ההידרים של התגובה:", response.headers);
+            const blob = new Blob([response.data], { type: 'application/octet-stream' });
+            // const blob = new Blob([response.data], { type: 'image/png' });
             const file = new File([blob], 'recipeimage.png', { type: 'image/png' });
             // const blob = new Blob([response.data], { type: 'image/jpeg' });
             // const file = new File([blob], 'recipe-image.jpg', { type: 'image/jpeg' });
 
-            const response2 = uploadRecipeImgService(file);
-            console.log(response2);
-            return response2;
+            console.log(typeof (file));
+
+            return file;
+            // const response2 = await uploadRecipeImgService(file);
+            // console.log(response2);
+            // return response2;
         }
     }
     catch (e) {
@@ -42,9 +52,13 @@ export const uploadRecipeImgService = async (file: File): Promise<string | null>
             });
 
             const presignedUrl = res.data.url;
-            await axios.put(presignedUrl, file, { headers: { "Content-Type": file.type } });
+            console.log(presignedUrl);
+            return presignedUrl;
+            // await axios.put(presignedUrl, file, {
+            //     headers: { "Content-Type": file.type }
+            // });
 
-            return presignedUrl.split("?")[0];
+            // return presignedUrl.split("?")[0];
         } catch (error) {
             console.error("שגיאה בהעלאת הקובץ:", error);
             return null;

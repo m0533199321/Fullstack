@@ -45,8 +45,8 @@ const Google = () => {
     return (<>
         <Box sx={{ display: 'flex', alignItems: 'center', my: 4 }}>
             <Divider sx={{ flexGrow: 1, borderColor: 'grey.500' }} />
-            <Typography variant="body2" sx={{ mx: 2, color: 'grey.500' }}>
-                OR
+            <Typography variant="body2" sx={{ mx: 2, color: 'grey.500', fontSize: '20px' }}>
+                או
             </Typography>
             <Divider sx={{ flexGrow: 1, borderColor: 'grey.500' }} />
         </Box>

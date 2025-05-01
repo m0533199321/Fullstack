@@ -8,7 +8,9 @@ import "../styles/File.css"
 import { FaImage } from "react-icons/fa"
 import { uploadRecipeService } from "./Services/RequestService"
 import { BookOpen, ChefHat, Clock, Utensils, ArrowRight, BookPlus, Star } from "lucide-react"
-import { recipeImg } from "./Services/RecipeImgService"
+import { recipeImg, uploadRecipeImgService } from "./Services/RecipeImgService"
+import axios from "axios"
+import { Close } from "@mui/icons-material"
 
 interface FileViewerProps {
     recipe: Recipe | null
@@ -22,14 +24,82 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
     const [htmlContent, setHtmlContent] = useState("")
     const [direction, setDirection] = useState<"ltr" | "rtl">("rtl")
     const [isLoading, setIsLoading] = useState(true)
+    // const [progress, setProgress] = useState(0);
+    const [recipeImage, setRecipeImage] = useState(recipe?.picture || "");
+    const [isImageUploading, setIsImageUploading] = useState(false)
 
     const changeImage = async () => {
         if (recipe) {
-            const url = await recipeImg(recipe?.title);
-            if (url) {
-                await fetchUpdateRecipeImg(recipe.id, url);
+            setIsImageUploading(true)
+            console.log(recipe?.title)
+            try {
+                const file = await recipeImg(recipe?.title)
+                console.log(typeof file)
+                console.log(file)
+
+                if (file) {
+                    uploadRecipeImgService(file)
+                        .then(async (presignedUrl) => {
+                            if (presignedUrl) {
+                                await axios
+                                    .put(presignedUrl, file, {
+                                        headers: { "Content-Type": file.type },
+                                        // onUploadProgress: (progressEvent) => {
+                                        //     const percent = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
+                                        //     console.log(`Uploaded: ${progressEvent.loaded} of ${progressEvent.total} bytes (${percent}%)`); // לוגים
+                                        //     setProgress(percent);
+                                        // },
+                                    })
+                                    .then(async () => {
+                                        const res = await fetchUpdateRecipeImg(recipe.id, presignedUrl.split("?")[0])
+                                        console.log(res)
+                                        setRecipeImage(presignedUrl.split("?")[0])
+                                        setIsImageUploading(false)
+                                    })
+                            } else {
+                                console.error("Failed to upload profile picture.")
+                                setIsImageUploading(false)
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error uploading image:", error)
+                            setIsImageUploading(false)
+                        })
+                } else {
+                    setIsImageUploading(false)
+                }
+            } catch (error) {
+                console.error("Error generating image:", error)
+                setIsImageUploading(false)
             }
+            // setProgress(0);
         }
+        // if (recipe) {
+        //     console.log(recipe?.title);
+        //     const file = await recipeImg(recipe?.title);
+        //     console.log(typeof (file));
+        //     console.log(file);
+
+        //     if (file) {
+        //         uploadRecipeImgService(file).then(async presignedUrl => {
+        //             if (presignedUrl) {
+        //                 await axios.put(presignedUrl, file, {
+        //                     headers: { "Content-Type": file.type },
+        //                     onUploadProgress: (progressEvent) => {
+        //                         const percent = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
+        //                         setProgress(percent);
+        //                     },
+        //                 }).then(async () => {
+        //                    const res = await fetchUpdateRecipeImg(recipe.id, presignedUrl.split('?')[0]);
+        //                    console.log(res);
+        //                    setRecipeImage(presignedUrl.split("?")[0]);
+        //                 });
+        //             } else {
+        //                 console.error("Failed to upload profile picture.");
+        //             }
+        //         });
+        //     }
+        // }
     }
 
     useEffect(() => {
@@ -182,6 +252,7 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                     title: details[0],
                     degree: Number(details[1]),
                     path: result,
+                    picture: ""
                 }
 
                 if (user) {
@@ -196,96 +267,116 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
     }
 
     return (
-        <div className="recipe-viewer">
-            <div className="recipe-header">
-                <div className="recipe-title-area">
-                    {details && details[0] && <h1 className="recipe-main-title">{details[0]}</h1>}
-                    {recipe && <h1 className="recipe-main-title">{recipe.title}</h1>}
+        <div className="file-fullscreen">
+            <div className="recipe-viewer">
+                <Close onClick={onClose} />
+                <div className="recipe-header">
+                    <div className="recipe-title-area">
+                        {details && details[0] && <h1 className="recipe-main-title">{details[0]}</h1>}
+                        {recipe && <h1 className="recipe-main-title">{recipe.title}</h1>}
 
-                    {details && details[1] && (
-                        <div className="recipe-difficulty">
-                            <span>דרגת קושי:</span>
-                            <div className="stars-container">
-                                {[...Array(5)].map((_, i) => (
-                                    <Star key={i} className={`star ${i < Number(details[1]) ? "active" : ""}`} size={18} />
-                                ))}
+                        {details && details[1] && (
+                            <div className="recipe-difficulty">
+                                <span>דרגת קושי:</span>
+                                <div className="stars-container">
+                                    {[...Array(5)].map((_, i) => (
+                                        <Star key={i} className={`star ${i < Number(details[1]) ? "active" : ""}`} size={18} />
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="recipe-actions">
+                        {details && (
+                            <>
+                                <button className="recipe-button back-button" onClick={onClose}>
+                                    <ArrowRight size={18} />
+                                    <span>חזרה לבחירת מתכון אחר</span>
+                                </button>
+                                <button className="recipe-button add-button" onClick={onSelect}>
+                                    <BookPlus size={18} />
+                                    <span>הוספה לספר המתכונים שלי</span>
+                                </button>
+                            </>
+                        )}
+
+                        {recipe && recipe.picture == "" && (
+                            <button
+                                className={`recipe-button img-button ${isImageUploading ? "disabled" : ""}`}
+                                onClick={changeImage}
+                                disabled={isImageUploading}
+                            >
+                                <FaImage size={18} />
+                                {/* <p>מחליף תמונה... {progress}%</p> */}
+                                <span>{isImageUploading ? "מחליף תמונה... " : "החלפת תמונה"}</span>
+                            </button>
+                        )}
+                    </div>
+                </div>
+
+                <div className="recipe-content-wrapper">
+                    <div className="recipe-chef-container">
+                        <div className="chef-image-wrapper">
+                            {isImageUploading && (
+                                <div className="image-loading-overlay">
+                                    <div className="loading-spinner"></div>
+                                    {/* {progress && <p>מעדכן תמונה... {progress}%</p>} */}
+                                    <p>מחליף תמונה...</p>
+                                </div>
+                            )}
+                            {!recipeImage && <img src="../../images/back/chef.png" alt="chef" className="chef-image" />}
+                            {recipeImage && <img src={recipeImage || "/placeholder.svg"} alt="chef" className="chef-image" />}
+                        </div>
+                        {/* <div className="chef-image-wrapper">
+                        {!recipeImage && <img src="../../images/back/chef.png" alt="chef" className="chef-image" />}
+                        {recipeImage && <img src={recipeImage} alt="chef" className="chef-image" />}
+                    </div> */}
+
+                        <div className="recipe-info">
+                            <div className="info-item">
+                                <Clock size={20} className="info-icon" />
+                                <span>זמן הכנה משוער</span>
+                            </div>
+                            <div className="info-item">
+                                <Utensils size={20} className="info-icon" />
+                                <span>מנה טובה</span>
+                            </div>
+                            <div className="info-item">
+                                <BookOpen size={20} className="info-icon" />
+                                <span>מתכון מומלץ</span>
+                            </div>
+                            <div className="info-item">
+                                <ChefHat size={20} className="info-icon" />
+                                <span>קל להכנה</span>
                             </div>
                         </div>
-                    )}
-                </div>
-
-                <div className="recipe-actions">
-                    {details && (
-                        <>
-                            <button className="recipe-button back-button" onClick={onClose}>
-                                <ArrowRight size={18} />
-                                <span>חזרה לבחירת מתכון אחר</span>
-                            </button>
-                            <button className="recipe-button add-button" onClick={onSelect}>
-                                <BookPlus size={18} />
-                                <span>הוספה לספר המתכונים שלי</span>
-                            </button>
-                        </>
-                    )}
-                    {recipe && (
-                        <button className="recipe-button img-button" onClick={changeImage}>
-                            <FaImage size={18} />
-                            <span>החלפת תמונה</span>
-                        </button>
-                    )}
-                </div>
-            </div>
-
-            <div className="recipe-content-wrapper">
-                <div className="recipe-chef-container">
-                    <div className="chef-image-wrapper">
-                        {!recipe?.picture && <img src="../../images/back/chef.png" alt="chef" className="chef-image" />}
-                        {recipe?.picture && <img src={recipe.picture} alt="chef" className="chef-image" />}
                     </div>
 
-                    <div className="recipe-info">
-                        <div className="info-item">
-                            <Clock size={20} className="info-icon" />
-                            <span>זמן הכנה משוער</span>
-                        </div>
-                        <div className="info-item">
-                            <Utensils size={20} className="info-icon" />
-                            <span>מנה טובה</span>
-                        </div>
-                        <div className="info-item">
-                            <BookOpen size={20} className="info-icon" />
-                            <span>מתכון מומלץ</span>
-                        </div>
-                        <div className="info-item">
-                            <ChefHat size={20} className="info-icon" />
-                            <span>קל להכנה</span>
-                        </div>
+                    <div className="recipe-content">
+                        {isLoading ? (
+                            <div className="loading-container">
+                                <div className="loading-spinner"></div>
+                                <p>טוען את המתכון...</p>
+                            </div>
+                        ) : (
+                            <div
+                                className={`recipe-document ${direction === "rtl" ? "rtl-content" : "ltr-content"}`}
+                                style={{ direction }}
+                                dangerouslySetInnerHTML={{ __html: htmlContent }}
+                            />
+                        )}
                     </div>
                 </div>
 
-                <div className="recipe-content">
-                    {isLoading ? (
-                        <div className="loading-container">
-                            <div className="loading-spinner"></div>
-                            <p>טוען את המתכון...</p>
-                        </div>
-                    ) : (
-                        <div
-                            className={`recipe-document ${direction === "rtl" ? "rtl-content" : "ltr-content"}`}
-                            style={{ direction }}
-                            dangerouslySetInnerHTML={{ __html: htmlContent }}
-                        />
-                    )}
-                </div>
-            </div>
-
-            <div className="recipe-footer">
-                <div className="footer-decoration">
-                    <span className="decoration-dot"></span>
-                    <span className="decoration-line"></span>
-                    <ChefHat size={24} className="footer-icon" />
-                    <span className="decoration-line"></span>
-                    <span className="decoration-dot"></span>
+                <div className="recipe-footer">
+                    <div className="footer-decoration">
+                        <span className="decoration-dot"></span>
+                        <span className="decoration-line"></span>
+                        <ChefHat size={24} className="footer-icon" />
+                        <span className="decoration-line"></span>
+                        <span className="decoration-dot"></span>
+                    </div>
                 </div>
             </div>
         </div>

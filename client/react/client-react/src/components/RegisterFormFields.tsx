@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 import { CreateTextField } from "./RegisterGenericTextField";
 
 const RegisterFromFields = ({ firstName, lastName, email, password, errorsEmail, errorsPassword, handleChange }:
-     { firstName: string, lastName: string, email: string, password: string, errorsEmail: string | undefined, errorsPassword: string | undefin,
+     { firstName: string, lastName: string, email: string, password: string, errorsEmail: string | undefined, errorsPassword: string | undefined,
         handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void }) => {
     return (<>
         <CreateTextField
