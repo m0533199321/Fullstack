@@ -55,6 +55,7 @@ const FileViewer: React.FC<FileViewerProps> = ({ fileUrl, onClose, details }) =>
             const recipePostModel: RecipePostModel = {
                 title: details[0],
                 degree: Number(details[1]),
+                picture: "",
                 path: result,
                 // category: Number(details[1]),
             }

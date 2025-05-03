@@ -63,6 +63,10 @@ const SideHeader = () => {
         }
     }, [notification])
 
+    useEffect(() => {
+        document.body.classList.toggle("collapsed-header", isCollapsed);
+    }, [isCollapsed]);
+
     const handleEditName = () => {
         setFName(user?.fName || "")
         setLName(user?.lName || "")
@@ -200,13 +204,11 @@ const SideHeader = () => {
                                     whileTap={{ scale: 0.95 }}
                                 >
                                     <div className="avatar-container">
-                                        <img
-                                            src={user?.profile || "/placeholder.svg?height=100&width=100"}
-                                            alt="פרופיל"
-                                            className="avatar-image"
-                                        />
-                                        <div className="avatar-status"></div>
+                                        {user?.profile && <img src={user?.profile} alt="פרופיל" className="avatar-image" />}
+                                        {!user?.profile && <ChefHat className="avatar-logo" size={30} />}
+                                        <div className="avatar-status" style={{ backgroundColor: isAuthenticated ? 'green' : 'gray' }}></div>
                                     </div>
+
                                     {!isCollapsed && (
                                         <div className="profile-info">
                                             <h3 className="profile-name">{user?.fName + " " + user?.lName}</h3>

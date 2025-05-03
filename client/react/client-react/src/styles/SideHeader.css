@@ -24,6 +24,14 @@
     --border-radius-full: 9999px;
 }
 
+body {
+    padding-right: 280px;
+    transition: padding-right var(--transition-normal);
+}
+
+body.collapsed-header {
+    padding-right: 80px;
+}
 
 .side-header {
     position: fixed;
@@ -181,6 +189,27 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.avatar-logo {
+    color: var(--primary);
+    margin-right: auto;
+    filter: drop-shadow(0 0 15px rgba(255, 152, 0, 0.7));
+    animation: float-icon 4s ease-in-out infinite;
+}
+
+@keyframes float-icon {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(1px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
 }
 
 .avatar-status {

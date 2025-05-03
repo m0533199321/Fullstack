@@ -143,7 +143,7 @@ import type React from "react"
 
 import { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Upload, X, Plus, Check } from "lucide-react"
+import { Upload, X, Check } from "lucide-react"
 import "../styles/ProfilePicture.css"
 
 interface ProfilePictureSelectorProps {
@@ -158,7 +158,7 @@ const ProfilePicture = ({ onSelect, onClose }: ProfilePictureSelectorProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isUploading, setIsUploading] = useState(false)
 
-  const defaultImages = ["../../images/profiles/1.jpg", "../../images/profiles/2.jpg", "../../images/profiles/3.jpg"]
+  const defaultImages = ["../../images/profiles/1.jpg", "../../images/profiles/2.jpg", "../../images/profiles/3.jpg", "../../images/profiles/4.jpg"]
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -325,14 +325,7 @@ const ProfilePicture = ({ onSelect, onClose }: ProfilePictureSelectorProps) => {
                   )}
                 </motion.div>
               ))}
-              <motion.div
-                className="profile-selector-upload-button"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <Plus size={30} />
-              </motion.div>
+              
             </div>
           </div>
 

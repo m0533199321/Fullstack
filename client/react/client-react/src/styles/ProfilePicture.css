@@ -206,7 +206,7 @@
     color: white;
 }
 
-.profile-selector-upload-button {
+/* .profile-selector-upload-button {
     width: 100%;
     aspect-ratio: 1;
     border-radius: 50%;
@@ -218,9 +218,9 @@
     cursor: pointer;
     border: 3px dashed var(--profile-border);
     transition: var(--profile-transition);
-}
+} */
 
-.profile-selector-upload-button:hover {
+/* .profile-selector-upload-button:hover {
     background-color: rgba(255, 149, 0, 0.1);
     border-color: rgba(255, 149, 0, 0.3);
     color: var(--profile-primary);

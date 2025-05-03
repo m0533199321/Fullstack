@@ -31,7 +31,7 @@ export const Router = createBrowserRouter([
             { path: 'public-recipes', element: <PublicRecipes /> },
             { path: 'private-recipes', element: <PrivateRecipes /> },
             { path: 'request', element: <Request /> },
-            { path: 'comments', element: <Comments recipeId={1} /> },
+            // { path: 'comments', element: <Comments recipeId={1} /> },
             { path: 'recipe/:id', element: <DisplayRecipe /> },
             { path: 'last', element: <LastRecipes /> },
             { path: 'forgot-password', element: <ForgotPassword /> },

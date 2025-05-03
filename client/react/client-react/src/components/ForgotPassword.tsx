@@ -193,7 +193,7 @@
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { useDispatch } from "react-redux"
 import type { AppDispatch } from "./Redux/Store"
-import { forgotPasswordUser, sendEmailForgot } from "./Redux/AuthSlice"
+import { forgotPasswordUser, loginUser, sendEmailForgot } from "./Redux/AuthSlice"
 import type { UserLogin } from "../models/AuthType"
 import { Mail, Lock, Check, AlertCircle, Loader2, KeyRound } from "lucide-react"
 import "../styles/ForgotPasswordForm.css"
@@ -240,23 +240,19 @@ const ForgotPasswordForm = () => {
       setErrors(newErrors)
     } else {
       setIsSubmitting(true)
-      setSnackMessage("בודק הרשאות כתובת מייל")
-      setSnackSeverity("success")
-      setSnackOpen(true)
-
       try {
         const result = await dispatch(sendEmailForgot({ to: email, subject: "שחזור סיסמה", body: "שחזור סיסמה" }))
         setRandomServer(result.payload)
 
         if (result.meta.requestStatus === "fulfilled") {
-          setSnackMessage("קוד אימות נשלח למייל")
-          setSnackSeverity("success")
-          setSnackOpen(true)
           setStep(2)
         } else {
           setSnackMessage("שליחה למייל נכשלה יש לנסות שוב")
           setSnackSeverity("error")
           setSnackOpen(true)
+          setTimeout(() => {
+            setSnackOpen(false);
+        }, 3000); // סגירה אוטומטית אחרי 3 שניות
           setStep(1)
         }
       } catch (error) {
@@ -264,6 +260,9 @@ const ForgotPasswordForm = () => {
         setSnackMessage("שגיאה בשליחת קוד אימות")
         setSnackSeverity("error")
         setSnackOpen(true)
+        setTimeout(() => {
+          setSnackOpen(false);
+      }, 3000); // סגירה אוטומטית אחרי 3 שניות
       } finally {
         setIsSubmitting(false)
       }
@@ -274,14 +273,14 @@ const ForgotPasswordForm = () => {
     setIsSubmitting(true)
 
     if (randomServer == random) {
-      setSnackMessage("אימות עבר בהצלחה")
-      setSnackSeverity("success")
-      setSnackOpen(true)
       setStep(3)
     } else {
       setSnackMessage("אימות נכשל יש לנסות שוב")
       setSnackSeverity("error")
       setSnackOpen(true)
+      setTimeout(() => {
+        setSnackOpen(false);
+    }, 3000); // סגירה אוטומטית אחרי 3 שניות
     }
 
     setIsSubmitting(false)
@@ -304,9 +303,20 @@ const ForgotPasswordForm = () => {
         const result = await dispatch(forgotPasswordUser({ user }))
 
         if (result.meta.requestStatus === "fulfilled") {
-          setSnackMessage("סיסמה שונתה בהצלחה")
-          setSnackSeverity("success")
-          setSnackOpen(true)
+          const loginResult = await dispatch(loginUser({ user }));
+          console.log(user);
+          if (loginResult.meta.requestStatus === "fulfilled") {
+            setTimeout(() => {
+              navigate("/");
+            }, 1500);
+          } else {
+            setSnackMessage("התחברות נכשלת לאחר שינוי הסיסמה");
+            setSnackSeverity("error");
+            setSnackOpen(true);
+            setTimeout(() => {
+              setSnackOpen(false);
+          }, 3000); // סגירה אוטומטית אחרי 3 שניות
+          }
           setTimeout(() => {
             navigate("/")
           }, 1500)
@@ -314,6 +324,9 @@ const ForgotPasswordForm = () => {
           setSnackMessage("עדכון סיסמה נכשל")
           setSnackSeverity("error")
           setSnackOpen(true)
+          setTimeout(() => {
+            setSnackOpen(false);
+        }, 3000); 
           setStep(1)
         }
       } catch (error) {
@@ -321,6 +334,9 @@ const ForgotPasswordForm = () => {
         setSnackMessage("שגיאה בתהליך עדכון הסיסמה")
         setSnackSeverity("error")
         setSnackOpen(true)
+        setTimeout(() => {
+          setSnackOpen(false);
+      }, 3000);
       } finally {
         setIsSubmitting(false)
       }
@@ -383,9 +399,8 @@ const ForgotPasswordForm = () => {
                 אימייל
               </label>
               <div
-                className={`forgot-input-container ${focusedField === "email" ? "focused" : ""} ${
-                  errors.email ? "error" : ""
-                }`}
+                className={`forgot-input-container ${focusedField === "email" ? "focused" : ""} ${errors.email ? "error" : ""
+                  }`}
               >
                 <Mail className="forgot-input-icon" size={18} />
                 <input
@@ -411,9 +426,8 @@ const ForgotPasswordForm = () => {
                 קוד אימות
               </label>
               <div
-                className={`forgot-input-container ${focusedField === "random" ? "focused" : ""} ${
-                  errors.random ? "error" : ""
-                }`}
+                className={`forgot-input-container ${focusedField === "random" ? "focused" : ""} ${errors.random ? "error" : ""
+                  }`}
               >
                 <KeyRound className="forgot-input-icon" size={18} />
                 <input
@@ -439,9 +453,8 @@ const ForgotPasswordForm = () => {
                 סיסמה חדשה
               </label>
               <div
-                className={`forgot-input-container ${focusedField === "password" ? "focused" : ""} ${
-                  errors.password ? "error" : ""
-                }`}
+                className={`forgot-input-container ${focusedField === "password" ? "focused" : ""} ${errors.password ? "error" : ""
+                  }`}
               >
                 <Lock className="forgot-input-icon" size={18} />
                 <input

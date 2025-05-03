@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import { StarBorder, MoreVert } from "@mui/icons-material";
 import { fetchPublicRecipes, fetchPublicToPrivate, fetchPrivateRecipes } from "./Services/RecipeService";
 import "../styles/PublicRecipes.css";
-import { downloadRecipeFromUrl } from "./DownAndEmail";
+import { downloadRecipeFromUrl } from "./DownLoad";
 import { useNavigate } from "react-router-dom";
 import FileViewer from "./FileViewer";
 import { sendEmail } from "./Redux/AuthSlice";
@@ -17,6 +17,7 @@ import RecipeSortBy, { sortRecipes } from "./RecipeSortBy";
 import PublicOptions from "./PublicOptions";
 import File2 from "./File";
 import { Star } from "lucide-react"
+import BackArrow from "./BackArrow";
 
 const PublicRecipes = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -115,23 +116,6 @@ const PublicRecipes = () => {
         <>
             {file ? (<>
                 {recipeToDisplay && (
-                    <>
-                        <Button sx={{
-                            position: 'fixed',
-                            top: '16vw',
-                            marginLeft: '60vh',
-                            color: '#FFA500',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            transition: 'transform 0.2s',
-                            height: 'auto',
-                        }}
-                            onClick={() => setFile(false)}>חזרה לרשימת המתכונים
-                        </Button>
-                    </>
-                )}
-                {recipeToDisplay && (
                     <File2 recipe={recipeToDisplay} fileUrl={recipeToDisplay.path} onClose={() => setFile(false)} details={null} />
                     // <FileViewer fileUrl={recipeToDisplay.path} onClose={() => null} details={null} />
                 )}
@@ -168,8 +152,8 @@ const PublicRecipes = () => {
                                                     <MoreVert style={{ marginTop: '3%', marginBottom: 0, fontSize: '30px', cursor: 'pointer', color: 'white' }} onClick={() => setShowVert(prev => prev === recipe.id ? null : recipe.id)} />
                                                     <h3 className="recipe-title" style={{ fontSize: `${Math.max(1.2, 2.6 - recipe.title.length / 10)}em`, marginTop: 0, margin: 'auto' }}>{recipe.title}</h3>
                                                 </div>
-                                                {recipe.picture && recipe.picture !== "" && <img src={recipe.picture} alt={recipe.title} className="recipe-image" onClick={() => handleDisplayRecipe(recipe)} />}
-                                                {(!recipe.picture || recipe.picture == "") && <img src="../../images/back/chef.png" alt={recipe.title} className="recipe-image" onClick={() => handleDisplayRecipe(recipe)} />}                                                <div className="difficulty-rating" style={{ bottom: '8%' }}>
+                                                {recipe.picture && recipe.picture !== "" && <img src={recipe.picture} alt={recipe.title} className="recipe-image" onClick={() => handleDisplayRecipeDetails(recipe.id)} />}
+                                                {(!recipe.picture || recipe.picture == "") && <img src="../../images/back/chef.png" alt={recipe.title} className="recipe-image" onClick={() => handleDisplayRecipeDetails(recipe.id)} />}                                                <div className="difficulty-rating" style={{ bottom: '8%' }}>
                                                     {/* <div className="difficulty-rating" style={{ bottom: '8%' }}>
                                                         <div className="stars">
                                                             {Array.from({ length: 5 }).reverse().map((_, index) => (

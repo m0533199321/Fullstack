@@ -5,7 +5,7 @@ import '../styles/PrivateRecipes.css';
 import { Button } from "@mui/material";
 import { MoreVert, StarBorder } from "@mui/icons-material";
 import { fetchDeletePrivateRecipe, fetchPrivateRecipes, fetchPrivateToPublic, fetchPublicRecipes } from "./Services/RecipeService";
-import { downloadRecipeFromUrl } from "./DownAndEmail";
+import { downloadRecipeFromUrl } from "./DownLoad";
 import { sendEmail } from "./Redux/AuthSlice";
 import { useDispatch } from "react-redux";
 import PrivateOptions from "./PrivateOptions";
@@ -15,6 +15,7 @@ import RecipeSearch from "./RecipeSearch";
 import RecipeSortBy, { sortRecipes } from "./RecipeSortBy";
 import File2 from "./File";
 import { Star } from "lucide-react"
+import BackArrow from "./BackArrow";
 
 const PrivateRecipes = () => {
     const dispatch = useDispatch<AppDispatch>();

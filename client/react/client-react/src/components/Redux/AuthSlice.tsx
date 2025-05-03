@@ -203,6 +203,7 @@ const AuthSlice = createSlice({
             .addCase(fetchUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
+                state.isAuthenticated = false;
             })
             .addCase(registerUser.pending, (state) => {
                 state.loading = true;

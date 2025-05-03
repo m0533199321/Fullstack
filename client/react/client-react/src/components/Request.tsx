@@ -198,10 +198,8 @@ const Request = () => {
     const [showFileViewer, setShowFileViewer] = useState(false);
     const [difficulty, setDifficulty] = useState<number>(2);
     const [details, setDetails] = useState<string[]>([]);
-    const [messages, setMessages] = useState<Message[]>([]);
     const [isGeneratingRecipe, setIsGeneratingRecipe] = useState(false);
-    const [recipeReadyMessage, setRecipeReadyMessage] = useState<Message | null>(null); // הודעת מערכת זמנית
-    const emptyInput = "";
+    const [recipeReadyMessage, setRecipeReadyMessage] = useState<Message | null>(null);
 
     const placeHolderTexts = [
         "איזה מתכון טעים בא לכם היום?",

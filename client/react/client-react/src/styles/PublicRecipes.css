@@ -7,6 +7,27 @@
 .public-showVert {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.5);
+    width: 13.2vw;
+    height: 70%;
+    top: 14.5%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.public-inShowVert {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+}
+
+/* .public-showVert {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
     width: 15vw;
     height: 80%;
     left: 5%;
@@ -24,7 +45,7 @@
         justify-content: space-around;
         width: 100%;
         align-items: center;
-}
+} */
 
 .shows {
     color: orange;
