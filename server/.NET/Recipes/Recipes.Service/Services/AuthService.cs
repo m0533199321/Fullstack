@@ -118,7 +118,7 @@ namespace Recipes.Service.Services
             return Result<LoginResponseDto>.NotFound("User registration failed.");
         }
 
-        public async Task<User> GetOrCreateUserAsync(string email, string name, string googleId)
+        public async Task<User> GetOrCreateUserAsync(string email, string fName, string lName, string picture, string googleId)
         {
             var user = await _iManager._userRepository.GetByEmailAsync(email);
             if (user == null)
@@ -127,10 +127,11 @@ namespace Recipes.Service.Services
                 user = new User
                 {
                     Email = email,
-                    FName = name,
-                    LName = "",
+                    FName = fName,
+                    LName = lName,
                     Password = "",
-                    Profile = "https://malismartchef.s3.amazonaws.com/images/profile-smartChef.png1745511305206",
+                    //Profile = "https://malismartchef.s3.amazonaws.com/images/profile-smartChef.png1745511305206",
+                    Profile = picture,
                     CreatedAt = DateTime.UtcNow,
                     IsDeleted = false,
                     RolesList = new List<Role> { role },

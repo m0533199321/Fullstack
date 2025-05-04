@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Recipes.Core.Entities;
 using Recipes.Core.Interfaces.IServices;
+using System.Net;
 
 namespace Recipes.Service.Services
 {
@@ -52,6 +53,40 @@ namespace Recipes.Service.Services
             };
 
             return _s3Client.GetPreSignedURL(request);
+        }
+
+        public async Task<string> UploadFileAsync(Stream fileStream, string fileName, string contentType = null)
+        {
+            try
+            {
+                var request = new PutObjectRequest
+                {
+                    BucketName = _bucketName,
+                    Key = $"images/{fileName}",
+                    InputStream = fileStream,
+                    ContentType = contentType
+                };
+
+                var response = await _s3Client.PutObjectAsync(request);
+
+                if (response.HttpStatusCode == HttpStatusCode.OK)
+                {
+                    string url = $"https://{_bucketName}.s3.amazonaws.com/images/{fileName}";
+                    return url;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (AmazonS3Exception ex)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }
