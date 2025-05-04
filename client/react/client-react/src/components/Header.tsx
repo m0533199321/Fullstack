@@ -8,7 +8,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchUser, UpdateUserName, UpdateUserProfile } from "./Redux/AuthSlice";
-import ProfilePicture from "./ProfilePicture";
+import ProfilePicture from "./Profile";
 import { uploadProfilePictureService } from "./Services/ProfileService";
 import { Favorite, NewReleases, Receipt } from "@mui/icons-material";
 import axios from "axios";

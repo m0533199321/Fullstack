@@ -452,9 +452,17 @@ body {
 }
 
 .register-modal-content {
-    padding: 1.5rem;
-    max-height: calc(90vh - 4rem);
-    overflow-y: auto;
+    position: fixed;
+    top: 40%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 1000px;
+    height: 80%;
+    background-color: transparent;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: none;
 }
 
 /* Snackbar */

@@ -106,7 +106,7 @@
 //                 profile: formData.profilePicture
 //             };
 //             const result = await dispatch(registerUser({ user }));
-            
+
 //             if (result.meta.requestStatus === 'fulfilled') {
 //             setSnackMessage('הרשמה בוצעה בהצלחה');
 //             setSnackSeverity('success');
@@ -114,7 +114,7 @@
 //             setTimeout(() => {navigate('/');}, 1500);
 //             const subject = "ברוכים הבאים למשפחה שלנו";
 //             const body = registerEmailBody(user.fName);
-            
+
 //             const result2 = await dispatch(sendEmail({ to: user.email, subject: subject, body: body }));
 //             if(result2.meta.requestStatus === 'fulfilled'){
 //                 console.log("mail sent!");
@@ -371,9 +371,6 @@ const RegisterForm = () => {
       const result = await dispatch(registerUser({ user }))
 
       if (result.meta.requestStatus === "fulfilled") {
-        setSnackMessage("הרשמה בוצעה בהצלחה")
-        setSnackSeverity("success")
-        setSnackOpen(true)
 
         const subject = "ברוכים הבאים למשפחה שלנו"
         const body = registerEmailBody(user.fName)
@@ -383,6 +380,9 @@ const RegisterForm = () => {
           if (emailResult.meta.requestStatus === "fulfilled") {
             console.log("mail sent!")
             dispatch(fetchUser() as any)
+            setSnackMessage("הרשמה בוצעה בהצלחה")
+            setSnackSeverity("success")
+            setSnackOpen(true)
           } else {
             console.log("mail not sent!")
           }
@@ -609,17 +609,17 @@ const RegisterForm = () => {
 
       {showProfilePicture && (
         <div className="register-modal-overlay">
-          <div className="register-modal-container">
-            <div className="register-modal-header">
+          {/* <div className="register-modal-container"> */}
+            {/* <div className="register-modal-header">
               <h2>בחירת תמונת פרופיל</h2>
               <button className="register-modal-close" onClick={() => setShowProfilePicture(false)}>
                 ×
               </button>
-            </div>
+            </div> */}
             <div className="register-modal-content">
               <ProfilePicture onSelect={handleProfilePictureSelect} onClose={() => setShowProfilePicture(false)} />
             </div>
-          </div>
+          {/* </div> */}
         </div>
       )}
     </>

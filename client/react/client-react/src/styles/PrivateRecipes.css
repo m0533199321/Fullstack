@@ -60,7 +60,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    /* letter-spacing: -1px; */
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     position: absolute;
@@ -101,33 +100,6 @@
     color: #ffa500;
     filter: drop-shadow(0 0 3px rgba(255, 165, 0, 0.5));
 }
-
-/* .private-difficulty-rating {
-    position: absolute;
-    left: 0;
-    right: 30%;
-    display: flex;
-    justify-content: center;
-    padding: 4px 0;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    height: 30vh;
-    top: 20%;
-    left: 2%;
-    z-index: 100;
-}
-
-.private-stars{
-    display: flex;
-    gap: 5px;
-    margin: 0;
-    margin-left: 90%;
-    margin-bottom: 27%;
-}
-
-.private-filled-star {
-    color: gold !important;
-} */
 
 .private-buttons-container {
     position: absolute;

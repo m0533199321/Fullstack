@@ -308,7 +308,7 @@ const About = () => {
         <motion.footer className="about-footer" variants={itemVariants}>
           <h3>הצטרפו למהפכה עכשיו!</h3>
           <p>אם אתם מחפשים דרך חדשה, חכמה ומהנה לבשל, SmartChef היא הבחירה המושלמת עבורכם! אין צורך יותר לבזבז זמן בחיפוש מתכונים באינטרנט – פשוט תנו לאפליקציה לעשות את העבודה בשבילכם. הורידו את SmartChef עוד היום והתחילו לבשל כמו מקצוענים!</p>
-          <button className="about-cta" onClick={() => (goTo("/login"))}>התחל עכשיו</button>
+      {!isAuthenticated && <button className="about-cta" onClick={() => (goTo("/login"))}>התחל עכשיו</button>}
         </motion.footer>}
     </motion.div>
   );

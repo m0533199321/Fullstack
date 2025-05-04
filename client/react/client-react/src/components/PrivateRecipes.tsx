@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { Recipe } from "../models/RecipeType";
 import { AppDispatch, useAppSelector } from "./Redux/Store";
 import '../styles/PrivateRecipes.css';
-import { Button } from "@mui/material";
-import { MoreVert, StarBorder } from "@mui/icons-material";
+import { MoreVert } from "@mui/icons-material";
 import { fetchDeletePrivateRecipe, fetchPrivateRecipes, fetchPrivateToPublic, fetchPublicRecipes } from "./Services/RecipeService";
 import { downloadRecipeFromUrl } from "./DownLoad";
 import { sendEmail } from "./Redux/AuthSlice";
@@ -15,7 +14,6 @@ import RecipeSearch from "./RecipeSearch";
 import RecipeSortBy, { sortRecipes } from "./RecipeSortBy";
 import File2 from "./File";
 import { Star } from "lucide-react"
-import BackArrow from "./BackArrow";
 
 const PrivateRecipes = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -40,8 +38,6 @@ const PrivateRecipes = () => {
                     await fetchPublicRecipes().then(fetchedPublicRecipes => {
                         setPublicRecipes(fetchedPublicRecipes);
                         setSuccess(true);
-                        console.log(recipes);
-                        console.log(publicRecipes);
                     })
                 });
 

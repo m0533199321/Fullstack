@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux"
 import { type AppDispatch, useAppSelector } from "./Redux/Store"
 import { fetchUser, UpdateUserName, UpdateUserProfile } from "./Redux/AuthSlice"
 import { uploadProfilePictureService } from "./Services/ProfileService"
-import ProfilePicture from "./ProfilePicture"
 import axios from "axios"
 import { motion, AnimatePresence } from "framer-motion"
 import {
@@ -13,15 +12,18 @@ import {
     DownloadIcon as NewReleases,
     Receipt,
     PersonStandingIcon as Person,
-    Settings,
     LogOutIcon as Logout,
     ChevronRight,
     ChevronLeft,
     Edit,
     ChefHat,
     Info,
+    Check,
+    AlertCircle,
 } from "lucide-react"
 import "../styles/SideHeader.css"
+import ProfileUpdate from "./ProfilePicture"
+import ProfilePicture from "./ProfilePicture"
 
 const SideHeader = () => {
     const user = useAppSelector((state) => state.auth.user)
@@ -36,6 +38,11 @@ const SideHeader = () => {
     const [lName, setLName] = useState(user?.lName || "")
     const [notification, setNotification] = useState<{ message: string; type: "success" | "error" } | null>(null)
     const profileRef = useRef<HTMLDivElement>(null)
+
+    const [snackOpen, setSnackOpen] = useState(false)
+    const [snackMessage, setSnackMessage] = useState("")
+    const [snackSeverity, setSnackSeverity] = useState<"success" | "error">("success")
+    // const [progress, setProgress] = useState(0)
 
     const goTo = (path: string) => {
         navigate(path)
@@ -103,35 +110,59 @@ const SideHeader = () => {
         setEditingName(false)
     }
 
-    const handleSelectProfilePicture = async (file: File | null) => {
+    const handleSelectProfilePicture = (file: File | null) => {
         if (file) {
-            await uploadProfilePictureService(file).then(async (presignedUrl) => {
-                if (user && presignedUrl) {
-                    await axios.put(presignedUrl, file, { headers: { "Content-Type": file.type } })
-                    await dispatch(UpdateUserProfile({ id: user.id, profile: presignedUrl.split("?")[0] })).then((result) => {
-                        if (result) {
-                            dispatch(fetchUser())
-                            setNotification({
-                                message: "תמונת הפרופיל עודכנה בהצלחה",
-                                type: "success",
-                            })
-                        } else {
-                            setNotification({
-                                message: "שגיאה בעדכון פרופיל",
-                                type: "error",
-                            })
-                        }
-                    })
-                } else {
-                    console.error("Failed to upload profile picture.")
-                }
-            })
+            setEditingProfile(true);
+            uploadProfilePictureService(file)
+                .then(async (presignedUrl) => {
+                    if (presignedUrl) {
+                        await axios.put(presignedUrl, file, {
+                            headers: { "Content-Type": file.type },
+                            onUploadProgress: () => {
+                            },
+                        }).then(async () => {
+                            setEditingProfile(false);
+                            if (user) {
+                                await dispatch(UpdateUserProfile({ id: user.id, profile: presignedUrl.split("?")[0] }));
+                                await dispatch(fetchUser() as any);
+                                setSnackMessage("תמונת הפרופיל עודכנה בהצלחה");
+                                setSnackSeverity("success");
+                                setSnackOpen(true);
+                                setTimeout(() => {
+                                    setSnackOpen(false);
+                                }, 3000);
+                            }
+                        });
+                    } else {
+                        setEditingProfile(false);
+                        setSnackMessage("נכשל בהעלאת תמונת פרופיל");
+                        setSnackSeverity("error");
+                        setSnackOpen(true);
+                        setTimeout(() => {
+                            setSnackOpen(false);
+                        }, 3000);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error uploading profile picture:", error);
+                    setSnackMessage("שגיאה בהעלאת תמונת פרופיל");
+                    setSnackSeverity("error");
+                    setSnackOpen(true);
+                    setEditingProfile(false);
+                    setTimeout(() => {
+                        setSnackOpen(false);
+                    }, 3000);
+                });
         }
-        setEditingProfile(false)
-    }
+        setEditingProfile(false);
+    };
 
     const handleCloseProfilePicture = () => {
         setEditingProfile(false)
+    }
+
+    const handleSnackClose = () => {
+        setSnackOpen(false)
     }
 
     const menuItems = [
@@ -144,8 +175,28 @@ const SideHeader = () => {
 
     return (
         <>
+            {editingProfile && (
+                <div className="profile-modal-overlay">
+                    <div className="profile-modal-content">
+                        <ProfilePicture onSelect={handleSelectProfilePicture} onClose={handleCloseProfilePicture} /></div></div>)}
+            {snackOpen && (
+                <div className={`side-snackbar ${snackSeverity} ${snackOpen ? "show" : ""}`}>
+                    <div className="side-snackbar-content">
+                        {snackSeverity === "success" ? (
+                            <Check className="side-snackbar-icon" size={20} />
+                        ) : (
+                            <AlertCircle className="side-snackbar-icon" size={20} />
+                        )}
+                        <span>{snackMessage}</span>
+                        <button className="side-snackbar-close" onClick={handleSnackClose}>
+                            ×
+                        </button>
+                    </div>
+                </div>
+            )}
+
             <div style={{ direction: "rtl" }}>
-                <AnimatePresence>
+                {/* <AnimatePresence>
                     {notification && (
                         <motion.div
                             className={`notification ${notification.type}`}
@@ -156,7 +207,7 @@ const SideHeader = () => {
                             {notification.message}
                         </motion.div>
                     )}
-                </AnimatePresence>
+                </AnimatePresence> */}
 
                 <motion.aside
                     className={`side-header ${isCollapsed ? "collapsed" : ""}`}
@@ -280,7 +331,7 @@ const SideHeader = () => {
                     </div>
                 </motion.aside>
 
-                {editingProfile && <ProfilePicture onSelect={handleSelectProfilePicture} onClose={handleCloseProfilePicture} />}
+                {/* {editingProfile && <ProfilePicture onSelect={handleSelectProfilePicture} onClose={handleCloseProfilePicture} />} */}
             </div>
         </>
     )
