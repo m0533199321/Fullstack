@@ -26,7 +26,7 @@ namespace Recipes.Core.Entities
 
         //public string Information { get; set; }
 
-        public bool IsDeleted { get; set; }
+        //public bool IsDeleted { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

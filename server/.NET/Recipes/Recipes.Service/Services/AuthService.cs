@@ -133,7 +133,6 @@ namespace Recipes.Service.Services
                     //Profile = "https://malismartchef.s3.amazonaws.com/images/profile-smartChef.png1745511305206",
                     Profile = picture,
                     CreatedAt = DateTime.UtcNow,
-                    IsDeleted = false,
                     RolesList = new List<Role> { role },
                     //GoogleId = googleId
                 };

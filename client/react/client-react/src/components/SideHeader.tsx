@@ -38,14 +38,16 @@ const SideHeader = () => {
     const [lName, setLName] = useState(user?.lName || "")
     const [notification, setNotification] = useState<{ message: string; type: "success" | "error" } | null>(null)
     const profileRef = useRef<HTMLDivElement>(null)
-
     const [snackOpen, setSnackOpen] = useState(false)
     const [snackMessage, setSnackMessage] = useState("")
     const [snackSeverity, setSnackSeverity] = useState<"success" | "error">("success")
+    const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
     // const [progress, setProgress] = useState(0)
 
     const goTo = (path: string) => {
         navigate(path)
+        setCurrentPath(path);
     }
 
     useEffect(() => {
@@ -234,7 +236,8 @@ const SideHeader = () => {
                                 return (
                                     <motion.button
                                         key={index}
-                                        className="menu-item"
+                                        // className="menu-item"
+                                        className={`menu-item ${currentPath === item.path ? 'active' : ''}`} 
                                         onClick={() => goTo(item.path)}
                                         whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 152, 0, 0.15)" }}
                                         whileTap={{ scale: 0.95 }}

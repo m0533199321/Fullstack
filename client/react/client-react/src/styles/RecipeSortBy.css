@@ -1,0 +1,86 @@
+.sort-container {
+    position: relative;
+}
+
+.sort-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #2a2a2a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: white;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sort-button:hover {
+    background-color: #333;
+    border-color: #ff6b00;
+}
+
+.sort-icon {
+    color: #ff6b00;
+    width: 16px;
+    height: 16px;
+}
+
+.sort-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    width: 180px;
+    background-color: #2a2a2a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.sort-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    color: white;
+    text-align: right;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    direction: rtl;
+}
+
+.sort-option:hover {
+    background-color: #333;
+}
+
+.sort-option:not(:last-child) {
+    border-bottom: 1px solid #333;
+}
+
+.option-icon {
+    color: #ff6b00;
+    width: 16px;
+    height: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sort-container {
+        width: 100%;
+    }
+
+    .sort-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .sort-dropdown {
+        width: 100%;
+    }
+}

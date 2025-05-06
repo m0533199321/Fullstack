@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --recipe-primary: #ff9500;
     --recipe-primary-light: #ffb74d;
     --recipe-primary-dark: #e67e00;
@@ -208,7 +208,7 @@
     color: #000;
 }
 
-/* Animations */
+
 @keyframes pulse {
     0% {
         opacity: 0.3;
@@ -221,7 +221,7 @@
     }
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .recipe-category-buttons {
         flex-direction: column;
@@ -254,4 +254,191 @@
     .recipe-category-label {
         font-size: 0.9rem;
     }
+} */
+
+
+
+
+
+/* 
+.private-category-container {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.private-category-buttons {
+    display: flex;
+    align-items: center;
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 0.25rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.private-category-button {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #999;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.private-category-button.active {
+    color: #ff6b00;
+    background-color: #2a2a2a;
+}
+
+.private-category-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.private-category-icon-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.private-category-icon {
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+}
+
+.private-category-icon-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(255, 107, 0, 0.2);
+    filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.private-category-button.active .private-category-icon-glow {
+    opacity: 1;
+}
+
+.private-category-label {
+    font-size: 0.9rem;
+}
+
+.private-category-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: #ff6b00;
+    border-radius: 3px;
+}
+
+.private-category-divider {
+    display: flex;
+    align-items: center;
+    height: 30px;
+}
+
+.private-category-divider-line {
+    width: 1px;
+    height: 70%;
+    background-color: #333;
+}
+
+.private-category-divider-circle {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #ff6b00;
+    margin: 0 -1.5px;
+}
+
+@media (max-width: 768px) {
+    .private-category-container {
+        margin-right: 0;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .private-category-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .private-category-button {
+        flex: 1;
+    }
+} */
+
+
+/* Modern Toggle Styling */
+.privateShows-recipe-toggle-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.privateShows-recipe-toggle-container {
+    position: relative;
+    display: flex;
+    background: rgba(30, 30, 30, 0.6);
+    border-radius: 50px;
+    padding: 0.25rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    width: 220px;
+    height: 48px;
+    backdrop-filter: blur(10px);
+}
+
+.privateShows-toggle-slider {
+    position: absolute;
+    top: 4px;
+    height: calc(100% - 8px);
+    width: 50%;
+    background: linear-gradient(135deg, #ff6b00 0%, #ff9248 100%);
+    border-radius: 40px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 10px rgba(255, 107, 0, 0.4);
+    z-index: 1;
+}
+
+.privateShows-toggle-slider.left {
+    left: 4px;
+}
+
+.privateShows-toggle-slider.right {
+    left: calc(50% - 4px);
+}
+
+.privateShows-toggle-option {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.privateShows-toggle-option.active {
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }

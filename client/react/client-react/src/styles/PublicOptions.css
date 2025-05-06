@@ -1,0 +1,88 @@
+.public-options-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0.5rem 1rem 1rem;
+}
+
+.public-option-button {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background-color: #2a2a2a;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: right;
+    direction: rtl;
+    width: 100%;
+    height: 8vh;
+}
+
+.public-option-4button {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background-color: #2a2a2a;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: right;
+    direction: rtl;
+    width: 100%;
+}
+
+.public-option-button:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+.public-option-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.public-delete-button {
+    color: #ff4d4d;
+}
+
+.public-delete-button:hover {
+    background-color: rgba(255, 77, 77, 0.15);
+}
+
+.public-favorite-button {
+    color: #ff6b00;
+}
+
+.public-favorite-button:hover {
+    background-color: rgba(255, 107, 0, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .public-options-container {
+        padding: 0.5rem;
+    }
+
+    .public-option-button {
+        padding: 0.6rem 0.75rem;
+        height: 44px;
+    }
+
+    .public-option-4button {
+        padding: 0.6rem 0.75rem;
+        height: 30px;
+    }
+
+    .public-option-text {
+        font-size: 0.8rem;
+    }
+}

@@ -1,0 +1,60 @@
+/* Modern Toggle Styling */
+.publicShows-recipe-toggle-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.publicShows-recipe-toggle-container {
+    position: relative;
+    display: flex;
+    background: rgba(30, 30, 30, 0.6);
+    border-radius: 50px;
+    padding: 0.25rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    width: 220px;
+    height: 48px;
+    backdrop-filter: blur(10px);
+}
+
+.publicShows-toggle-slider {
+    position: absolute;
+    top: 4px;
+    height: calc(100% - 8px);
+    width: 50%;
+    background: linear-gradient(135deg, #ff6b00 0%, #ff9248 100%);
+    border-radius: 40px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 10px rgba(255, 107, 0, 0.4);
+    z-index: 1;
+}
+
+.publicShows-toggle-slider.left {
+    left: 4px;
+}
+
+.publicShows-toggle-slider.right {
+    left: calc(50% - 4px);
+}
+
+.publicShows-toggle-option {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.publicShows-toggle-option.active {
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}

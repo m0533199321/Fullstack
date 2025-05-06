@@ -404,6 +404,11 @@ body.collapsed-header {
     overflow: hidden;
 }
 
+.menu-item.active {
+    background-color: var(--header-active);
+    color: var(--primary-active);
+}
+
 .menu-item::after {
     content: "";
     position: absolute;

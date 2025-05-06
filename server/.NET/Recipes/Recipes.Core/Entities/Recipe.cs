@@ -26,7 +26,7 @@ namespace Recipes.Core.Entities
 
         public string Picture { get; set; }
 
-        public bool IsDeleted { get; set; }
+        //public bool IsDeleted { get; set; }
 
         //public CategoryType Category { get; set; }
 
