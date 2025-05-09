@@ -186,7 +186,6 @@
     color: var(--login-secondary);
 }
 
-/* Forgot Password */
 .login-forgot-password {
     display: flex;
     justify-content: center;

@@ -2,15 +2,19 @@ import type React from "react"
 import { useEffect, useState } from "react"
 import { fetchAddToMyBook, fetchUpdateRecipeImg } from "./Services/RecipeService"
 import type { Recipe, RecipePostModel } from "../models/RecipeType"
-import { useAppSelector } from "./Redux/Store"
+import { AppDispatch, useAppSelector } from "./Redux/Store"
 import mammoth from "mammoth"
 import "../styles/File.css"
 import { FaImage } from "react-icons/fa"
 import { uploadRecipeService } from "./Services/RequestService"
-import { BookOpen, ChefHat, Clock, Utensils, ArrowRight, BookPlus, Star } from "lucide-react"
+import { BookOpen, ChefHat, Clock, Utensils, ArrowRight, BookPlus, Star, Download, Mail } from "lucide-react"
 import { recipeImg, uploadRecipeImgService } from "./Services/RecipeImgService"
 import axios from "axios"
 import { Close } from "@mui/icons-material"
+import { downloadRecipeFromUrl } from "./DownLoad"
+import { recipeEmailBody } from "./RecipeEmailBody"
+import { sendEmail } from "./Redux/AuthSlice"
+import { useDispatch } from "react-redux"
 
 interface FileViewerProps {
     recipe: Recipe | null
@@ -20,6 +24,7 @@ interface FileViewerProps {
 }
 
 const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details }) => {
+    const dispatch = useDispatch<AppDispatch>();
     const user = useAppSelector((state) => state.auth.user)
     const [htmlContent, setHtmlContent] = useState("")
     const [direction, setDirection] = useState<"ltr" | "rtl">("rtl")
@@ -266,6 +271,14 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
         }
     }
 
+    const emailRecipe = async (recipe: Recipe) => {
+        if (user) {
+            const subject = "מתכון טעים במיוחד בשבילך";
+            const body = recipeEmailBody(user.fName, recipe.path);
+            await dispatch(sendEmail({ to: user.email, subject: subject, body: body }));
+        }
+    };
+
     return (
         <div className="file-fullscreen">
             <div className="recipe-viewer">
@@ -333,24 +346,30 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                         {recipeImage && <img src={recipeImage} alt="chef" className="chef-image" />}
                     </div> */}
 
-                        <div className="recipe-info">
-                            <div className="info-item">
-                                <Clock size={20} className="info-icon" />
-                                <span>זמן הכנה משוער</span>
+                        {recipe && (
+                            <div className="recipe-info">
+                                <div className="info-item" onClick={() => downloadRecipeFromUrl(recipe)} style={{ cursor: 'pointer' }}>
+                                    {/* <Clock size={20} className="info-icon" />
+                                    <span>זמן הכנה משוער</span> */}
+                                    <Download size={20} className="info-icon" />
+                                    <span>הורדת המתכון</span>
+                                </div>
+                                <div className="info-item" onClick={() => emailRecipe(recipe)} style={{ cursor: 'pointer' }}>
+                                    {/* <Utensils size={20} className="info-icon" />
+                                    <span>מנה טובה</span> */}
+                                    <Mail size={20} className="info-icon" />
+                                    <span>שליחה למייל</span>
+                                </div>
+                                {/* <div className="info-item"> */}
+                                {/* <BookOpen size={20} className="info-icon" />
+                                    <span>מתכון מומלץ</span> */}
+                                {/* </div> */}
+                                {/* <div className="info-item"> */}
+                                {/* <ChefHat size={20} className="info-icon" />
+                                    <span>קל להכנה</span> */}
+                                {/* </div> */}
                             </div>
-                            <div className="info-item">
-                                <Utensils size={20} className="info-icon" />
-                                <span>מנה טובה</span>
-                            </div>
-                            <div className="info-item">
-                                <BookOpen size={20} className="info-icon" />
-                                <span>מתכון מומלץ</span>
-                            </div>
-                            <div className="info-item">
-                                <ChefHat size={20} className="info-icon" />
-                                <span>קל להכנה</span>
-                            </div>
-                        </div>
+                        )}
                     </div>
 
                     <div className="recipe-content">

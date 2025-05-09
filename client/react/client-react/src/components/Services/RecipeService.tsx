@@ -10,8 +10,8 @@ export const fetchPrivateRecipes = async (id: number): Promise<Recipe[]> => {
         const response = await api.get(`${API_URL}/Private/${id}`);
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to fetch private recipes. Please try again.", "error");
-        throw new Error(e.message);
+        // Swal.fire("Error!", "Failed to fetch private recipes. Please try again.", "error");
+        throw new Error("Failed to fetch private recipes. Please try again.");
     }
 };
 
@@ -20,8 +20,8 @@ export const fetchPublicRecipes = async (): Promise<Recipe[]> => {
         const response = await axios.get(`${API_URL}/Public`);
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to fetch public recipes. Please try again.", "error");
-        throw new Error(e.message);
+        // Swal.fire("Error!", "Failed to fetch public recipes. Please try again.", "error");
+        throw new Error("Failed to fetch public recipes. Please try again.");
     }
 };
 
@@ -44,8 +44,8 @@ export const fetchRecipeById = async (
         const response = await api.get(`${API_URL}/${recipeId}`);
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to fetch category's recipes. Please try again.", "error");
-        throw new Error(e.message);
+        // Swal.fire("Error!", "Failed to fetch category's recipes. Please try again.", "error");
+        throw new Error("Failed to fetch recipe. Please try again.");
     }
 };
 
@@ -62,8 +62,8 @@ export const fetchPublicToPrivate = async (
         });
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to add recipe to private. Please try again.", "error");
-        throw new Error(e.message);
+        // Swal.fire("Error!", "Failed to add recipe to private. Please try again.", "error");
+        throw new Error("Failed to add recipe to private. Please try again.");
     }
 };
 
@@ -74,8 +74,8 @@ export const fetchPrivateToPublic = async (
         const response = await api.put(`${API_URL}/PrivateToPublic/${recipeId}`)
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to update recipe to public. Please try again.", "error");
-        throw new Error(e.message);
+        // Swal.fire("Error!", "Failed to update recipe to public. Please try again.", "error");
+        throw new Error("Failed to update recipe to public. Please try again.");
     }
 };
 
@@ -86,8 +86,8 @@ export const fetchDeletePrivateRecipe = async (
         const response = await api.delete(`${API_URL}/Recipe/${recipeId}`);
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to delete private recipes. Please try again.", "error");
-        throw new Error(e.message);
+        // Swal.fire("Error!", "Failed to delete private recipes. Please try again.", "error");
+        throw new Error("Failed to delete private recipes. Please try again.");
     }
 };
 
@@ -105,8 +105,8 @@ export const fetchAddToMyBook = async (
         console.log(response2);
         // return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to add recipe to public. Please try again.", "error");
-        throw new Error(e.message);
+        // Swal.fire("Error!", "Failed to add recipe to public. Please try again.", "error");
+        throw new Error("Failed to add recipe to public. Please try again.");
     }
 };
 
@@ -121,8 +121,8 @@ export const fetchUpdateRecipeImg = async (
         });
         console.log(response2);
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to edit recipe image. Please try again.", "error");
-        throw new Error(e.message);
+        // Swal.fire("Error!", "Failed to edit recipe image. Please try again.", "error");
+        throw new Error("Failed to edit recipe image. Please try again.");
     }
 };
 

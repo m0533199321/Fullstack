@@ -40,7 +40,6 @@
     background: #e67e00;
 }
 
-/* Backdrop */
 .profile-selector-backdrop {
     position: fixed;
     background-color: rgba(0, 0, 0, 0);
@@ -52,7 +51,6 @@
     padding: 20px;
 }
 
-/* Modal */
 .profile-selector-modal {
     background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
     border-radius: 16px;
@@ -60,12 +58,11 @@
     max-width: 500px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    border: none; /* הסרת המסגרת */
+    border: none; 
     position: relative;
     direction: rtl;
 }
 
-/* Header */
 .profile-selector-header {
     background: linear-gradient(to right, var(--profile-primary-dark), var(--profile-primary));
     padding: 16px 24px;
@@ -101,7 +98,6 @@
     background: rgba(0, 0, 0, 0.3);
 }
 
-/* Upload Progress Bar */
 .upload-progress-container {
     position: relative;
     height: 4px;
@@ -152,13 +148,11 @@
     }
 }
 
-/* Content */
 .profile-selector-content {
     padding: 24px;
     min-height: 300px;
 }
 
-/* Enhanced Dropzone from ProfileUpdate */
 .profile-selector-dropzone {
     border: 2px dashed rgba(255, 149, 0, 0.3);
     border-radius: 12px;
@@ -245,7 +239,6 @@
     cursor: pointer;
 }
 
-/* Divider */
 .profile-selector-divider {
     display: flex;
     align-items: center;
@@ -266,7 +259,6 @@
     font-size: 0.9rem;
 }
 
-/* Gallery */
 .profile-selector-gallery {
     display: flex;
     flex-wrap: nowrap;
@@ -316,7 +308,6 @@
     color: white;
 }
 
-/* Cropper */
 .cropper-container {
     display: flex;
     flex-direction: column;
@@ -383,7 +374,6 @@
     box-shadow: 0 0 10px rgba(255, 149, 0, 0.5);
 }
 
-/* Loading overlay */
 .profile-selector-loading {
     position: absolute;
     top: 0;
@@ -416,7 +406,6 @@
     }
 }
 
-/* Success State */
 .success-container {
     display: flex;
     flex-direction: column;
@@ -475,7 +464,6 @@
     }
 }
 
-/* Error State */
 .error-container {
     display: flex;
     flex-direction: column;
@@ -531,7 +519,6 @@
     transform: translateY(-2px);
 }
 
-/* Footer */
 .profile-selector-footer {
     display: flex;
     justify-content: flex-end;
@@ -609,7 +596,6 @@
     animation: spin 1.5s linear infinite;
 }
 
-/* Responsive */
 @media (max-width: 600px) {
     .profile-selector-modal {
         max-width: 100%;
@@ -635,7 +621,6 @@
     }
 }
 
-/* Animations */
 @keyframes pulse {
     0% {
         box-shadow: 0 0 0 0 rgba(255, 149, 0, 0.4);

@@ -227,10 +227,13 @@ import RecipeSortBy, { sortRecipes } from "./RecipeSortBy";
 import File2 from "./File";
 import { Star } from "lucide-react";
 import "../styles/PublicRecipes.css";
+import DisplayRecipe from "./DisplayRecipe";
+import { useNavigate } from "react-router-dom";
 
 const PublicRecipes = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useAppSelector((state) => state.auth.user);
+  const navigate = useNavigate();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [privateRecipes, setPrivateRecipes] = useState<Recipe[]>([]);
   const [success, setSuccess] = useState(false);
@@ -242,6 +245,9 @@ const PublicRecipes = () => {
   const [file, setFile] = useState(false);
   const [recipeToDisplay, setRecipeToDisplay] = useState<Recipe | null>(null);
   const [showVert, setShowVert] = useState<number | null>(null);
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("");
+  const [snackSeverity, setSnackSeverity] = useState<"success" | "error">("success");
   const optionsPanelRef = useRef<HTMLDivElement>(null);
 
   const allRecipes = async () => {
@@ -254,7 +260,9 @@ const PublicRecipes = () => {
         setPrivateRecipes(fetchedPrivateRecipes);
       }
     } catch (error) {
-      console.error("Failed to fetch recipes:", error);
+      setSnackMessage("שגיאה בטעינת המתכונים")
+      setSnackSeverity("error")
+      setSnackOpen(true)
     }
   };
 
@@ -279,10 +287,12 @@ const PublicRecipes = () => {
   };
 
   const DownLoadRecipe = (recipe: Recipe) => {
+    setShowVert(null);
     downloadRecipeFromUrl(recipe);
   };
 
   const EmailRecipe = async (recipe: Recipe) => {
+    setShowVert(null);
     if (user) {
       const subject = "מתכון טעים במיוחד בשבילך";
       const body = recipeEmailBody(user.fName, recipe.path);
@@ -291,8 +301,10 @@ const PublicRecipes = () => {
   };
 
   const handleDisplayRecipe = (recipe: Recipe) => {
-    setFile(true);
-    setRecipeToDisplay(recipe);
+    setShowVert(null);
+    // setFile(true);
+    // setRecipeToDisplay(recipe);
+    navigate(`/recipe/${recipe.id}`);
   };
 
   const existInPrivate = (recipeId: number) => {
@@ -316,21 +328,41 @@ const PublicRecipes = () => {
     recipe.title.toLowerCase().includes(searchRecipe.toLowerCase())
   );
 
+  const handleSnackClose = () => {
+    setSnackOpen(false);
+  };
+
   return (
     <>
       {file ? (
         <>
           {recipeToDisplay && (
-            <File2
-              recipe={recipeToDisplay}
-              fileUrl={recipeToDisplay.path}
-              onClose={() => setFile(false)}
-              details={null}
-            />
+            <DisplayRecipe />
+            // <File2
+            //   recipe={recipeToDisplay}
+            //   fileUrl={recipeToDisplay.path}
+            //   onClose={() => setFile(false)}
+            //   details={null}
+            // />
           )}
         </>
       ) : (
         <>
+          {snackOpen && (
+            <>
+              {/* <div className={`public-snackbar ${snackSeverity}`}>
+                <span style={{ color: 'aqua' }}>{snackSeverity}</span>
+                <span>{snackMessage}</span>
+                <button onClick={handleSnackClose}>×</button>
+              </div> */}
+              <div className="public-snackbar">
+                <span className="public-snackbar-content">
+                  {snackMessage}
+                  <button onClick={handleSnackClose} className="public-snackbar-close">×</button>
+                </span>
+              </div>
+            </>
+          )}
           <div className="public-recipe-header">
             <div className="public-recipe-header-content">
               <div className="public-recipe-toggle-container">

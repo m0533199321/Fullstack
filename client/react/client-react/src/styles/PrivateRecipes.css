@@ -454,7 +454,6 @@
     justify-content: flex-end;
 }
 
-/* Recipe container */
 .private-recipe-container {
     padding: 2rem;
     background: linear-gradient(180deg, #1a1a1a 0%, #121212 100%);
@@ -470,12 +469,10 @@
     margin: 0 auto;
 }
 
-/* Recipe card styles */
 .private-recipe-card {
     background: linear-gradient(145deg, #262626 0%, #1a1a1a 100%);
     border-radius: 16px;
     overflow: visible;
-    /* Changed from hidden to visible to allow dropdown to show outside */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.15);
     width: 100%;
@@ -483,7 +480,6 @@
     margin: 0 auto;
     border: 1px solid rgba(255, 255, 255, 0.05);
     position: relative;
-    /* Added for positioning the dropdown */
 }
 
 .private-recipe-card:hover {
@@ -496,11 +492,9 @@
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    /* Keep the inner content with hidden overflow */
     border-radius: 16px;
 }
 
-/* Image container styles */
 .private-recipe-image-container {
     position: relative;
     width: 100%;
@@ -520,7 +514,6 @@
     transform: scale(1.05);
 }
 
-/* Difficulty stars */
 .private-recipe-difficulty {
     position: absolute;
     top: 10px;
@@ -550,7 +543,6 @@
     filter: drop-shadow(0 0 3px rgba(255, 107, 0, 0.5));
 }
 
-/* Recipe content styles */
 .private-recipe-content {
     padding: 1rem;
     flex-grow: 1;
@@ -690,7 +682,6 @@
     padding: 0.75rem;
 }
 
-/* Responsive adjustments */
 @media (max-width: 992px) {
     .private-recipe-header-content {
         flex-direction: column;
@@ -731,7 +722,6 @@
         margin-left: auto;
     }
 
-    /* Adjust dropdown for smaller screens */
     .private-recipe-options-dropdown {
         width: 180px;
         right: -40px;
@@ -776,7 +766,6 @@
         font-size: 0.9rem;
     }
 
-    /* Further adjust dropdown for very small screens */
     .private-recipe-options-dropdown {
         width: 160px;
         right: -30px;

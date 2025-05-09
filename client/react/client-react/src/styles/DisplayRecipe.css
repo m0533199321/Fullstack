@@ -219,22 +219,6 @@ body {
     filter: drop-shadow(0 0 3px rgba(255, 165, 0, 0.5));
 }
 
-/* .stars {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.filled-star {
-    color: #ff8c00;
-    font-size: 28px;
-}
-
-.empty-star {
-    color: #777;
-    font-size: 28px;
-} */
-
 .displayRecipe-defenitions {
     color: white;
     margin-left: 10px;

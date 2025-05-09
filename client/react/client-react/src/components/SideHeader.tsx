@@ -20,6 +20,7 @@ import {
     Info,
     Check,
     AlertCircle,
+    Camera,
 } from "lucide-react"
 import "../styles/SideHeader.css"
 import ProfileUpdate from "./ProfilePicture"
@@ -168,13 +169,13 @@ const SideHeader = () => {
     }
 
     const menuItems = [
-        { icon: <Home size={24} />, label: "דף הבית", path: "/" },
-        { icon: <Info size={24} />, label: "אודות המערכת", path: "/about" },
-        { icon: <Favorite size={24} />, label: "המומלצים שלנו", path: "/public-recipes" },
+        { icon: <Home size={24} />, label: "בית", path: "/" },
+        { icon: <Info size={24} />, label: "על המערכת", path: "/about" },
+        { icon: <Favorite size={24} />, label: "המלצות", path: "/public-recipes" },
         { icon: <NewReleases size={24} />, label: "מתכון חדש", path: "/request", authRequired: true },
-        { icon: <Receipt size={24} />, label: "ספר המתכונים שלי", path: "/private-recipes", authRequired: true },
-    ]
-
+        { icon: <Receipt size={24} />, label: "המתכונים שלי", path: "/private-recipes", authRequired: true },
+    ];
+    
     return (
         <>
             {editingProfile && (
@@ -317,7 +318,7 @@ const SideHeader = () => {
                                                         <span>ערוך שם משתמש</span>
                                                     </button>
                                                     <button className="profile-action-btn" onClick={handleEditProfile}>
-                                                        <Person size={18} />
+                                                        <Camera size={18} />
                                                         <span>ערוך תמונת פרופיל</span>
                                                     </button>
                                                     <button className="profile-action-btn logout" onClick={handleLogout}>

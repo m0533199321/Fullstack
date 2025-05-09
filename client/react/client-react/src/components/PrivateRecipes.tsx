@@ -89,10 +89,12 @@ const PrivateRecipes = () => {
   }
 
   const DownLoadRecipe = (recipe: Recipe) => {
+    setShowVert(null);
     downloadRecipeFromUrl(recipe)
   }
 
   const EmailRecipe = async (recipe: Recipe) => {
+    setShowVert(null);
     if (user) {
       const subject = "מתכון טעים במיוחד בשבילך"
       const body = recipeEmailBody(user.fName, recipe.path)
@@ -101,6 +103,7 @@ const PrivateRecipes = () => {
   }
 
   const handleDisplayRecipe = (recipe: Recipe) => {
+    setShowVert(null);
     setFile(true)
     setRecipeToDisplay(recipe)
   }

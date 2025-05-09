@@ -372,8 +372,16 @@ const Home = () => {
     ];
 
     const goTo = (path: string) => {
-        navigate(path);
+        if (path.startsWith("#")) {
+            const element = document.querySelector(path);
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+            }
+        } else {
+            navigate(path);
+        }
     };
+
 
     useEffect(() => {
         setIsLoaded(true);
@@ -403,7 +411,7 @@ const Home = () => {
 
             <section className="hero-section">
                 <div className="hero-background" ref={heroRef}>
-           
+
                     <div className="particles-container">
                         {[...Array(20)].map((_, i) => (
                             <div
@@ -478,25 +486,25 @@ const Home = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.8 }}
                         >
-                            <div className="feature">
+                            <div className="feature" onClick={() => goTo('/public-recipes')}>
                                 <div className="feature-icon-container">
                                     <ChefHat size={24} />
                                 </div>
                                 <span>מתכונים אינסופיים</span>
                             </div>
-                            <div className="feature">
+                            <div className="feature" onClick={() => goTo('/request')}>
                                 <div className="feature-icon-container">
                                     <Star size={24} />
                                 </div>
                                 <span>התאמה אישית</span>
                             </div>
-                            <div className="feature">
+                            <div className="feature" onClick={() => goTo('/private-recipes')}>
                                 <div className="feature-icon-container">
                                     <BookOpen size={24} />
                                 </div>
                                 <span>ספר מתכונים אישי</span>
                             </div>
-                            <div className="feature">
+                            <div className="feature" onClick={() => goTo("#recommendations")}>
                                 <div className="feature-icon-container">
                                     <Users size={24} />
                                 </div>
@@ -510,7 +518,7 @@ const Home = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 1 }}
                         >
-                           {!isAuthenticated && <button className="primary-cta" onClick={() => goTo("/login")}>
+                            {!isAuthenticated && <button className="primary-cta" onClick={() => goTo("/login")}>
                                 <Sparkles size={20} />
                                 <span>התחבר/י עכשיו</span>
                             </button>}
@@ -606,7 +614,7 @@ const Home = () => {
                     {isAuthenticated && <button className="cta-button outline" onClick={() => goTo("/public-recipes")}>גלה עוד מתכונים</button>}
                 </div>
             </section>
-            
+
             <section className="testimonials">
                 <div className="section-header">
                     <h2>מה המשתמשים אומרים</h2>
@@ -617,7 +625,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className="testimonials-container">
+                <div className="testimonials-container" id="recommendations">
                     <motion.div
                         className="testimonial"
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -713,8 +721,8 @@ const Home = () => {
                     <p>הצטרפו למהפכה הקולינרית והתחילו ליצור מתכונים מותאמים אישית עוד היום!</p>
                     <button className="main-cta-button">
                         <ChefHat size={24} />
-                       {!isAuthenticated && <span onClick={() => goTo("/login")}>התחל ליצור מתכונים</span>}
-                       {isAuthenticated && <span onClick={() => goTo("/request")}>התחל ליצור מתכונים</span>}
+                        {!isAuthenticated && <span onClick={() => goTo("/login")}>התחל ליצור מתכונים</span>}
+                        {isAuthenticated && <span onClick={() => goTo("/request")}>התחל ליצור מתכונים</span>}
                     </button>
                 </motion.div>
             </section>

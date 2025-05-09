@@ -40,7 +40,6 @@
     pointer-events: none;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .search-container {
         width: 100%;

@@ -97,6 +97,8 @@ input[type="range"]::-ms-fill-upper {
  */
 
 
+
+
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -412,19 +414,18 @@ input[type="range"]::-ms-fill-upper {
     }
 }
 
-/* Request.css או קובץ ה-CSS הרלוונטי */
 .suggestion-scroll {
-    overflow: hidden; /* מסתיר את הטקסט שיוצא מגבולות ה-div */
-    white-space: nowrap; /* מונע מעבר שורה של הטקסט */
+    overflow: hidden; 
+    white-space: nowrap; 
 }
 
 .suggestion-scroll .message-content p {
-    display: inline-block; /* מאפשר גלילה אופקית */
-    padding-right: 20px; /* מרווח בין ההצעות */
-    animation: scrollText 10s linear infinite; /* אנימציה לגלילה */
+    display: inline-block; 
+    padding-right: 20px; 
+    animation: scrollText 10s linear infinite;
 }
 
 @keyframes scrollText {
-    0% { transform: translateX(100%); } /* מתחיל מימין */
-    100% { transform: translateX(-100%); } /* מסתיים משמאל */
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); } 
 }

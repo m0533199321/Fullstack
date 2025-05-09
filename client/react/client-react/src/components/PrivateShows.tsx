@@ -305,11 +305,13 @@ const PrivateShows: React.FC<PrivateShowsProps> = ({ showPrivate, showPublic, pr
     <div className="privateShows-recipe-toggle-wrapper">
       <div className="privateShows-recipe-toggle-container">
         <div className={`privateShows-toggle-slider ${showPublic ? "right" : "left"}`}></div>
-        <button className={`privateShows-toggle-option ${showPrivate ? "active" : ""}`} onClick={privateClick}>
-          פרטי
+        <button className={`privateShows-toggle-option ${showPrivate ? "active" : ""}`} onClick={publicClick}>
+          {/* פרטי */}
+          מהמומלצים
         </button>
-        <button className={`privateShows-toggle-option ${showPublic ? "active" : ""}`} onClick={publicClick}>
-          ציבורי
+        <button className={`privateShows-toggle-option ${showPublic ? "active" : ""}`} onClick={privateClick}>
+          {/* ציבורי */}
+          אישיים
         </button>
       </div>
     </div>

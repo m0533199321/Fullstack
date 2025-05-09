@@ -405,7 +405,8 @@ body.collapsed-header {
 }
 
 .menu-item.active {
-    background-color: var(--header-active);
+    /* background-color: var(--header-active); */
+    background-image: linear-gradient(to right, var(--header-border), var(--header-active));
     color: var(--primary-active);
 }
 

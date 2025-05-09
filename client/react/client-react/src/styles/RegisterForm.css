@@ -1,4 +1,4 @@
-/* Modern Registration Form Styling with Black, White, and Orange */
+Modern Registration Form Styling with Black, White, and Orange
 :root {
     --register-primary: #000000;
     --register-primary-light: #333333;
@@ -23,13 +23,6 @@
     --register-transition: 0.2s ease;
 }
 
-/* Global styles */
-/* * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-} */
-
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
         "Helvetica Neue", sans-serif;
@@ -38,7 +31,6 @@ body {
     line-height: 1.5;
 }
 
-/* Container */
 .register-container {
     display: flex;
     justify-content: center;
@@ -49,7 +41,6 @@ body {
     background: #121212;
 }
 
-/* Card */
 .register-card {
     width: 100%;
     max-width: 500px;
@@ -73,7 +64,6 @@ body {
     }
 }
 
-/* Header */
 .register-header {
     padding: 2rem 2rem 1.5rem;
     text-align: center;
@@ -93,7 +83,6 @@ body {
     opacity: 0.9;
 }
 
-/* Form */
 .register-form {
     padding: 2rem;
 }
@@ -180,7 +169,6 @@ body {
     color: var(--register-secondary);
 }
 
-/* Profile Picture */
 .register-profile-section {
     margin-bottom: 1.5rem;
 }
@@ -294,7 +282,6 @@ body {
     display: block;
 }
 
-/* Submit Button */
 .register-submit-button {
     width: 100%;
     padding: 0.875rem;
@@ -341,7 +328,6 @@ body {
     }
 }
 
-/* Divider */
 .register-divider {
     display: flex;
     align-items: center;
@@ -362,7 +348,6 @@ body {
     padding: 0 1rem;
 }
 
-/* Login Link */
 .register-login-link {
     text-align: center;
     margin-top: 1.5rem;
@@ -382,7 +367,6 @@ body {
     text-decoration: underline;
 }
 
-/* Modal */
 .register-modal-overlay {
     position: fixed;
     top: 0;
@@ -465,7 +449,6 @@ body {
     overflow: none;
 }
 
-/* Snackbar */
 .register-snackbar {
     position: fixed;
     top: 1rem;
@@ -521,7 +504,6 @@ body {
     opacity: 1;
 }
 
-/* Responsive */
 @media (max-width: 640px) {
     .register-form-row {
         flex-direction: column;
@@ -537,7 +519,6 @@ body {
     }
 }
 
-/* Additional responsive adjustments */
 @media (max-width: 480px) {
     .register-header {
         padding: 1.5rem 1rem;
@@ -568,7 +549,6 @@ body {
     }
 }
 
-/* Focus states for accessibility */
 .register-form-input:focus {
     outline: none;
 }
@@ -583,7 +563,6 @@ body {
     box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.4);
 }
 
-/* Hover effects */
 .register-submit-button:hover:not(:disabled) {
     background-color: var(--register-secondary-dark);
     transform: translateY(-1px);
@@ -595,7 +574,6 @@ body {
     text-decoration: underline;
 }
 
-/* Animation for success message */
 @keyframes registerPulse {
     0% {
         box-shadow: 0 0 0 0 rgba(51, 204, 102, 0.4);

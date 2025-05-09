@@ -27,7 +27,7 @@ const PrivateOptions = ({
         <div className="private-options-container">
           <button className="private-option-5button" onClick={() => handleDisplayRecipe(recipe)}>
             <Eye size={18} />
-            <span className="private-option-text">הצג מתכון</span>
+            <span className="private-option-text">הצגת המתכון</span>
           </button>
 
           <button
@@ -38,12 +38,12 @@ const PrivateOptions = ({
             }}
           >
             <Download size={18} />
-            <span className="private-option-text">הורד מתכון</span>
+            <span className="private-option-text">הורדת המתכון</span>
           </button>
 
           <button className="private-option-5button" onClick={() => EmailRecipe(recipe)}>
             <Mail size={18} />
-            <span className="private-option-text">שלח למייל</span>
+            <span className="private-option-text">שליחה למייל</span>
           </button>
 
           <button
@@ -54,7 +54,7 @@ const PrivateOptions = ({
             }}
           >
             <Star size={18} />
-            <span className="private-option-text">הוסף למומלצים</span>
+            <span className="private-option-text">הוספה למומלצים</span>
           </button>
 
           <button
@@ -65,7 +65,7 @@ const PrivateOptions = ({
             }}
           >
             <Delete size={18} />
-            <span className="private-option-text">מחק מתכון</span>
+            <span className="private-option-text">הסרה מהספר שלי</span>
           </button>
 
         </div>
@@ -73,7 +73,7 @@ const PrivateOptions = ({
         <div className="private-options-container">
           <button className="private-option-button" onClick={() => handleDisplayRecipe(recipe)}>
             <Eye size={18} />
-            <span className="private-option-text">הצג מתכון</span>
+            <span className="private-option-text">הצגת המתכון</span>
           </button>
 
           <button
@@ -84,12 +84,12 @@ const PrivateOptions = ({
             }}
           >
             <Download size={18} />
-            <span className="private-option-text">הורד מתכון</span>
+            <span className="private-option-text">הורדת המתכון</span>
           </button>
 
           <button className="private-option-button" onClick={() => EmailRecipe(recipe)}>
             <Mail size={18} />
-            <span className="private-option-text">שלח למייל</span>
+            <span className="private-option-text">שליחה למייל</span>
           </button>
 
           <button
@@ -100,7 +100,7 @@ const PrivateOptions = ({
             }}
           >
             <Delete size={18} />
-            <span className="private-option-text">מחק מתכון</span>
+            <span className="private-option-text">מחיקה מהספר שלי</span>
           </button>
         </div>
       </>)}
