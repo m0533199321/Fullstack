@@ -1,7 +1,6 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-// import Swal from "sweetalert2";
 import { AuthState, UserLogin, UserRegister } from "../../models/AuthType";
 import api from "../api";
 import { User } from "../../models/UserType";
@@ -52,15 +51,12 @@ export const registerUser = createAsyncThunk(
 
             const response = await axios.post(`${API_URL}/Auth/register`, user);
             localStorage.setItem("token", response.data.token);
-            // Swal.fire("Success!", "Your account has been created!", "success");   
             if (response.status === 200 || response.status === 201) {
                 console.log(response.status);
                 console.log(user.email);
-                // await sendEmail({to:user.email, subject:"Registration", body:"You have successfully registered"});    
             }
             return response.data;
         } catch (e: any) {
-            // Swal.fire("Error!", "Registration failed. Please try again.", "error");
             return thunkAPI.rejectWithValue(e.message);
         }
     }
@@ -104,10 +100,8 @@ export const loginUser = createAsyncThunk(
         try {
             const response = await axios.post(`${API_URL}/Auth/login`, user);
             localStorage.setItem("token", response.data.token);
-            // Swal.fire("Success!", "You have successfully logged in!", "success");
             return response.data;
         } catch (e: any) {
-            // Swal.fire("Error!", "Login failed. Please check your credentials.", "error");
             return thunkAPI.rejectWithValue(e.message);
         }
     }
@@ -121,10 +115,8 @@ export const forgotPasswordUser = createAsyncThunk(
             const response = await axios.post(`${API_URL}/Auth/login`, user)
 
             localStorage.setItem("token", response.data.token);
-            // Swal.fire("Success!", "You have successfully logged in!", "success");
             return response.data;
         } catch (e: any) {
-            // Swal.fire("Error!", "Login failed. Please check your credentials.", "error");
             return thunkAPI.rejectWithValue(e.message);
         }
     }
@@ -136,11 +128,8 @@ export const UpdateUserName = createAsyncThunk(
         try {
             console.log(id, fName, lName);
             const response = await api.put(`${API_URL}/User/Name/${id}?fName=${fName}&lName=${lName}`);
-            // const response = await api.put(`${API_URL}/User/Name`, { id, fName, lName });
-            // Swal.fire("Success!", "You have successfully updated name!", "success");
             return response.data;
         } catch (e: any) {
-            // Swal.fire("Error!", "Updated failed. Please try later.", "error");
             return thunkAPI.rejectWithValue(e.message);
         }
     }
@@ -152,10 +141,8 @@ export const UpdateUserProfile = createAsyncThunk(
         try {
             console.log(id, profile);
             const response = await api.put(`${API_URL}/User/Profile/${id}?profile=${profile}`);
-            // Swal.fire("Success!", "You have successfully updated profile!", "success");
             return response.data;
         } catch (e: any) {
-            // Swal.fire("Error!", "Updated failed. Please try later.", "error");
             return thunkAPI.rejectWithValue(e.message);
         }
     }

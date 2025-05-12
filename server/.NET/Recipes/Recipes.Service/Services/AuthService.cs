@@ -59,10 +59,13 @@ namespace Recipes.Service.Services
         {
             roles = null;
             user = _iManager._userRepository.GetUserFullRoles(email);
-            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
+            if (user != null && user.Password != "")
             {
-                roles = user.RolesList.Select(r => r.RoleName).ToArray();
-                return true;
+                if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
+                {
+                    roles = user.RolesList.Select(r => r.RoleName).ToArray();
+                    return true;
+                }
             }
             return false;
         }

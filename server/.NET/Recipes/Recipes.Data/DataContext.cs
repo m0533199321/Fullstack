@@ -19,6 +19,10 @@ namespace Recipes.Data
 
         public DbSet<Role> Roles { get; set; }
 
+        public DbSet<Allergy> Allergies { get; set; }
+
+        public DbSet<Preference> Preferences { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=recipes_db");

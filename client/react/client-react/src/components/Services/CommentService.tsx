@@ -1,4 +1,3 @@
-import Swal from "sweetalert2";
 import api from "../api";
 import { CommentType } from "../../models/CommentType";
 const API_URL = "https://localhost:7005/api/Comment";
@@ -11,8 +10,7 @@ export const fetchComments = async (
         console.log(response);
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to add recipe to public. Please try again.", "error");
-        throw new Error(e.message);
+        throw new Error("Failed to fetch comments. Please try again.");
     }
 };
 
@@ -25,8 +23,7 @@ export const fetchAddComment = async (
         console.log(response);
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to add recipe to public. Please try again.", "error");
-        throw new Error(e.message);
+        throw new Error("Failed to add your comment. Please try again.");
     }
 };
 
@@ -41,8 +38,7 @@ export const fetchEditComment = async (
         console.log(response);
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to edit comment to public. Please try again.", "error");
-        throw new Error(e.message);
+        throw new Error("Failed to edit your comment. Please try again.");
     }
 };
 
@@ -55,8 +51,7 @@ export const fetchRemoveComment = async (
         console.log(response);
         return response.data;
     } catch (e: any) {
-        Swal.fire("Error!", "Failed to edit comment to public. Please try again.", "error");
-        throw new Error(e.message);
+        throw new Error("Failed to remove your comment. Please try again.");
     }
 };
 

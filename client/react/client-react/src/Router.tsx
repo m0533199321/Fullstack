@@ -14,6 +14,8 @@ import LastRecipes from "./components/LastRecipes"
 import ForgotPassword from "./components/ForgotPassword"
 import EmailToMe from "./components/EmailToMe"
 import { Google } from "@mui/icons-material"
+import AllergiesForm from "./components/AllergiesForm"
+import PreferencesForm from "./components/PreferencesForm"
 // import Python from "./components/Python"
 // import Home  from "./components/Home"
 
@@ -37,6 +39,9 @@ export const Router = createBrowserRouter([
             { path: 'forgot-password', element: <ForgotPassword /> },
             { path: 'email-to-me', element: <EmailToMe /> },
             { path: 'google', element: <Google /> },
+            { path: 'allergies', element: <AllergiesForm userId={110}/> },
+            { path: 'preferences', element: <PreferencesForm userId={110}/> },
+
             // {
             //     path: 'file-viewer', element: <FileViewer onClose={() => { }}
             //         fileUrl="https://malismartchef.s3.us-east-1.amazonaws.com/recipes/261742340504975.docx"

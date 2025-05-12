@@ -1,0 +1,105 @@
+.preferences-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.preferences-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.preferences-description {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.preferences-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.preference-checkbox-label {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.preference-checkbox-label:hover {
+    background-color: #f0f0f0;
+}
+
+.preference-checkbox {
+    margin-left: 0.75rem;
+    width: 18px;
+    height: 18px;
+    accent-color: #ff9800;
+}
+
+.preference-name {
+    font-size: 0.95rem;
+}
+
+.preferences-submit-button {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.preferences-submit-button:hover {
+    background-color: #f57c00;
+}
+
+.preferences-submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.preferences-notification {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.preferences-notification.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #2e7d32;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.preferences-notification.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #d32f2f;
+    border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.notification-icon {
+    margin-left: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .preferences-grid {
+        grid-template-columns: 1fr;
+    }
+}

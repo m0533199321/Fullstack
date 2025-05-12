@@ -33,7 +33,7 @@ const LastRecipes = () => {
                         {recipes.map((recipe) => (
                             <div key={recipe.id} className="last-recipe-card">
                                 <h3 className="last-recipe-title" style={{ fontSize: `${Math.max(1.2, 2.6 - recipe.title.length / 10)}em`, marginTop: '2%' }}>{recipe.title}</h3>
-                                <img src="../../images/back/smartSource2.png" alt={recipe.title} className="last-recipe-image" />
+                                <img src="../../images/back/chef.png" alt={recipe.title} className="last-recipe-image" />
                             </div>
                         ))}
                     </div>

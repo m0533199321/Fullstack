@@ -378,6 +378,7 @@ const Home = () => {
                 element.scrollIntoView({ behavior: "smooth" });
             }
         } else {
+            if (!isAuthenticated) return navigate("/login");
             navigate(path);
         }
     };

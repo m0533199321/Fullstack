@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recipes.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,10 @@ namespace Recipes.Core.Interfaces.IRepository
         ICommentRepository _commentRepository { get; set; }
 
         IRoleRepository _roleRepository { get; set; }
+
+        IAllergiesRepository _allergiesRepository { get; set; }
+
+        IPreferencesRepository _preferencesRepository { get; set; }
 
         Task SaveAsync();
     }

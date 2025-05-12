@@ -43,7 +43,6 @@ export const uploadProfilePictureService = async (file: File): Promise<string | 
 
 
 // import axios from "axios";
-// import Swal from "sweetalert2";
 
 // const API_URL = "https://localhost:7005/api/User";
 
@@ -73,7 +72,6 @@ export const uploadProfilePictureService = async (file: File): Promise<string | 
 //             console.log(uploadUrl);
 
 //         } catch (e: any) {
-//             Swal.fire("Error!", "Failed to get upload URL. Please try again.", "error");
 //             throw new Error(e.message);
 //         }
 
@@ -87,9 +85,7 @@ export const uploadProfilePictureService = async (file: File): Promise<string | 
 //                     "Content-Type": "multipart/form-data",
 //                 },
 //             });
-//             Swal.fire("Success!", "Profile picture uploaded successfully!", "success");
 //         } catch (e: any) {
-//             Swal.fire("Error!", "Failed to upload profile picture. Please try again.", "error");
 
 //             throw new Error(e.message);
 //         }

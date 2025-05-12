@@ -29,6 +29,12 @@ namespace Recipes.Data.Repositories
             return t;
         }
 
+        public async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
+        {
+            await _dataSet.AddRangeAsync(entities);
+            return entities;
+        }
+
         public async Task<T> UpdateAsync(int id, T updatedEntity)
         {
             var existingEntity = await _dataSet.FindAsync(id);
@@ -59,6 +65,16 @@ namespace Recipes.Data.Repositories
             if (find != null)
             {
                 _dataSet.Remove(find);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> DeleteRangeAsync(IEnumerable<T> entities)
+        {
+            if (entities != null && entities.Any())
+            {
+                _dataSet.RemoveRange(entities);
                 return true;
             }
             return false;

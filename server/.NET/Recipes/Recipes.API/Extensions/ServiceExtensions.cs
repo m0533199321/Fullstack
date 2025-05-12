@@ -23,6 +23,8 @@ namespace Recipes.Api.Extensions
             services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IAllergiesRepository, AllergiesRepository>();
+            services.AddScoped<IPreferencesRepository, PreferencesRepository>();
 
             // Register services
             services.AddScoped<IAuthService, AuthService>();
@@ -32,6 +34,9 @@ namespace Recipes.Api.Extensions
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IRequestService,  RequestService>();
+            services.AddScoped<IAllergiesService, AllergiesService>();
+            services.AddScoped<IPreferencesService, PreferencesService>();
+
         }
 
 

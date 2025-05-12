@@ -139,10 +139,13 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
     const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
     const [originalContent, setOriginalContent] = useState('');
     const [localComments, setLocalComments] = useState<CommentType[]>(comments);
+    const [snackOpen, setSnackOpen] = useState(false);
+    const [snackMessage, setSnackMessage] = useState("");
+    const [snackSeverity, setSnackSeverity] = useState<"success" | "error">("success");
     const user = useAppSelector((state) => state.auth.user);
 
     useEffect(() => {
-        setLocalComments(comments); 
+        setLocalComments(comments);
         setSuccess(true);
     }, [comments]);
 
@@ -151,7 +154,9 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
             setLocalComments(await fetchComments(recipeId));
             setSuccess(true);
         } catch (error) {
-            console.error('Failed to fetch comments:', error);
+            setSnackMessage("שגיאה ב טעינת התגובות")
+            setSnackSeverity("error")
+            setSnackOpen(true)
         }
     }
 
@@ -160,8 +165,9 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
             await fetchRemoveComment(comment.id);
             allComments();
         } catch (error) {
-            console.error('Failed to remove comment:', error);
-        }
+            setSnackMessage("שגיאה ב מחיקת התגובה")
+            setSnackSeverity("error")
+            setSnackOpen(true)        }
     }
 
     const handleEdit = (comment: CommentType) => {
@@ -176,8 +182,9 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
             setEditingCommentId(null);
             allComments();
         } catch (error) {
-            console.error('Failed to edit comment:', error);
-        }
+            setSnackMessage("שגיאה בעדכון התגובה")
+            setSnackSeverity("error")
+            setSnackOpen(true)        }
     }
 
     const handleCancelEdit = () => {
@@ -189,13 +196,27 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
     //     allComments();
     // }, [recipeId]);
 
+    const handleSnackClose = () => {
+        setSnackOpen(false);
+    };
+
     return (
         <>
+            {snackOpen && (
+                <>
+                    <div className="comments-snackbar">
+                        <span className="comments-snackbar-content">
+                            {snackMessage}
+                            <button onClick={handleSnackClose} className="comments-snackbar-close">×</button>
+                        </span>
+                    </div>
+                </>
+            )}
             <div className="comments-container">
                 {success && comments.length > 0 && (
                     <h1 className="comments-title">תגובות</h1>
                 )}
-                
+
                 {success && comments.length === 0 && (
                     <div className="no-comments">אין תגובות עדיין. היה הראשון להגיב!</div>
                 )}
@@ -206,7 +227,7 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
                             <Avatar src={comment.user.profile} className="avatar" />
                             <span className="user-name">{comment.user.fName + " " + comment.user.lName}</span>
                         </div>
-                        
+
                         {editingCommentId === comment.id ? (
                             <input
                                 type="text"
@@ -223,25 +244,25 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
                         ) : (
                             <p className="comment-content">{comment.content}</p>
                         )}
-                        
+
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                             <p className="comment-date">
                                 <strong>תאריך:</strong> {new Date(comment.createdAt).toLocaleDateString()}
                             </p>
-                            
+
                             {user && user.id === comment.userId && (
                                 <div className="comment-actions">
                                     {editingCommentId === comment.id ? (
                                         <>
-                                            <Button 
+                                            <Button
                                                 className={`comment-button save ${content !== originalContent ? 'active' : ''}`}
                                                 onClick={() => handleSaveEdit(comment)}
                                                 disabled={content === originalContent}
                                             >
                                                 שמירה
                                             </Button>
-                                            <Button 
-                                                className="comment-button" 
+                                            <Button
+                                                className="comment-button"
                                                 onClick={handleCancelEdit}
                                             >
                                                 ביטול
@@ -249,14 +270,14 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
                                         </>
                                     ) : (
                                         <>
-                                            <Button 
-                                                className="comment-button" 
+                                            <Button
+                                                className="comment-button"
                                                 onClick={handleRemove(comment)}
                                             >
                                                 מחיקה
                                             </Button>
-                                            <Button 
-                                                className="comment-button" 
+                                            <Button
+                                                className="comment-button"
                                                 onClick={() => handleEdit(comment)}
                                             >
                                                 עריכה
@@ -269,7 +290,7 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
                     </div>
                 ))}
             </div>
-            <div style={{height:'50px'}}></div>
+            <div style={{ height: '50px' }}></div>
         </>
     );
 };

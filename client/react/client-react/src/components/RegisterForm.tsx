@@ -341,8 +341,7 @@ const RegisterForm = () => {
     e.preventDefault()
 
     const emailError = isEmailValid(formData.email) ? "" : "אימייל לא תקין"
-    const passwordError = isPasswordValid(formData.password) ? "" : "סיסמה חייבת להיות באורך של לפחות 6 תווים"
-
+    const passwordError = isPasswordValid(formData.password) ? "" : "הסיסמה חייבת להיות באורך של לפחות 6 תווים ולהכיל אות וספרה.";
     if (emailError || passwordError) {
       setErrors({ email: emailError, password: passwordError })
       return

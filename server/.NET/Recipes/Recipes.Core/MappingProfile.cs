@@ -18,6 +18,10 @@ namespace Recipes.Core
             CreateMap<Recipe, RecipeDto>().ReverseMap();
 
             CreateMap<Comment, CommentDto>().ReverseMap();
+
+            CreateMap<Allergy, AllergyDto>().ReverseMap();
+
+            CreateMap<Preference, PreferenceDto>().ReverseMap();
         }
     }
 }
