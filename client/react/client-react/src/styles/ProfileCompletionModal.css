@@ -1,0 +1,232 @@
+.profile-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    direction: rtl;
+}
+
+.profile-modal-container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 800px;
+    min-height: 90vh;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(-50px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.profile-modal-container.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.profile-modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+.profile-modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #333;
+}
+
+.profile-modal-description {
+    color: #666;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.profile-modal-close {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.profile-modal-close:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* .profile-modal-content {
+    padding: 0;
+} */
+
+.profile-modal-content {
+    padding: 20px;
+    margin-top: 15vh;
+    margin-left: 20%;
+}
+
+.profile-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-tab {
+    flex: 1;
+    /* padding: 16px; */
+    padding-top:5px;
+    padding-bottom: 5px;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+}
+
+.profile-tab.active {
+    color: #ff9800;
+    border-bottom-color: #ff9800;
+    background-color: rgba(255, 152, 0, 0.05);
+}
+
+.profile-tab:hover:not(.active) {
+    background-color: #f9f9f9;
+}
+
+.profile-tab-content {
+    padding: 0;
+}
+
+.tab-panel {
+    padding: 0;
+}
+
+.tab-actions {
+    padding: 16px 24px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #eee;
+}
+
+.next-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.next-button:hover {
+    background-color: #f57c00;
+}
+
+.profile-modal-success {
+    padding: 40px 24px;
+    text-align: center;
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    background-color: rgba(76, 175, 80, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.check-icon {
+    width: 32px;
+    height: 32px;
+    color: #4caf50;
+}
+
+.success-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #333;
+}
+
+.success-message {
+    color: #666;
+    margin: 0;
+}
+
+/* עדכון סגנונות לטפסים בתוך המודל */
+.profile-modal-container .allergies-form-container,
+.profile-modal-container .preferences-form-container {
+    box-shadow: none;
+    border-radius: 0;
+    max-width: none;
+    margin: 0;
+    padding: 24px;
+}
+
+.profile-modal-container .allergies-title,
+.profile-modal-container .preferences-title {
+    font-size: 1.3rem;
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 768px) {
+    .profile-modal-container {
+        width: 95%;
+        max-height: 85vh;
+    }
+
+    .profile-modal-title {
+        font-size: 1.3rem;
+    }
+
+    .profile-modal-container .allergies-grid,
+    .profile-modal-container .preferences-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* סגנון לגלילה */
+.profile-modal-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.profile-modal-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.profile-modal-container::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+}
+
+.profile-modal-container::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+}

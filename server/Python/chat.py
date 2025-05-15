@@ -77,7 +77,8 @@ def get_recipe_file():
 
     recipe_text = completion.choices[0].message.content
 
-    url = 'https://malismartchef.s3.us-east-1.amazonaws.com/recipes/template3.docx'
+    # url = 'https://malismartchef.s3.us-east-1.amazonaws.com/recipes/template3.docx'
+    url = 'https://malismartchef.s3.us-east-1.amazonaws.com/recipes/smartChef-word.docx'
 
     response = requests.get(url)
     if response.status_code == 200:
@@ -191,7 +192,8 @@ def name_recipe_with_ai(user_request):
             messages=[
                 {
                     "role": "system",
-                    "content": f"""You are a precise chef who names recipes. The recipe name must be in the language of the user's request. Given the following request, return a recipe name that matches the request, a generic name without events, dates, and specific descriptions from the request."""
+                    # "content": f"""You are a precise chef who names recipes. The recipe name must be in the language of the user's request. Given the following request, return a recipe name that matches the request, a generic name without events, dates, and specific descriptions from the request."""
+                    "content": f"""You are a precise chef who names recipes. The recipe name must be in the language of the user's request. Given the following request, return a recipe name that matches the request, a generic name without events, dates, and specific descriptions from the request. Address allergies and preferences only if it does not conflict with the user's request."""
                 },
                 {
                     "role": "user",
