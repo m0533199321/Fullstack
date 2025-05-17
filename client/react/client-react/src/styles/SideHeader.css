@@ -61,7 +61,6 @@ body.collapsed-header {
     padding: 20px 0;
 }
 
-/* Logo */
 .logo-container {
     display: flex;
     align-items: center;
@@ -111,7 +110,6 @@ body.collapsed-header {
     color: var(--text-primary);
 }
 
-/* Menu */
 .menu-container {
     display: flex;
     flex-direction: column;
@@ -151,7 +149,6 @@ body.collapsed-header {
     white-space: nowrap;
 }
 
-/* Profile */
 .profile-container {
     position: relative;
     padding: 16px;
@@ -248,7 +245,6 @@ body.collapsed-header {
     text-overflow: ellipsis;
 }
 
-/* Profile Dropdown */
 .profile-dropdown {
     position: absolute;
     bottom: calc(100% + 8px);
@@ -297,7 +293,6 @@ body.collapsed-header {
     background-color: rgba(244, 67, 54, 0.1);
 }
 
-/* Edit Name Form */
 .edit-name-container {
     padding: 16px;
 }
@@ -363,7 +358,6 @@ body.collapsed-header {
     background-color: var(--primary-hover);
 }
 
-/* Notification */
 .notification {
     position: fixed;
     top: 20px;
@@ -387,7 +381,6 @@ body.collapsed-header {
     background-color: var(--error);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .side-header {
         width: 240px;
@@ -398,14 +391,12 @@ body.collapsed-header {
     }
 }
 
-/* Animation for menu items */
 .menu-item {
     position: relative;
     overflow: hidden;
 }
 
 .menu-item.active {
-    /* background-color: var(--header-active); */
     background-image: linear-gradient(to right, var(--header-border), var(--header-active));
     color: var(--primary-active);
 }
@@ -427,7 +418,6 @@ body.collapsed-header {
     transform: scaleY(1);
 }
 
-/* Glow effect for primary elements */
 .logo-icon,
 .avatar-container {
     position: relative;

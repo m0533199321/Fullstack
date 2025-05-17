@@ -285,7 +285,7 @@ const Request = () => {
     const [showConfirmationDialog, setShowConfirmationDialog] = useState(false)
     const [showProfileModal, setShowProfileModal] = useState(false)
     const [isFirstLoad, setIsFirstLoad] = useState(true)
-    const [isUpdateMode, setIsUpdateMode] = useState(false) // מצב עדכון חדש
+    const [isUpdateMode, setIsUpdateMode] = useState(false)
 
     // הוספת מצב לפרטים האישיים של המשתמש
     const [userProfileDetails, setUserProfileDetails] = useState<UserProfileDetails>({

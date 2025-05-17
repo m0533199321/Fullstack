@@ -224,7 +224,6 @@ import { recipeEmailBody } from "./RecipeEmailBody";
 import PublicShows from "./PublicShows";
 import RecipeSearch from "./RecipeSearch";
 import RecipeSortBy, { sortRecipes } from "./RecipeSortBy";
-import File2 from "./File";
 import { Star } from "lucide-react";
 import "../styles/PublicRecipes.css";
 import DisplayRecipe from "./DisplayRecipe";
@@ -240,15 +239,18 @@ const PublicRecipes = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [showPrivate, setShowPrivate] = useState(false);
-  const [showPublic, setShowPublic] = useState(true); // Set default to true
+  const [showPublic, setShowPublic] = useState(true);
   const [searchRecipe, setSearchRecipe] = useState("");
-  const [file, setFile] = useState(false);
-  const [recipeToDisplay, setRecipeToDisplay] = useState<Recipe | null>(null);
+  // const [file, setFile] = useState(false);
+  // const [recipeToDisplay, setRecipeToDisplay] = useState<Recipe | null>(null);
+  const [file,] = useState(false);
+  const [recipeToDisplay,] = useState<Recipe | null>(null);
   const [showVert, setShowVert] = useState<number | null>(null);
   const [snackOpen, setSnackOpen] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
-  const [snackSeverity, setSnackSeverity] = useState<"success" | "error">("success");
+  // const [snackSeverity, setSnackSeverity] = useState<"success" | "error">("success");
   const optionsPanelRef = useRef<HTMLDivElement>(null);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
 
   const allRecipes = async () => {
     try {
@@ -261,7 +263,7 @@ const PublicRecipes = () => {
       }
     } catch (error) {
       setSnackMessage("שגיאה בטעינת המתכונים")
-      setSnackSeverity("error")
+      // setSnackSeverity("error")
       setSnackOpen(true)
     }
   };
@@ -418,7 +420,7 @@ const PublicRecipes = () => {
 
                         <div className="public-recipe-content">
                           <div className="public-recipe-actions">
-                            <button
+                            {isAuthenticated &&<button
                               className="public-recipe-options-button"
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -427,7 +429,7 @@ const PublicRecipes = () => {
                               aria-label="אפשרויות מתכון"
                             >
                               <MoreVert />
-                            </button>
+                            </button>}
                             <h3 className="public-recipe-title">{recipe.title}</h3>
                           </div>
 

@@ -175,7 +175,7 @@
 //         { icon: <NewReleases size={24} />, label: "מתכון חדש", path: "/request", authRequired: true },
 //         { icon: <Receipt size={24} />, label: "המתכונים שלי", path: "/private-recipes", authRequired: true },
 //     ];
-    
+
 //     return (
 //         <>
 //             {editingProfile && (
@@ -357,7 +357,6 @@ import {
     ListIcon as Favorite,
     DownloadIcon as NewReleases,
     Receipt,
-    PersonStandingIcon as Person,
     LogOutIcon as Logout,
     ChevronRight,
     ChevronLeft,
@@ -367,9 +366,11 @@ import {
     Check,
     AlertCircle,
     Camera,
+    Settings,
 } from "lucide-react"
 import "../styles/SideHeader.css"
 import ProfilePicture from "./ProfilePicture" // הנחתי ש ProfileUpdate הוא אותו קומפוננטה כמו ProfilePicture
+import ProfileCompletionModal from "./ProfileCompletionModal"
 
 const SideHeader = () => {
     const user = useAppSelector((state) => state.auth.user)
@@ -389,6 +390,9 @@ const SideHeader = () => {
     const [snackMessage, setSnackMessage] = useState("")
     const [snackSeverity, setSnackSeverity] = useState<"success" | "error">("success")
     const [currentPath, setCurrentPath] = useState(location.pathname); // אתחל עם הנתיב הנוכחי
+    const [isUpdateMode, setIsUpdateMode] = useState(false)
+    const [showProfileModal, setShowProfileModal] = useState(false)
+    // const [hasCompletedProfile, setHasCompletedProfile] = useState<boolean | null>(null)
 
     // useEffect שמגיב לשינויים ב-location.pathname
     useEffect(() => {
@@ -449,16 +453,16 @@ const SideHeader = () => {
             await dispatch(UpdateUserName({ id: user.id, fName, lName })).then((result) => {
                 // הנחה שהתוצאה של dispatch מחזירה משהו שמסמל הצלחה/כישלון
                 if ((result.payload as any)?.success === false) { // התאם את התנאי בהתאם למה ש-UpdateUserName מחזירה בפועל
-                     setNotification({
-                         message: (result.payload as any)?.message || "שגיאה בעדכון שם", // השתמש בהודעת שגיאה מהתוצאה אם קיימת
-                         type: "error",
-                     });
-                 } else {
-                     setNotification({
-                         message: "שם עודכן בהצלחה",
-                         type: "success",
-                     });
-                 }
+                    setNotification({
+                        message: (result.payload as any)?.message || "שגיאה בעדכון שם", // השתמש בהודעת שגיאה מהתוצאה אם קיימת
+                        type: "error",
+                    });
+                } else {
+                    setNotification({
+                        message: "שם עודכן בהצלחה",
+                        type: "success",
+                    });
+                }
             })
         }
         setEditingName(false)
@@ -511,7 +515,7 @@ const SideHeader = () => {
                     }, 3000);
                 });
         } else { // טיפול במקרה ש file הוא null (למשל, המשתמש ביטל בחירה)
-             setEditingProfile(false);
+            setEditingProfile(false);
         }
     };
 
@@ -522,6 +526,15 @@ const SideHeader = () => {
 
     const handleSnackClose = () => {
         setSnackOpen(false)
+    }
+
+    const handleProfileComplete = () => {
+        setShowProfileModal(false)
+    }
+
+    const handleOpenProfileUpdate = () => {
+        setIsUpdateMode(true)
+        setShowProfileModal(true)
     }
 
     const menuItems = [
@@ -555,6 +568,16 @@ const SideHeader = () => {
                         </button>
                     </div>
                 </div>
+            )}
+
+            {user && (
+                <ProfileCompletionModal
+                    userId={user.id}
+                    isOpen={showProfileModal}
+                    onClose={() => setShowProfileModal(false)}
+                    onComplete={handleProfileComplete}
+                    isUpdateMode={isUpdateMode}
+                />
             )}
 
             <div style={{ direction: "rtl" }}>
@@ -673,15 +696,19 @@ const SideHeader = () => {
                                                 <div className="profile-actions">
                                                     <button className="profile-action-btn" onClick={handleEditName}>
                                                         <Edit size={18} />
-                                                        <span>ערוך שם משתמש</span>
+                                                        <span>עריכת שם משתמש</span>
                                                     </button>
                                                     <button className="profile-action-btn" onClick={handleEditProfile}>
                                                         <Camera size={18} />
-                                                        <span>ערוך תמונת פרופיל</span>
+                                                        <span>עריכת תמונת פרופיל</span>
+                                                    </button>
+                                                    <button className="profile-action-btn" onClick={handleOpenProfileUpdate}>
+                                                        <Settings size={18} />
+                                                        <span>עריכת פרטים</span>
                                                     </button>
                                                     <button className="profile-action-btn logout" onClick={handleLogout}>
                                                         <Logout size={18} />
-                                                        <span>התנתק</span>
+                                                        <span>התנתקות</span>
                                                     </button>
                                                 </div>
                                             )}

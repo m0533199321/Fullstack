@@ -42,11 +42,15 @@
 
 .profile-selector-backdrop {
     position: fixed;
-    background-color: rgba(0, 0, 0, 0);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 0, 0, 0);
     backdrop-filter: none;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
     z-index: 10000;
     padding: 20px;
 }
@@ -57,10 +61,11 @@
     width: 100%;
     max-width: 500px;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    border: none; 
+    /* box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); */
+    border: none;
     position: relative;
     direction: rtl;
+    z-index: 10000000;
 }
 
 .profile-selector-header {
@@ -276,7 +281,7 @@
 }
 
 .profile-selector-image {
-    width: 100%; 
+    width: 100%;
     height: 100%;
     object-fit: cover;
 }
@@ -337,7 +342,7 @@
 
 .zoom-slider {
     flex: 1;
-    -webkit-appearance: none;
+    /* -webkit-appearance: none; */
     height: 6px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 3px;

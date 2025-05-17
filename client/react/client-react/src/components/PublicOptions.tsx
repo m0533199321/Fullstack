@@ -49,6 +49,7 @@
 import { Download, Mail, Eye, Book } from "lucide-react"
 import { Recipe } from "../models/RecipeType";
 import "../styles/PublicOptions.css";
+import { useAppSelector } from "./Redux/Store";
 
 interface PublicOptionsProps {
     recipe: Recipe;

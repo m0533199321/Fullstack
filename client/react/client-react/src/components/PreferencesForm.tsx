@@ -33,7 +33,7 @@ const preferenceOptions = Object.entries(PreferenceType)
 // פונקציה להמרת שמות ההעדפות לעברית
 function getPreferenceLabel(preferenceName: string): string {
     const hebrewLabels: Record<string, string> = {
-        None: "ללא אלרגיות",
+        None: "ללא ההעדפות",
         Spicy: "חריף",
         Sweet: "מתוק",
         Salty: "מלוח",

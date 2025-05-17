@@ -78,7 +78,7 @@ def get_recipe_file():
     recipe_text = completion.choices[0].message.content
 
     # url = 'https://malismartchef.s3.us-east-1.amazonaws.com/recipes/template3.docx'
-    url = 'https://malismartchef.s3.us-east-1.amazonaws.com/recipes/smartChef-word.docx'
+    url = 'https://malismartchef.s3.us-east-1.amazonaws.com/recipes/smartChef.docx'
 
     response = requests.get(url)
     if response.status_code == 200:
@@ -91,7 +91,7 @@ def get_recipe_file():
     title.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
     run = title.runs[0]
     run.font.size = Pt(29)
-    run.font.color.rgb = RGBColor(255, 255, 255)
+    run.font.color.rgb = RGBColor(255, 183, 77)
     run.bold = True 
 
     lines = recipe_text.split("\n")
@@ -115,7 +115,7 @@ def get_recipe_file():
     ingredients_name.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
     run2 = ingredients_name.runs[0]
     run2.font.size = Pt(26)
-    run2.font.color.rgb = RGBColor(255, 255, 255)
+    run2.font.color.rgb = RGBColor(255, 149, 0)
     run2.bold = True
 
     ingredients_list = doc.add_paragraph(ingredients_text)
@@ -128,7 +128,7 @@ def get_recipe_file():
     instructions_name.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
     run4 = instructions_name.runs[0]
     run4.font.size = Pt(26)
-    run4.font.color.rgb = RGBColor(255, 255, 0)
+    run4.font.color.rgb = RGBColor(245, 124, 0)
     run4.bold = True
 
     instructions_list = doc.add_paragraph(instructions_text)

@@ -265,7 +265,7 @@ const ProfileUpdate = ({ onSelect, onClose, currentProfilePic }: ProfilePictureE
   }
 
   const modalVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    hidden: { opacity: 0, y: 0 },
     visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", damping: 25, stiffness: 300 } },
     exit: { opacity: 0, y: 50, scale: 0.9, transition: { duration: 0.2 } },
   }
