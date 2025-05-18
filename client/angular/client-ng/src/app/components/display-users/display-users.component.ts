@@ -5,6 +5,7 @@ import { DisplayUsersService } from '../../services/display-users.service';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './display-users.component.css'
 })
 export class DisplayUsersComponent {
-  constructor(private usersService: DisplayUsersService, private snackBar: MatSnackBar) { }
+  constructor(private usersService: DisplayUsersService, private snackBar: MatSnackBar, private router:Router) { }
   users$: Observable<User[]> = this.usersService.users;
   add: boolean = false;
   newUser: User = {
@@ -136,6 +137,7 @@ export class DisplayUsersComponent {
   }
 
   goBack = () => {
-    window.history.back();
+    this.router.navigate(['/home']);
+    // window.history.back();
   }
 }
