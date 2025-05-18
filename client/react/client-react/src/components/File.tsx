@@ -7,7 +7,7 @@ import mammoth from "mammoth"
 import "../styles/File.css"
 import { FaImage } from "react-icons/fa"
 import { uploadRecipeService } from "./Services/RequestService"
-import { BookOpen, ChefHat, Clock, Utensils, ArrowRight, BookPlus, Star, Download, Mail } from "lucide-react"
+import { ChefHat, ArrowRight, BookPlus, Star, Download, Mail } from "lucide-react"
 import { recipeImg, uploadRecipeImgService } from "./Services/RecipeImgService"
 import axios from "axios"
 import { Close } from "@mui/icons-material"
@@ -162,6 +162,7 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
 
             // Enhance list items with custom bullets and numbering
             .replace(/<li>(.*?)<\/li>/g, (match, content) => {
+                console.log(match);
                 // Check if content contains words like "דקות", "שעות", or numbers followed by time units
                 const hasTimeReference = /(\d+)\s*(דקות|שעות|minutes|hours)/i.test(content)
                 const hasTemperature = /(\d+)\s*(מעלות|°C|°F|degrees)/i.test(content)
@@ -195,6 +196,8 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
 
             // Enhance paragraphs
             .replace(/<p>(.*?)<\/p>/g, (match, content) => {
+                console.log(match);
+                
                 // Check if paragraph contains cooking tips or notes
                 const isTip = /טיפ|עצה|המלצה|tip|note|hint/i.test(content)
 
@@ -237,6 +240,8 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
         // Add step numbers to ordered list items
         enhanced = enhanced.replace(/<li class="recipe-item">(.*?)<\/li>/g, (match, content, index) => {
             // Only add step numbers within ordered lists
+            console.log(index);
+            
             if (
                 enhanced.lastIndexOf('<ol class="recipe-steps">', enhanced.indexOf(match)) >
                 enhanced.lastIndexOf("</ol>", enhanced.indexOf(match))

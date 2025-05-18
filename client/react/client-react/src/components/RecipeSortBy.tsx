@@ -24,9 +24,10 @@ interface RecipeSortByProps {
   handleSortChange: (criterion: string) => void
 }
 
-const RecipeSortBy = ({ anchorEl, setAnchorEl, handleSortChange }: RecipeSortByProps) => {
+const RecipeSortBy = ({ handleSortChange }: RecipeSortByProps) => {
+// const RecipeSortBy = ({ anchorEl, setAnchorEl, handleSortChange }: RecipeSortByProps) => {
   const [isOpen, setIsOpen] = useState(false)
-
+  
   const toggleDropdown = () => {
     setIsOpen(!isOpen)
   }

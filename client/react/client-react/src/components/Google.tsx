@@ -8,9 +8,9 @@ import { Box, Divider, Typography } from "@mui/material";
 
 const Google = () => {
 
-    const [snackOpen, setSnackOpen] = useState(false);
-    const [snackMessage, setSnackMessage] = useState('');
-    const [snackSeverity, setSnackSeverity] = useState<'success' | 'error'>('success');
+    const [, setSnackOpen] = useState(false);
+    const [, setSnackMessage] = useState('');
+    const [, setSnackSeverity] = useState<'success' | 'error'>('success');
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 

@@ -5,7 +5,7 @@ import '../styles/BackArrow.css';
 
 const BackArrow = () => {
   const navigate = useNavigate();
-  const [isHovering, setIsHovering] = useState(false);
+  const [,setIsHovering] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 

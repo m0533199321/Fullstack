@@ -206,7 +206,7 @@ input[type="range"]::-ms-fill-upper {
     background-color: #f9f5f0;
     background-size: 200px;
     background-repeat: repeat;
-    background-opacity: 0.1;
+    /* background-opacity: 0.1; */
 }
 
 .message {
@@ -287,7 +287,7 @@ input[type="range"]::-ms-fill-upper {
 }
 
 .difficulty-slider {
-    -webkit-appearance: none;
+    /* -webkit-appearance: none; */
     width: 100%;
     height: 8px;
     background: white;

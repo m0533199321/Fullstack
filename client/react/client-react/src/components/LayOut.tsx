@@ -1,5 +1,4 @@
 import { Outlet } from "react-router";
-import Header from "./Header";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchUser } from "./Redux/AuthSlice";

@@ -1,4 +1,3 @@
-import axios from "axios";
 import api from "../api";
 
 const API_URL = "https://localhost:7005/api/RecipeImg";

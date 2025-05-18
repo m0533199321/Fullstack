@@ -2,8 +2,6 @@ import { AppBar, Toolbar, Button, Typography, Avatar, Popover, Box, IconButton, 
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, useAppSelector } from "./Redux/Store";
 import HomeIcon from "@mui/icons-material/Home";
-import LoginIcon from "@mui/icons-material/Login";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState } from "react";
 import { useDispatch } from "react-redux";

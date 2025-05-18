@@ -141,7 +141,7 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
     const [localComments, setLocalComments] = useState<CommentType[]>(comments);
     const [snackOpen, setSnackOpen] = useState(false);
     const [snackMessage, setSnackMessage] = useState("");
-    const [snackSeverity, setSnackSeverity] = useState<"success" | "error">("success");
+    // const [snackSeverity, setSnackSeverity] = useState<"success" | "error">("success");
     const user = useAppSelector((state) => state.auth.user);
 
     useEffect(() => {
@@ -155,7 +155,7 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
             setSuccess(true);
         } catch (error) {
             setSnackMessage("שגיאה ב טעינת התגובות")
-            setSnackSeverity("error")
+            // setSnackSeverity("error")
             setSnackOpen(true)
         }
     }
@@ -166,7 +166,7 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
             allComments();
         } catch (error) {
             setSnackMessage("שגיאה ב מחיקת התגובה")
-            setSnackSeverity("error")
+            // setSnackSeverity("error")
             setSnackOpen(true)        }
     }
 
@@ -183,7 +183,7 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
             allComments();
         } catch (error) {
             setSnackMessage("שגיאה בעדכון התגובה")
-            setSnackSeverity("error")
+            // setSnackSeverity("error")
             setSnackOpen(true)        }
     }
 
