@@ -53,7 +53,7 @@ builder.Configuration["AWS:AccessKey"] = Env.GetString("AWS_ACCESS_KEY");
 builder.Configuration["AWS:SecretKey"] = Env.GetString("AWS_SECRET_KEY");
 
 builder.Configuration["SMTP:SMTP_SERVER"] = Env.GetString("SMTP_SERVER");
-builder.Configuration["SMTP:SMTP_PORT"] = Env.GetString("PORT");
+builder.Configuration["SMTP:PORT"] = Env.GetString("SMTP_PORT");
 builder.Configuration["SMTP:GOOGLE_USER_EMAIL"] = Env.GetString("GOOGLE_USER_EMAIL");
 builder.Configuration["SMTP:PASSWORD"] = Env.GetString("PASSWORD");
 
