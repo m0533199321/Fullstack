@@ -23,10 +23,21 @@ namespace Recipes.Data
 
         public DbSet<Preference> Preferences { get; set; }
 
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+
+
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=recipes_db");
+            base.OnConfiguring(optionsBuilder);
+            //optionsBuilder.LogTo(mesege => Console.Write(mesege));
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=recipes_db");
+        //}
 
     }
 }

@@ -1,4 +1,5 @@
 using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Recipes.Api.Extensions;
 using Recipes.Data;
@@ -34,7 +35,7 @@ builder.Services.AddCors(options =>
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<DataContext>();
+//builder.Services.AddDbContext<DataContext>();
 
 builder.Services.AddDependencyInjectoions();
 
@@ -55,6 +56,12 @@ builder.Configuration["SMTP:SMTP_SERVER"] = Env.GetString("SMTP_SERVER");
 builder.Configuration["SMTP:PORT"] = Env.GetString("PORT");
 builder.Configuration["SMTP:GOOGLE_USER_EMAIL"] = Env.GetString("GOOGLE_USER_EMAIL");
 builder.Configuration["SMTP:PASSWORD"] = Env.GetString("PASSWORD");
+
+string connectionString = Env.GetString("DATABASE_CONNECTION_STRING");
+
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
+    options => options.CommandTimeout(60)));
 
 var app = builder.Build();
 

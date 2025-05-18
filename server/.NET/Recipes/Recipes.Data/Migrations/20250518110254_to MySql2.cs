@@ -5,7 +5,7 @@
 namespace Recipes.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class allergiesandpreferences : Migration
+    public partial class toMySql2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
