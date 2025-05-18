@@ -5,7 +5,8 @@ import { AuthState, UserLogin, UserRegister } from "../../models/AuthType";
 import api from "../api";
 import { User } from "../../models/UserType";
 
-const API_URL = "https://localhost:7005/api";
+// const API_URL = "https://localhost:7005/api";
+const API_URL = "https://smartchef-api.onrender.com/api";
 
 const initialState: AuthState = {
     token: localStorage.getItem("token") || null,

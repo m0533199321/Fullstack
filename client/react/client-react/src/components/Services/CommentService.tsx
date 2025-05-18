@@ -1,6 +1,6 @@
 import api from "../api";
 import { CommentType } from "../../models/CommentType";
-const API_URL = "https://localhost:7005/api/Comment";
+const API_URL = "https://smartchef-api.onrender.com/api/Comment";
 
 export const fetchComments = async (
     recipeId: number,

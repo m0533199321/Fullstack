@@ -2,7 +2,7 @@
 import api from "../api";
 
 // קבוע לנתיב הבסיסי של ה-API
-const API_URL = "https://localhost:7005/api/Allergies";
+const API_URL = "https://smartchef-api.onrender.com/api/Allergies";
 
 // הגדרת הטיפוסים
 export interface Allergy {

@@ -122,7 +122,7 @@ export const uploadRecipeService = async (
     blob: Blob,
     userId: number
 ) => {
-    const API_URL = "https://localhost:7005/api/Recipe";
+    const API_URL = "https://smartchef-api.onrender.com/api/Recipe";
     if (blob) {
         try {
             const blobName = '' + userId + new Date().getTime() + ".docx";
@@ -179,7 +179,7 @@ export const fetchGenerateImage = async (
         const imgName = '' + userId + new Date().getTime() + ".png";
         console.log(imgName);
 
-        const apiUrl = "https://localhost:7005/api/Recipe/Upload-url";
+        const apiUrl = "https://smartchef-api.onrender.com/api/Recipe/Upload-url";
         const presignedResponse = await axios.get(apiUrl, {
             params: {
                 fileName: imgName,

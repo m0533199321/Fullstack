@@ -2,7 +2,7 @@
 import api from "../api";
 
 // קבוע לנתיב הבסיסי של ה-API
-const API_URL = "https://localhost:7005/api/Preferences";
+const API_URL = "https://smartchef-api.onrender.com/api/Preferences";
 
 // הגדרת הטיפוסים
 export interface Preference {

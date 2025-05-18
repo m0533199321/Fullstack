@@ -2,7 +2,7 @@ import api from "../api";
 import { Recipe, RecipePostModel } from "../../models/RecipeType";
 import axios from "axios";
 
-const API_URL = "https://localhost:7005/api/Recipe";
+const API_URL = "https://smartchef-api.onrender.com/api/Recipe";
 
 export const fetchPrivateRecipes = async (id: number): Promise<Recipe[]> => {
     try {

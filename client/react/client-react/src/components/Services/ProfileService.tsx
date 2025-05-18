@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://localhost:7005/api/User";
+const API_URL = "https://smartchef-api.onrender.com/api/User";
 export const uploadProfilePictureService = async (file: File): Promise<string | null> => {
     if (file) {
         try {
