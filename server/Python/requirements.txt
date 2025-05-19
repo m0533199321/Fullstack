@@ -6,3 +6,4 @@ python-dotenv==1.0.1
 requests==2.32.3
 Pillow==10.4.0
 boto3==1.38.6
+gunicorn==20.1.0
