@@ -228,6 +228,7 @@ import { Star } from "lucide-react";
 import "../styles/PublicRecipes.css";
 import DisplayRecipe from "./DisplayRecipe";
 import { useNavigate } from "react-router-dom";
+import chef from "../../images/back/chef.png"
 
 const PublicRecipes = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -410,7 +411,7 @@ const PublicRecipes = () => {
                             />
                           ) : (
                             <img
-                              src="../../images/back/chef.png"
+                              src={chef}
                               alt={recipe.title}
                               className="public-recipe-image"
                               onClick={() => handleDisplayRecipe(recipe)}

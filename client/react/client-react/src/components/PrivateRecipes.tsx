@@ -19,6 +19,7 @@ import RecipeSortBy, { sortRecipes } from "./RecipeSortBy"
 import File2 from "./File"
 import { Star } from "lucide-react"
 import "../styles/PrivateRecipes.css"
+import chef from "../../images/back/chef.png"
 
 const PrivateRecipes = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -188,7 +189,7 @@ const PrivateRecipes = () => {
                             />
                           ) : (
                             <img
-                              src="../../images/back/chef.png"
+                              src={chef}
                               alt={recipe.title}
                               className="private-recipe-image"
                               onClick={() => handleDisplayRecipe(recipe)}
