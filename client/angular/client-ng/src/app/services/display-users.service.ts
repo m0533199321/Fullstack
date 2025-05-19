@@ -8,7 +8,7 @@ import { User } from '../models/user.model';
 })
 export class DisplayUsersService {
 
-  private baseUrl = 'https://localhost:7005/api/User';
+  private baseUrl = 'https://smartchef-api.onrender.com/api/User';
 
   public users: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   constructor(private http: HttpClient) { }

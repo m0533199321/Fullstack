@@ -8,7 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class UserService {
 
-  private baseUrl = 'https://localhost:7005/api/User'
+  private baseUrl = 'https://smartchef-api.onrender.com/api/User'
   public user: BehaviorSubject<User> = new BehaviorSubject<User>(new User(0, '', '', '', '', '', new Date(), [], []));
 
   constructor(private http: HttpClient) { }

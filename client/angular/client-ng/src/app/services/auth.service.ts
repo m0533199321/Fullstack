@@ -9,7 +9,9 @@ import { catchError, map, tap, throwError } from 'rxjs';
 })
 export class AuthService {
 
-  private baseUrl = 'https://localhost:7005/api/Auth';
+  // private baseUrl = 'https://localhost:7005/api/Auth';
+  private baseUrl = 'https://smartchef-api.onrender.com/api/Auth';
+
 
   constructor(private http: HttpClient, private userService: UserService) { }
 
