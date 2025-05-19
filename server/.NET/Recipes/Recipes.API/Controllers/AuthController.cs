@@ -5,7 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using Recipes.API.PostModels;
 using Recipes.Core.DTOs;
 using Recipes.Core.Entities;
+using Recipes.Core.Interfaces.IRepository;
 using Recipes.Core.Interfaces.IServices;
+using Recipes.Data.Repositories;
 using Recipes.Service.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,11 +19,12 @@ namespace Recipes.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController(IAuthService authService, IMapper mapper, IS3Service s3Service) : ControllerBase
+    public class AuthController(IAuthService authService, IMapper mapper, IS3Service s3Service, IRepositoryManager repositoryManager) : ControllerBase
     {
         private readonly IAuthService _authService = authService;
         private readonly IMapper _mapper = mapper;
         private readonly IS3Service _s3Service = s3Service;
+        private readonly IRepositoryManager _iManager = repositoryManager;
 
         [HttpPost("login")]
         public ActionResult<LoginResponseDto> Login([FromBody] LoginModel model)
@@ -75,8 +78,9 @@ namespace Recipes.API.Controllers
                     Audience = new[] { Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID") ?? "YOUR_GOOGLE_CLIENT_ID" }
                 });
 
+                var existingUser = await _iManager._userRepository.GetByEmailAsync(payload.Email);
                 string profilePictureUrlS3 = null;
-                if (!string.IsNullOrEmpty(payload.Picture))
+                if (existingUser == null && !string.IsNullOrEmpty(payload.Picture))
                 {
                     using (var httpClient = new HttpClient())
                     {
