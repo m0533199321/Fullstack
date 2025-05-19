@@ -28,6 +28,9 @@ client = openai.OpenAI()
 
 my_model = "gpt-4o-mini"
 
+@app.route("/")
+def index():
+    return "השרת פועל! 🍽️"
 
 @app.route('/api/recipe/name', methods=['POST'])
 def get_recipe_name():
