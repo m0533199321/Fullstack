@@ -3,6 +3,7 @@ import { Recipe } from "../models/RecipeType";
 import { useAppSelector } from "./Redux/Store";
 import { fetchPublicRecipes } from "./Services/RecipeService";
 import "../styles/LastRecipes.css";
+import chef from "../../images/back/chef.png"
 
 const LastRecipes = () => {
     const user = useAppSelector((state) => state.auth.user);
@@ -33,7 +34,7 @@ const LastRecipes = () => {
                         {recipes.map((recipe) => (
                             <div key={recipe.id} className="last-recipe-card">
                                 <h3 className="last-recipe-title" style={{ fontSize: `${Math.max(1.2, 2.6 - recipe.title.length / 10)}em`, marginTop: '2%' }}>{recipe.title}</h3>
-                                <img src="../../images/back/chef.png" alt={recipe.title} className="last-recipe-image" />
+                                <img src={chef} alt={recipe.title} className="last-recipe-image" />
                             </div>
                         ))}
                     </div>

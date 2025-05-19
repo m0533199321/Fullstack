@@ -5,6 +5,10 @@ import { motion, AnimatePresence } from "framer-motion"
 import Cropper from "react-easy-crop"
 import { Upload, X, Camera, Trash, Check, Loader2, AlertCircle } from "lucide-react"
 import "../styles/ProfilePicture.css"
+import chef1 from "../../images/profiles/1.jpg"
+import chef2 from "../../images/profiles/2.jpg"
+import chef3 from "../../images/profiles/3.jpg"
+import chef4 from "../../images/profiles/4.jpg"
 
 interface ProfilePictureEnhancedProps {
   onSelect: (file: File | null) => void
@@ -35,12 +39,7 @@ const ProfileUpdate = ({ onSelect, onClose, currentProfilePic }: ProfilePictureE
 
   // Default gallery images
   const defaultImages = [
-    "../../images/profiles/1.jpg",
-    "../../images/profiles/2.jpg",
-    "../../images/profiles/3.jpg",
-    "../../images/profiles/4.jpg"
-  ]
-
+    chef1, chef2, chef3, chef4]
 
   // Store original callbacks in refs to avoid dependency issues
   useEffect(() => {
