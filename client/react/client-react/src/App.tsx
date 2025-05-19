@@ -1,36 +1,36 @@
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import Store from './components/Redux/Store';
-import AppRoutes from './Router';
-
-function App() {
-  return (
-    <Provider store={Store}>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </Provider>
-  );
-}
-
-export default App;
-
-
-
 // import { Provider } from 'react-redux';
-// import { RouterProvider } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
 // import Store from './components/Redux/Store';
-// import { Router } from './Router';
+// import AppRoutes from './Router';
 
 // function App() {
-//     return (
-//         <Provider store={Store}>
-//             <RouterProvider router={Router} />
-//         </Provider>
-//     );
+//   return (
+//     <Provider store={Store}>
+//       <BrowserRouter>
+//         <AppRoutes />
+//       </BrowserRouter>
+//     </Provider>
+//   );
 // }
 
 // export default App;
+
+
+
+import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+import Store from './components/Redux/Store';
+import { Router } from './Router';
+
+function App() {
+    return (
+        <Provider store={Store}>
+            <RouterProvider router={Router} />
+        </Provider>
+    );
+}
+
+export default App;
 
 
 
