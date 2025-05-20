@@ -5,6 +5,7 @@ import { useAppSelector } from './Redux/Store';
 import mammoth from 'mammoth';
 import '../styles/FileViewer.css';
 import { uploadRecipeService } from './Services/RequestService';
+import chef from "../../images/back/chef.png"
 
 interface FileViewerProps {
     fileUrl: Blob | string;
@@ -134,7 +135,7 @@ const FileViewer: React.FC<FileViewerProps> = ({ fileUrl, onClose, details }) =>
                             הוספה לספר המתכונים שלי
                         </button>
                     </div>}
-                <img src="../../images/back/chef.png" alt="chef" className="file-recipe-image" />
+                <img src={chef} alt="chef" className="file-recipe-image" />
                 <div style={{ height: '25vh' }}></div>
                 <div className="file-recipe-container">
                     {direction === 'ltr' &&

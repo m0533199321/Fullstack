@@ -126,6 +126,7 @@ import { Recipe } from "../models/RecipeType";
 import "../styles/DisplayRecipe.css";
 import { CommentType } from "../models/CommentType";
 import BackArrow from "./BackArrow";
+import chef from "../../images/back/chef.png"
 
 const DisplayRecipe = () => {
     const { id } = useParams();
@@ -236,7 +237,7 @@ const DisplayRecipe = () => {
                     <div className="displayRecipe-container">
                         {recipe.picture ?
                             <img className="displayRecipe-image" src={recipe.picture || "/placeholder.svg"} alt={recipe.title} /> :
-                            <img className="displayRecipe-image" src={"../../images/back/chef.png"} alt={recipe.title} />
+                            <img className="displayRecipe-image" src={chef} alt={recipe.title} />
                         }
                         <div className="displayRecipe-details">
                             <h3 className="displayRecipe-title">{recipe.title}</h3>

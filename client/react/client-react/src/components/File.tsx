@@ -15,6 +15,7 @@ import { downloadRecipeFromUrl } from "./DownLoad"
 import { recipeEmailBody } from "./RecipeEmailBody"
 import { sendEmail } from "./Redux/AuthSlice"
 import { useDispatch } from "react-redux"
+import chef from "../../images/back/chef.png"
 
 interface FileViewerProps {
     recipe: Recipe | null
@@ -343,7 +344,7 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                                     <p>מחליף תמונה...</p>
                                 </div>
                             )}
-                            {!recipeImage && <img src="../../images/back/chef.png" alt="chef" className="chef-image" />}
+                            {!recipeImage && <img src={chef} alt="chef" className="chef-image" />}
                             {recipeImage && <img src={recipeImage || "/placeholder.svg"} alt="chef" className="chef-image" />}
                         </div>
                         {/* <div className="chef-image-wrapper">
