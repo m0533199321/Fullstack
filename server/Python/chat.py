@@ -15,6 +15,7 @@ import requests
 from PIL import Image
 import boto3
 import time
+from deep_translator import GoogleTranslator
 
 
 load_dotenv()
@@ -247,13 +248,15 @@ def generate_image_with_dalle():
 
     if not prompt:
         return {"error": "Prompt is required"}, 400
+    
+    prompt_en = GoogleTranslator(source='auto', target='en').translate(prompt)
 
     headers = {
         "Authorization": f"Bearer {my_key}",
         "Content-Type": "application/json",
     }
     data = {
-        "prompt": prompt,
+        "prompt": prompt_en,
         "n": 1,
         "size": "512x512"
     }
