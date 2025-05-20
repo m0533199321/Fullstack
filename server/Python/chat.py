@@ -21,7 +21,8 @@ load_dotenv()
 my_key = os.getenv('OPENAI_API_KEY')
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://smartchef-app.onrender.com"])
+# CORS(app)
 
 os.environ['OPENAI_API_KEY'] = my_key
 client = openai.OpenAI()
