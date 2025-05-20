@@ -3,7 +3,7 @@ import api from "../api";
 const API_URL = "https://smartchef-api.onrender.com/api/RecipeImg";
 
 export const recipeImg = async (request: string) => {
-    const API_URL = "http://localhost:5000/api/recipe";
+    const API_URL = "https://smartchef-python.onrender.com/api/recipe";
 
     try {
         const response = await api.post(`${API_URL}/image`, { prompt: request }, {

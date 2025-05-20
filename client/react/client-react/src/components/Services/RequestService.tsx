@@ -49,7 +49,8 @@ const requestService = async (
     request: string
 ) => {
     // const API_URL = "https://localhost:7005/api/Request";
-    const API_URL = "http://localhost:5000/api/recipe";
+    // const API_URL = "http://localhost:5000/api/recipe";
+    const API_URL = "https://smartchef-python.onrender.com/api/recipe";
 
     try {
         const response = await api.post(`${API_URL}/name`, { request: request }, {
@@ -154,7 +155,7 @@ export const fetchGenerateImage = async (
 ) => {
     try {
         console.log(request);
-        const response = await fetch('http://localhost:5000/api/generate_image', {
+        const response = await fetch('https://smartchef-python.onrender.com/api/generate_image', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
