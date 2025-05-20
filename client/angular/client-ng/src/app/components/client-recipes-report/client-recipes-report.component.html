@@ -1,5 +1,4 @@
 <div class="client-container">
-
   <div class="title-container">
     <a href="javascript:history.back()" class="back-button">
       <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" fill="white"
@@ -8,24 +7,69 @@
       </svg>
     </a>
 
-    <h2>Clients Recipes Distribution</h2>
+    <div class="title-div">
+      <div class="section-divider">
+        <div class="divider-line"></div>
+        <div class="divider-space"></div>
+        <h2 class="title">Clients Recipes Distribution</h2>
+        <div class="divider-space"></div>
+        <div class="divider-line"></div>
+      </div>
+    </div>
   </div>
 
   <div class="chart-container">
     @if(getSortedRecipeCounts().length > 0) {
-    <div class="chart">
-      @for(count of getSortedRecipeCounts(); track count ){
-      <div class="chart-column">
-        <div class="bar-container">
-          <div class="bar" [style.height.%]="getBarHeight(count)">
-            <span class="client-count">{{ clientsByRecipeCount[count] }}</span>
+    <div class="pie-chart-wrapper">
+      <div class="pie-chart">
+        @for(count of getSortedRecipeCounts(); track count; let i = $index) {
+        <div class="pie-slice" [style.animation-delay.ms]="i * 100">
+          <!-- SVG for pie slice -->
+          <svg width="300" height="300" viewBox="0 0 300 300">
+            <path [attr.d]="getPieSlicePath(count)" [attr.fill]="'var(--pie-color-' + ((i % 8) + 1) + ')'"
+              stroke="#1e1e1e" stroke-width="1" />
+          </svg>
+
+          <!-- Tooltip for hover -->
+          <div class="pie-tooltip" [style.top.px]="getTooltipPosition(count).y"
+            [style.left.px]="getTooltipPosition(count).x">
+            {{ count }} {{ count === 1 ? 'Recipe' : 'Recipes' }}: {{ clientsByRecipeCount[count] }} clients ({{
+            getPercentage(count) }}%)
           </div>
         </div>
-        <div class="label">
-          <span class="recipe-count">{{ count }}</span>
-          <span class="recipe-text">{{ count === 1 ? 'Recipe' : 'Recipes' }}</span>
+        }
+
+        <!-- Center circle -->
+        <div class="pie-center">
+          <div class="pie-center-value">{{ getTotalClients() }}</div>
+          <div class="pie-center-label">Total Clients</div>
         </div>
-      </div>}
+
+        <!-- Labels for each slice -->
+        @for(count of getSortedRecipeCounts(); track count; let i = $index) {
+        <div class="pie-label" [style.top.px]="getLabelPosition(count).y" [style.left.px]="getLabelPosition(count).x">
+          <span class="pie-label-count">{{ count }}</span>
+          <span class="pie-label-text">{{ count === 1 ? 'Recipe' : 'Recipes' }}</span>
+        </div>
+
+        <!-- Connector line from slice to label -->
+        <div class="connector" [style.top.px]="getConnectorStart(count).y" [style.left.px]="getConnectorStart(count).x"
+          [style.width.px]="getConnectorLength(count)"
+          [style.transform]="'rotate(' + getConnectorAngle(count) + 'deg)'">
+        </div>
+        }
+      </div>
+
+      <div class="pie-legend">
+        @for(count of getSortedRecipeCounts(); track count; let i = $index) {
+        <div class="legend-item">
+          <div class="legend-color" [style.background]="'var(--pie-color-' + ((i % 8) + 1) + ')'"></div>
+          <div class="legend-text">{{ count }} {{ count === 1 ? 'Recipe' : 'Recipes' }}</div>
+          <div class="legend-value">{{ clientsByRecipeCount[count] }}</div>
+          <div class="legend-percent">{{ getPercentage(count) }}%</div>
+        </div>
+        }
+      </div>
     </div>
 
     <div class="stats-cards">
@@ -50,9 +94,12 @@
     }
   </div>
 
-  <div class="legend">
-    <div class="legend-item">
-      <div class="legend-color"></div>
-      <div class="legend-text">Number of clients with specific recipe count</div>
+  <div class="chart-footer">
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color"></div>
+        <div class="legend-text">Number of clients with specific recipe count</div>
+      </div>
     </div>
   </div>
+</div>

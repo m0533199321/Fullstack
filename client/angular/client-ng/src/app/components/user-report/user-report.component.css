@@ -12,24 +12,97 @@
     --grid-line: rgba(255, 255, 255, 0.1);
 }
 
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+    position: relative;
+}
+
 .back-button {
+    position: absolute;
+    left: 0; /* תמיד בצד שמאל */
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
-    margin: 0;
+    transition: transform 0.3s ease;
+}
+
+.back-button:hover {
+    transform: translateX(-5px);
 }
 
 .back-button svg {
-    fill: white;
+    fill: #ffffff;
+    transition: fill 0.3s ease;
 }
 
 .back-button:hover svg {
-    fill: #e05d00;
+    fill: #ff6b00;
 }
 
-.title-container {
+/* h1.title {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1.title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: #ff6b00;
+    border-radius: 3px;
+} */
+
+.title-div {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-divider {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.divider-line {
+    height: 2px;
+    width: 100px;
+    background: linear-gradient(to right, transparent, #ff8c3f, transparent);
+    flex-shrink: 0;
+}
+
+.divider-space {
+    width: 20px;
+    flex-shrink: 0;
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #ff8c3f;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    background: linear-gradient(to right, #ffffff, #ffb74d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+    white-space: nowrap;
 }
 
 .chart-container {
@@ -49,78 +122,72 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 2.5rem;
-}
-
-h2 {
-    text-align: center;
-    color: #ffffff;
-    font-size: 2rem;
-    margin-left: 30vw;
-    margin-bottom: 1.7rem;
-    font-weight: 600;
-    position: relative;
-    padding-bottom: 1rem;
-}
-
-h2::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background-color: #ff6b00;
-    border-radius: 2px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .year-range {
     font-size: 1.5rem;
     color: #aaaaaa;
     top: 0;
-    margin-left: 30vw;
     font-weight: 500;
 }
 
 .stats-cards {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 2rem;
-    gap: 1rem;
-}
-
-.stats-cards {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+    z-index: 1;
+    position: relative;
 }
 
 .stat-card {
-    background-color: #333333;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
     padding: 1.5rem;
-    text-align: center;
-    flex: 1;
-    margin: 0 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-    border-bottom: 3px solid #ff6b00;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #e05d00, #ff6b00);
 }
 
 .stat-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .stat-value {
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 2.5rem;
+    font-weight: 700;
     color: #ffffff;
     margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #ffffff, #ff8c3f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .stat-label {
-    color: #aaaaaa;
-    font-size: 0.9rem;
+    color: #888888;
+    font-size: 1rem;
+    text-align: center;
 }
 
 .chart-area {
@@ -128,7 +195,7 @@ h2::after {
     height: 400px;
     margin: 2rem 0;
     position: relative;
-    background-color: var(--chart-bg);
+    background-color: #2a2a2a;
     border-radius: 10px;
     padding: 2rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -152,13 +219,13 @@ h2::after {
 
 .y-label {
     font-size: 0.8rem;
-    color: var(--text-secondary);
+    color: #aaaaaa;
     padding-right: 10px;
 }
 
 .grid-line {
     height: 1px;
-    background-color: var(--grid-line);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .chart-content {
@@ -215,7 +282,7 @@ h2::after {
     color: #ffffff;
     font-weight: bold;
     font-size: 1.1rem;
-    background-color: var(--primary-color);
+    background-color: #ff6b00;
     padding: 0.2rem 0.6rem;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -232,7 +299,7 @@ h2::after {
 .x-label {
     margin-top: 1rem;
     font-size: 0.9rem;
-    color: var(--text-secondary);
+    color: #aaaaaa;
     transform: rotate(-45deg);
     white-space: nowrap;
 }

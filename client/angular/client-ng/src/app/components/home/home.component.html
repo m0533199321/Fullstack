@@ -1,10 +1,28 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <div class="home-container">
-
     <header>
-        <div class="logo">
-            <img class="logo-img" src="../../../assets/smartChef.png" alt="">
+        <div>
+            <div class="logo-container" @logoEnter>
+                <div class="logo-glow"></div>
+                <h1 class="home-logo-text">SmartChef</h1>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="home-logo-icon">
+                    <path
+                        d="M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z" />
+                    <path d="M6 17h12" />
+                </svg>
+            </div>
+            <div class="text2">
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-space"></div>
+                    <h2 class="home-logo-text2">management app</h2>
+                    <div class="divider-space"></div>
+                    <div class="divider-line"></div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -13,8 +31,8 @@
         @if (user.value.id == 0) {
         <div class="cards-container">
             <div class="card" (click)="navigateToRoute('/signIn')">
-                <div class="card-icon">
-                    <i class="fas fa-sign-in"></i>
+                <div class="card-icon-wrapper">
+                    <i class="fas fa-sign-in-alt card-icon"></i>
                 </div>
                 <h2>sign in</h2>
                 <div class="card-overlay"></div>
@@ -26,11 +44,18 @@
         <div class="cards-container">
             @for(option of options; track option.title) {
             <div class="card" (click)="navigateToRoute(option.route)">
-                <div class="card-icon">
+                <div class="card-icon-wrapper">
                     @if(option.title.includes('Users')) {
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-users card-icon"></i>
                     } @else if(option.title.includes('Graphs')) {
-                    <i class="fas fa-chart-line"></i> }
+                    <i class="fas fa-chart-line card-icon"></i>
+                    } @else if(option.title.includes('Recipes')) {
+                    <i class="fas fa-utensils card-icon"></i>
+                    } @else if(option.title.includes('Settings')) {
+                    <i class="fas fa-cog card-icon"></i>
+                    } @else {
+                    <i class="fas fa-clipboard-list card-icon"></i>
+                    }
                 </div>
                 <h2>{{ option.title }}</h2>
                 <div class="card-overlay"></div>
@@ -41,7 +66,7 @@
         }
     </main>
 
-    <footer>
+    <!-- <footer>
         <div class="footer-content">
             <div class="footer-links">
                 <div class="footer-column">
@@ -73,319 +98,5 @@
         <div class="footer-bottom">
             <p>&copy; {{ currentYear }} SmartChef Management System. All rights reserved.</p>
         </div>
-    </footer>
+    </footer> -->
 </div>
-
-
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<div class="home-container">
-    <h1>Welcome to the Reports Dashboard</h1>
-
-    <div class="cards-container">
-        @for(option of options; track option.title) {
-        <div class="card" (click)="navigateToRoute(option.route)">
-            <div class="card-icon">
-                @if(option.title.includes('Users')) {
-                <i class="fas fa-users"></i>
-                } @else if(option.title.includes('Graphs')) {
-                    <i class="fas fa-chart-line"></i>                }
-            </div>
-            <h2>{{ option.title }}</h2>
-            <div class="card-overlay"></div>
-            <p class="card-description">Click to view detailed analytics and insights</p>
-        </div>
-        }
-    </div>
-</div> -->
-
-
-
-
-
-<!-- <div class="home-container" [class.authenticated]="isAuthenticated">
-    <div class="background-elements">
-    <div class="circle circle-1"></div>
-      <div class="circle circle-2"></div>
-      <div class="circle circle-3"></div>
-      <div class="grid-overlay"></div>
-    </div>
-
-    <header>
-            <img class="logo" src="../../assets/smartChef.png" alt="SmartChef Logo">
-        <nav>
-            <ul>
-                <li><a href="#" class="nav-link">Home</a></li>
-                <li><a href="#" class="nav-link">Recipes</a></li>
-                <li><a href="#" class="nav-link">About</a></li>
-                @if (!isAuthenticated) {
-                <li><a href="#" class="nav-link login-btn" (click)="login($event)">Login</a></li>
-                } @else {
-                <li>
-                    <div class="user-avatar" [style.backgroundImage]="'url(' + userAvatar + ')'">
-                        <div class="user-menu">
-                            <div class="user-info">
-                                <span class="user-name">{{ userName }}</span>
-                                <span class="user-email">{{ userEmail }}</span>
-                            </div>
-                            <ul class="menu-items">
-                                <li><a href="#">Profile</a></li>
-                                <li><a href="#">My Recipes</a></li>
-                                <li><a href="#" (click)="logout($event)">Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                }
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        @if (!isAuthenticated) {
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Elevate Your Cooking Experience</h1>
-                <p class="subtitle">Discover recipes, track your cooking journey, and connect with chefs around the
-                    world.</p>
-                <div class="cta-buttons">
-                    <button class="primary-btn" (click)="register()">Join Smart Chef</button>
-                    <button class="secondary-btn" (click)="learnMore()">Explore Recipes</button>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="/placeholder.svg?height=400&width=500" alt="Chef dashboard" class="dashboard-preview">
-                <div class="floating-card card-1">
-                    <div class="card-icon">🍳</div>
-                    <div class="card-stat">2,543</div>
-                    <div class="card-label">Recipes</div>
-                </div>
-                <div class="floating-card card-2">
-                    <div class="card-icon">👨‍🍳</div>
-                    <div class="card-stat">12K+</div>
-                    <div class="card-label">Chefs</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="features">
-            <h2>Why Choose Smart Chef?</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-utensils">
-                            <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
-                            <path d="M7 2v20" />
-                            <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
-                        </svg>
-                    </div>
-                    <h3>Recipe Management</h3>
-                    <p>Store, organize, and access your favorite recipes from anywhere.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-users">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                    </div>
-                    <h3>Chef Community</h3>
-                    <p>Connect with other chefs, share recipes, and get inspired.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-bar-chart-3">
-                            <path d="M3 3v18h18" />
-                            <path d="M18 17V9" />
-                            <path d="M13 17V5" />
-                            <path d="M8 17v-3" />
-                        </svg>
-                    </div>
-                    <h3>Cooking Analytics</h3>
-                    <p>Track your cooking habits and see insights about your culinary journey.</p>
-                </div>
-            </div>
-        </section>
-        } @else {
-        <section class="dashboard">
-            <div class="welcome-banner">
-                <div class="welcome-text">
-                    <h1>Welcome back, Chef {{ userName }}!</h1>
-                    <p>What are you cooking today?</p>
-                </div>
-                <div class="date-display">{{ currentDate | date:'EEEE, MMMM d, y' }}</div>
-            </div>
-
-            <div class="quick-stats">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-book-open">
-                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-value">{{ totalRecipes }}</div>
-                        <div class="stat-label">Your Recipes</div>
-                    </div>
-                    <div class="stat-change positive">+{{ newRecipes }} this week</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-users">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-value">{{ totalUsers }}</div>
-                        <div class="stat-label">Community Chefs</div>
-                    </div>
-                    <div class="stat-change positive">+{{ newUsers }} new</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-heart">
-                            <path
-                                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-value">{{ totalLikes }}</div>
-                        <div class="stat-label">Recipe Likes</div>
-                    </div>
-                    <div class="stat-change positive">+{{ newLikes }} new</div>
-                </div>
-            </div>
-
-            <div class="action-cards">
-                <div class="action-card" (click)="navigateToUserList()">
-                    <div class="action-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-users">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                    </div>
-                    <div class="action-content">
-                        <h3>Chef Directory</h3>
-                        <p>Browse and connect with other chefs</p>
-                    </div>
-                    <div class="action-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-chevron-right">
-                            <path d="m9 18 6-6-6-6" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="action-card" (click)="navigateToGraphs()">
-                    <div class="action-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-bar-chart-3">
-                            <path d="M3 3v18h18" />
-                            <path d="M18 17V9" />
-                            <path d="M13 17V5" />
-                            <path d="M8 17v-3" />
-                        </svg>
-                    </div>
-                    <div class="action-content">
-                        <h3>Cooking Analytics</h3>
-                        <p>View insights and statistics about your recipes</p>
-                    </div>
-                    <div class="action-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-chevron-right">
-                            <path d="m9 18 6-6-6-6" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="action-card" (click)="navigateToRecipes()">
-                    <div class="action-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-utensils">
-                            <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
-                            <path d="M7 2v20" />
-                            <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
-                        </svg>
-                    </div>
-                    <div class="action-content">
-                        <h3>Recipe Collection</h3>
-                        <p>Browse and manage your recipe collection</p>
-                    </div>
-                    <div class="action-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-chevron-right">
-                            <path d="m9 18 6-6-6-6" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </section>
-        }
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <span class="logo-text">Smart<span class="accent">Chef</span></span>
-            </div>
-            <div class="footer-links">
-                <div class="footer-column">
-                    <h4>Explore</h4>
-                    <ul>
-                        <li><a href="#">Recipes</a></li>
-                        <li><a href="#">Chefs</a></li>
-                        <li><a href="#">Cuisines</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Cooking Tips</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; {{ currentYear }} Smart Chef. All rights reserved.</p>
-        </div>
-    </footer>
-</div> -->

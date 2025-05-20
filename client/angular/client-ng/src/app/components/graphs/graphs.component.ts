@@ -21,6 +21,8 @@ export class GraphsComponent {
   }
 
   goBack = () => {
-    window.history.back();
+    console.log('go back');
+    this.router.navigate(['-1']);
+    // window.history.back();
   }
 }

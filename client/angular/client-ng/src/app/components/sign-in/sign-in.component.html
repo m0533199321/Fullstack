@@ -1,90 +1,26 @@
-<!-- <div class="overlay"> -->
-    <!-- <div id="root" class="form-container"> -->
-        <!-- <h1>Sign In</h1>
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
-
-            <mat-form-field appearance="outline" class="input-field full-width">
-                <mat-label>Email</mat-label>
-                <input matInput type="email" formControlName="email" required />
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="input-field full-width">
-                <mat-label>Password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required />
-                <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
-                    <mat-icon>{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
-                </button>
-            </mat-form-field>
-
-            <div class="button-group full-width">
-                <button mat-flat-button (click)="toggleForm()" color="primary" class="full-width">Cancel</button>
-                <button mat-flat-button type="submit" color="primary" class="full-width">Sign in</button>
-            </div>
-        </form> -->
-
-        <!-- <div class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <form [formGroup]="userForm" (ngSubmit)="onSignIn()" class="signIn-form">
-
-                    <mat-form-field appearance="outline" class="input-field full-width">
-                        <mat-label>Email</mat-label>
-                        <input matInput type="email" formControlName="email" required />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline" class="input-field full-width">
-                        <mat-label>Password</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required />
-                        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
-                            <mat-icon>{{ hide ? 'visibility' : 'visibility_off' }}</mat-icon>
-                        </button>
-                    </mat-form-field>
-                </form>
-                <button (click)="onSignIn()">Sign in</button>
-            </div>
-        </div>
-    </div> -->
-
-<!-- </div> -->
-
-<!-- <style>
-    .full-width {
-        width: 100%;
-    }
-
-    .button-group {
-        display: flex;
-        gap: 10px;
-    }
-
-    .signup-link {
-        margin-top: 20px;
-        text-align: center;
-    }
-
-    .signup-link a {
-        color: #1976d2;
-        /* הצבע של הקישור */
-        text-decoration: none;
-    }
-
-    .signup-link a:hover {
-        text-decoration: underline;
-    }
-</style> -->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <div class="modal">
-    <div class="modal-content">
-        <span class="close" (click)="cancelSignIn()">&times;</span>
-        <h2 class="signIn-title">Sign In</h2>
-        <form [formGroup]="userForm" (ngSubmit)="signIn()" class="signIn-form">
-        <div class="signIn-form">
-                <input matInput type="email" formControlName="email" required placeholder="Email" />
-                <input matInput type="password" formControlName="password" required placeholder="Password" />
-            <button (click)="signIn()">Sign In</button>
-        </div>
-    </form>
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close" (click)="cancelSignIn()">&times;</span>
+      <i class="fas fa-user-circle signIn-icon"></i>
+      <h2 class="signIn-title">Welcome Back</h2>
+      <p class="signIn-subtitle">Sign in to your management account</p>
     </div>
-</div>
 
+    <form [formGroup]="userForm" (ngSubmit)="signIn()" class="signIn-form">
+      <div class="input-group">
+        <input type="email" formControlName="email" required placeholder="Email Address" />
+        <i class="fas fa-envelope input-icon"></i>
+      </div>
+
+      <div class="input-group">
+        <input type="password" formControlName="password" required placeholder="Password" />
+        <i class="fas fa-lock input-icon"></i>
+      </div>
+
+      <button type="submit" [disabled]="userForm.invalid">Sign In</button>
+    </form>
+  </div>
+</div>

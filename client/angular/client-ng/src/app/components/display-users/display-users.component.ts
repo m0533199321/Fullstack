@@ -137,7 +137,7 @@ export class DisplayUsersComponent {
   }
 
   goBack = () => {
-    this.router.navigate(['/home']);
+    this.router.navigate(['-1']);
     // window.history.back();
   }
 }

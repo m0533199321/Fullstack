@@ -3,24 +3,32 @@
 <div class="graphs-container">
     <div class="title-container">
         <a href="javascript:history.back()" class="back-button">
-            <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" fill="white"
-                viewBox="0 0 24 24">
+            <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" viewBox="0 0 24 24">
                 <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
             </svg>
         </a>
-        <h1>Welcome to the Reports Dashboard</h1>
+
+        <div class="title-div">
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-space"></div>
+                <h1 class="title">Reports Dashboard</h1>
+                <div class="divider-space"></div>
+                <div class="divider-line"></div>
+            </div>
+        </div>
     </div>
 
     <div class="cards-container">
         @for(report of reports; track report.title) {
         <div class="card" (click)="navigateToReport(report.route)">
-            <div class="card-icon">
+            <div class="card-icon-wrapper">
                 @if(report.title.includes('User')) {
-                <i class="fas fa-users"></i>
+                <i class="fas fa-users card-icon"></i>
                 } @else if(report.title.includes('Client')) {
-                <i class="fas fa-utensils"></i>
+                <i class="fas fa-utensils card-icon"></i>
                 } @else {
-                <i class="fas fa-comments"></i>
+                <i class="fas fa-comments card-icon"></i>
                 }
             </div>
             <h2>{{ report.title }}</h2>

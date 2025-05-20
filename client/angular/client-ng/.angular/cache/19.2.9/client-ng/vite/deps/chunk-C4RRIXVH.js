@@ -1,4 +1,7 @@
 import {
+  BidiModule
+} from "./chunk-MJXODPID.js";
+import {
   _CdkPrivateStyleLoader,
   _bindEventWithOptions
 } from "./chunk-WJA3ZDO2.js";
@@ -6,10 +9,7 @@ import {
   Platform,
   coerceElement,
   coerceNumberProperty
-} from "./chunk-OB7XF4J3.js";
-import {
-  BidiModule
-} from "./chunk-MJXODPID.js";
+} from "./chunk-UG6DNBBL.js";
 import {
   DOCUMENT
 } from "./chunk-AKFTAZAO.js";
@@ -3163,4 +3163,4 @@ export {
   removeAriaReferencedId,
   MatCommonModule
 };
-//# sourceMappingURL=chunk-5WX3J52Z.js.map
+//# sourceMappingURL=chunk-C4RRIXVH.js.map

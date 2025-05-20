@@ -9,6 +9,7 @@ import { GraphsComponent } from './components/graphs/graphs.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'signIn', component: SignInComponent },
   { path: 'displayUsers', component: DisplayUsersComponent },
   { path: 'graphs', component: GraphsComponent },
