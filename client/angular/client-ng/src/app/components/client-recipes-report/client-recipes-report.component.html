@@ -1,4 +1,4 @@
-<div class="client-container">
+<!-- <div class="client-container">
   <div class="title-container">
     <a href="javascript:history.back()" class="back-button">
       <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" fill="white"
@@ -24,13 +24,11 @@
       <div class="pie-chart">
         @for(count of getSortedRecipeCounts(); track count; let i = $index) {
         <div class="pie-slice" [style.animation-delay.ms]="i * 100">
-          <!-- SVG for pie slice -->
           <svg width="300" height="300" viewBox="0 0 300 300">
             <path [attr.d]="getPieSlicePath(count)" [attr.fill]="'var(--pie-color-' + ((i % 8) + 1) + ')'"
               stroke="#1e1e1e" stroke-width="1" />
           </svg>
 
-          <!-- Tooltip for hover -->
           <div class="pie-tooltip" [style.top.px]="getTooltipPosition(count).y"
             [style.left.px]="getTooltipPosition(count).x">
             {{ count }} {{ count === 1 ? 'Recipe' : 'Recipes' }}: {{ clientsByRecipeCount[count] }} clients ({{
@@ -39,20 +37,17 @@
         </div>
         }
 
-        <!-- Center circle -->
         <div class="pie-center">
           <div class="pie-center-value">{{ getTotalClients() }}</div>
           <div class="pie-center-label">Total Clients</div>
         </div>
 
-        <!-- Labels for each slice -->
         @for(count of getSortedRecipeCounts(); track count; let i = $index) {
         <div class="pie-label" [style.top.px]="getLabelPosition(count).y" [style.left.px]="getLabelPosition(count).x">
           <span class="pie-label-count">{{ count }}</span>
           <span class="pie-label-text">{{ count === 1 ? 'Recipe' : 'Recipes' }}</span>
         </div>
 
-        <!-- Connector line from slice to label -->
         <div class="connector" [style.top.px]="getConnectorStart(count).y" [style.left.px]="getConnectorStart(count).x"
           [style.width.px]="getConnectorLength(count)"
           [style.transform]="'rotate(' + getConnectorAngle(count) + 'deg)'">
@@ -91,6 +86,85 @@
       <div class="no-data-icon">📊</div>
       <p>No recipe data available</p>
     </div>
+    }
+  </div>
+
+  <div class="chart-footer">
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color"></div>
+        <div class="legend-text">Number of clients with specific recipe count</div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="client-container" (window:resize)="onResize($event)">
+  <div class="title-container">
+    <a href="javascript:history.back()" class="back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" fill="white"
+        viewBox="0 0 24 24">
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+      </svg>
+    </a>
+
+    <div class="title-div">
+      <div class="section-divider">
+        <div class="divider-line"></div>
+        <div class="divider-space"></div>
+        <h2 class="title">Clients Recipes Distribution</h2>
+        <div class="divider-space"></div>
+        <div class="divider-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    @if(chartData.length > 0) {
+      <div class="pie-chart-wrapper">
+        <div class="chart-area">
+          <ngx-charts-advanced-pie-chart
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="chartData"
+            [gradient]="gradient"
+            (select)="onSelect($event)"
+            [tooltipDisabled]="false"
+            [animations]="true">
+            <ng-template #tooltipTemplate let-model="model">
+              <div class="custom-tooltip">
+                {{ model.name }}: {{ model.value }} clients ({{ model.extra.percentage }}%)
+              </div>
+            </ng-template>
+          </ngx-charts-advanced-pie-chart>
+        </div>
+
+        <!-- <div class="total-value-card">
+          <div class="total-value">{{ getTotalClients() }}</div>
+          <div class="total-label">Total Clients</div>
+        </div> -->
+      </div>
+
+      <div class="stats-cards">
+        <div class="stat-card">
+          <div class="stat-value">{{ getTotalClients() }}</div>
+          <div class="stat-label">Total Clients</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ getMostRecipesCount() }}</div>
+          <div class="stat-label">Most Recipes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ getAverageRecipes() | number:'1.1-1' }}</div>
+          <div class="stat-label">Avg Recipes</div>
+        </div>
+      </div>
+    } @else {
+      <div class="no-data">
+        <div class="no-data-icon">📊</div>
+        <p>No recipe data available</p>
+      </div>
     }
   </div>
 

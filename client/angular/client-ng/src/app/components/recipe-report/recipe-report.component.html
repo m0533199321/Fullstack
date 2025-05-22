@@ -1,4 +1,4 @@
-<div class="recipe-container">
+<!-- <div class="recipe-container">
 
   <div class="title-container">
     <a href="javascript:history.back()" class="back-button">
@@ -35,6 +35,94 @@
         </div>
       </div>
       }
+    </div>
+
+    <div class="stats-cards">
+      <div class="stat-card">
+        <div class="stat-value">{{ getTotalRecipes() }}</div>
+        <div class="stat-label">Total Recipes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ getMostCommentedCount() }}</div>
+        <div class="stat-label">Most Comments</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ getAverageComments() | number:'1.1-1' }}</div>
+        <div class="stat-label">Avg Comments</div>
+      </div>
+    </div>
+    } @else {
+    <div class="no-data">
+      <div class="no-data-icon">📊</div>
+      <p>No recipe data available</p>
+    </div>
+    }
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color"></div>
+      <div class="legend-text">Number of recipes with specific comment count</div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="recipe-container">
+  <div class="title-container">
+    <a href="javascript:history.back()" class="back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" fill="white"
+        viewBox="0 0 24 24">
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+      </svg>
+    </a>
+
+    <div class="title-div">
+      <div class="section-divider">
+        <div class="divider-line"></div>
+        <div class="divider-space"></div>
+        <h2 class="title">Recipe Comments Distribution</h2>
+        <div class="divider-space"></div>
+        <div class="divider-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    @if(gaugeData.length > 0) {
+    <div class="chart-tabs">
+      <button class="tab-button" data-chart="treemap" (click)="setActiveChart('treemap')">Tree Map</button>
+      <button class="tab-button active" data-chart="gauge" (click)="setActiveChart('gauge')">Gauge</button>
+      <button class="tab-button" data-chart="bubble" (click)="setActiveChart('bubble')">Bubble Chart</button>
+      <!-- <button class="tab-button" data-chart="force" (click)="setActiveChart('force')">Force Directed</button> -->
+    </div>
+
+    <div class="chart-wrapper" [ngClass]="{'active': activeChart === 'treemap'}">
+      <ngx-charts-tree-map [view]="view" [scheme]="colorScheme" [results]="treeMapData" [gradient]="true"
+        [animations]="true" (select)="onSelect($event)">
+      </ngx-charts-tree-map>
+    </div>
+
+    <div class="chart-wrapper" [ngClass]="{'active': activeChart === 'gauge'}">
+      <ngx-charts-gauge [view]="view" [scheme]="colorScheme" [results]="gaugeData" [min]="gaugeMin" [max]="gaugeMax"
+        [units]="gaugeUnits" [angleSpan]="gaugeAngleSpan" [startAngle]="gaugeStartAngle" [showAxis]="gaugeShowAxis"
+        [bigSegments]="gaugeLargeSegments" [smallSegments]="gaugeSmallSegments" [animations]="true"
+        (select)="onSelect($event)">
+      </ngx-charts-gauge>
+    </div>
+
+    <div class="chart-wrapper" [ngClass]="{'active': activeChart === 'bubble'}">
+      <ngx-charts-bubble-chart [view]="view" [scheme]="colorScheme" [results]="bubbleChartData" [xAxis]="true"
+        [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="'Comment Count'"
+        [yAxisLabel]="'Recipe Count'" [animations]="true" (select)="onSelect($event)">
+      </ngx-charts-bubble-chart>
+    </div>
+
+    <div class="chart-wrapper" [ngClass]="{'active': activeChart === 'force'}">
+      <ngx-charts-force-directed-graph [view]="view" [scheme]="colorScheme" [links]="forceDirectedData.links"
+        [nodes]="forceDirectedData.nodes" [animations]="true" [autoZoom]="true" [autoCenter]="true" [minZoomLevel]="0.1"
+        [maxZoomLevel]="2.0" [linkDimension]="'value'" (select)="onSelect($event)">
+      </ngx-charts-force-directed-graph>
     </div>
 
     <div class="stats-cards">

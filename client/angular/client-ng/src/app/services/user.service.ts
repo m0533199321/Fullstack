@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 @Injectable({
