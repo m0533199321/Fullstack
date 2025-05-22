@@ -237,6 +237,7 @@ body.collapsed-header {
 }
 
 .profile-email {
+    direction: ltr;
     font-size: 0.75rem;
     color: var(--text-muted);
     margin: 0;
