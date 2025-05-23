@@ -9,3 +9,12 @@ export class Recipe {
         public profile: string,
         public commentsList: []) { };
 }
+
+
+export class RecipePostModel {
+    constructor(
+        public title: string,
+        public degree: number,
+        public path: string,
+        public profile: string) { };
+}

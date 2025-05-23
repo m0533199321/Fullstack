@@ -12,3 +12,12 @@ export class User {
         public rolesList: [],
         public recipesList: Recipe[]) { };
 }
+
+export class UserPostModel {
+    constructor(
+        public fName: string,
+        public lName: string,
+        public email: string,
+        public password: string,
+        public profile: string) { };
+}

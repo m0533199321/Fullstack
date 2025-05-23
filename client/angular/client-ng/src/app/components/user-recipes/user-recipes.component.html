@@ -2,11 +2,6 @@
 
 <div class="list-container">
     <div class="title-container">
-        <!-- <button class="back-button" (click)="goBack()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
-                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-            </svg>
-        </button> -->
         <a href="javascript:history.back()" class="back-button">
             <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" viewBox="0 0 24 24">
                 <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
@@ -18,8 +13,8 @@
                 <div class="divider-line"></div>
                 <div class="divider-space"></div>
                 <h1 class="title">
-                    @if (userName) {
-                        {{ userName }}'s Recipes
+                    @if (userOfRecipes$ | async; as user) {
+                        {{ user.fName }}'s Recipes
                     } @else {
                         User Recipes
                     }
@@ -29,6 +24,40 @@
             </div>
         </div>
     </div>
+
+    @if (userOfRecipes$ | async; as user) {
+    <div class="user-info-header">
+        <div class="user-avatar">
+            @if(user.profile) {
+                <img [src]="user.profile" alt="{{ user.fName }} {{ user.lName }}" />
+            } @else {
+                {{ user.fName.charAt(0) }}{{ user.lName.charAt(0) }}
+            }
+        </div>
+        <div class="user-details">
+            @if(editingUserName) {
+                <div class="edit-user-name">
+                    <input type="text" [(ngModel)]="editingFirstName" placeholder="First Name" class="edit-input">
+                    <input type="text" [(ngModel)]="editingLastName" placeholder="Last Name" class="edit-input">
+                    <div class="edit-actions">
+                        <button class="edit-action-btn save-btn" (click)="saveUserName(user)" title="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="edit-action-btn cancel-btn" (click)="cancelEditingUserName()" title="Cancel">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            } @else {
+                <h2 (click)="startEditingUserName(user)" class="editable-name">
+                    {{ user.fName }} {{ user.lName }}
+                    <i class="fas fa-pen edit-icon"></i>
+                </h2>
+            }
+            <p><i class="fas fa-envelope"></i> {{ user.email }}</p>
+        </div>
+    </div>
+    }
 
     <div class="recipe-cards-container">
         @for (recipe of (userOfRecipes$ | async)?.recipesList; track recipe.id) {
@@ -51,18 +80,37 @@
                     </div>
                 </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">{{ recipe.title }}</h3>
-                    <!-- <p class="recipe-description">{{ recipe.description }}</p> -->
+                    @if(editingRecipeId === recipe.id) {
+                        <div class="edit-recipe-title">
+                            <input type="text" [(ngModel)]="editingRecipeName" class="edit-input" placeholder="Recipe name">
+                            <div class="edit-actions">
+                                <button class="edit-action-btn save-btn" (click)="saveRecipeName(recipe)" title="Save">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="edit-action-btn cancel-btn" (click)="cancelEditingRecipe()" title="Cancel">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    } @else {
+                        <h3 class="recipe-title editable" (click)="startEditingRecipe(recipe)">
+                            {{ recipe.title }}
+                            <i class="fas fa-pen edit-icon"></i>
+                        </h3>
+                    }
                     <div class="recipe-meta">
                         <span class="recipe-date">
                             <i class="fas fa-calendar-alt"></i> {{ recipe.createdAt }}
                         </span>
+                        <button class="recipe-delete-btn" (click)="deleteRecipe(recipe.id)" title="Delete Recipe">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         }
 
-        @if((userOfRecipes$| async)?.recipesList?.length === 0) {
+        @if((userOfRecipes$ | async)?.recipesList?.length === 0) {
             <div class="empty-state">
                 <div class="empty-state-icon">
                     <i class="fas fa-book-open"></i>

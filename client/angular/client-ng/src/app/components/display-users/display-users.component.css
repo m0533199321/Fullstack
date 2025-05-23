@@ -245,6 +245,18 @@ h1.title::after {
     border-radius: 50%;
 }
 
+.view-recipes-button {
+    background: rgba(255, 107, 0, 0.1);
+}
+
+.view-recipes-button:hover {
+    background: rgba(255, 107, 0, 0.2);
+}
+
+.view-recipes-button i {
+    color: #ff6b00;
+}
+
 .user-info {
     padding-left: 1rem;
 }

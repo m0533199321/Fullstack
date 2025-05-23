@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/user.model';
+import { User, UserPostModel } from '../models/user.model';
 import { BehaviorSubject, of, tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
@@ -43,6 +43,15 @@ export class UserService {
 
   ngOnInit() {
     this.getUserFromToken()
+  }
+
+  updateUserName(userId: number, userPostModel: UserPostModel) {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.put<User>(
+      `${this.baseUrl}/${userId}`,
+      userPostModel,
+      { headers }
+    );
   }
 
 }
