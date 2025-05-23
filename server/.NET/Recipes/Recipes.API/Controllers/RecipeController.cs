@@ -124,6 +124,14 @@ namespace Recipes.API.Controllers
             return await _iService.AddRecipeToUserAsync(userId, recipeId);
         }
 
+        [HttpPut("{id}")]
+        [Authorize(Policy = "Admin")]
+        public async Task<ActionResult<RecipeDto>> Put(int id, RecipePostModel recipePostModel)
+        {
+            var recipeDto = _mapper.Map<RecipeDto>(recipePostModel);
+            return await _iService.UpdateAsync(id, recipeDto);
+        }
+
         // PUT-PUBLIC api/<Users>/5
         [HttpPut("PrivateToPublic/{id}")]
         public async Task<ActionResult<bool>> Put(int id)
