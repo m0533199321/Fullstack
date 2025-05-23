@@ -6,7 +6,7 @@ export class Recipe {
         public degree: number,
         public createdAt: Date,
         public path: string,
-        public profile: string,
+        public picture: string,
         public commentsList: []) { };
 }
 
@@ -16,5 +16,5 @@ export class RecipePostModel {
         public title: string,
         public degree: number,
         public path: string,
-        public profile: string) { };
+        public picture: string) { };
 }

@@ -63,8 +63,8 @@
         @for (recipe of (userOfRecipes$ | async)?.recipesList; track recipe.id) {
             <div class="recipe-card">
                 <div class="recipe-image">
-                    @if(recipe.profile) {
-                        <img [src]="recipe.profile" alt="{{ recipe.title }}" />
+                    @if(recipe.picture) {
+                        <img [src]="recipe.picture" alt="{{ recipe.title }}" />
                     } @else {
                         <div class="placeholder-image">
                             <i class="fas fa-utensils"></i>

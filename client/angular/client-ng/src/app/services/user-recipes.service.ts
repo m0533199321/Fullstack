@@ -35,12 +35,15 @@ export class UserRecipesService {
   }
 
   updateRecipeName(recipeId: number, recipePostModel: RecipePostModel) {
+    console.log("updateRecipeName"); 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     return this.http.put<Recipe>(
       `${this.baseUrlRecipe}/${recipeId}`,
       recipePostModel,
       { headers }
-    );
+    ).subscribe(() => {
+      this.getUserRecipes(this.userOfRecipes.value.id);
+    });
   }
 
   updateUserName(userId: number, userPostModel: UserPostModel) {
@@ -49,7 +52,9 @@ export class UserRecipesService {
         `${this.baseUrl}/${userId}`,
         userPostModel,
         { headers }
-      );
+      ).subscribe(() => {
+        this.getUserRecipes(this.userOfRecipes.value.id);
+      });
     }
 
   deleteRecipe(recipeId: number) {

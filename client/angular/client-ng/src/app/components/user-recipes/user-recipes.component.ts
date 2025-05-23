@@ -76,7 +76,7 @@ export class UserRecipesComponent implements OnInit {
         title: this.editingRecipeName,
         degree: recipe.degree,
         path: recipe.path,
-        profile: recipe.profile
+        picture: recipe.picture
       };
       this.recipesService.updateRecipeName(recipe.id, recipePostModel);
     }

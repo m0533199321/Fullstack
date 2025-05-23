@@ -92,7 +92,10 @@ namespace Recipes.API.Controllers
                 return BadRequest("User data is required.");
             var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var tokenId = int.Parse(HttpContext.User.Claims.First(claim => claim.Type == "id").Value);
-            if (tokenId != id)
+            var isAdmin = HttpContext.User.Claims.Any(c =>
+                    c.Type == ClaimTypes.Role && c.Value == "Admin");
+
+            if (tokenId != id && !isAdmin)
                 return Forbid();
             var userDto = _mapper.Map<UserDto>(userPostModel);
             userDto = await _iService.UpdateAsync(id, userDto);
