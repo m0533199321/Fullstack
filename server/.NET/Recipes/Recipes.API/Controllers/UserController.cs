@@ -6,6 +6,7 @@ using Recipes.Core.DTOs;
 using Recipes.Core.Entities;
 using Recipes.Core.Interfaces.IServices;
 using Recipes.Service.Services;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -53,7 +54,9 @@ namespace Recipes.API.Controllers
         {
             var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var tokenId = int.Parse(HttpContext.User.Claims.First(claim => claim.Type == "id").Value);
-            var isAdmin = HttpContext.User.Claims.Any(c => c.Type == "role" && c.Value == "Admin");
+            //var isAdmin = HttpContext.User.Claims.Any(c => c.Type == "role" && c.Value == "Admin");
+            var isAdmin = HttpContext.User.Claims.Any(c =>
+                    c.Type == ClaimTypes.Role && c.Value == "Admin");
 
             if (tokenId != id && !isAdmin)
                 return Forbid();
