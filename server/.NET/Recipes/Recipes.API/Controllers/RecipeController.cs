@@ -175,6 +175,13 @@ namespace Recipes.API.Controllers
             return await _iService.DeleteRecipeAsync(user, recipe);
         }
 
+        //[HttpDelete("RecipeByAdmin/{id}")]
+        //public async Task<ActionResult<bool>> DeleteRecipeByAdmin(int id)
+        //{
+        //    var recipe = await _iService.GetFullByIdAsync(id);
+        //    return await _iService.DeleteRecipeAsync(user, recipe);
+        //}
+
         // ⬆️ שלב 1: קבלת URL להעלאת קובץ ל-S3
         [HttpGet("Upload-url")]
         public async Task<IActionResult> GetUploadUrl([FromQuery] string fileName, [FromQuery] string contentType)

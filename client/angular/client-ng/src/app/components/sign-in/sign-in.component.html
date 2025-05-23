@@ -11,16 +11,23 @@
 
     <form [formGroup]="userForm" (ngSubmit)="signIn()" class="signIn-form">
       <div class="input-group">
-        <input type="email" formControlName="email" required placeholder="Email Address" />
+        <input type="email" formControlName="email" required placeholder="Email Address" [disabled]="isLoading" />
         <i class="fas fa-envelope input-icon"></i>
       </div>
 
       <div class="input-group">
-        <input type="password" formControlName="password" required placeholder="Password" />
+        <input type="password" formControlName="password" required placeholder="Password" [disabled]="isLoading" />
         <i class="fas fa-lock input-icon"></i>
       </div>
 
-      <button type="submit" [disabled]="userForm.invalid">Sign In</button>
+      <button type="submit" [disabled]="userForm.invalid || isLoading">
+        @if(isLoading) {
+          <div class="spinner"></div>
+          Signing In...
+        } @else {
+          Sign In
+        }
+      </button>
     </form>
   </div>
 </div>

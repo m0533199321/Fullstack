@@ -71,7 +71,7 @@ body {
 
 .back-button {
     position: absolute;
-    left: 0; /* תמיד בצד שמאל */
+    left: 0;
     background: none;
     border: none;
     cursor: pointer;
@@ -90,28 +90,6 @@ body {
 .back-button:hover svg {
     fill: #ff6b00;
 }
-
-/* h1.title {
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: #ffffff;
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-h1.title::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: #ff6b00;
-    border-radius: 3px;
-} */
 
 .title-div {
     text-align: center;
@@ -175,6 +153,10 @@ h1.title::after {
     animation: fadeIn 0.5s ease-out forwards;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-card.loading {
+    pointer-events: none;
 }
 
 @keyframes fadeIn {
@@ -306,16 +288,21 @@ h1.title::after {
     transition: all 0.3s ease;
 }
 
-.action-button:hover {
+.action-button:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.2);
     transform: scale(1.1);
+}
+
+.action-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .delete-button {
     background: rgba(244, 67, 54, 0.1);
 }
 
-.delete-button:hover {
+.delete-button:hover:not(:disabled) {
     background: rgba(244, 67, 54, 0.2);
 }
 
@@ -490,6 +477,11 @@ h1.title::after {
     color: #555555;
 }
 
+.add-form input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .error-message {
     color: #f44336;
     font-size: 0.8rem;
@@ -511,6 +503,10 @@ h1.title::after {
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .add-form button::before {
@@ -524,13 +520,183 @@ h1.title::after {
     transition: all 0.5s ease;
 }
 
-.add-form button:hover {
+.add-form button:hover:not(:disabled) {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
 }
 
-.add-form button:hover::before {
+.add-form button:hover:not(:disabled)::before {
     left: 100%;
+}
+
+.add-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Loading states */
+.spinner, .spinner-large {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 2px solid #ff6b00;
+    animation: spin 1s linear infinite;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+}
+
+.spinner-large {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.card-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 16px;
+}
+
+.loading-spinner {
+    text-align: center;
+    color: #ffffff;
+}
+
+.loading-spinner p {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #ff6b00;
+}
+
+/* Confirmation Dialog */
+.confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeInOverlay 0.3s ease-out;
+}
+
+@keyframes fadeInOverlay {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.confirmation-dialog {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%;
+    overflow: hidden;
+    animation: slideInDialog 0.3s ease-out;
+}
+
+@keyframes slideInDialog {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.confirmation-header {
+    background: linear-gradient(135deg, #ff6b00 0%, #e05d00 100%);
+    color: #ffffff;
+    padding: 2rem;
+    text-align: center;
+}
+
+.confirmation-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.confirmation-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.confirmation-body {
+    padding: 2rem;
+    text-align: center;
+    color: #333333;
+}
+
+.confirmation-body p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.confirmation-actions {
+    padding: 1rem 2rem 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.confirmation-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.confirmation-btn.cancel-btn {
+    background: #e0e0e0;
+    color: #666666;
+}
+
+.confirmation-btn.cancel-btn:hover {
+    background: #d0d0d0;
+    transform: translateY(-2px);
+}
+
+.confirmation-btn.confirm-btn {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+}
+
+.confirmation-btn.confirm-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(244, 67, 54, 0.4);
 }
 
 /* Empty state */
@@ -610,5 +776,13 @@ h1.title::after {
     .add-form {
         padding: 2rem 1.5rem 1.5rem;
         gap: 1.25rem;
+    }
+
+    .confirmation-dialog {
+        margin: 1rem;
+    }
+
+    .confirmation-actions {
+        flex-direction: column;
     }
 }

@@ -216,6 +216,10 @@ body {
     flex-direction: column;
 }
 
+.recipe-card.loading {
+    pointer-events: none;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -408,6 +412,11 @@ body {
     box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.2);
 }
 
+.edit-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .edit-actions {
     display: flex;
     gap: 0.5rem;
@@ -426,12 +435,17 @@ body {
     transition: all 0.3s ease;
 }
 
+.edit-action-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .save-btn {
     background: rgba(76, 175, 80, 0.2);
     color: #4caf50;
 }
 
-.save-btn:hover {
+.save-btn:hover:not(:disabled) {
     background: rgba(76, 175, 80, 0.3);
     transform: scale(1.1);
 }
@@ -441,7 +455,7 @@ body {
     color: #f44336;
 }
 
-.cancel-btn:hover {
+.cancel-btn:hover:not(:disabled) {
     background: rgba(244, 67, 54, 0.3);
     transform: scale(1.1);
 }
@@ -456,9 +470,179 @@ body {
     transition: all 0.3s ease;
 }
 
-.recipe-delete-btn:hover {
+.recipe-delete-btn:hover:not(:disabled) {
     opacity: 1;
     transform: scale(1.1);
+}
+
+.recipe-delete-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Loading states */
+.spinner, .spinner-large {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 2px solid #ff6b00;
+    animation: spin 1s linear infinite;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+}
+
+.spinner-large {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.card-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 16px;
+}
+
+.loading-spinner {
+    text-align: center;
+    color: #ffffff;
+}
+
+.loading-spinner p {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #ff6b00;
+}
+
+/* Confirmation Dialog */
+.confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeInOverlay 0.3s ease-out;
+}
+
+@keyframes fadeInOverlay {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.confirmation-dialog {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%;
+    overflow: hidden;
+    animation: slideInDialog 0.3s ease-out;
+}
+
+@keyframes slideInDialog {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.confirmation-header {
+    background: linear-gradient(135deg, #ff6b00 0%, #e05d00 100%);
+    color: #ffffff;
+    padding: 2rem;
+    text-align: center;
+}
+
+.confirmation-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.confirmation-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.confirmation-body {
+    padding: 2rem;
+    text-align: center;
+    color: #333333;
+}
+
+.confirmation-body p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.confirmation-actions {
+    padding: 1rem 2rem 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.confirmation-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.confirmation-btn.cancel-btn {
+    background: #e0e0e0;
+    color: #666666;
+}
+
+.confirmation-btn.cancel-btn:hover {
+    background: #d0d0d0;
+    transform: translateY(-2px);
+}
+
+.confirmation-btn.confirm-btn {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+}
+
+.confirmation-btn.confirm-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(244, 67, 54, 0.4);
 }
 
 /* Responsive */
@@ -490,5 +674,13 @@ body {
     
     .edit-user-name {
         width: 100%;
+    }
+
+    .confirmation-dialog {
+        margin: 1rem;
+    }
+
+    .confirmation-actions {
+        flex-direction: column;
     }
 }

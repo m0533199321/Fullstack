@@ -29,6 +29,22 @@ export class UserRecipesComponent implements OnInit {
   editingFirstName: string = '';
   editingLastName: string = '';
 
+  // Loading states
+  loadingRecipeUpdate: number | null = null;
+  loadingUserUpdate: boolean = false;
+  loadingRecipeDelete: number | null = null;
+
+  // Confirmation dialog
+  showConfirmDialog: boolean = false;
+  confirmDialogData: {
+    title: string;
+    message: string;
+    confirmText: string;
+    cancelText: string;
+    onConfirm: () => void;
+    onCancel: () => void;
+  } | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -123,9 +139,58 @@ export class UserRecipesComponent implements OnInit {
   }
 
   // Delete recipe
-  deleteRecipe(recipeId: number): void {
-    if (confirm('Are you sure you want to delete this recipe?')) {
-      this.recipesService.deleteRecipe(recipeId)
+  // deleteRecipe(recipeId: number): void {
+  //   if (confirm('Are you sure you want to delete this recipe?')) {
+  //     this.recipesService.deleteRecipe(recipeId)
+  //   }
+  // }
+
+  // Delete recipe with confirmation
+  deleteRecipe(recipe: Recipe): void {
+    this.showConfirmationDialog(
+      'Delete Recipe',
+      'Are you sure you want to delete this recipe? This action cannot be undone.',
+      'Delete',
+      'Cancel',
+      () => this.confirmDeleteRecipe(recipe),
+      () => this.hideConfirmationDialog()
+    );
+  }
+
+  confirmDeleteRecipe(recipe: Recipe): void {
+    this.loadingRecipeDelete = recipe.id;
+    this.hideConfirmationDialog();
+
+    if (!recipe.isPublic) {
+      this.recipesService.deleteRecipe(recipe.id)
     }
+
+    else {
+      this.recipesService.deleteRecipeFromUser(recipe.id)
+    }
+  }
+  // Confirmation dialog methods
+  showConfirmationDialog(
+    title: string,
+    message: string,
+    confirmText: string,
+    cancelText: string,
+    onConfirm: () => void,
+    onCancel: () => void
+  ): void {
+    this.confirmDialogData = {
+      title,
+      message,
+      confirmText,
+      cancelText,
+      onConfirm,
+      onCancel
+    };
+    this.showConfirmDialog = true;
+  }
+
+  hideConfirmationDialog(): void {
+    this.showConfirmDialog = false;
+    this.confirmDialogData = null;
   }
 }

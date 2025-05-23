@@ -37,13 +37,17 @@
         <div class="user-details">
             @if(editingUserName) {
                 <div class="edit-user-name">
-                    <input type="text" [(ngModel)]="editingFirstName" placeholder="First Name" class="edit-input">
-                    <input type="text" [(ngModel)]="editingLastName" placeholder="Last Name" class="edit-input">
+                    <input type="text" [(ngModel)]="editingFirstName" placeholder="First Name" class="edit-input" [disabled]="loadingUserUpdate">
+                    <input type="text" [(ngModel)]="editingLastName" placeholder="Last Name" class="edit-input" [disabled]="loadingUserUpdate">
                     <div class="edit-actions">
-                        <button class="edit-action-btn save-btn" (click)="saveUserName(user)" title="Save">
-                            <i class="fas fa-check"></i>
+                        <button class="edit-action-btn save-btn" (click)="saveUserName(user)" title="Save" [disabled]="loadingUserUpdate">
+                            @if(loadingUserUpdate) {
+                                <div class="spinner"></div>
+                            } @else {
+                                <i class="fas fa-check"></i>
+                            }
                         </button>
-                        <button class="edit-action-btn cancel-btn" (click)="cancelEditingUserName()" title="Cancel">
+                        <button class="edit-action-btn cancel-btn" (click)="cancelEditingUserName()" title="Cancel" [disabled]="loadingUserUpdate">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
@@ -61,7 +65,16 @@
 
     <div class="recipe-cards-container">
         @for (recipe of (userOfRecipes$ | async)?.recipesList; track recipe.id) {
-            <div class="recipe-card">
+            <div class="recipe-card" [class.loading]="loadingRecipeDelete === recipe.id">
+                @if(loadingRecipeDelete === recipe.id) {
+                    <div class="card-loading-overlay">
+                        <div class="loading-spinner">
+                            <div class="spinner-large"></div>
+                            <p>Deleting recipe...</p>
+                        </div>
+                    </div>
+                }
+                
                 <div class="recipe-image">
                     @if(recipe.picture) {
                         <img [src]="recipe.picture" alt="{{ recipe.title }}" />
@@ -82,12 +95,16 @@
                 <div class="recipe-content">
                     @if(editingRecipeId === recipe.id) {
                         <div class="edit-recipe-title">
-                            <input type="text" [(ngModel)]="editingRecipeName" class="edit-input" placeholder="Recipe name">
+                            <input type="text" [(ngModel)]="editingRecipeName" class="edit-input" placeholder="Recipe name" [disabled]="loadingRecipeUpdate === recipe.id">
                             <div class="edit-actions">
-                                <button class="edit-action-btn save-btn" (click)="saveRecipeName(recipe)" title="Save">
-                                    <i class="fas fa-check"></i>
+                                <button class="edit-action-btn save-btn" (click)="saveRecipeName(recipe)" title="Save" [disabled]="loadingRecipeUpdate === recipe.id">
+                                    @if(loadingRecipeUpdate === recipe.id) {
+                                        <div class="spinner"></div>
+                                    } @else {
+                                        <i class="fas fa-check"></i>
+                                    }
                                 </button>
-                                <button class="edit-action-btn cancel-btn" (click)="cancelEditingRecipe()" title="Cancel">
+                                <button class="edit-action-btn cancel-btn" (click)="cancelEditingRecipe()" title="Cancel" [disabled]="loadingRecipeUpdate === recipe.id">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
@@ -102,8 +119,12 @@
                         <span class="recipe-date">
                             <i class="fas fa-calendar-alt"></i> {{ recipe.createdAt }}
                         </span>
-                        <button class="recipe-delete-btn" (click)="deleteRecipe(recipe.id)" title="Delete Recipe">
-                            <i class="fas fa-trash-alt"></i>
+                        <button class="recipe-delete-btn" (click)="deleteRecipe(recipe)" title="Delete Recipe" [disabled]="loadingRecipeDelete === recipe.id">
+                            @if(loadingRecipeDelete === recipe.id) {
+                                <div class="spinner"></div>
+                            } @else {
+                                <i class="fas fa-trash-alt"></i>
+                            }
                         </button>
                     </div>
                 </div>
@@ -119,4 +140,27 @@
             </div>
         }
     </div>
+
+    <!-- Confirmation Dialog -->
+    @if(showConfirmDialog && confirmDialogData) {
+        <div class="confirmation-overlay">
+            <div class="confirmation-dialog">
+                <div class="confirmation-header">
+                    <i class="fas fa-exclamation-triangle confirmation-icon"></i>
+                    <h3>{{ confirmDialogData.title }}</h3>
+                </div>
+                <div class="confirmation-body">
+                    <p>{{ confirmDialogData.message }}</p>
+                </div>
+                <div class="confirmation-actions">
+                    <button class="confirmation-btn cancel-btn" (click)="confirmDialogData.onCancel()">
+                        {{ confirmDialogData.cancelText }}
+                    </button>
+                    <button class="confirmation-btn confirm-btn" (click)="confirmDialogData.onConfirm()">
+                        {{ confirmDialogData.confirmText }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
 </div>

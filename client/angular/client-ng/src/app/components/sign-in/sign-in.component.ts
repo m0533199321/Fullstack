@@ -25,6 +25,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class SignInComponent {
   userForm: FormGroup;
   hide: boolean = true;
+  isLoading: boolean = false;
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
@@ -45,6 +46,8 @@ export class SignInComponent {
       this.userForm.markAllAsTouched();
       return;
     }
+
+    this.isLoading = true;
 
     let userLoginIn: UserLogIn = new UserLogIn(
       this.userForm.get('email')?.value,

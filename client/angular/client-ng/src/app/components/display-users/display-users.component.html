@@ -21,7 +21,16 @@
 
     <div class="user-cards-container">
         @for (user of (users$ | async); track user.id) {
-        <div class="user-card">
+        <div class="user-card" [class.loading]="loadingUserDelete === user.id">
+            @if(loadingUserDelete === user.id) {
+                <div class="card-loading-overlay">
+                    <div class="loading-spinner">
+                        <div class="spinner-large"></div>
+                        <p>Deleting user...</p>
+                    </div>
+                </div>
+            }
+            
             <div class="user-avatar">
                 @if(user.profile) {
                 <img [src]="user.profile" alt="" />
@@ -35,14 +44,15 @@
                 <div class="user-email"><i class="fas fa-envelope"></i> {{ user.email }}</div>
             </div>
             <div class="user-actions">
-                <!-- <button class="action-button" title="Edit User">
-                    <i class="fas fa-pen"></i>
-                </button> -->
-                <button class="action-button view-recipes-button" (click)="viewUserRecipes(user.id); $event.stopPropagation();" title="View Recipes">
+                <button class="action-button view-recipes-button" (click)="viewUserRecipes(user.id); $event.stopPropagation();" title="View Recipes" [disabled]="loadingUserDelete === user.id">
                     <i class="fas fa-book-open"></i>
                 </button>
-                <button class="action-button delete-button" (click)="deleteUser(user.id)" title="Delete User">
-                    <i class="fas fa-trash icon-trash"></i>
+                <button class="action-button delete-button" (click)="deleteUser(user.id, user.fName + ' ' + user.lName); $event.stopPropagation();" title="Delete User" [disabled]="loadingUserDelete === user.id">
+                    @if(loadingUserDelete === user.id) {
+                        <div class="spinner"></div>
+                    } @else {
+                        <i class="fas fa-trash icon-trash"></i>
+                    }
                 </button>
             </div>
         </div>
@@ -80,35 +90,65 @@
             <div class="add-form">
                 <div class="input-group">
                     <input type="text" [(ngModel)]="newUser.fName" placeholder="First Name" required
-                        (ngModelChange)="clearError('fName')" />
+                        (ngModelChange)="clearError('fName')" [disabled]="loadingUserAdd" />
                     <i class="fas fa-user input-icon"></i>
                     <div class="error-message">{{ errorMessages['fName'] }}</div>
                 </div>
 
                 <div class="input-group">
                     <input type="text" [(ngModel)]="newUser.lName" placeholder="Last Name" required
-                        (ngModelChange)="clearError('lName')" />
+                        (ngModelChange)="clearError('lName')" [disabled]="loadingUserAdd" />
                     <i class="fas fa-user input-icon"></i>
                     <div class="error-message">{{ errorMessages['lName'] }}</div>
                 </div>
 
                 <div class="input-group">
                     <input type="email" [(ngModel)]="newUser.email" placeholder="Email Address" required
-                        (ngModelChange)="clearError('email')" />
+                        (ngModelChange)="clearError('email')" [disabled]="loadingUserAdd" />
                     <i class="fas fa-envelope input-icon"></i>
                     <div class="error-message">{{ errorMessages['email'] }}</div>
                 </div>
 
                 <div class="input-group">
                     <input type="password" [(ngModel)]="newUser.password" placeholder="Password" required
-                        (ngModelChange)="clearError('password')" />
+                        (ngModelChange)="clearError('password')" [disabled]="loadingUserAdd" />
                     <i class="fas fa-lock input-icon"></i>
                     <div class="error-message">{{ errorMessages['password'] }}</div>
                 </div>
 
-                <button (click)="addUser()">Add User</button>
+                <button (click)="addUser()" [disabled]="loadingUserAdd">
+                    @if(loadingUserAdd) {
+                        <div class="spinner"></div>
+                        Adding User...
+                    } @else {
+                        Add User
+                    }
+                </button>
             </div>
         </div>
     </div>
+    }
+
+    <!-- Confirmation Dialog -->
+    @if(showConfirmDialog && confirmDialogData) {
+        <div class="confirmation-overlay">
+            <div class="confirmation-dialog">
+                <div class="confirmation-header">
+                    <i class="fas fa-exclamation-triangle confirmation-icon"></i>
+                    <h3>{{ confirmDialogData.title }}</h3>
+                </div>
+                <div class="confirmation-body">
+                    <p>{{ confirmDialogData.message }}</p>
+                </div>
+                <div class="confirmation-actions">
+                    <button class="confirmation-btn cancel-btn" (click)="confirmDialogData.onCancel()">
+                        {{ confirmDialogData.cancelText }}
+                    </button>
+                    <button class="confirmation-btn confirm-btn" (click)="confirmDialogData.onConfirm()">
+                        {{ confirmDialogData.confirmText }}
+                    </button>
+                </div>
+            </div>
+        </div>
     }
 </div>

@@ -19,6 +19,20 @@ export class DisplayUsersComponent {
   constructor(private usersService: DisplayUsersService, private snackBar: MatSnackBar, private router:Router) { }
   users$: Observable<User[]> = this.usersService.users;
   add: boolean = false;
+  loadingUserDelete: number | null = null;
+  loadingUserAdd: boolean = false;
+  
+  // Confirmation dialog
+  showConfirmDialog: boolean = false;
+  confirmDialogData: {
+    title: string;
+    message: string;
+    confirmText: string;
+    cancelText: string;
+    onConfirm: () => void;
+    onCancel: () => void;
+  } | null = null;
+
   newUser: User = {
     id: 0,
     fName: '',
@@ -85,7 +99,20 @@ export class DisplayUsersComponent {
     }
   }
 
-  deleteUser(userId: number) {
+  deleteUser(userId: number, userName: string) {
+    this.showConfirmationDialog(
+      'Delete User',
+      `Are you sure you want to delete ${userName}? This action cannot be undone and will also delete all their recipes.`,
+      'Delete',
+      'Cancel',
+      () => this.confirmDeleteUser(userId),
+      () => this.hideConfirmationDialog()
+    );
+  }
+
+  confirmDeleteUser(userId: number): void {
+    this.loadingUserDelete = userId;
+    this.hideConfirmationDialog();
     this.usersService.deleteUser(userId);
   }
 
@@ -143,5 +170,30 @@ export class DisplayUsersComponent {
 
   viewUserRecipes(userId: number) {
     this.router.navigate(['/users', userId, 'recipes']);
+  }
+
+  // Confirmation dialog methods
+  showConfirmationDialog(
+    title: string,
+    message: string,
+    confirmText: string,
+    cancelText: string,
+    onConfirm: () => void,
+    onCancel: () => void
+  ): void {
+    this.confirmDialogData = {
+      title,
+      message,
+      confirmText,
+      cancelText,
+      onConfirm,
+      onCancel
+    };
+    this.showConfirmDialog = true;
+  }
+
+  hideConfirmationDialog(): void {
+    this.showConfirmDialog = false;
+    this.confirmDialogData = null;
   }
 }

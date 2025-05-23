@@ -65,6 +65,14 @@ export class UserRecipesService {
     );
   }
 
+  deleteRecipeFromUser(recipeId: number) {
+    // console.log(`${this.baseUrl}/${recipeId}`);
+    // return this.http.delete(`${this.baseUrlRecipe}/Recipe/${recipeId}`).subscribe(() => {
+    //   this.getUserRecipes(this.userOfRecipes.value.id);
+    // }
+    // );
+  }
+
   // getUserRecipes(userId: number) {
   //   return this.http.get<Recipe[]>(`${this.baseUrl}/Private/${userId}`);
   // }
