@@ -53,7 +53,9 @@ namespace Recipes.API.Controllers
         {
             var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var tokenId = int.Parse(HttpContext.User.Claims.First(claim => claim.Type == "id").Value);
-            if (tokenId != id)
+            var isAdmin = HttpContext.User.Claims.Any(c => c.Type == "role" && c.Value == "Admin");
+
+            if (tokenId != id && !isAdmin)
                 return Forbid();
             var user = await _iService.GetFullByIdAsync(id);
             if (user == null)

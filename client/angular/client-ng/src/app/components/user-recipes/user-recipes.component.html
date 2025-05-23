@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="list-container">
+    <div class="title-container">
+        <!-- <button class="back-button" (click)="goBack()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+        </button> -->
+        <a href="javascript:history.back()" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+        </a>
+
+        <div class="title-div">
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-space"></div>
+                <h1 class="title">
+                    @if (userName) {
+                        {{ userName }}'s Recipes
+                    } @else {
+                        User Recipes
+                    }
+                </h1>
+                <div class="divider-space"></div>
+                <div class="divider-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="recipe-cards-container">
+        @for (recipe of (userOfRecipes$ | async)?.recipesList; track recipe.id) {
+            <div class="recipe-card">
+                <div class="recipe-image">
+                    @if(recipe.profile) {
+                        <img [src]="recipe.profile" alt="{{ recipe.title }}" />
+                    } @else {
+                        <div class="placeholder-image">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                    }
+                    <div class="recipe-badges">
+                        @if(!recipe.isPublic) {
+                            <span class="badge personal">Personal</span>
+                        }
+                        @if(recipe.isPublic) {
+                            <span class="badge recommended">Recommended</span>
+                        }
+                    </div>
+                </div>
+                <div class="recipe-content">
+                    <h3 class="recipe-title">{{ recipe.title }}</h3>
+                    <!-- <p class="recipe-description">{{ recipe.description }}</p> -->
+                    <div class="recipe-meta">
+                        <span class="recipe-date">
+                            <i class="fas fa-calendar-alt"></i> {{ recipe.createdAt }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if((userOfRecipes$| async)?.recipesList?.length === 0) {
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="empty-state-text">No recipes found for this user</div>
+            </div>
+        }
+    </div>
+</div>

@@ -17,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
 
 export class HomeComponent implements OnInit {
   options = [
-    { title: 'Display Users', route: '/displayUsers' },
+    { title: 'Display Users', route: '/users' },
     { title: 'Graphs', route: '/graphs' }
   ];
 

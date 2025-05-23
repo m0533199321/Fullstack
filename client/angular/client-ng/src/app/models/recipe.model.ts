@@ -6,5 +6,6 @@ export class Recipe {
         public degree: number,
         public createdAt: Date,
         public path: string,
+        public profile: string,
         public commentsList: []) { };
 }

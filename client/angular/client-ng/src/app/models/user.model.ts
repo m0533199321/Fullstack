@@ -1,3 +1,5 @@
+import { Recipe } from "./recipe.model";
+
 export class User {
     constructor(
         public id: number,
@@ -8,5 +10,5 @@ export class User {
         public profile: string,
         public createdAt: Date,
         public rolesList: [],
-        public recipesList: []) { };
+        public recipesList: Recipe[]) { };
 }

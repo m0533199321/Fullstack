@@ -26,7 +26,7 @@ export class DisplayUsersComponent {
     email: '',
     password: '',
     createdAt: new Date(),
-    profile: "https://malismartchef.s3.amazonaws.com/images/profile-smartChef.png1745511305206",
+    profile: "https://malismartchef.s3.us-east-1.amazonaws.com/images/1.jpg",
     rolesList: [],
     recipesList: []
   };
@@ -130,7 +130,7 @@ export class DisplayUsersComponent {
       email: '',
       password: '',
       createdAt: new Date(),
-      profile: "https://malismartchef.s3.amazonaws.com/images/profile-smartChef.png1745511305206",
+      profile: "https://malismartchef.s3.us-east-1.amazonaws.com/images/1.jpg",
       rolesList: [],
       recipesList: []
     };
@@ -139,5 +139,9 @@ export class DisplayUsersComponent {
   goBack = () => {
     this.router.navigate(['-1']);
     // window.history.back();
+  }
+
+  viewUserRecipes(userId: number) {
+    this.router.navigate(['/users', userId, 'recipes']);
   }
 }

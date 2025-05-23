@@ -6,12 +6,14 @@ import { UserReportComponent } from './components/user-report/user-report.compon
 import { RecipeReportComponent } from './components/recipe-report/recipe-report.component';
 import { ClientReportComponent } from './components/client-recipes-report/client-recipes-report.component';
 import { GraphsComponent } from './components/graphs/graphs.component';
+import { UserRecipesComponent } from './components/user-recipes/user-recipes.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'signIn', component: SignInComponent },
-  { path: 'displayUsers', component: DisplayUsersComponent },
+  { path: 'users', component: DisplayUsersComponent },
+  { path: 'users/:id/recipes', component: UserRecipesComponent },
   { path: 'graphs', component: GraphsComponent },
   { path: 'graphs/user-report', component: UserReportComponent },
   { path: 'graphs/client-recipes-report', component: ClientReportComponent },
