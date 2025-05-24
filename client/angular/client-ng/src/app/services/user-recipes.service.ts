@@ -65,12 +65,14 @@ export class UserRecipesService {
     );
   }
 
-  deleteRecipeFromUser(recipeId: number) {
-    // console.log(`${this.baseUrl}/${recipeId}`);
-    // return this.http.delete(`${this.baseUrlRecipe}/Recipe/${recipeId}`).subscribe(() => {
-    //   this.getUserRecipes(this.userOfRecipes.value.id);
-    // }
-    // );
+  deleteRecipeFromUser(recipeId: number, userId: number) {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.delete<boolean>(
+      `${this.baseUrlRecipe}/RecipeFromUser/${recipeId}/${userId}`,
+      { headers }
+    ).subscribe(() => {
+      this.getUserRecipes(userId);
+    });
   }
 
   // getUserRecipes(userId: number) {

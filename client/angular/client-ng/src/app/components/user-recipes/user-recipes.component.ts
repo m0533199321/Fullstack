@@ -166,7 +166,8 @@ export class UserRecipesComponent implements OnInit {
     }
 
     else {
-      this.recipesService.deleteRecipeFromUser(recipe.id)
+      console.log(`Deleting recipe ${recipe.id} from user ${this.userId}`);  
+      this.recipesService.deleteRecipeFromUser(recipe.id, this.userId)
     }
   }
   // Confirmation dialog methods

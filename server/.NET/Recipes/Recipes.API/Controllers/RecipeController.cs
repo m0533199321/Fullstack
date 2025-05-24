@@ -175,12 +175,33 @@ namespace Recipes.API.Controllers
             return await _iService.DeleteRecipeAsync(user, recipe);
         }
 
-        //[HttpDelete("RecipeByAdmin/{id}")]
-        //public async Task<ActionResult<bool>> DeleteRecipeByAdmin(int id)
+        //[HttpDelete("RecipeFromUser/{id}")]
+        //[Authorize(Policy = "Admin")]
+        //public async Task<ActionResult<bool>> DeleteRecipeByAdmin(int id, UserPostModel userPostModel)
         //{
         //    var recipe = await _iService.GetFullByIdAsync(id);
+        //    var userDto = _mapper.Map<UserDto>(userPostModel);
+        //    var user = recipe.UsersList.Where(u=> u.Id == userDto.Id).FirstOrDefault();
+        //     if (user == null)
+        //        return false;
         //    return await _iService.DeleteRecipeAsync(user, recipe);
         //}
+
+        [HttpDelete("RecipeFromUser/{recipeId}/{userId}")]
+        [Authorize(Policy = "Admin")]
+        public async Task<ActionResult<bool>> DeleteRecipeFromUser(int recipeId, int userId)
+        {
+            var recipe = await _iService.GetFullByIdAsync(recipeId);
+            if (recipe == null)
+                return NotFound();
+
+            var user = recipe.UsersList.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+                return BadRequest("User not associated with this recipe."); 
+
+            return await _iService.DeleteRecipeAsync(user, recipe);
+        }
+
 
         // ⬆️ שלב 1: קבלת URL להעלאת קובץ ל-S3
         [HttpGet("Upload-url")]
