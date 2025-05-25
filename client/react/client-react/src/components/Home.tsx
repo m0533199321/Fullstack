@@ -339,6 +339,9 @@ import LastRecipes from './LastRecipes';
 import { ChefHat, BookOpen, Star, Users, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from './Redux/Store';
+import avatar1 from "../../images/profiles/1.jpg";
+import avatar3 from "../../images/profiles/3.jpg";
+import avatar4 from "../../images/profiles/4.jpg";
 
 const Home = () => {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -638,7 +641,7 @@ const Home = () => {
                             <p>"מאז שהתחלתי להשתמש ב-SmartChef, הבישול שלי השתדרג פלאים. אני מקבלת רעיונות חדשים בכל פעם!"</p>
                         </div>
                         <div className="testimonial-author">
-                            <div className="author-avatar">רמ</div>
+                            <img src={avatar1} className="author-avatar" alt="" />
                             <div className="author-info">
                                 <h4>רונית מזרחי</h4>
                                 <div className="rating">
@@ -663,8 +666,8 @@ const Home = () => {
                             <p>"האפליקציה פשוט מדהימה! אני כבר לא צריך לחפש מתכונים באינטרנט, הכל נוצר במיוחד בשבילי."</p>
                         </div>
                         <div className="testimonial-author">
-                            <div className="author-avatar">אכ</div>
-                            <div className="author-info">
+                        <img src={avatar4} className="author-avatar" alt="" />
+                        <div className="author-info">
                                 <h4>אלון כהן</h4>
                                 <div className="rating">
                                     <Star className="star filled" size={16} />
@@ -688,8 +691,8 @@ const Home = () => {
                             <p>"הצלחתי להכין ארוחות מדהימות עם המצרכים שהיו לי בבית, בלי לצאת לקניות. חוסך זמן וכסף!"</p>
                         </div>
                         <div className="testimonial-author">
-                            <div className="author-avatar">דל</div>
-                            <div className="author-info">
+                        <img src={avatar3} className="author-avatar" alt="" />
+                        <div className="author-info">
                                 <h4>דנה לוי</h4>
                                 <div className="rating">
                                     <Star className="star filled" size={16} />

@@ -59,7 +59,9 @@ export class RecipeViewerComponent implements OnInit {
 
     try {
       this.recipe = await firstValueFrom(this.recipeService.getById(this.recipeId!));
-      this.recipeService.recipe.next(this.recipe); // עדכון ה-BehaviorSubject
+      this.recipeService.recipe.next(this.recipe);
+      console.log("Recipe loaded from server:", this.recipe);
+       // עדכון ה-BehaviorSubject
       await this.loadRecipeContent();
     } catch (err) {
       console.error("Error loading recipe from server:", err);

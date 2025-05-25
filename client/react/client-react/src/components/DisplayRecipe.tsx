@@ -230,7 +230,7 @@ const DisplayRecipe = () => {
 
     return (
         <>
-        <BackArrow />
+            {!file && <BackArrow />}
             {!file ? (
                 <>
                     <div style={{ marginTop: '10vh', height: '8vh' }}></div>

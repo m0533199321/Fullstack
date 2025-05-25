@@ -5,14 +5,18 @@
             <!-- <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" viewBox="0 0 24 24" fill="#ffa500">
                 <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
             </svg> -->
-            <div (click)="goBack()" class="back-button-X">X</div>
+            <!-- <div (click)="goBack()" class="back-button-X">X</div> -->
+            <svg (click)="goBack()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white"
+                viewBox="0 0 24 24">
+                <path stroke="white" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
         </a>
 
         <!-- Loading Recipe State -->
         @if(isLoadingRecipe) {
         <div class="loading-container">
             <div class="loading-spinner"></div>
-            <p>טוען מתכון מהשרת...</p>
+            <p>טוען מתכון ...</p>
         </div>}
 
         <!-- Error State -->
@@ -49,11 +53,11 @@
                     <div class="chef-image-wrapper">
 
                         <!-- Default chef image or recipe image -->
-                        @if(!recipeImage){
+                        @if(!recipe.picture){
                         <img src="../../../assets/chef.png" alt="chef" class="chef-image">
-                        @if(recipeImage){
-                        <img [src]="recipeImage" alt="recipe" class="chef-image">}
                         }
+                        @if(recipe.picture){
+                        <img [src]="recipe.picture" alt="recipe" class="chef-image">}
                     </div>
 
                     <!-- Recipe Info Actions -->

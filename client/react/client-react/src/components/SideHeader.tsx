@@ -826,6 +826,7 @@ const SideHeader = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("sessionStart")
     navigate("/login")
     window.location.reload()
   }

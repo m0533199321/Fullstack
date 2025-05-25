@@ -52,6 +52,7 @@ export const registerUser = createAsyncThunk(
 
             const response = await axios.post(`${API_URL}/Auth/register`, user);
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("sessionStart", Date.now().toString());
             if (response.status === 200 || response.status === 201) {
                 console.log(response.status);
                 console.log(user.email);
@@ -101,6 +102,7 @@ export const loginUser = createAsyncThunk(
         try {
             const response = await axios.post(`${API_URL}/Auth/login`, user);
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("sessionStart", Date.now().toString());
             return response.data;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
@@ -116,6 +118,7 @@ export const forgotPasswordUser = createAsyncThunk(
             const response = await axios.post(`${API_URL}/Auth/login`, user)
 
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("sessionStart", Date.now().toString());
             return response.data;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
@@ -157,6 +160,7 @@ export const connectWithGoogle = createAsyncThunk(
                 `${API_URL}/Auth/google`,
                 { token });
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("sessionStart", Date.now().toString());
             const res = { response: response.data, name: response.data.user.fName, email: response.data.user.email };
             return res;
 

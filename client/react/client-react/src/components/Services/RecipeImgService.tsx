@@ -6,12 +6,13 @@ export const recipeImg = async (request: string) => {
     const API_URL = "https://smartchef-python.onrender.com/api/recipe";
 
     try {
+        console.log("שליחת בקשה ליצירת תמונה עם הפקודה:", request);
+        
         const response = await api.post(`${API_URL}/image`, { prompt: request }, {
             headers: { 'Content-Type': 'application/json' },
             responseType: 'blob'
         });
         console.log("תגובה מלאה מהשרת:", response);
-
         if (response) {
             console.log("נתוני התגובה:", response.data);
             console.log("סוג נתוני התגובה:", typeof response.data);

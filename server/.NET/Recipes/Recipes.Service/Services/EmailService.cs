@@ -33,6 +33,11 @@ namespace Recipes.Service.Services
             //var bodyBuilder = new BodyBuilder { TextBody = request.Body };
             //emailMessage.Body = bodyBuilder.ToMessageBody();
 
+            emailMessage.Headers.Add("Auto-Submitted", "auto-generated");
+            emailMessage.Headers.Add("Precedence", "bulk");
+            emailMessage.Headers.Add("X-Auto-Response-Suppress", "All");
+            emailMessage.Headers.Add("Return-Path", "<>");
+
             using (var client = new SmtpClient())
             {
                 try

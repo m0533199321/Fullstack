@@ -289,7 +289,7 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
     return (
         <div className="file-fullscreen">
             <div className="recipe-viewer">
-                <Close onClick={onClose} />
+                <Close onClick={onClose} style={{ cursor: 'pointer' }}/>
                 <div className="recipe-header">
                     <div className="recipe-title-area">
                         {details && details[0] && <h1 className="recipe-main-title">{details[0]}</h1>}
