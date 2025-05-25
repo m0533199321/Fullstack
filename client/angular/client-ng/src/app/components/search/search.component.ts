@@ -113,7 +113,7 @@ export class SearchComponent {
 
   // Recipe actions
   viewRecipe(recipeId: number): void {
-    this.router.navigate(["/recipes", recipeId])
+    this.router.navigate(["/recipe", recipeId]);
   }
 
   deleteRecipe(recipe: SearchResult): void {

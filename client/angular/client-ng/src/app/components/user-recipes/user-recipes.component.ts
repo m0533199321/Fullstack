@@ -64,8 +64,8 @@ export class UserRecipesComponent implements OnInit {
     });
   }
 
-  viewRecipe(userId: number): void {
-    // this.router.navigate(["/users", userId, "recipes"])
+  viewRecipe(recipeId: number): void {
+    this.router.navigate(["/user", this.userId, "recipe", recipeId]);
   }
 
   loadUserRecipes(): void {
@@ -95,6 +95,7 @@ export class UserRecipesComponent implements OnInit {
       const recipePostModel: RecipePostModel = {
         title: this.editingRecipeName,
         degree: recipe.degree,
+        ispublic: recipe.isPublic,
         path: recipe.path,
         picture: recipe.picture
       };

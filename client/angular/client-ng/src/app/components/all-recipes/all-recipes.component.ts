@@ -83,7 +83,7 @@ export class AllRecipesComponent implements OnInit {
   }
 
   viewRecipe(recipeId: number): void {
-    this.router.navigate(["/recipes", recipeId])
+    this.router.navigate(["/recipe", recipeId]);
   }
 
   deleteRecipe(recipe: RecipeWithOwner): void {

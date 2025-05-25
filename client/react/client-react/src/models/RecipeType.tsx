@@ -12,6 +12,7 @@ export interface RecipeInterface {
 export interface RecipePostModel {
     title: string,
     degree: number,
+    isPublic: boolean,
     path: string,
     picture: string,
     // category: number

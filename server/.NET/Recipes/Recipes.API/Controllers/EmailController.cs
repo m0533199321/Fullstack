@@ -24,10 +24,18 @@ namespace Recipes.API.Controllers
                 Random random = new Random();
                 int randomNumber = random.Next(100000, 1000000);
                 request.Body = $@"
-                <div style='border: 2px solid #FFA500; background-color: #FFA500; padding: 20px; text-align: center;'>
-                <h1 style='font-size: 24px; color: white;'>שחזור סיסמה</h1>
-                <p style='font-size: 20px; color: white;'>הקוד שלך הוא: <strong>{randomNumber}</strong></p>
-                </div>";
+                <div style='direction: rtl; font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 10px; text-align: center;'>
+                 <div style='background-color: #FFA500; padding: 15px 0; border-radius: 8px;'>
+                 <h1 style='margin: 0; font-size: 28px; color: white;'>שחזור סיסמה</h1>
+                 </div>
+                <div style='background-color: white; border: 1px solid #eee; margin-top: 15px; padding: 20px; border-radius: 8px;'>
+                 <p style='font-size: 20px; color: #333;'>הקוד שלך לאיפוס הסיסמה הוא:</p>
+                 <p style='font-size: 32px; font-weight: bold; color: #FFA500; margin: 20px 0;'>{randomNumber}</p>
+                 <p style='font-size: 16px; color: #666;'>אם לא ביקשת את הקוד, אנא התעלם מהודעה זו.</p>
+                 </div>
+                 <p style='font-size: 14px; color: gray; margin-top: 30px;'>ההודעה נשלחה אוטומטית מאפליקציית ניהול המתכונים - Smart Chef</p>
+                </div>
+                 ";
                 //request.Body += randomNumber.ToString();
                 await _emailService.SendEmailAsync(request);
                 return Ok(new { randomPassword = randomNumber });

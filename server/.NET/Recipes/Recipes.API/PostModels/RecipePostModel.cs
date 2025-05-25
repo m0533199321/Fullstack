@@ -8,6 +8,8 @@ namespace Recipes.API.PostModels
 
         public int Degree { get; set; }
 
+        public bool IsPublic { get; set; }
+
         public string Path { get; set; }
 
         public string Picture { get; set; }

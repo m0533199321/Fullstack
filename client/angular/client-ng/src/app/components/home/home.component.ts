@@ -23,6 +23,13 @@ export class HomeComponent implements OnInit {
     { title: 'Graphs', route: '/graphs' }
   ];
 
+  particles: {
+    left: string;
+    top: string;
+    animationDelay: string;
+    animationDuration: string;
+  }[] = [];
+
   currentYear = new Date().getFullYear()
 
   constructor(
@@ -34,11 +41,23 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.user;
+    this.generateParticles(20);
+  }
+
+  generateParticles(count: number) {
+    this.particles = Array.from({ length: count }).map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 5}s`,
+      animationDuration: `${5 + Math.random() * 8}s`,
+    }));
   }
 
   login(event: Event): void {
     event.preventDefault()
-    this.router.navigate(["/signIn"])
+    console.log("Login clicked");
+    
+    this.router.navigate(["/sign-in"])
   }
 
   logout(event: Event): void {

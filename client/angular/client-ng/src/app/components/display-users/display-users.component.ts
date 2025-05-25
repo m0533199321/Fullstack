@@ -219,7 +219,7 @@ export class DisplayUsersComponent {
   }
 
   viewUserRecipes(userId: number) {
-    this.router.navigate(['/users', userId, 'recipes']);
+    this.router.navigate(['/user', userId ]);
   }
 
   // Confirmation dialog methods

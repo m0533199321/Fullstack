@@ -184,7 +184,7 @@ header {
     background: linear-gradient(to right, transparent, #ff8c3f, transparent);
 }
 
-.divider-space{
+.divider-space {
     width: 20px;
 }
 
@@ -202,13 +202,21 @@ main {
 
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
 }
+
+.cards-container:has(.card:nth-child(1):nth-last-child(1)) {
+    grid-template-columns: repeat(1, 1fr);
+    width: 40%;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
 
 .card {
     position: relative;
@@ -474,4 +482,105 @@ footer {
         flex-direction: column;
         gap: 2rem;
     }
+}
+
+/* Enhanced Hero Section */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7) contrast(1.1) saturate(1.2);
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85));
+    z-index: 1;
+}
+
+/* Animated particles */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 152, 0, 0.6);
+    border-radius: 50%;
+    filter: blur(2px);
+    animation: float 15s infinite linear;
+    z-index: 2;
+    box-shadow: 0 0 10px 2px rgba(255, 152, 0, 0.3);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100vh) translateX(50px) scale(0.8);
+        /* קצת פחות תזוזה לרוחב */
+        opacity: 0;
+    }
+}
+
+/* Animated gradient overlay */
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 3;
+    mix-blend-mode: overlay;
 }

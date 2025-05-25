@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <div class="home-container">
     <header>
@@ -65,38 +65,88 @@
         </div>
         }
     </main>
+</div> -->
 
-    <!-- <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <div class="footer-column">
-                    <h4>System</h4>
-                    <ul>
-                        <li><a href="#">Dashboard</a></li>
-                        <li><a href="#">Recipes</a></li>
-                        <li><a href="#">Users</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">API</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Data Policy</a></li>
-                    </ul>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="home-container">
+    <header>
+        <div class="hero-background" #heroRef>
+            <div class="particles-container">
+                @for(particle of particles; track particle) {
+                <div class="particle" [ngStyle]="{
+            left: particle.left,
+            top: particle.top,
+            'animation-delay': particle.animationDelay,
+            'animation-duration': particle.animationDuration
+          }"></div>}
+            </div>
+
+            <div class="gradient-overlay"></div>
+        </div>
+
+        <div>
+            <div class="logo-container" @logoEnter>
+                <div class="logo-glow"></div>
+                <h1 class="home-logo-text">SmartChef</h1>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="home-logo-icon">
+                    <path
+                        d="M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z" />
+                    <path d="M6 17h12" />
+                </svg>
+            </div>
+
+            <div class="text2">
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-space"></div>
+                    <h2 class="home-logo-text2">management app</h2>
+                    <div class="divider-space"></div>
+                    <div class="divider-line"></div>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; {{ currentYear }} SmartChef Management System. All rights reserved.</p>
+    </header>
+
+    <main>
+        @if (user.value.id == 0) {
+        <div class="cards-container">
+            <div class="card" (click)="navigateToRoute('/sign-in')">
+                <div class="card-icon-wrapper">
+                    <i class="fas fa-sign-in-alt card-icon"></i>
+                </div>
+                <h2>sign in</h2>
+                <div class="card-overlay"></div>
+                <p class="card-description">Click to sign in to the management system</p>
+            </div>
         </div>
-    </footer> -->
+        }
+        @else {
+        <div class="cards-container">
+            @for(option of options; track option.title) {
+            <div class="card" (click)="navigateToRoute(option.route)">
+                <div class="card-icon-wrapper">
+                    @if(option.title.includes('Users')) {
+                    <i class="fas fa-users card-icon"></i>
+                    } @else if(option.title.includes('Graphs')) {
+                    <i class="fas fa-chart-line card-icon"></i>
+                    } @else if(option.title.includes('Recipes')) {
+                    <i class="fas fa-utensils card-icon"></i>
+                    } @else if(option.title.includes('Settings')) {
+                    <i class="fas fa-cog card-icon"></i>
+                    } @else {
+                    <i class="fas fa-clipboard-list card-icon"></i>
+                    }
+                </div>
+                <h2>{{ option.title }}</h2>
+                <div class="card-overlay"></div>
+                <p class="card-description">Click to view detailed analytics and insights</p>
+            </div>
+            }
+        </div>
+        }
+    </main>
 </div>

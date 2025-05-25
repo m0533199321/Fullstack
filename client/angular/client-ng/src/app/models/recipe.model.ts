@@ -15,6 +15,7 @@ export class RecipePostModel {
     constructor(
         public title: string,
         public degree: number,
+        public ispublic: boolean,
         public path: string,
         public picture: string) { };
 }

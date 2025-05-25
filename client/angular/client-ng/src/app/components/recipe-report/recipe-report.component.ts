@@ -96,6 +96,7 @@ import { NgxChartsModule, Color, ScaleType } from "@swimlane/ngx-charts"
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { Recipe } from "../../models/recipe.model"
 import { RecipeService } from "../../services/recipe.service"
+import { Observable } from "rxjs";
 
 interface ChartData {
   name: string
@@ -148,7 +149,6 @@ export class RecipeReportComponent implements OnInit, AfterViewInit {
     domain: ["#ff6b00", "#ff8c3f", "#ffa76b", "#ffbd8c", "#ffd4b3", "#e05d00", "#b24a00", "#7f3500"],
   };
 
-
   // Active chart type
   activeChart = "gauge"
 
@@ -162,7 +162,7 @@ export class RecipeReportComponent implements OnInit, AfterViewInit {
     this.updateChartDimensions()
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.updateChartDimensions()
 
     this.recipeService.getFull().subscribe((recipes: Recipe[]) => {
