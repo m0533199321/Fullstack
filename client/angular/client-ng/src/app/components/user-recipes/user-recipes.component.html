@@ -75,24 +75,17 @@
                     </div>
                 }
                 
-                <div class="recipe-image">
+                <div class="recipe-avatar">
                     @if(recipe.picture) {
-                        <img [src]="recipe.picture" alt="{{ recipe.title }}" />
+                    <img [src]="recipe.picture" alt="{{ recipe.title }}" />
                     } @else {
-                        <div class="placeholder-image">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                    }
-                    <div class="recipe-badges">
-                        @if(!recipe.isPublic) {
-                            <span class="badge personal">Personal</span>
-                        }
-                        @if(recipe.isPublic) {
-                            <span class="badge recommended">Recommended</span>
-                        }
+                    <div class="recipe-placeholder">
+                        <i class="fas fa-utensils"></i>
                     </div>
+                    }
                 </div>
-                <div class="recipe-content">
+                
+                <div class="recipe-info">
                     @if(editingRecipeId === recipe.id) {
                         <div class="edit-recipe-title">
                             <input type="text" [(ngModel)]="editingRecipeName" class="edit-input" placeholder="Recipe name" [disabled]="loadingRecipeUpdate === recipe.id">
@@ -110,23 +103,47 @@
                             </div>
                         </div>
                     } @else {
-                        <h3 class="recipe-title editable" (click)="startEditingRecipe(recipe)">
+                        <div class="recipe-title editable" (click)="startEditingRecipe(recipe)">
                             {{ recipe.title }}
                             <i class="fas fa-pen edit-icon"></i>
-                        </h3>
+                        </div>
                     }
-                    <div class="recipe-meta">
-                        <span class="recipe-date">
-                            <i class="fas fa-calendar-alt"></i> {{ recipe.createdAt }}
-                        </span>
-                        <button class="recipe-delete-btn" (click)="deleteRecipe(recipe)" title="Delete Recipe" [disabled]="loadingRecipeDelete === recipe.id">
-                            @if(loadingRecipeDelete === recipe.id) {
-                                <div class="spinner"></div>
-                            } @else {
-                                <i class="fas fa-trash-alt"></i>
-                            }
-                        </button>
+                    @if(recipe.createdAt) {
+                    <div class="recipe-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        {{ recipe.createdAt }}
                     </div>
+                    }
+                </div>
+                
+                <div class="recipe-actions">
+                    <button class="action-button view-recipe-button" (click)="viewRecipe(recipe.id)" 
+                        title="View Recipe" [disabled]="loadingRecipeDelete === recipe.id">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="action-button delete-button" (click)="deleteRecipe(recipe)" 
+                        title="Delete Recipe" [disabled]="loadingRecipeDelete === recipe.id">
+                        @if(loadingRecipeDelete === recipe.id) {
+                        <div class="spinner"></div>
+                        } @else {
+                        <i class="fas fa-trash icon-trash"></i>
+                        }
+                    </button>
+                </div>
+                
+                <!-- Recipe badges below actions -->
+                <div class="recipe-badges-bottom">
+                    @if(!recipe.isPublic) {
+                    <span class="badge personal">
+                        <i class="fas fa-lock"></i>
+                        Personal
+                    </span>
+                    } @else {
+                    <span class="badge recommended">
+                        <i class="fas fa-globe"></i>
+                        Recommended
+                    </span>
+                    }
                 </div>
             </div>
         }

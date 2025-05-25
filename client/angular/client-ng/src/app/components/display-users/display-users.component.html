@@ -19,39 +19,80 @@
         </div>
     </div>
 
+    <div class="search-section">
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" [(ngModel)]="searchTerm" placeholder="Search users by name or email..."
+                class="search-input">
+            @if(searchTerm) {
+            <button class="clear-search-btn" (click)="clearSearch()" title="Clear search">
+                <i class="fas fa-times"></i>
+            </button>
+            }
+        </div>
+    </div>
+
     <div class="user-cards-container">
-        @for (user of (users$ | async); track user.id) {
+        @for (user of (filteredUsers$ | async); track user.id) {
         <div class="user-card" [class.loading]="loadingUserDelete === user.id">
             @if(loadingUserDelete === user.id) {
-                <div class="card-loading-overlay">
-                    <div class="loading-spinner">
-                        <div class="spinner-large"></div>
-                        <p>Deleting user...</p>
-                    </div>
+            <div class="card-loading-overlay">
+                <div class="loading-spinner">
+                    <div class="spinner-large"></div>
+                    <p>Deleting user...</p>
                 </div>
+            </div>
             }
-            
+
             <div class="user-avatar">
                 @if(user.profile) {
-                <img [src]="user.profile" alt="" />
-                }
-                @else {
+                <img [src]="user.profile" alt="{{ user.fName }} {{ user.lName }}" />
+                } @else {
                 {{ user.fName.charAt(0) }}{{ user.lName.charAt(0) }}
                 }
             </div>
+
             <div class="user-info">
                 <div class="user-name">{{ user.fName }} {{ user.lName }}</div>
-                <div class="user-email"><i class="fas fa-envelope"></i> {{ user.email }}</div>
+                <div class="user-email">
+                    <i class="fas fa-envelope"></i>
+                    {{ user.email }}
+                </div>
+                @if(user.recipesList && user.recipesList.length > 0) {
+                <div class="user-recipes">
+                    <i class="fas fa-book-open"></i>
+                    {{ user.recipesList.length || 0 }} recipes
+                </div>
+                }
+                @else {
+                <div class="user-recipes">
+                    <i class="fas fa-book-open"></i>
+                    {{ 0 }} recipes
+                </div>
+                }
+                <div class="user-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    Joined {{ user.createdAt }}
+                </div>
             </div>
+
             <div class="user-actions">
-                <button class="action-button view-recipes-button" (click)="viewUserRecipes(user.id); $event.stopPropagation();" title="View Recipes" [disabled]="loadingUserDelete === user.id">
+                <button class="action-button view-recipes-button"
+                    (click)="viewUserRecipes(user.id); $event.stopPropagation();" title="View Recipes"
+                    [disabled]="loadingUserDelete === user.id">
                     <i class="fas fa-book-open"></i>
                 </button>
-                <button class="action-button delete-button" (click)="deleteUser(user.id, user.fName + ' ' + user.lName); $event.stopPropagation();" title="Delete User" [disabled]="loadingUserDelete === user.id">
+                <!-- <button class="action-button view-user-button" (click)="viewUser(user.id); $event.stopPropagation();"
+                    title="View User" [disabled]="loadingUserDelete === user.id">
+                    <i class="fas fa-eye"></i>
+                </button> -->
+                <button class="action-button delete-button"
+                    (click)="deleteUser(user.id, user.fName + ' ' + user.lName); $event.stopPropagation();"
+                    title="Delete User" [disabled]="loadingUserDelete === user.id">
                     @if(loadingUserDelete === user.id) {
-                        <div class="spinner"></div>
+                    <div class="spinner"></div>
                     } @else {
-                        <i class="fas fa-trash icon-trash"></i>
+                    <i class="fas fa-trash icon-trash"></i>
                     }
                 </button>
             </div>
@@ -118,10 +159,10 @@
 
                 <button (click)="addUser()" [disabled]="loadingUserAdd">
                     @if(loadingUserAdd) {
-                        <div class="spinner"></div>
-                        Adding User...
+                    <div class="spinner"></div>
+                    Adding User...
                     } @else {
-                        Add User
+                    Add User
                     }
                 </button>
             </div>
@@ -131,24 +172,24 @@
 
     <!-- Confirmation Dialog -->
     @if(showConfirmDialog && confirmDialogData) {
-        <div class="confirmation-overlay">
-            <div class="confirmation-dialog">
-                <div class="confirmation-header">
-                    <i class="fas fa-exclamation-triangle confirmation-icon"></i>
-                    <h3>{{ confirmDialogData.title }}</h3>
-                </div>
-                <div class="confirmation-body">
-                    <p>{{ confirmDialogData.message }}</p>
-                </div>
-                <div class="confirmation-actions">
-                    <button class="confirmation-btn cancel-btn" (click)="confirmDialogData.onCancel()">
-                        {{ confirmDialogData.cancelText }}
-                    </button>
-                    <button class="confirmation-btn confirm-btn" (click)="confirmDialogData.onConfirm()">
-                        {{ confirmDialogData.confirmText }}
-                    </button>
-                </div>
+    <div class="confirmation-overlay">
+        <div class="confirmation-dialog">
+            <div class="confirmation-header">
+                <i class="fas fa-exclamation-triangle confirmation-icon"></i>
+                <h3>{{ confirmDialogData.title }}</h3>
+            </div>
+            <div class="confirmation-body">
+                <p>{{ confirmDialogData.message }}</p>
+            </div>
+            <div class="confirmation-actions">
+                <button class="confirmation-btn cancel-btn" (click)="confirmDialogData.onCancel()">
+                    {{ confirmDialogData.cancelText }}
+                </button>
+                <button class="confirmation-btn confirm-btn" (click)="confirmDialogData.onConfirm()">
+                    {{ confirmDialogData.confirmText }}
+                </button>
             </div>
         </div>
+    </div>
     }
 </div>

@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import { DisplayUsersService } from '../../services/display-users.service';
 import { AsyncPipe } from '@angular/common';
@@ -52,9 +52,40 @@ export class DisplayUsersComponent {
     password: ''
   };
 
+  searchTerm = ""
+
+  get filteredUsers$(): Observable<User[]> {
+    return this.users$.pipe(
+      map((users) => {
+        if (!this.searchTerm.trim()) {
+          return users
+        }
+
+        const searchLower = this.searchTerm.toLowerCase()
+        return users.filter(
+          (user) =>
+            user.fName.toLowerCase().includes(searchLower) ||
+            user.lName.toLowerCase().includes(searchLower) ||
+            user.email.toLowerCase().includes(searchLower) ||
+            `${user.fName} ${user.lName}`.toLowerCase().includes(searchLower),
+        )
+      }),
+    )
+  }
+
+  clearSearch(): void {
+    this.searchTerm = ""
+  }
+
   ngOnInit() {
     this.users$ = this.usersService.users;
     this.usersService.getUsers();
+    console.log("Users loaded:", this.users$.subscribe(users => console.log(users)));
+    
+  }
+
+  viewUser(userId: number): void {
+    this.router.navigate(["/users", userId])
   }
 
   isFormValid(): boolean {
@@ -113,7 +144,26 @@ export class DisplayUsersComponent {
   confirmDeleteUser(userId: number): void {
     this.loadingUserDelete = userId;
     this.hideConfirmationDialog();
-    this.usersService.deleteUser(userId);
+    this.usersService.deleteUserWithRecipes(userId).subscribe({
+      next: () => {
+        this.loadingUserDelete = null
+        this.snackBar.open("User and their private recipes deleted successfully!", "Close", {
+          duration: 3000,
+          verticalPosition: "top",
+          horizontalPosition: "center",
+        })
+      },
+      error: (error) => {
+        this.loadingUserDelete = null
+        console.error("Error deleting user:", error)
+        this.snackBar.open("Failed to delete user. Please try again.", "Close", {
+          duration: 3000,
+          verticalPosition: "top",
+          horizontalPosition: "center",
+        })
+      },
+    })
+    // this.usersService.deleteUser(userId);
   }
 
   addForm() {

@@ -1,0 +1,180 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="list-container">
+    <div class="title-container">
+        <a href="javascript:history.back()" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+        </a>
+
+        <div class="title-div">
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-space"></div>
+                <h1 class="title">All Recipes</h1>
+                <div class="divider-space"></div>
+                <div class="divider-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="controls-section">
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" [(ngModel)]="searchTerm" placeholder="Search recipes or owners..." class="search-input">
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn" [class.active]="filterType === 'all'" (click)="onFilterChange('all')">
+                <i class="fas fa-list"></i>
+                All
+            </button>
+            <button class="filter-btn" [class.active]="filterType === 'recommended'"
+                (click)="onFilterChange('recommended')">
+                <i class="fas fa-globe"></i>
+                Recommended
+            </button>
+            <button class="filter-btn" [class.active]="filterType === 'personal'" (click)="onFilterChange('personal')">
+                <i class="fas fa-lock"></i>
+                Personal
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    @if(loading$ | async) {
+    <div class="loading-container">
+        <div class="loading-spinner">
+            <div class="spinner-large"></div>
+            <p>Loading recipes...</p>
+        </div>
+    </div>
+    }
+
+    <!-- Recipes Grid -->
+    @if(!(loading$ | async)) {
+    <div class="recipe-cards-container">
+        @for(recipe of (filteredRecipes$ | async); track recipe.id) {
+        <div class="recipe-card" [class.loading]="loadingRecipeDelete === recipe.id">
+            @if(loadingRecipeDelete === recipe.id) {
+            <div class="card-loading-overlay">
+                <div class="loading-spinner">
+                    <div class="spinner-large"></div>
+                    <p>Deleting recipe...</p>
+                </div>
+            </div>
+            }
+            
+            <div class="recipe-avatar">
+                @if(recipe.picture) {
+                <img [src]="recipe.picture" alt="{{ recipe.title }}" />
+                } @else {
+                <div class="recipe-placeholder">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                }
+            </div>
+            
+            <div class="recipe-info">
+                <div class="recipe-title">{{ recipe.title }}</div>
+                @if(recipe.ownerName) {
+                <div class="recipe-owner">
+                    <i class="fas fa-user"></i> 
+                    By: {{ recipe.ownerName }}
+                </div>
+                }
+                @if(recipe.createdAt) {
+                <div class="recipe-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{ recipe.createdAt }}
+                </div>
+                }
+                @if(recipe.commentsList) {
+                <div class="recipe-comments">
+                    <i class="fas fa-comments"></i>
+                    {{ recipe.commentsList.length || 0 }} comments
+                </div>
+                }
+            </div>
+            
+            <div class="recipe-actions">
+                <button class="action-button view-recipe-button" (click)="viewRecipe(recipe.id)" 
+                    title="View Recipe" [disabled]="loadingRecipeDelete === recipe.id">
+                    <i class="fas fa-eye"></i>
+                </button>
+                
+                @if(!recipe.isPublic) {
+                <button class="action-button privacy-button" (click)="togglePrivacy(recipe)"
+                    title="Make Public" [disabled]="loadingRecipeDelete === recipe.id">
+                    <i class="fas fa-globe"></i>
+                </button>
+                }
+                
+                <button class="action-button delete-button" (click)="deleteRecipe(recipe)" 
+                    title="Delete Recipe" [disabled]="loadingRecipeDelete === recipe.id">
+                    @if(loadingRecipeDelete === recipe.id) {
+                    <div class="spinner"></div>
+                    } @else {
+                    <i class="fas fa-trash icon-trash"></i>
+                    }
+                </button>
+            </div>
+            
+            <!-- Recipe badges below actions -->
+            <div class="recipe-badges-bottom">
+                @if(!recipe.isPublic) {
+                <span class="badge personal">
+                    <i class="fas fa-lock"></i>
+                    Personal
+                </span>
+                } @else {
+                <span class="badge recommended">
+                    <i class="fas fa-globe"></i>
+                    Recommended
+                </span>
+                }
+            </div>
+        </div>
+        }
+
+        @if((filteredRecipes$ | async)?.length === 0) {
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div class="empty-state-text">No recipes found</div>
+            @if(searchTerm) {
+            <p>Try adjusting your search terms or filters</p>
+            } @else {
+            <p>No recipes available in the system</p>
+            }
+        </div>
+        }
+    </div>
+    }
+
+    <!-- Confirmation Dialog -->
+    @if(showConfirmDialog && confirmDialogData) {
+    <div class="confirmation-overlay">
+        <div class="confirmation-dialog">
+            <div class="confirmation-header">
+                <i class="fas fa-exclamation-triangle confirmation-icon"></i>
+                <h3>{{ confirmDialogData.title }}</h3>
+            </div>
+            <div class="confirmation-body">
+                <p>{{ confirmDialogData.message }}</p>
+            </div>
+            <div class="confirmation-actions">
+                <button class="confirmation-btn cancel-btn" (click)="confirmDialogData.onCancel()">
+                    {{ confirmDialogData.cancelText }}
+                </button>
+                <button class="confirmation-btn confirm-btn" (click)="confirmDialogData.onConfirm()">
+                    {{ confirmDialogData.confirmText }}
+                </button>
+            </div>
+        </div>
+    </div>
+    }
+</div>

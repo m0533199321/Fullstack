@@ -18,3 +18,8 @@ export class RecipePostModel {
         public path: string,
         public picture: string) { };
 }
+
+export interface RecipeWithOwner extends Recipe {
+    ownerName?: string
+    ownerId?: number
+}

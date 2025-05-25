@@ -1,0 +1,271 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="list-container">
+    <div class="title-container">
+        <a href="javascript:history.back()" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+        </a>
+
+        <div class="title-div">
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-space"></div>
+                <h1 class="title">Global Search</h1>
+                <div class="divider-space"></div>
+                <div class="divider-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-section">
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()"
+                placeholder="Search users, recipes, emails..." class="search-input" #searchInput>
+            @if(searchTerm) {
+            <button class="clear-search-btn" (click)="clearSearch()" title="Clear search">
+                <i class="fas fa-times"></i>
+            </button>
+            }
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn" [class.active]="filterType === 'all'" (click)="onFilterChange('all')">
+                <i class="fas fa-list"></i>
+                All ({{ getFilteredCount('all') }})
+            </button>
+            <button class="filter-btn" [class.active]="filterType === 'users'" (click)="onFilterChange('users')">
+                <i class="fas fa-users"></i>
+                Users ({{ getFilteredCount('users') }})
+            </button>
+            <button class="filter-btn" [class.active]="filterType === 'recipes'" (click)="onFilterChange('recipes')">
+                <i class="fas fa-utensils"></i>
+                Recipes ({{ getFilteredCount('recipes') }})
+            </button>
+        </div>
+    </div>
+
+    @if(loading$ | async) {
+    <div class="loading-container">
+        <div class="loading-spinner">
+            <div class="spinner-large"></div>
+            <p>Searching...</p>
+        </div>
+    </div>
+    }
+
+    @if(!(loading$ | async)) {
+    @if(searchTerm && (filteredResults$ | async)?.length === 0) {
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="empty-state-text">No results found</div>
+        <p>Try searching for different terms or check your spelling</p>
+    </div>
+    }
+
+    @if(!searchTerm) {
+    <div class="welcome-state">
+        <div class="welcome-icon">
+            <i class="fas fa-search"></i>
+        </div>
+        <h2>Search Everything</h2>
+        <p>Search for users, recipes, emails and more...</p>
+        <div class="search-tips">
+            <h3>Search Tips:</h3>
+            <ul>
+                <li><i class="fas fa-user"></i> Search by user name or email</li>
+                <li><i class="fas fa-utensils"></i> Search by recipe title</li>
+                <li><i class="fas fa-filter"></i> Use filters to narrow results</li>
+            </ul>
+        </div>
+    </div>
+    }
+
+    @let filteredResults = (filteredResults$ | async);
+    @if(searchTerm && filteredResults && filteredResults.length > 0) {
+    <div class="results-container">
+        @for(result of (filteredResults$ | async); track result.id + result.type) {
+        
+        <!-- Recipe Card -->
+        @if(result.type === 'recipe') {
+        <div class="recipe-card" [class.loading]="loadingRecipeDelete === result.id">
+            @if(loadingRecipeDelete === result.id) {
+            <div class="card-loading-overlay">
+                <div class="loading-spinner">
+                    <div class="spinner-large"></div>
+                    <p>Deleting recipe...</p>
+                </div>
+            </div>
+            }
+            
+            <div class="recipe-avatar">
+                @if(result.image) {
+                <img [src]="result.image" alt="{{ result.title }}" />
+                } @else {
+                <div class="recipe-placeholder">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                }
+            </div>
+            
+            <div class="recipe-info">
+                <div class="recipe-title">{{ result.title }}</div>
+                @if(result.userName) {
+                <div class="recipe-owner">
+                    <i class="fas fa-user"></i> 
+                    By: {{ result.userName }}
+                </div>
+                }
+                @if(result.createdAt) {
+                <div class="recipe-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{ result.createdAt }}
+                </div>
+                }
+                @if(result.degree) {
+                <div class="recipe-degree">
+                    <i class="fas fa-star"></i>
+                    Rating: {{ result.degree }}
+                </div>
+                }
+            </div>
+            
+            <div class="recipe-actions">
+                <button class="action-button view-recipe-button" (click)="viewRecipe(result.id)" 
+                    title="View Recipe" [disabled]="loadingRecipeDelete === result.id">
+                    <i class="fas fa-eye"></i>
+                </button>
+                
+                @if(!result.isPublic) {
+                <button class="action-button privacy-button" (click)="toggleRecipePrivacy(result)"
+                    title="Make Public" [disabled]="loadingRecipeDelete === result.id">
+                    <i class="fas fa-globe"></i>
+                </button>
+                }
+                
+                @if(result.userId) {
+                <button class="action-button user-button" (click)="viewUserRecipes(result.userId)" 
+                    title="View Owner" [disabled]="loadingRecipeDelete === result.id">
+                    <i class="fas fa-user"></i>
+                </button>
+                }
+                
+                <button class="action-button delete-button" (click)="deleteRecipe(result)" 
+                    title="Delete Recipe" [disabled]="loadingRecipeDelete === result.id">
+                    @if(loadingRecipeDelete === result.id) {
+                    <div class="spinner"></div>
+                    } @else {
+                    <i class="fas fa-trash icon-trash"></i>
+                    }
+                </button>
+            </div>
+            
+            <!-- Recipe badges below actions -->
+            <div class="recipe-badges-bottom">
+                @if(!result.isPublic) {
+                <span class="badge personal">
+                    <i class="fas fa-lock"></i>
+                    Personal
+                </span>
+                } @else {
+                <span class="badge recommended">
+                    <i class="fas fa-globe"></i>
+                    Recommended
+                </span>
+                }
+            </div>
+        </div>
+        }
+
+        <!-- User Card -->
+        @if(result.type === 'user') {
+        <div class="user-card" [class.loading]="loadingUserDelete === result.id">
+            @if(loadingUserDelete === result.id) {
+            <div class="card-loading-overlay">
+                <div class="loading-spinner">
+                    <div class="spinner-large"></div>
+                    <p>Deleting user...</p>
+                </div>
+            </div>
+            }
+            
+            <div class="user-avatar">
+                @if(result.image) {
+                <img [src]="result.image" alt="{{ result.title }}" />
+                } @else {
+                {{ result.title.split(' ')[0].charAt(0) || '' }}{{ result.title.split(' ')[1].charAt(0) || '' }}
+                }
+            </div>
+            
+            <div class="user-info">
+                <div class="user-name">{{ result.title }}</div>
+                <div class="user-email">
+                    <i class="fas fa-envelope"></i> 
+                    {{ result.subtitle }}
+                </div>
+                <!-- @if(result.recipesList) {
+                    <div class="user-recipes">
+                        <i class="fas fa-book-open"></i>
+                        {{ result.recipesList.length || 0 }} recipes
+                    </div>
+                } -->
+                @if(result.createdAt) {
+                <div class="user-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    Joined {{ result.createdAt }}
+                </div>
+                }
+            </div>
+            
+            <div class="user-actions">
+                <button class="action-button view-recipes-button" (click)="viewUserRecipes(result.id)" 
+                    title="View Recipes" [disabled]="loadingUserDelete === result.id">
+                    <i class="fas fa-book-open"></i>
+                </button>
+                <!-- <button class="action-button view-user-button" (click)="viewUser(result.id)" 
+                    title="View User" [disabled]="loadingUserDelete === result.id">
+                    <i class="fas fa-eye"></i>
+                </button> -->
+                <button class="action-button delete-button" (click)="deleteUser(result)" 
+                    title="Delete User" [disabled]="loadingUserDelete === result.id">
+                    @if(loadingUserDelete === result.id) {
+                    <div class="spinner"></div>
+                    } @else {
+                    <i class="fas fa-trash icon-trash"></i>
+                    }
+                </button>
+            </div>
+        </div>
+        }
+        }
+    </div>
+    }
+    }
+
+    <!-- Confirmation Dialog -->
+    @if(showConfirmDialog && confirmDialogData) {
+    <div class="confirmation-overlay">
+        <div class="confirmation-dialog">
+            <div class="confirmation-header">
+                <i class="fas fa-exclamation-triangle confirmation-icon"></i>
+                <h3>{{ confirmDialogData.title }}</h3>
+            </div>
+            <div class="confirmation-body">
+                <p>{{ confirmDialogData.message }}</p>
+            </div>
+            <div class="confirmation-actions">
+                <button class="confirmation-btn cancel-btn" (click)="confirmDialogData.onCancel()">
+                    {{ confirmDialogData.cancelText }}
+                </button>
+                <button class="confirmation-btn confirm-btn" (click)="confirmDialogData.onConfirm()">
+                    {{ confirmDialogData.confirmText }}
+                </button>
+            </div>
+        </div>
+    </div>
+    }
+</div>

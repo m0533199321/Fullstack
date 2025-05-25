@@ -7,6 +7,8 @@ import { RecipeReportComponent } from './components/recipe-report/recipe-report.
 import { ClientReportComponent } from './components/client-recipes-report/client-recipes-report.component';
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { UserRecipesComponent } from './components/user-recipes/user-recipes.component';
+import { AllRecipesComponent } from './components/all-recipes/all-recipes.component';
+import { SearchComponent } from './components/search/search.component';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +16,8 @@ export const appRoutes: Routes = [
   { path: 'signIn', component: SignInComponent },
   { path: 'users', component: DisplayUsersComponent },
   { path: 'users/:id/recipes', component: UserRecipesComponent },
+  { path: 'all-recipes', component: AllRecipesComponent },
+  { path: 'search', component: SearchComponent },
   { path: 'graphs', component: GraphsComponent },
   { path: 'graphs/user-report', component: UserReportComponent },
   { path: 'graphs/client-recipes-report', component: ClientReportComponent },

@@ -18,6 +18,8 @@ import { AuthService } from '../../services/auth.service';
 export class HomeComponent implements OnInit {
   options = [
     { title: 'Display Users', route: '/users' },
+    { title: 'All Recipes', route: '/all-recipes' },
+    { title: 'Global Search', route: '/search' },
     { title: 'Graphs', route: '/graphs' }
   ];
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -62,6 +62,10 @@ export class UserRecipesComponent implements OnInit {
       });
       this.loadUserRecipes();
     });
+  }
+
+  viewRecipe(userId: number): void {
+    // this.router.navigate(["/users", userId, "recipes"])
   }
 
   loadUserRecipes(): void {
