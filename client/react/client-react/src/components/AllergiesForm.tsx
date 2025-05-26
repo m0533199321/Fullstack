@@ -6,7 +6,6 @@ import { Check, AlertCircle } from "lucide-react"
 import { getAllergies, updateUserAllergies } from "./Services/AllergiesService"
 import "../styles/AllergiesForm.css"
 
-// Enum מקביל ל-C# enum בצד הקליינט
 export enum AllergyType {
   None = 0,
   Gluten = 1,
@@ -21,16 +20,14 @@ export enum AllergyType {
   Corn = 10,
 }
 
-// ממיר את ה-enum לאובייקט שניתן להציג בממשק
 const allergyOptions = Object.entries(AllergyType)
-  .filter(([key]) => isNaN(Number(key))) // מסנן את המפתחות המספריים
+  .filter(([key]) => isNaN(Number(key))) 
   .map(([key, value]) => ({
     id: Number(value),
     name: key,
     label: getAllergyLabel(key),
   }))
 
-// פונקציה להמרת שמות האלרגיות לעברית
 function getAllergyLabel(allergyName: string): string {
   const hebrewLabels: Record<string, string> = {
     None: "ללא אלרגיות",
@@ -59,7 +56,6 @@ const AllergiesForm = ({ userId, onSaved }: AllergiesFormProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [notification, setNotification] = useState<{ message: string; type: "success" | "error" } | null>(null)
 
-  // טעינת האלרגיות הקיימות של המשתמש
   useEffect(() => {
     const fetchUserAllergies = async () => {
       try {
@@ -67,7 +63,6 @@ const AllergiesForm = ({ userId, onSaved }: AllergiesFormProps) => {
         const userAllergies = await getAllergies(userId)
         setSelectedAllergies(userAllergies.map((a) => a.allergyId))
       } catch (error) {
-        console.error("שגיאה בטעינת אלרגיות:", error)
         setNotification({
           message: "שגיאה בטעינת האלרגיות הקיימות",
           type: "error",
@@ -82,24 +77,19 @@ const AllergiesForm = ({ userId, onSaved }: AllergiesFormProps) => {
     }
   }, [userId])
 
-  // טיפול בשינוי בחירת אלרגיה
   const handleAllergyChange = (allergyId: number) => {
     setSelectedAllergies((prev) => {
-      // אם האלרגיה כבר נבחרה, הסר אותה
       if (prev.includes(allergyId)) {
         return prev.filter((id) => id !== allergyId)
       }
-      // אם בחרנו "ללא אלרגיות", נקה את כל הבחירות האחרות
       if (allergyId === AllergyType.None) {
         return [AllergyType.None]
       }
-      // אם בחרנו אלרגיה אחרת, הסר את האופציה "ללא אלרגיות" אם היא נבחרה
       const newSelected = prev.filter((id) => id !== AllergyType.None)
       return [...newSelected, allergyId]
     })
   }
 
-  // שליחת הטופס
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -116,7 +106,6 @@ const AllergiesForm = ({ userId, onSaved }: AllergiesFormProps) => {
         onSaved()
       }
     } catch (error) {
-      console.error("שגיאה בשמירת אלרגיות:", error)
       setNotification({
         message: "שגיאה בשמירת האלרגיות",
         type: "error",
@@ -126,7 +115,6 @@ const AllergiesForm = ({ userId, onSaved }: AllergiesFormProps) => {
     }
   }
 
-  // סגירת ההודעה
   useEffect(() => {
     if (notification) {
       const timer = setTimeout(() => {

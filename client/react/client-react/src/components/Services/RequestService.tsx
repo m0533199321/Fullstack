@@ -112,7 +112,6 @@ const requestService = async (
         // }
     }
     catch (e) {
-        console.error('Error:', e);
         return null;
     }
 };
@@ -127,9 +126,6 @@ export const uploadRecipeService = async (
     if (blob) {
         try {
             const blobName = '' + userId + new Date().getTime() + ".docx";
-            console.log(blobName);
-            console.log(blob.type);
-
             const res = await api.get(`${API_URL}/Upload-url`, {
                 params: {
                     fileName: blobName,
@@ -142,7 +138,6 @@ export const uploadRecipeService = async (
 
             return presignedUrl.split("?")[0];
         } catch (error) {
-            console.error("שגיאה בהעלאת הקובץ:", error);
             return null;
         }
     }
@@ -154,7 +149,6 @@ export const fetchGenerateImage = async (
     userId: number
 ) => {
     try {
-        console.log(request);
         const response = await fetch('https://smartchef-python.onrender.com/api/generate_image', {
             method: 'POST',
             headers: {
@@ -173,12 +167,9 @@ export const fetchGenerateImage = async (
         const imageResponse = await axios.get(imageUrl, { responseType: 'arraybuffer' });
         const imageBuffer = imageResponse.data;
         const contentType = imageResponse.headers['content-type'];
-        console.log(contentType);
-
 
 
         const imgName = '' + userId + new Date().getTime() + ".png";
-        console.log(imgName);
 
         const apiUrl = "https://smartchef-api.onrender.com/api/Recipe/Upload-url";
         const presignedResponse = await axios.get(apiUrl, {
@@ -199,7 +190,6 @@ export const fetchGenerateImage = async (
         return presignedUrl.split('?')[0];
 
     } catch (error) {
-        console.error('שגיאה:', error);
         return null;
     }
 }

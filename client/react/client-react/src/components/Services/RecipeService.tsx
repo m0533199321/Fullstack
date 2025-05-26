@@ -87,7 +87,6 @@ export const fetchAddToMyBook = async (
     userId: number,
     recipe: RecipePostModel
 ): Promise<any> => {
-    console.log(recipe);
     try {
         const response2 = await api.post(`${API_URL}/AddNewToUser`, recipe, {
             params: {
@@ -130,7 +129,6 @@ export const recipeDetailsService = async (
         });
 
         if (response.ok) {
-            console.log(response); 
             const result = await response.json();
             if (result) {
                 console.log(result);
@@ -146,7 +144,6 @@ export const recipeDetailsService = async (
             return null;
         }
     } catch (error) {
-        console.error('Fetch error:', error);
         return null;
     }
 };

@@ -7,7 +7,6 @@ export const fetchComments = async (
 ): Promise<CommentType[]> => {
     try {
         const response = await api.get(`${API_URL}/Full/${recipeId}`);
-        console.log(response);
         return response.data;
     } catch (e: any) {
         throw new Error("Failed to fetch comments. Please try again.");
@@ -20,7 +19,6 @@ export const fetchAddComment = async (
 ): Promise<any> => {
     try {
         const response = await api.post(`${API_URL}`, { recipeId, content });
-        console.log(response);
         return response.data;
     } catch (e: any) {
         throw new Error("Failed to add your comment. Please try again.");
@@ -35,7 +33,6 @@ export const fetchEditComment = async (
 ): Promise<any> => {
     try {
         const response = await api.put(`${API_URL}/${commentId}`, { recipeId,userId, content });
-        console.log(response);
         return response.data;
     } catch (e: any) {
         throw new Error("Failed to edit your comment. Please try again.");
@@ -48,7 +45,6 @@ export const fetchRemoveComment = async (
     try {
 
         const response = await api.delete(`${API_URL}/${commentId}`);
-        console.log(response);
         return response.data;
     } catch (e: any) {
         throw new Error("Failed to remove your comment. Please try again.");

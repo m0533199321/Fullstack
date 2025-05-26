@@ -6,7 +6,6 @@ import { Check, AlertCircle } from 'lucide-react'
 import { getPreferences, updateUserPreferences } from "./Services/PreferencesService"
 import "../styles/PreferencesForm.css"
 
-// Enum מקביל ל-C# enum בצד הקליינט
 export enum PreferenceType {
     None = 0,
     Spicy = 1,
@@ -21,16 +20,14 @@ export enum PreferenceType {
     Aromatic = 10
 }
 
-// ממיר את ה-enum לאובייקט שניתן להציג בממשק
 const preferenceOptions = Object.entries(PreferenceType)
-    .filter(([key]) => isNaN(Number(key))) // מסנן את המפתחות המספריים
+    .filter(([key]) => isNaN(Number(key)))
     .map(([key, value]) => ({
         id: Number(value),
         name: key,
         label: getPreferenceLabel(key),
     }))
 
-// פונקציה להמרת שמות ההעדפות לעברית
 function getPreferenceLabel(preferenceName: string): string {
     const hebrewLabels: Record<string, string> = {
         None: "ללא ההעדפות",
@@ -59,7 +56,6 @@ const PreferencesForm = ({ userId, onSaved }: PreferencesFormProps) => {
     const [isLoading, setIsLoading] = useState(false)
     const [notification, setNotification] = useState<{ message: string; type: "success" | "error" } | null>(null)
 
-    // טעינת ההעדפות הקיימות של המשתמש
     useEffect(() => {
         const fetchUserPreferences = async () => {
             try {
@@ -67,7 +63,6 @@ const PreferencesForm = ({ userId, onSaved }: PreferencesFormProps) => {
                 const userPreferences = await getPreferences(userId)
                 setSelectedPreferences(userPreferences.map((p) => p.preferenceId))
             } catch (error) {
-                console.error("שגיאה בטעינת העדפות:", error)
                 setNotification({
                     message: "שגיאה בטעינת ההעדפות הקיימות",
                     type: "error",
@@ -82,24 +77,19 @@ const PreferencesForm = ({ userId, onSaved }: PreferencesFormProps) => {
         }
     }, [userId])
 
-    // טיפול בשינוי בחירת העדפה
     const handlePreferenceChange = (preferenceId: number) => {
         setSelectedPreferences((prev) => {
-            // אם ההעדפה כבר נבחרה, הסר אותה
             if (prev.includes(preferenceId)) {
                 return prev.filter((id) => id !== preferenceId)
             }
-            // אם בחרנו "ללא העדxxxxxxxxxxxxxxxל הבחירות האחרות
             if (preferenceId === PreferenceType.None) {
                 return [PreferenceType.None]
             }
-            // אם בחרנו העדפה אחרת, הסר את האופציה "ללא העדפות" אם היא נבחרה
             const newSelected = prev.filter((id) => id !== PreferenceType.None)
             return [...newSelected, preferenceId]
         })
     }
 
-    // שליחת הטופס
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
@@ -126,7 +116,6 @@ const PreferencesForm = ({ userId, onSaved }: PreferencesFormProps) => {
         }
     }
 
-    // סגירת ההודעה
     useEffect(() => {
         if (notification) {
             const timer = setTimeout(() => {

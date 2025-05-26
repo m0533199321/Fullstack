@@ -5,9 +5,6 @@ export const uploadProfilePictureService = async (file: File): Promise<string | 
     if (file) {
         try {
             const imageName = '' + new Date().getTime() + file.name
-            console.log(imageName);
-            console.log(file.type);
-
             const res = await axios.get(`${API_URL}/Upload-url`, {
                 params: {
                     fileName: imageName,
@@ -16,12 +13,10 @@ export const uploadProfilePictureService = async (file: File): Promise<string | 
             });
 
             const presignedUrl = res.data.url;
-            console.log(presignedUrl);    
             return presignedUrl;
             // await axios.put(presignedUrl, file, { headers: { "Content-Type": file.type } });
             // return presignedUrl.split("?")[0];
         } catch (error) {
-            console.error("שגיאה בהעלאת הקובץ:", error);
             return null;
         }
     }

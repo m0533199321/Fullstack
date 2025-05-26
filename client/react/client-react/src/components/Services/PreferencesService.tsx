@@ -23,7 +23,6 @@ export const getPreferences = async (userId: number): Promise<Preference[]> => {
     const response = await api.get(`${API_URL}/${userId}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching preferences:", error);
     throw error;
   }
 };
@@ -34,7 +33,6 @@ export const getPreferenceTypes = async (): Promise<PreferenceType[]> => {
     const response = await api.get(`${API_URL}/types`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching preference types:", error);
     throw error;
   }
 };
@@ -44,7 +42,6 @@ export const updateUserPreferences = async (userId: number, preferences: number[
   try {
     await api.post(`${API_URL}/${userId}`, { preferences });
   } catch (error) {
-    console.error("Error updating preferences:", error);
     throw error;
   }
 };
@@ -54,7 +51,6 @@ export const addUserPreference = async (userId: number, preferenceId: number): P
   try {
     await api.post(`${API_URL}/${userId}/add`, { preferenceId });
   } catch (error) {
-    console.error("Error adding preference:", error);
     throw error;
   }
 };
@@ -64,7 +60,6 @@ export const removeUserPreference = async (userId: number, preferenceId: number)
   try {
     await api.delete(`${API_URL}/${userId}/${preferenceId}`);
   } catch (error) {
-    console.error("Error removing preference:", error);
     throw error;
   }
 };

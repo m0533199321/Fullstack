@@ -16,8 +16,7 @@ export const downloadRecipeFromUrl = (recipe: Recipe) => {
             a.click();
             window.URL.revokeObjectURL(url);
         })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
+        .catch(() => {
         });
 };
  

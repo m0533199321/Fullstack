@@ -33,10 +33,7 @@ export const fetchUser = createAsyncThunk(
         }
         try {
             const id = getIdFromToken(token);
-            console.log(id);
             const response = await api.get(`${API_URL}/User/Full/${id}`);
-            console.log(response.data);
-
             return response.data;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
@@ -48,15 +45,13 @@ export const registerUser = createAsyncThunk(
     "register",
     async ({ user }: { user: UserRegister }, thunkAPI) => {
         try {
-            console.log(user);
-
             const response = await axios.post(`${API_URL}/Auth/register`, user);
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("sessionStart", Date.now().toString());
-            if (response.status === 200 || response.status === 201) {
-                console.log(response.status);
-                console.log(user.email);
-            }
+            // if (response.status === 200 || response.status === 201) {
+            //     console.log(response.status);
+            //     console.log(user.email);
+            // }
             return response.data;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
@@ -68,11 +63,9 @@ export const sendEmail = createAsyncThunk(
     "emailRegister",
     async ({ to, subject, body }: { to: string, subject: string, body: string }, thunkAPI) => {
         try {
-            console.log("send email");
             const response = await axios.post(`${API_URL}/Email/send`, { to, subject, body }, {
                 headers: { "Content-Type": "application/json" }
             });
-            console.log(response.data);
             return response.data;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
@@ -84,11 +77,9 @@ export const sendEmailForgot = createAsyncThunk(
     "emailForgot",
     async ({ to, subject, body }: { to: string, subject: string, body: string }, thunkAPI) => {
         try {
-            console.log("send email");
             const response = await axios.post(`${API_URL}/Email/send`, { to, subject, body }, {
                 headers: { "Content-Type": "application/json" }
             });
-            console.log(response.data.randomPassword);
             return response.data.randomPassword;
         } catch (e: any) {
             return thunkAPI.rejectWithValue(e.message);
@@ -130,7 +121,6 @@ export const UpdateUserName = createAsyncThunk(
     "updateName",
     async ({ id, fName, lName }: { id: number, fName: string, lName: string }, thunkAPI) => {
         try {
-            console.log(id, fName, lName);
             const response = await api.put(`${API_URL}/User/Name/${id}?fName=${fName}&lName=${lName}`);
             return response.data;
         } catch (e: any) {
@@ -143,7 +133,6 @@ export const UpdateUserProfile = createAsyncThunk(
     "updateProfile",
     async ({ id, profile }: { id: number, profile: string }, thunkAPI) => {
         try {
-            console.log(id, profile);
             const response = await api.put(`${API_URL}/User/Profile/${id}?profile=${profile}`);
             return response.data;
         } catch (e: any) {

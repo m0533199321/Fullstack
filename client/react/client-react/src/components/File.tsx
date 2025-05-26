@@ -30,18 +30,14 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
     const [htmlContent, setHtmlContent] = useState("")
     const [direction, setDirection] = useState<"ltr" | "rtl">("rtl")
     const [isLoading, setIsLoading] = useState(true)
-    // const [progress, setProgress] = useState(0);
     const [recipeImage, setRecipeImage] = useState(recipe?.picture || "");
     const [isImageUploading, setIsImageUploading] = useState(false)
 
     const changeImage = async () => {
         if (recipe) {
             setIsImageUploading(true)
-            console.log(recipe?.title)
             try {
                 const file = await recipeImg(recipe?.title)
-                console.log(typeof file)
-                console.log(file)
 
                 if (file) {
                     uploadRecipeImgService(file)
@@ -50,11 +46,6 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                                 await axios
                                     .put(presignedUrl, file, {
                                         headers: { "Content-Type": file.type },
-                                        // onUploadProgress: (progressEvent) => {
-                                        //     const percent = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
-                                        //     console.log(`Uploaded: ${progressEvent.loaded} of ${progressEvent.total} bytes (${percent}%)`); // לוגים
-                                        //     setProgress(percent);
-                                        // },
                                     })
                                     .then(async () => {
                                         const res = await fetchUpdateRecipeImg(recipe.id, presignedUrl.split("?")[0])
@@ -63,49 +54,19 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                                         setIsImageUploading(false)
                                     })
                             } else {
-                                console.error("Failed to upload profile picture.")
                                 setIsImageUploading(false)
                             }
                         })
-                        .catch((error) => {
-                            console.error("Error uploading image:", error)
+                        .catch(() => {
                             setIsImageUploading(false)
                         })
                 } else {
                     setIsImageUploading(false)
                 }
             } catch (error) {
-                console.error("Error generating image:", error)
                 setIsImageUploading(false)
             }
-            // setProgress(0);
         }
-        // if (recipe) {
-        //     console.log(recipe?.title);
-        //     const file = await recipeImg(recipe?.title);
-        //     console.log(typeof (file));
-        //     console.log(file);
-
-        //     if (file) {
-        //         uploadRecipeImgService(file).then(async presignedUrl => {
-        //             if (presignedUrl) {
-        //                 await axios.put(presignedUrl, file, {
-        //                     headers: { "Content-Type": file.type },
-        //                     onUploadProgress: (progressEvent) => {
-        //                         const percent = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
-        //                         setProgress(percent);
-        //                     },
-        //                 }).then(async () => {
-        //                    const res = await fetchUpdateRecipeImg(recipe.id, presignedUrl.split('?')[0]);
-        //                    console.log(res);
-        //                    setRecipeImage(presignedUrl.split("?")[0]);
-        //                 });
-        //             } else {
-        //                 console.error("Failed to upload profile picture.");
-        //             }
-        //         });
-        //     }
-        // }
     }
 
     useEffect(() => {
@@ -121,11 +82,9 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                 const arrayBuffer = await response.arrayBuffer()
                 const { value } = await mammoth.convertToHtml({ arrayBuffer })
 
-                // Enhance the HTML content with better styling
                 const enhancedHtml = enhanceRecipeContent(value)
                 setHtmlContent(enhancedHtml)
 
-                // Count Hebrew words to determine direction
                 const hebrewWords = value.match(/[א-ת]+/g)
                 const hebrewWordCount = hebrewWords
                     ? hebrewWords.reduce((count, word) => count + word.split(/\s+/).length, 0)
@@ -137,7 +96,6 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                     setDirection("ltr")
                 }
             } catch (error) {
-                console.error("Error loading document:", error)
             } finally {
                 setIsLoading(false)
             }
@@ -147,30 +105,23 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
     }, [fileUrl])
 
     const enhanceRecipeContent = (html: string) => {
-        // Enhanced recipe content with more styling and visual elements
         let enhanced = html
-            // Highlight important text
             .replace(/<strong>(.*?)<\/strong>/g, '<span class="highlighted">$1</span>')
 
-            // Enhance headings
             .replace(/<h1>(.*?)<\/h1>/g, '<h1 class="recipe-title"><span class="title-icon">👨‍🍳</span> $1</h1>')
             .replace(/<h2>(.*?)<\/h2>/g, '<h2 class="recipe-section">$1</h2>')
             .replace(/<h3>(.*?)<\/h3>/g, '<h3 class="recipe-subsection">$1</h3>')
 
-            // Enhance lists
             .replace(/<ul>/g, '<ul class="recipe-list">')
             .replace(/<ol>/g, '<ol class="recipe-steps">')
 
-            // Enhance list items with custom bullets and numbering
             .replace(/<li>(.*?)<\/li>/g, (match, content) => {
                 console.log(match);
-                // Check if content contains words like "דקות", "שעות", or numbers followed by time units
                 const hasTimeReference = /(\d+)\s*(דקות|שעות|minutes|hours)/i.test(content)
                 const hasTemperature = /(\d+)\s*(מעלות|°C|°F|degrees)/i.test(content)
 
                 let enhancedContent = content
 
-                // Add special styling for time references
                 if (hasTimeReference) {
                     enhancedContent = enhancedContent.replace(
                         /(\d+)\s*(דקות|שעות|minutes|hours)/gi,
@@ -178,7 +129,6 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                     )
                 }
 
-                // Add special styling for temperature references
                 if (hasTemperature) {
                     enhancedContent = enhancedContent.replace(
                         /(\d+)\s*(מעלות|°C|°F|degrees)/gi,
@@ -186,7 +136,6 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                     )
                 }
 
-                // Highlight ingredient quantities
                 enhancedContent = enhancedContent.replace(
                     /(\d+\/?\d*)\s*(כוס|כפית|כפות|גרם|מ"ל|ק"ג|cup|tsp|tbsp|g|ml|kg)/gi,
                     '<span class="quantity-highlight">$1 $2</span>',
@@ -195,11 +144,9 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                 return `<li class="recipe-item">${enhancedContent}</li>`
             })
 
-            // Enhance paragraphs
             .replace(/<p>(.*?)<\/p>/g, (match, content) => {
                 console.log(match);
                 
-                // Check if paragraph contains cooking tips or notes
                 const isTip = /טיפ|עצה|המלצה|tip|note|hint/i.test(content)
 
                 if (isTip) {
@@ -209,7 +156,6 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                 return `<p class="recipe-paragraph">${content}</p>`
             })
 
-        // Add section headers if they don't exist
         if (!enhanced.includes("מצרכים") && !enhanced.includes("Ingredients")) {
             const ingredientsHeader = direction === "rtl" ? "מצרכים" : "Ingredients"
             enhanced = enhanced.replace(
@@ -217,7 +163,6 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                 `<h2 class="recipe-section ingredients-header"><span class="section-icon">🍲</span> ${ingredientsHeader}</h2><ul class="recipe-list">`,
             )
         } else {
-            // Add icon to existing ingredients header
             enhanced = enhanced.replace(
                 /<h2 class="recipe-section">(מצרכים|Ingredients)<\/h2>/gi,
                 '<h2 class="recipe-section ingredients-header"><span class="section-icon">🍲</span> $1</h2>',
@@ -231,16 +176,13 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                 `<h2 class="recipe-section instructions-header"><span class="section-icon">📝</span> ${instructionsHeader}</h2><ol class="recipe-steps">`,
             )
         } else {
-            // Add icon to existing instructions header
             enhanced = enhanced.replace(
                 /<h2 class="recipe-section">(אופן הכנה|Instructions)<\/h2>/gi,
                 '<h2 class="recipe-section instructions-header"><span class="section-icon">📝</span> $1</h2>',
             )
         }
 
-        // Add step numbers to ordered list items
         enhanced = enhanced.replace(/<li class="recipe-item">(.*?)<\/li>/g, (match, content, index) => {
-            // Only add step numbers within ordered lists
             console.log(index);
             
             if (
@@ -269,11 +211,9 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
 
                 if (user) {
                     await fetchAddToMyBook(user.id, recipePostModel)
-                    console.log("הוספה לספר המתכונים שלי")
                     onClose()
                 }
             } catch (error) {
-                console.error("Error adding recipe:", error)
             }
         }
     }
@@ -328,7 +268,6 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                                 disabled={isImageUploading}
                             >
                                 <FaImage size={18} />
-                                {/* <p>מחליף תמונה... {progress}%</p> */}
                                 <span>{isImageUploading ? "מחליף תמונה... " : "החלפת תמונה"}</span>
                             </button>
                         )}
@@ -341,40 +280,23 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                             {isImageUploading && (
                                 <div className="image-loading-overlay">
                                     <div className="loading-spinner"></div>
-                                    {/* {progress && <p>מעדכן תמונה... {progress}%</p>} */}
                                     <p>מחליף תמונה...</p>
                                 </div>
                             )}
                             {!recipeImage && <img src={chef} alt="chef" className="chef-image" />}
                             {recipeImage && <img src={recipeImage || "/placeholder.svg"} alt="chef" className="chef-image" />}
                         </div>
-                        {/* <div className="chef-image-wrapper">
-                        {!recipeImage && <img src="../../images/back/chef.png" alt="chef" className="chef-image" />}
-                        {recipeImage && <img src={recipeImage} alt="chef" className="chef-image" />}
-                    </div> */}
 
                         {recipe && (
                             <div className="recipe-info">
                                 <div className="info-item" onClick={() => downloadRecipeFromUrl(recipe)} style={{ cursor: 'pointer' }}>
-                                    {/* <Clock size={20} className="info-icon" />
-                                    <span>זמן הכנה משוער</span> */}
                                     <Download size={20} className="info-icon" />
                                     <span>הורדת המתכון</span>
                                 </div>
                                 <div className="info-item" onClick={() => emailRecipe(recipe)} style={{ cursor: 'pointer' }}>
-                                    {/* <Utensils size={20} className="info-icon" />
-                                    <span>מנה טובה</span> */}
                                     <Mail size={20} className="info-icon" />
                                     <span>שליחה למייל</span>
                                 </div>
-                                {/* <div className="info-item"> */}
-                                {/* <BookOpen size={20} className="info-icon" />
-                                    <span>מתכון מומלץ</span> */}
-                                {/* </div> */}
-                                {/* <div className="info-item"> */}
-                                {/* <ChefHat size={20} className="info-icon" />
-                                    <span>קל להכנה</span> */}
-                                {/* </div> */}
                             </div>
                         )}
                     </div>

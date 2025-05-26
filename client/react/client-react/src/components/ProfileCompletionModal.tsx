@@ -11,7 +11,7 @@ interface ProfileCompletionModalProps {
   isOpen: boolean
   onClose: () => void
   onComplete: () => void
-  isUpdateMode?: boolean // פרמטר חדש שמציין אם זה מצב עדכון
+  isUpdateMode?: boolean
 }
 
 export default function ProfileCompletionModal({
@@ -19,7 +19,7 @@ export default function ProfileCompletionModal({
   isOpen,
   onClose,
   onComplete,
-  isUpdateMode = false, // ברירת מחדל: לא במצב עדכון
+  isUpdateMode = false,
 }: ProfileCompletionModalProps) {
   const [activeTab, setActiveTab] = useState<string>("allergies")
   const [completed, setCompleted] = useState(false)
@@ -27,12 +27,10 @@ export default function ProfileCompletionModal({
 
   useEffect(() => {
     if (isOpen) {
-      // איפוס מצב ה-completed כשפותחים את המודל במצב עדכון
       if (isUpdateMode) {
         setCompleted(false)
       }
 
-      // קצת השהייה כדי לאפשר לאנימציה להיראות טוב
       setTimeout(() => {
         setIsVisible(true)
       }, 10)

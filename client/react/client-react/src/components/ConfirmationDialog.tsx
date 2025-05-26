@@ -24,7 +24,6 @@ export default function ConfirmationDialog({
 
   useEffect(() => {
     if (isOpen) {
-      // קצת השהייה כדי לאפשר לאנימציה להיראות טוב
       setTimeout(() => {
         setIsVisible(true)
       }, 10)

@@ -5,12 +5,12 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Divider, Typography } from "@mui/material";
+import { AlertCircle } from "lucide-react";
+import "../styles/Google.css";
 
 const Google = () => {
-
-    const [, setSnackOpen] = useState(false);
-    const [, setSnackMessage] = useState('');
-    const [, setSnackSeverity] = useState<'success' | 'error'>('success');
+    const [errorMessage, setErrorMessage] = useState<string>("")
+    const [errorOpen, setErrorOpen] = useState<boolean>(false);
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
@@ -21,24 +21,22 @@ const Google = () => {
             const result = await dispatch(connectWithGoogle({ token }));
 
             if (result.meta.requestStatus === 'fulfilled') {
-                setSnackMessage('הרשמה בוצעה בהצלחה');
-                setSnackSeverity('success');
-                setSnackOpen(true);
                 setTimeout(() => { navigate('/'); }, 1500);
                 dispatch(fetchUser() as any);
             }
 
             else {
-                setSnackMessage('הרשמה נכשלה');
-                setSnackSeverity('error');
-                setSnackOpen(true);
+                setErrorMessage('הרשמה באמצעות Google נכשלה');
+                setTimeout(() => {
+                    setErrorOpen(false);
+                  }, 3000);
             }
         }
         catch (error) {
-            console.error('Error during Google Sign-In:', error);
-            setSnackMessage('הרשמה נכשלה');
-            setSnackSeverity('error');
-            setSnackOpen(true);
+            setErrorMessage('הרשמה באמצעות Google נכשלה');
+            setTimeout(() => {
+                setErrorOpen(false);
+              }, 3000);
         }
     }
 
@@ -55,17 +53,14 @@ const Google = () => {
                 locale='en'
                 text="signin_with"
                 onSuccess={(credentialResponse) => {
-                    console.log('Google Sign-In Success:', credentialResponse);
                     const token = credentialResponse.credential;
                     if (token) {
                         handleGoogleSignIn(token);
                     } else {
-                        console.error('Google Sign-In failed: Token is undefined');
                         //setErrorMessage('Google Sign-In failed. Please try again.');
                     }
                 }}
                 onError={() => {
-                    console.error('Google Sign-In Failed');
                     // setErrorMessage('Google Sign-In failed. Please try again.');
                 }}
                 useOneTap
@@ -73,6 +68,12 @@ const Google = () => {
                 size="large"
             />
         </Box>
+        {errorOpen && errorMessage && (
+            <div className="google-error-message">
+                <AlertCircle className="google-error-icon" size={18} />
+                {errorMessage}
+            </div>
+        )}
     </>)
 }
 

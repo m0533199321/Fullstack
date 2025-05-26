@@ -32,11 +32,9 @@ export function useProfileCompletion(userId: number | null): ProfileStatus {
       }
 
       try {
-        // בדיקת אלרגיות
         const allergies = await getAllergies(userId)
         const hasAllergies = allergies && allergies.length > 0
 
-        // בדיקת העדפות
         const preferences = await getPreferences(userId)
         const hasPreferences = preferences && preferences.length > 0
 
@@ -47,7 +45,6 @@ export function useProfileCompletion(userId: number | null): ProfileStatus {
           loading: false,
         })
       } catch (error) {
-        console.error("שגיאה בבדיקת שלמות הפרופיל:", error)
         setStatus({
           isComplete: false,
           hasAllergies: false,

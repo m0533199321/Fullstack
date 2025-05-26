@@ -23,7 +23,6 @@ export const getAllergies = async (userId: number): Promise<Allergy[]> => {
     const response = await api.get(`${API_URL}/${userId}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching allergies:", error);
     throw error;
   }
 };
@@ -34,7 +33,6 @@ export const getAllergyTypes = async (): Promise<AllergyType[]> => {
     const response = await api.get(`${API_URL}/types`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching allergy types:", error);
     throw error;
   }
 };
@@ -44,7 +42,6 @@ export const updateUserAllergies = async (userId: number, allergies: number[]): 
   try {
     await api.post(`${API_URL}/${userId}`, { allergies });
   } catch (error) {
-    console.error("Error updating allergies:", error);
     throw error;
   }
 };
@@ -54,7 +51,6 @@ export const addUserAllergy = async (userId: number, allergyId: number): Promise
   try {
     await api.post(`${API_URL}/${userId}/add`, { allergyId });
   } catch (error) {
-    console.error("Error adding allergy:", error);
     throw error;
   }
 };
@@ -64,7 +60,6 @@ export const removeUserAllergy = async (userId: number, allergyId: number): Prom
   try {
     await api.delete(`${API_URL}/${userId}/${allergyId}`);
   } catch (error) {
-    console.error("Error removing allergy:", error);
     throw error;
   }
 };

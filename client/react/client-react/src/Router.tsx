@@ -6,18 +6,13 @@ import RegisterForm from "./components/RegisterForm"
 import PublicRecipes from "./components/PublicRecipes"
 import PrivateRecipes from "./components/PrivateRecipes"
 import Request from "./components/Request"
-// import FileViewer from "./components/FileViewer"
 import DisplayRecipe from "./components/DisplayRecipe"
 import About from "./components/About"
 import LastRecipes from "./components/LastRecipes"
 import ForgotPassword from "./components/ForgotPassword"
-import EmailToMe from "./components/EmailToMe"
 import { Google } from "@mui/icons-material"
 import AllergiesForm from "./components/AllergiesForm"
 import PreferencesForm from "./components/PreferencesForm"
-// import Python from "./components/Python"
-// import Home  from "./components/Home"
-
 
 
 export const Router = createBrowserRouter([
@@ -32,11 +27,9 @@ export const Router = createBrowserRouter([
             { path: 'public-recipes', element: <PublicRecipes /> },
             { path: 'private-recipes', element: <PrivateRecipes /> },
             { path: 'request', element: <Request /> },
-            // { path: 'comments', element: <Comments recipeId={1} /> },
             { path: 'recipe/:id', element: <DisplayRecipe /> },
             { path: 'last', element: <LastRecipes /> },
             { path: 'forgot-password', element: <ForgotPassword /> },
-            { path: 'email-to-me', element: <EmailToMe /> },
             { path: 'google', element: <Google /> },
             { path: 'allergies', element: <AllergiesForm userId={110}/> },
             { path: 'preferences', element: <PreferencesForm userId={110}/> },

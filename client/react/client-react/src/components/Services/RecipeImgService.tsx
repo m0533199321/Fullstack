@@ -6,25 +6,16 @@ export const recipeImg = async (request: string) => {
     const API_URL = "https://smartchef-python.onrender.com/api/recipe";
 
     try {
-        console.log("שליחת בקשה ליצירת תמונה עם הפקודה:", request);
-        
         const response = await api.post(`${API_URL}/image`, { prompt: request }, {
             headers: { 'Content-Type': 'application/json' },
             responseType: 'blob'
         });
-        console.log("תגובה מלאה מהשרת:", response);
         if (response) {
-            console.log("נתוני התגובה:", response.data);
-            console.log("סוג נתוני התגובה:", typeof response.data);
-            console.log("ההידרים של התגובה:", response.headers);
             const blob = new Blob([response.data], { type: 'application/octet-stream' });
             // const blob = new Blob([response.data], { type: 'image/png' });
             const file = new File([blob], 'recipeimage.png', { type: 'image/png' });
             // const blob = new Blob([response.data], { type: 'image/jpeg' });
             // const file = new File([blob], 'recipe-image.jpg', { type: 'image/jpeg' });
-
-            console.log(typeof (file));
-
             return file;
             // const response2 = await uploadRecipeImgService(file);
             // console.log(response2);
@@ -32,7 +23,6 @@ export const recipeImg = async (request: string) => {
         }
     }
     catch (e) {
-        console.error('Error:', e);
         return null;
     }
 }
@@ -41,9 +31,6 @@ export const uploadRecipeImgService = async (file: File): Promise<string | null>
     if (file) {
         try {
             const imgName = '' + new Date().getTime() + ".png";
-            console.log(imgName);
-            console.log(file.type);
-
             const res = await api.get(`${API_URL}/Upload-url`, {
                 params: {
                     fileName: imgName,
@@ -52,7 +39,6 @@ export const uploadRecipeImgService = async (file: File): Promise<string | null>
             });
 
             const presignedUrl = res.data.url;
-            console.log(presignedUrl);
             return presignedUrl;
             // await axios.put(presignedUrl, file, {
             //     headers: { "Content-Type": file.type }
@@ -60,7 +46,6 @@ export const uploadRecipeImgService = async (file: File): Promise<string | null>
 
             // return presignedUrl.split("?")[0];
         } catch (error) {
-            console.error("שגיאה בהעלאת הקובץ:", error);
             return null;
         }
         // try { 
