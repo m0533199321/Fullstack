@@ -59,6 +59,7 @@ const Header = () => {
             await dispatch(UpdateUserName({ id: user.id, fName, lName })).then(result => {
                 if (!result) {
                     setErrorMessage("שגיאה בעדכון שם המשתמש");
+                    setErrorOpen(true)
                     setTimeout(() => {
                         setErrorOpen(false);
                       }, 3000);
@@ -79,6 +80,7 @@ const Header = () => {
                         }
                         else {
                             setErrorMessage("שגיאה בעדכון תמונת הפרופיל");
+                            setErrorOpen(true)
                             setTimeout(() => {
                                 setErrorOpen(false);
                               }, 3000);
@@ -87,6 +89,7 @@ const Header = () => {
 
                 } else {
                     setErrorMessage("שגיאה בעדכון תמונת הפרופיל");
+                    setErrorOpen(true)
                     setTimeout(() => {
                         setErrorOpen(false);
                       }, 3000);

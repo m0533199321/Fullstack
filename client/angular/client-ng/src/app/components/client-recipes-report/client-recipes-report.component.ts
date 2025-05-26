@@ -306,4 +306,9 @@ export class ClientReportComponent implements OnInit {
   formatTooltipText(data: any): string {
     return `${data.value} clients (${data.extra.percentage}%)`
   }
+
+  toggleDoughnut() {
+    this.isDoughnut = !this.isDoughnut;
+  }
 }
+

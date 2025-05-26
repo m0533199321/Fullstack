@@ -27,6 +27,7 @@ const Google = () => {
 
             else {
                 setErrorMessage('הרשמה באמצעות Google נכשלה');
+                setErrorOpen(true)
                 setTimeout(() => {
                     setErrorOpen(false);
                   }, 3000);
@@ -34,6 +35,7 @@ const Google = () => {
         }
         catch (error) {
             setErrorMessage('הרשמה באמצעות Google נכשלה');
+            setErrorOpen(true)
             setTimeout(() => {
                 setErrorOpen(false);
               }, 3000);

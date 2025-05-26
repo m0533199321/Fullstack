@@ -17,11 +17,27 @@ import { AuthService } from '../../services/auth.service';
 
 export class HomeComponent implements OnInit {
   options = [
-    { title: 'Display Users', route: '/users' },
-    { title: 'All Recipes', route: '/all-recipes' },
-    { title: 'Global Search', route: '/search' },
-    { title: 'Graphs', route: '/graphs' }
-  ];
+    { 
+      title: 'Display Users', 
+      route: '/users', 
+      description: 'View and manage all registered users in the system.' 
+    },
+    { 
+      title: 'All Recipes', 
+      route: '/all-recipes', 
+      description: 'Browse through all available recipes and explore new dishes.' 
+    },
+    { 
+      title: 'Global Search', 
+      route: '/search', 
+      description: 'Search across the entire application for users, recipes, and more.' 
+    },
+    { 
+      title: 'Analytics', 
+      route: '/analytics', 
+      description: 'View detailed analytics and data visualizations about app usage.' 
+    }
+  ];  
 
   particles: {
     left: string;

@@ -293,8 +293,16 @@
   animation: barGrow 1s forwards;
 } */
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .recipe-container {
+  font-family: "Poppins", sans-serif;
   padding: 2rem;
   background-color: #1a1a1a;
   background-image: radial-gradient(circle at top right, rgba(255, 107, 0, 0.1), transparent 400px),
@@ -447,6 +455,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

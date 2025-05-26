@@ -58,12 +58,14 @@ const LoginForm = () => {
           }, 1500)
         } else {
           setErrorMessage("התחברות נכשלה")
+          setErrorOpen(true)
           setTimeout(() => {
             setErrorOpen(false);
           }, 3000);
         }
       } catch (error) {
         setErrorMessage("שגיאה בתהליך ההתחברות")
+        setErrorOpen(true)
         setTimeout(() => {
           setErrorOpen(false);
         }, 3000);

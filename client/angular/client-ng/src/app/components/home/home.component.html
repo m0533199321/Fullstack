@@ -131,7 +131,7 @@
                 <div class="card-icon-wrapper">
                     @if(option.title.includes('Users')) {
                     <i class="fas fa-users card-icon"></i>
-                    } @else if(option.title.includes('Graphs')) {
+                    } @else if(option.title.includes('Analytics')) {
                     <i class="fas fa-chart-line card-icon"></i>
                     } @else if(option.title.includes('Recipes')) {
                     <i class="fas fa-utensils card-icon"></i>
@@ -143,7 +143,7 @@
                 </div>
                 <h2>{{ option.title }}</h2>
                 <div class="card-overlay"></div>
-                <p class="card-description">Click to view detailed analytics and insights</p>
+                <p class="card-description">{{ option.description }}</p>
             </div>
             }
         </div>

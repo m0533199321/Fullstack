@@ -33,6 +33,7 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
       setSuccess(true)
     } catch (error) {
       setErrorMessage("שגיאה בטעינת התגובות")
+      setErrorOpen(true)
       setTimeout(() => {
         setErrorOpen(false);
       }, 3000);
@@ -53,6 +54,7 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
         setCommentToDelete(null)
       } catch (error) {
         setErrorMessage("שגיאה במחיקת התגובה")
+        setErrorOpen(true)
         setTimeout(() => {
           setErrorOpen(false);
         }, 3000);
@@ -80,6 +82,7 @@ const Comments = ({ recipeId, comments }: CommentsProps) => {
       allComments()
     } catch (error) {
       setErrorMessage("שגיאה בעדכון התגובה")
+      setErrorOpen(true)
       setTimeout(() => {
         setErrorOpen(false);
       }, 3000);

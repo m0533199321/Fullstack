@@ -21,7 +21,7 @@ export const appRoutes: Routes = [
   { path: 'all-recipes', component: AllRecipesComponent },
   { path: 'recipe/:recipeId', component: RecipeViewerComponent },
   { path: 'search', component: SearchComponent },
-  { path: 'graphs', component: GraphsComponent },
+  { path: 'analytics', component: GraphsComponent },
   { path: 'graphs/user-report', component: UserReportComponent },
   { path: 'graphs/client-recipes-report', component: ClientReportComponent },
   { path: 'graphs/recipe-report', component: RecipeReportComponent }

@@ -114,6 +114,7 @@ const RegisterForm = () => {
               })
           } else {
             setErrorMessage("נכשל בהעלאת תמונת פרופיל")
+            setErrorOpen(true)
             setTimeout(() => {
               setErrorOpen(false);
             }, 3000);
@@ -123,6 +124,7 @@ const RegisterForm = () => {
         })
         .catch(() => {
           setErrorMessage("שגיאה בהעלאת תמונת פרופיל")
+          setErrorOpen(true)
           setTimeout(() => {
             setErrorOpen(false);
           }, 3000);
@@ -150,6 +152,7 @@ const RegisterForm = () => {
 
     if (!finishProfile) {
       setErrorMessage("תמונה לא הועלתה")
+      setErrorOpen(true)
       setTimeout(() => {
         setErrorOpen(false);
       }, 3000);
@@ -186,12 +189,14 @@ const RegisterForm = () => {
         }, 1500)
       } else {
         setErrorMessage("הרשמה נכשלה")
+        setErrorOpen(true)
         setTimeout(() => {
           setErrorOpen(false);
         }, 3000);
       }
     } catch (error) {
       setErrorMessage("שגיאה בתהליך ההרשמה")
+      setErrorOpen(true)
       setTimeout(() => {
         setErrorOpen(false);
       }, 3000);
