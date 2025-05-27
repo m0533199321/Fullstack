@@ -8,14 +8,14 @@ import * as mammoth from 'mammoth';
 import { RecipeService } from '../../services/recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmailService } from '../../services/email.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-recipe-viewer',
-  imports: [],
+  imports: [MatSnackBarModule],
   templateUrl: './recipe-viewer.component.html',
   styleUrl: './recipe-viewer.component.css'
 })
-
 export class RecipeViewerComponent implements OnInit {
   @Input() recipe: Recipe | null = null
   @Input() user: User | null = null
@@ -30,9 +30,13 @@ export class RecipeViewerComponent implements OnInit {
   isImageUploading = false
   error: string | null = null
 
-  recipe$: Observable<Recipe> = this.recipeService.recipe;
-  recipeId: number | null = null;
+  recipe$: Observable<Recipe> = this.recipeService.recipe
+  recipeId: number | null = null
+  showDeleteButton = false
+  loadingRecipeDelete: number | null = null
 
+  // משתנה חדש למצב מחיקה
+  isDeleting = false
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -40,40 +44,36 @@ export class RecipeViewerComponent implements OnInit {
     private recipeService: RecipeService,
     private emailService: EmailService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+    private snackBar: MatSnackBar,
+  ) {}
 
   async ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.recipeId = +params['recipeId'];
-    });
+    this.route.params.subscribe((params) => {
+      this.recipeId = +params["recipeId"]
+    })
     if (this.recipeId && !this.recipe) {
-      console.log("Loading recipe from server...");
       await this.loadRecipeFromServer()
     }
   }
 
   async loadRecipeFromServer(): Promise<void> {
-    this.isLoadingRecipe = true;
-    this.isLoading = true;
+    this.isLoadingRecipe = true
+    this.isLoading = true
 
     try {
-      this.recipe = await firstValueFrom(this.recipeService.getById(this.recipeId!));
-      this.recipeService.recipe.next(this.recipe);
-      console.log("Recipe loaded from server:", this.recipe);
-       // עדכון ה-BehaviorSubject
-      await this.loadRecipeContent();
+      this.recipe = await firstValueFrom(this.recipeService.getById(this.recipeId!))
+      this.recipeService.recipe.next(this.recipe)
+      await this.loadRecipeContent()
     } catch (err) {
-      console.error("Error loading recipe from server:", err);
-      this.error = "שגיאה בטעינת המתכון";
+      this.error = "שגיאה בטעינת המתכון"
     } finally {
-      this.isLoadingRecipe = false;
-      this.isLoading = false;
+      this.isLoadingRecipe = false
+      this.isLoading = false
     }
   }
 
   private async loadRecipeContent(): Promise<void> {
-
     if (!this.recipe?.path) {
       this.error = "לא נמצא קישור לקובץ המתכון"
       this.isLoading = false
@@ -96,11 +96,7 @@ export class RecipeViewerComponent implements OnInit {
       this.detectTextDirection(result.value)
 
       this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(enhancedHtml)
-      console.log(this.htmlContent)
-
-      console.log("Recipe content loaded successfully")
     } catch (error) {
-      console.error("Error loading recipe content:", error)
       this.error = "שגיאה בטעינת תוכן המתכון"
 
       await this.loadMockContent()
@@ -115,37 +111,15 @@ export class RecipeViewerComponent implements OnInit {
       if (typeof mammoth !== "undefined") {
         return await mammoth.convertToHtml({ arrayBuffer })
       } else {
-        console.warn("Mammoth.js not available, using mock conversion")
         return { value: this.getMockDocxContent() }
       }
     } catch (error) {
-      console.error("Error converting docx to html:", error)
       return { value: this.getMockDocxContent() }
     }
   }
 
   private getMockDocxContent(): string {
     return ""
-    // return `
-    //   <h1>${this.recipe?.title || "מתכון טעים"}</h1>
-    //   <h2>מצרכים</h2>
-    //   <ul>
-    //     <li>2 כוסות קמח</li>
-    //     <li>3 ביצים</li>
-    //     <li>1 כוס חלב</li>
-    //     <li>2 כפות סוכר</li>
-    //     <li>מלח לפי הטעם</li>
-    //   </ul>
-    //   <h2>אופן הכנה</h2>
-    //   <ol>
-    //     <li>מערבבים את הקמח עם המלח בקערה גדולה</li>
-    //     <li>מוסיפים את הביצים ומערבבים היטב</li>
-    //     <li>מוזגים את החלב בהדרגה תוך כדי ערבוב</li>
-    //     <li>מחממים מחבת על אש בינונית</li>
-    //     <li>מטגנים כל צד למשך 2-3 דקות</li>
-    //   </ol>
-    //   <p><strong>טיפ:</strong> ניתן להוסיף וניל או קינמון לטעם מיוחד</p>
-    // `
   }
 
   private async loadMockContent(): Promise<void> {
@@ -153,7 +127,6 @@ export class RecipeViewerComponent implements OnInit {
     const enhancedHtml = this.enhanceRecipeContent(mockContent)
     this.detectTextDirection(mockContent)
     this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(enhancedHtml)
-    
   }
 
   private detectTextDirection(content: string): void {
@@ -267,80 +240,46 @@ export class RecipeViewerComponent implements OnInit {
 
   onDownloadRecipe(): void {
     if (!this.recipe || !this.recipe.path) {
-      console.warn("No recipe or recipe path to download");
-      return;
+      return
     }
 
     fetch(this.recipe.path)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok")
         }
-        return response.blob();
+        return response.blob()
       })
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement("a")
+        a.href = url
 
         // ניקוי שם הקובץ מתווים לא תקינים
-        const safeTitle = this.recipe!.title.replace(/[^a-z0-9\u0590-\u05fe\s]/gi, '').trim().replace(/\s+/g, '_');
-        a.download = safeTitle + '.docx';
+        const safeTitle = this.recipe!.title.replace(/[^a-z0-9\u0590-\u05fe\s]/gi, "")
+          .trim()
+          .replace(/\s+/g, "_")
+        a.download = safeTitle + ".docx"
 
-        a.click();
-        window.URL.revokeObjectURL(url);
+        a.click()
+        window.URL.revokeObjectURL(url)
       })
-      .catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
-        this.error = "שגיאה בהורדת הקובץ";
-      });
+      .catch((error) => {
+        this.error = "שגיאה בהורדת הקובץ"
+      })
   }
 
   onEmailRecipe(recipe: Recipe) {
-      const subject = 'מתכון לבדיקה';
-      const body = this.emailService.buildRecipeEmailBody(recipe.path);
-    
-      this.emailService.sendEmail("smartchef12345@gmail.com", subject, body).subscribe({
-        next: () => console.log('Email sent successfully'),
-        error: err => console.error('Error sending email', err)
-      });
-    }
+    const subject = "מתכון לבדיקה"
+    const body = this.emailService.buildRecipeEmailBody(recipe.path)
 
-  async changeImage(): Promise<void> {
-    //   if (!this.recipe) return
-
-    //   this.isImageUploading = true
-    //   try {
-    //     // Call your image generation service
-    //     // const response = await firstValueFrom(
-    //       // this.http.post<{ imageUrl: string }>(`${this.apiUrl}/recipes/${this.recipe.id}/generate-image`, {
-    //       //   title: this.recipe.title,
-    //       // }),
-    //     )
-
-    //     if (response.imageUrl) {
-    //       // Update recipe image
-    //       // await firstValueFrom(
-    //       //   this.http.put(`${this.apiUrl}/recipes/${this.recipe.id}/image`, {
-    //       //     picture: response.imageUrl,
-    //       //   }),
-    //       // )
-
-    //       this.recipeImage = response.imageUrl
-    //       if (this.recipe) {
-    //         this.recipe.picture = response.imageUrl
-    //       }
-
-    //       console.log("Image updated successfully")
-    //     }
-    //   } catch (error) {
-    //     console.error("Error updating image:", error)
-    //     // Fallback to placeholder
-    //     this.recipeImage = "/placeholder.svg?height=250&width=250&text=New+Recipe+Image"
-    //   } finally {
-    //     this.isImageUploading = false
-    //   }
+    this.emailService.sendEmail("smartchef12345@gmail.com", subject, body).subscribe({
+      next: () => console.log("Email sent successfully"),
+      error: (err) => console.error("Error sending email", err),
+    })
   }
+
+  async changeImage(): Promise<void> {}
 
   getStarsArray(): number[] {
     return Array.from({ length: 5 }, (_, i) => i)
@@ -356,7 +295,36 @@ export class RecipeViewerComponent implements OnInit {
     this.ngOnInit()
   }
 
+  // פונקציה מעודכנת למחיקת תמונה
+  deleteImage(): void {
+    if (!this.recipe?.picture) return
+
+    this.isDeleting = true
+    this.showDeleteButton = false
+
+    // קריאה לפונקציה deleteAttachment במקום deleteImage
+    this.recipeService.deleteImage(this.recipe.id).subscribe({
+      next: () => {
+        this.isDeleting = false
+        this.recipe!.picture = ""
+        this.snackBar.open("התמונה נמחקה בהצלחה!", "סגור", {
+          duration: 3000,
+          verticalPosition: "top",
+          horizontalPosition: "center",
+        })
+      },
+      error: () => {
+        this.isDeleting = false
+        this.snackBar.open("שגיאה במחיקת התמונה", "סגור", {
+          duration: 3000,
+          verticalPosition: "top",
+          horizontalPosition: "center",
+        })
+      },
+    })
+  }
+
   goBack = () => {
-    this.router.navigate(['-1']);
+    this.router.navigate(["-1"])
   }
 }

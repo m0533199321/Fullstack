@@ -36,6 +36,8 @@ namespace Recipes.Core.Interfaces.IServices
 
         public Task<bool> DeleteAsync(int id);
 
+        public Task<bool> DeleteImageAsync(int id);
+
         public Task<bool> DeleteRecipeAsync(User user, Recipe recipe);
 
         public Task<bool> UpdatePublicAsync(int id);

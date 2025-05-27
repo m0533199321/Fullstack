@@ -23,6 +23,8 @@ namespace Recipes.Core.Interfaces.IRepository
 
         public Task<bool> UpdatePublicAsync(int id);
 
+        public Task<bool> DeleteImageAsync(int id);
+
         public Task<Recipe?> UpdateImgAsync(int recipeId, string url);
 
     }

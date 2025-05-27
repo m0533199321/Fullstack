@@ -27,12 +27,7 @@ export class AllRecipesService {
     })
       .pipe(
         map(({ recipes, users }) => {
-          console.log("All recipes:", recipes)
-          console.log("All users:", users)
-
-          // Combine recipes with owner information
           const recipesWithOwners: RecipeWithOwner[] = recipes.map((recipe) => {
-            // Find the owner of this recipe by checking which user has it in their recipesList
             const owner = users.find(
               (user) => user.recipesList && user.recipesList.some((userRecipe) => userRecipe.id === recipe.id),
             )
@@ -49,12 +44,10 @@ export class AllRecipesService {
       )
       .subscribe({
         next: (recipesWithOwners) => {
-          console.log("Recipes with owners:", recipesWithOwners)
           this.recipes.next(recipesWithOwners)
           this.loading.next(false)
         },
         error: (error) => {
-          console.error("Error fetching recipes with owners:", error)
           this.loading.next(false)
         },
       })
@@ -64,13 +57,11 @@ export class AllRecipesService {
     this.loading.next(true)
     this.http.get<Recipe[]>(`${this.baseUrlRecipe}/Public`).subscribe({
       next: (data) => {
-        console.log("Public recipes:", data)
         const publicRecipes: RecipeWithOwner[] = data.map((recipe) => ({ ...recipe }))
         this.recipes.next(publicRecipes)
         this.loading.next(false)
       },
       error: (error) => {
-        console.error("Error fetching public recipes:", error)
         this.loading.next(false)
       },
     })

@@ -18,10 +18,8 @@ export class AuthService {
   login(user: UserLogIn) {
     return this.http.post<any>(this.baseUrl + '/login', user).pipe(
       map(response => {
-        console.log(response);
         if (response && response.user.rolesList.length > 0) {
           const hasAdminRole = response.user.rolesList.some((role: { roleName: string; }) => {
-            console.log(role.roleName);
             return role.roleName.toLowerCase() === 'admin';
           });
 
@@ -37,7 +35,6 @@ export class AuthService {
         }
       }),
       catchError(error => {
-        console.error(error);
         return throwError(error);
       })
     );

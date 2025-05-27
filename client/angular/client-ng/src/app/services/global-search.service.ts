@@ -47,9 +47,8 @@ export class GlobalSearchService {
       .pipe( 
         tap(data => console.log('Raw data from forkJoin:', data)),
         catchError(error => {
-          console.error('Caught error in forkJoin:', error)
           this.loading.next(false)
-          return of({ users: [], recipes: [] }) // תחזיר משהו ריק כדי שהפייפ ימשיך
+          return of({ users: [], recipes: [] })
         }),
         map(({ users, recipes }) => {
           const results: SearchResult[] = []
@@ -129,12 +128,10 @@ export class GlobalSearchService {
       )
       .subscribe({
         next: (results) => {
-          console.log("Search results:", results)
           this.searchResults.next(results)
           this.loading.next(false)
         },
         error: (error) => {
-          console.error("Error searching:", error)
           this.loading.next(false)
         },
       })

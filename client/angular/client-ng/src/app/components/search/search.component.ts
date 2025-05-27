@@ -60,7 +60,14 @@ export class SearchComponent {
       )
       .subscribe((searchTerm) => {
         this.searchService.searchAll(searchTerm)
+        localStorage.setItem('searchTerm', searchTerm);
       })
+
+    const savedSearchTerm = localStorage.getItem('searchTerm');
+    if (savedSearchTerm) {
+      this.searchTerm = savedSearchTerm;
+      this.searchService.searchAll(this.searchTerm); // חיפוש עם הערך ששוחזר
+    }
   }
 
   ngAfterViewInit(): void {
@@ -78,6 +85,7 @@ export class SearchComponent {
     this.searchTerm = ""
     this.searchService.clearSearch()
     this.searchInput.nativeElement.focus()
+    localStorage.removeItem('searchTerm');
   }
 
   get filteredResults$(): Observable<SearchResult[]> {
@@ -137,15 +145,12 @@ export class SearchComponent {
     this.loadingRecipeDelete = recipeId
     this.allRecipesService.deleteRecipe(recipeId).subscribe({
       next: () => {
-        console.log("Recipe deleted successfully")
         this.loadingRecipeDelete = null
-        // Refresh search results
         if (this.searchTerm) {
           this.searchService.searchAll(this.searchTerm)
         }
       },
       error: (error) => {
-        console.error("Error deleting recipe:", error)
         this.loadingRecipeDelete = null
       },
     })
@@ -154,8 +159,6 @@ export class SearchComponent {
   toggleRecipePrivacy(recipe: SearchResult): void {
     this.allRecipesService.toggleRecipePrivacy(recipe.id).subscribe({
       next: () => {
-        console.log("Recipe privacy toggled successfully")
-        // Refresh search results
         if (this.searchTerm) {
           this.searchService.searchAll(this.searchTerm)
         }
@@ -172,7 +175,7 @@ export class SearchComponent {
   }
 
   viewUserRecipes(userId: number): void {
-    this.router.navigate(["/users", userId, "recipes"])
+    this.router.navigate(["/user", userId])
   }
 
   deleteUser(user: SearchResult): void {
@@ -196,15 +199,12 @@ export class SearchComponent {
     this.loadingUserDelete = userId
     this.displayUsersService.deleteUserWithRecipes(userId).subscribe({
       next: () => {
-        console.log("User deleted successfully")
         this.loadingUserDelete = null
-        // Refresh search results
         if (this.searchTerm) {
           this.searchService.searchAll(this.searchTerm)
         }
       },
       error: (error) => {
-        console.error("Error deleting user:", error)
         this.loadingUserDelete = null
       },
     })
@@ -216,6 +216,7 @@ export class SearchComponent {
   }
 
   goBack(): void {
+    localStorage.removeItem('searchTerm');
     this.router.navigate(["-1"])
   }
 }

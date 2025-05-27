@@ -56,7 +56,6 @@ export class AllRecipesComponent implements OnInit {
       map((recipes) => {
         let filtered = recipes
 
-        // Filter by search term
         if (this.searchTerm.trim()) {
           const searchLower = this.searchTerm.toLowerCase()
           filtered = filtered.filter(
@@ -66,7 +65,6 @@ export class AllRecipesComponent implements OnInit {
           )
         }
 
-        // Filter by type
         if (this.filterType === "recommended") {
           filtered = filtered.filter((recipe) => recipe.isPublic)
         } else if (this.filterType === "personal") {
@@ -113,7 +111,6 @@ export class AllRecipesComponent implements OnInit {
       },
       error: (error) => {
         this.loadingRecipeDelete = null
-        console.error("Error deleting recipe:", error)
         this.snackBar.open("Failed to delete recipe.", "Close", {
           duration: 3000,
           verticalPosition: "top",
@@ -135,7 +132,6 @@ export class AllRecipesComponent implements OnInit {
         this.loadRecipes()
       },
       error: (error) => {
-        console.error("Error updating recipe privacy:", error)
         this.snackBar.open("Failed to update recipe privacy.", "Close", {
           duration: 3000,
           verticalPosition: "top",
@@ -153,7 +149,6 @@ export class AllRecipesComponent implements OnInit {
     return recipe.id
   }
 
-  // Confirmation dialog methods
   showConfirmationDialog(
     title: string,
     message: string,

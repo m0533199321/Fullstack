@@ -18,11 +18,8 @@ export class UserService {
   }
 
   getById(id: number) {
-    console.log(id);
     this.http.get<User>(`${this.baseUrl}/Full/${id}`).subscribe(data => {
-      console.log(data);   
       this.user.next(data as User);
-      console.log(this.user.value);
     }
     );
   }
@@ -32,9 +29,7 @@ export class UserService {
     if (token)
       try {
         const decodedToken: any = jwtDecode(token)
-        console.log(decodedToken)
         this.getById(decodedToken.id)
-        console.log(this.user.value)
       }
       catch (error) {
         console.error('שגיאה בפענוח ה-Token:', error)

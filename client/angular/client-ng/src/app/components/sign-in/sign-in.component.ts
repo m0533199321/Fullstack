@@ -42,7 +42,6 @@ export class SignInComponent {
 
   signIn() {
     if (this.userForm.invalid) {
-      console.log("inavlid");
       this.userForm.markAllAsTouched();
       return;
     }
@@ -54,9 +53,7 @@ export class SignInComponent {
       this.userForm.get('password')?.value);
 
       this.authService.login(userLoginIn).subscribe({
-      next: (response) => {
-        console.log(response);
-        
+      next: (response) => {        
         this.snackBar.open('sign in successfully!', 'Close', {
           duration: 3000,
           verticalPosition: 'top',
@@ -65,7 +62,6 @@ export class SignInComponent {
         this.router.navigate(['']);
       },
       error: (error) => {
-        console.log(error); 
         this.snackBar.open('User does not have admin role', 'Close', {
           duration: 3000,
           verticalPosition: 'top',

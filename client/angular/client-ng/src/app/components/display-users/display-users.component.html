@@ -82,10 +82,6 @@
                     [disabled]="loadingUserDelete === user.id">
                     <i class="fas fa-book-open"></i>
                 </button>
-                <!-- <button class="action-button view-user-button" (click)="viewUser(user.id); $event.stopPropagation();"
-                    title="View User" [disabled]="loadingUserDelete === user.id">
-                    <i class="fas fa-eye"></i>
-                </button> -->
                 <button class="action-button delete-button"
                     (click)="deleteUser(user.id, user.fName + ' ' + user.lName); $event.stopPropagation();"
                     title="Delete User" [disabled]="loadingUserDelete === user.id">
@@ -170,7 +166,6 @@
     </div>
     }
 
-    <!-- Confirmation Dialog -->
     @if(showConfirmDialog && confirmDialogData) {
     <div class="confirmation-overlay">
         <div class="confirmation-dialog">

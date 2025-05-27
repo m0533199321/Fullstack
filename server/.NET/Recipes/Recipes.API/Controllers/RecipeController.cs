@@ -158,6 +158,13 @@ namespace Recipes.API.Controllers
             return recipeDto;
         }
 
+        [HttpDelete("Image/{id}")]
+        [Authorize(Policy = "Admin")]
+        public async Task<ActionResult<bool>> DeleteImage(int id)
+        {
+            return await _iService.DeleteImageAsync(id);
+        }
+
         // DELETE api/<Users>/5
         [HttpDelete("{id}")]
         [Authorize(Policy = "Admin")]

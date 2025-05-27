@@ -19,7 +19,6 @@
         </div>
     </div>
 
-    <!-- Search and Filter Section -->
     <div class="controls-section">
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
@@ -43,7 +42,6 @@
         </div>
     </div>
 
-    <!-- Loading State -->
     @if(loading$ | async) {
     <div class="loading-container">
         <div class="loading-spinner">
@@ -53,7 +51,6 @@
     </div>
     }
 
-    <!-- Recipes Grid -->
     @if(!(loading$ | async)) {
     <div class="recipe-cards-container">
         @for(recipe of (filteredRecipes$ | async); track recipe.id) {
@@ -122,7 +119,6 @@
                 </button>
             </div>
             
-            <!-- Recipe badges below actions -->
             <div class="recipe-badges-bottom">
                 @if(!recipe.isPublic) {
                 <span class="badge personal">
@@ -155,7 +151,6 @@
     </div>
     }
 
-    <!-- Confirmation Dialog -->
     @if(showConfirmDialog && confirmDialogData) {
     <div class="confirmation-overlay">
         <div class="confirmation-dialog">

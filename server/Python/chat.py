@@ -60,7 +60,7 @@ def get_recipe_file():
             messages=[
                 {
                     "role": "system",
-                    "content": f"""Give me a kosher recipe for the request.the language must be only in the user's request language. Include the recipe name: {recipe_name}, full ingredient list, and step-by-step instructions.The quantity of the ingredient will not be represented by numbers but by writing the quantity in words. Use line breaks only.The format must be:
+                    "content": f"""Give me a kosher recipe for the request.the language must be in hebrew only. Include the recipe name: {recipe_name}, full ingredient list, and step-by-step instructions.The quantity of the ingredient will not be represented by numbers but by writing the quantity in words. Use line breaks only.The format must be:
                                 Ingredients:
                                 - ingredient 1
                                 - ingredient 2

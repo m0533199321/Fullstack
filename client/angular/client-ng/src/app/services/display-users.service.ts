@@ -30,48 +30,37 @@ export class DisplayUsersService {
   }
 
   deleteUserWithRecipes(userId: number) {
-    console.log(`Deleting user ${userId} and their private recipes`)
 
     return this.getUserPrivateRecipes(userId).pipe(
       switchMap((privateRecipes) => {
-        console.log(`Found ${privateRecipes.length} private recipes for user ${userId}`)
-
         if (privateRecipes.length === 0) {
-          // No private recipes, just delete the user
           return this.deleteUserOnly(userId)
         }
 
-        // Delete all private recipes first
         const deleteRecipeRequests = privateRecipes.map((recipe) =>
           this.deleteRecipe(recipe.id).pipe(
             catchError((error) => {
-              console.error(`Failed to delete recipe ${recipe.id}:`, error)
-              return of(null) // Continue even if one recipe deletion fails
+              return of(null)
             }),
           ),
         )
 
         return forkJoin(deleteRecipeRequests).pipe(
           switchMap(() => {
-            console.log("All private recipes deleted, now deleting user")
             return this.deleteUserOnly(userId)
           }),
         )
       }),
       catchError((error) => {
-        console.error("Error getting user private recipes:", error)
-        // If we can't get recipes, still try to delete the user
         return this.deleteUserOnly(userId)
       }),
       tap(() => {
-        console.log(`User ${userId} and their recipes deleted successfully`)
-        this.getUsers() // Refresh the users list
+        this.getUsers()
       }),
     )
   }
 
   private deleteUserOnly(userId: number) {
-    console.log(`Deleting user ${userId}`)
     return this.http.delete(`${this.baseUrl}/${userId}`)
   }
 

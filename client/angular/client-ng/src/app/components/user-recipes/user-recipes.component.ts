@@ -143,14 +143,6 @@ export class UserRecipesComponent implements OnInit {
     this.editingLastName = '';
   }
 
-  // Delete recipe
-  // deleteRecipe(recipeId: number): void {
-  //   if (confirm('Are you sure you want to delete this recipe?')) {
-  //     this.recipesService.deleteRecipe(recipeId)
-  //   }
-  // }
-
-  // Delete recipe with confirmation
   deleteRecipe(recipe: Recipe): void {
     this.showConfirmationDialog(
       'Delete Recipe',
@@ -171,7 +163,6 @@ export class UserRecipesComponent implements OnInit {
     }
 
     else {
-      console.log(`Deleting recipe ${recipe.id} from user ${this.userId}`);  
       this.recipesService.deleteRecipeFromUser(recipe.id, this.userId)
     }
   }

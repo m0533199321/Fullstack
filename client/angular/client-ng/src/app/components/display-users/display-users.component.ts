@@ -79,9 +79,7 @@ export class DisplayUsersComponent {
 
   ngOnInit() {
     this.users$ = this.usersService.users;
-    this.usersService.getUsers();
-    console.log("Users loaded:", this.users$.subscribe(users => console.log(users)));
-    
+    this.usersService.getUsers();    
   }
 
   viewUser(userId: number): void {
@@ -98,8 +96,6 @@ export class DisplayUsersComponent {
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{6,}$/;
-
-    console.log("validating form", this.newUser);
 
     if (this.newUser.fName.trim() === '') {
       this.errorMessages['fName'] = 'First Name is required.';
@@ -155,7 +151,6 @@ export class DisplayUsersComponent {
       },
       error: (error) => {
         this.loadingUserDelete = null
-        console.error("Error deleting user:", error)
         this.snackBar.open("Failed to delete user. Please try again.", "Close", {
           duration: 3000,
           verticalPosition: "top",
@@ -163,7 +158,6 @@ export class DisplayUsersComponent {
         })
       },
     })
-    // this.usersService.deleteUser(userId);
   }
 
   addForm() {
@@ -215,14 +209,12 @@ export class DisplayUsersComponent {
 
   goBack = () => {
     this.router.navigate(['-1']);
-    // window.history.back();
   }
 
   viewUserRecipes(userId: number) {
     this.router.navigate(['/user', userId ]);
   }
 
-  // Confirmation dialog methods
   showConfirmationDialog(
     title: string,
     message: string,

@@ -151,6 +151,16 @@ namespace Recipes.Service.Services
             return update;
         }
 
+        public async Task<bool> DeleteImageAsync(int id)
+        {
+            var result = await _iManager._recipeRepository.DeleteImageAsync(id);
+            if (result)
+            { 
+                await _iManager.SaveAsync();
+            }
+            return result;
+        }
+
         public async Task<bool> DeleteAsync(int id)
         {
             var recipe = await GetFullByIdAsync(id);

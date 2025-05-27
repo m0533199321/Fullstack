@@ -2,10 +2,6 @@
     <div class="recipe-viewer">
         <!-- Close Button -->
         <a href="javascript:history.back()" class="back-button">
-            <!-- <svg xmlns="http://www.w3.org/2000/svg" (click)="goBack()" width="40" height="40" viewBox="0 0 24 24" fill="#ffa500">
-                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-            </svg> -->
-            <!-- <div (click)="goBack()" class="back-button-X">X</div> -->
             <svg (click)="goBack()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white"
                 viewBox="0 0 24 24">
                 <path stroke="white" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -46,21 +42,43 @@
                 </div>
             </div>
 
-            <!-- Recipe Content Wrapper -->
             <div class="recipe-content-wrapper">
-                <!-- Chef/Recipe Image Container -->
                 <div class="recipe-chef-container">
-                    <div class="chef-image-wrapper">
+                    <div class="chef-image-wrapper" 
+                         (mouseenter)="showDeleteButton = true"
+                         (mouseleave)="showDeleteButton = false">
 
-                        <!-- Default chef image or recipe image -->
+                        <!-- התמונה -->
                         @if(!recipe.picture){
                         <img src="../../../assets/chef.png" alt="chef" class="chef-image">
                         }
                         @if(recipe.picture){
-                        <img [src]="recipe.picture" alt="recipe" class="chef-image">}
+                        <img [src]="recipe.picture" alt="recipe" class="chef-image">
+                        }
+
+                        <!-- שכבת ה-hover עם כפתור המחיקה -->
+                        @if(showDeleteButton && recipe.picture && !isDeleting){
+                        <div class="delete-overlay">
+                            <button class="delete-button" (click)="deleteImage()">
+                                <i class="fas fa-trash"></i> מחק תמונה
+                            </button>
+                        </div>
+                        }
+
+                        <!-- שכבת הטעינה כשמוחקים -->
+                        @if(isDeleting){
+                        <div class="deleting-overlay">
+                            <div class="deleting-content">
+                                <div class="deleting-spinner"></div>
+                                <div class="deleting-text">מוחק תמונה...</div>
+                                <div class="loading-bar">
+                                    <div class="loading-bar-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+                        }
                     </div>
 
-                    <!-- Recipe Info Actions -->
                     <div class="recipe-info">
                         <div class="info-item" (click)="onDownloadRecipe()" style="cursor: pointer;">
                             <i class="fas fa-download info-icon"></i>

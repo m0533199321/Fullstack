@@ -27,15 +27,11 @@ export class UserRecipesService {
 
   getUserRecipes(userId: number) {
     this.http.get<User>(this.baseUrl + `/Full/${userId}`).subscribe(data => {
-      console.log(data);
       this.userOfRecipes.next(data as User)
-      console.log(this.userOfRecipes.value);
-
     })
   }
 
   updateRecipeName(recipeId: number, recipePostModel: RecipePostModel) {
-    console.log("updateRecipeName"); 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     return this.http.put<Recipe>(
       `${this.baseUrlRecipe}/${recipeId}`,
@@ -58,7 +54,6 @@ export class UserRecipesService {
     }
 
   deleteRecipe(recipeId: number) {
-    console.log(`${this.baseUrl}/${recipeId}`);
     return this.http.delete(`${this.baseUrlRecipe}/${recipeId}`).subscribe(() => {
       this.getUserRecipes(this.userOfRecipes.value.id);
     }

@@ -25,8 +25,11 @@ export class RecipeService {
   // }
 
   getById(id: number): Observable<Recipe> {
-    console.log(`Fetching recipe with ID: ${id}`);
     return this.http.get<Recipe>(`${this.baseUrl}/${id}`);
   }  
+
+  deleteImage(id: number) {
+    return this.http.delete(`${this.baseUrl}/Image/${id}`)
+  }
 
 }
