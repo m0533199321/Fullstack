@@ -116,7 +116,7 @@ namespace Recipes.Data.Repositories
             return null;
         }
 
-        public async Task<bool> DeleteAsyncAsync(int id)
+        public async Task<bool> DeleteImageAsync(int id)
         {
             var recipe = await GetByIdAsync(id);
             if (recipe != null)
