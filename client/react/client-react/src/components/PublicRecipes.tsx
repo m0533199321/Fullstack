@@ -402,7 +402,7 @@ const PublicRecipes = () => {
               <line x1="14" y1="9" x2="14" y2="9" />
             </svg>
           </div>
-          <h2 className="public-loading-title">טוען מתכונים ציבוריים...</h2>
+          <h2 className="public-loading-title">טוען מתכונים מומלצים..</h2>
           <div className="public-loading-spinner"></div>
         </div>
       </div>

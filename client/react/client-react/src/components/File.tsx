@@ -32,6 +32,7 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
     const [isLoading, setIsLoading] = useState(true)
     const [recipeImage, setRecipeImage] = useState(recipe?.picture || "");
     const [isImageUploading, setIsImageUploading] = useState(false)
+    const [isAddingToBook, setIsAddingToBook] = useState(false)
 
     const changeImage = async () => {
         if (recipe) {
@@ -146,7 +147,7 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
 
             .replace(/<p>(.*?)<\/p>/g, (match, content) => {
                 console.log(match);
-                
+
                 const isTip = /טיפ|עצה|המלצה|tip|note|hint/i.test(content)
 
                 if (isTip) {
@@ -184,7 +185,7 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
 
         enhanced = enhanced.replace(/<li class="recipe-item">(.*?)<\/li>/g, (match, content, index) => {
             console.log(index);
-            
+
             if (
                 enhanced.lastIndexOf('<ol class="recipe-steps">', enhanced.indexOf(match)) >
                 enhanced.lastIndexOf("</ol>", enhanced.indexOf(match))
@@ -197,26 +198,51 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
         return enhanced
     }
 
+    // const onSelect = async () => {
+    //     if (details && user && typeof fileUrl != "string") {
+    //         try {
+    //             const result = await uploadRecipeService(fileUrl, user.id)
+    //             const recipePostModel: RecipePostModel = {
+    //                 title: details[0],
+    //                 degree: Number(details[1]),
+    //                 isPublic: false,
+    //                 path: result,
+    //                 picture: ""
+    //             }
+
+    //             if (user) {
+    //                 await fetchAddToMyBook(user.id, recipePostModel)
+    //                 onClose()
+    //             }
+    //         } catch (error) {
+    //         }
+    //     }
+    // }
+
     const onSelect = async () => {
         if (details && user && typeof fileUrl != "string") {
-            try {
-                const result = await uploadRecipeService(fileUrl, user.id)
-                const recipePostModel: RecipePostModel = {
-                    title: details[0],
-                    degree: Number(details[1]),
-                    isPublic: false,
-                    path: result,
-                    picture: ""
-                }
-
-                if (user) {
-                    await fetchAddToMyBook(user.id, recipePostModel)
-                    onClose()
-                }
-            } catch (error) {
+          setIsAddingToBook(true)
+          try {
+            const result = await uploadRecipeService(fileUrl, user.id)
+            const recipePostModel: RecipePostModel = {
+              title: details[0],
+              degree: Number(details[1]),
+              isPublic: false,
+              path: result,
+              picture: "",
             }
+    
+            if (user) {
+              await fetchAddToMyBook(user.id, recipePostModel)
+              onClose()
+            }
+          } catch (error) {
+            console.error(error)
+          } finally {
+            setIsAddingToBook(false)
+          }
         }
-    }
+      }
 
     const emailRecipe = async (recipe: Recipe) => {
         if (user) {
@@ -229,7 +255,7 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
     return (
         <div className="file-fullscreen">
             <div className="recipe-viewer">
-                <Close onClick={onClose} style={{ cursor: 'pointer' }}/>
+                <Close onClick={onClose} style={{ cursor: 'pointer' }} />
                 <div className="recipe-header">
                     <div className="recipe-title-area">
                         {details && details[0] && <h1 className="recipe-main-title">{details[0]}</h1>}
@@ -247,7 +273,7 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                         )}
                     </div>
 
-                    <div className="recipe-actions">
+                    {/* <div className="recipe-actions">
                         {details && (
                             <>
                                 <button className="recipe-button back-button" onClick={onClose}>
@@ -269,6 +295,53 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                             >
                                 <FaImage size={18} />
                                 <span>{isImageUploading ? "מחליף תמונה... " : "החלפת תמונה"}</span>
+                            </button>
+                        )}
+                    </div> */}
+                    <div className="recipe-actions">
+                        {details && (
+                            <>
+                                <button className="recipe-button back-button" onClick={onClose}>
+                                    <ArrowRight size={18} />
+                                    <span>חזרה לבחירת מתכון אחר</span>
+                                </button>
+                                <button
+                                    className={`recipe-button add-button ${isAddingToBook ? "loading" : ""}`}
+                                    onClick={onSelect}
+                                    disabled={isAddingToBook}
+                                >
+                                    {isAddingToBook ? (
+                                        <>
+                                            <div className="button-loading-spinner"></div>
+                                            <span>מוסיף לספר...</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <BookPlus size={18} />
+                                            <span>הוספה לספר המתכונים שלי</span>
+                                        </>
+                                    )}
+                                </button>
+                            </>
+                        )}
+
+                        {recipe && recipe.picture == "" && (
+                            <button
+                                className={`recipe-button img-button ${isImageUploading ? "loading" : ""}`}
+                                onClick={changeImage}
+                                disabled={isImageUploading}
+                            >
+                                {isImageUploading ? (
+                                    <>
+                                        <div className="button-loading-spinner"></div>
+                                        <span>מחליף תמונה...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <FaImage size={18} />
+                                        <span>החלפת תמונה</span>
+                                    </>
+                                )}
                             </button>
                         )}
                     </div>
