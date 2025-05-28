@@ -66,6 +66,33 @@
     background-color: rgba(255, 107, 0, 0.15);
 }
 
+.public-favorite-button.loading {
+    background-color: rgba(255, 107, 0, 0.2);
+    color: #ff8c00;
+}
+
+.private-button-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 140, 0, 0.3);
+    border-radius: 50%;
+    border-top-color: #ff8c00;
+    animation: spin 1s ease-in-out infinite;
+}
+
+.public-option-button:disabled,
+.public-option-4button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 @media (max-width: 768px) {
     .public-options-container {
         padding: 0.5rem;

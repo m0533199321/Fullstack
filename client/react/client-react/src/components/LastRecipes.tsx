@@ -12,7 +12,7 @@ const LastRecipes = () => {
 
     const allRecipes = async () => {
         try {
-            const fetchedRecipes = await fetchPublicRecipes(); 
+            const fetchedRecipes = await fetchPublicRecipes();
             const sortedRecipes = fetchedRecipes.sort((a, b) => new Date(b.createdAt).toLocaleDateString().localeCompare(new Date(a.createdAt).toLocaleDateString()));
             const latestRecipes = sortedRecipes.slice(0, 10);
             setRecipes(latestRecipes);
@@ -33,8 +33,12 @@ const LastRecipes = () => {
                     <div className="last-recipe-grid">
                         {recipes.map((recipe) => (
                             <div key={recipe.id} className="last-recipe-card">
-                                <h3 className="last-recipe-title" style={{ fontSize: `${Math.max(1.2, 2.6 - recipe.title.length / 10)}em`, marginTop: '2%' }}>{recipe.title}</h3>
-                                <img src={chef} alt={recipe.title} className="last-recipe-image" />
+                                <h3 className="last-recipe-title" style={{ fontSize: `${Math.max(1, 2 - recipe.title.length / 10)}em`, marginTop: '2%' }}>{recipe.title}</h3>
+                                {recipe.picture && recipe.picture !== "" ? (
+                                    <img src={recipe.picture} alt={recipe.title} className="last-recipe-image" />
+                                ) :
+                                    <img src={chef} alt={recipe.title} className="last-recipe-image" />
+                                }
                             </div>
                         ))}
                     </div>

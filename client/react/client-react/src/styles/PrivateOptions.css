@@ -1,4 +1,4 @@
-.private-options-container {
+/* .private-options-container {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -64,6 +64,123 @@
 
 .private-favorite-button:hover {
     background-color: rgba(255, 107, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+    .private-options-container {
+        padding: 0.5rem;
+    }
+
+    .private-option-button {
+        padding: 0.6rem 0.75rem;
+        height: 30px;
+    }
+
+    .private-option-text {
+        font-size: 0.8rem;
+    }
+} */
+
+.private-options-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0.5rem 1rem 1rem;
+}
+
+.private-option-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: #2a2a2a;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: right;
+    direction: rtl;
+    width: 100%;
+}
+
+.private-option-5button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: #2a2a2a;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: right;
+    direction: rtl;
+    width: 100%;
+    height: 4.3vh;
+    position: relative;
+}
+
+.private-option-button:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+.private-option-5button:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+.private-option-button:disabled,
+.private-option-5button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.private-option-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.private-delete-button {
+    color: #ff4d4d;
+}
+
+.private-delete-button:hover {
+    background-color: rgba(255, 77, 77, 0.15);
+}
+
+.private-favorite-button {
+    color: #ff6b00;
+}
+
+.private-favorite-button:hover {
+    background-color: rgba(255, 107, 0, 0.15);
+}
+
+.private-favorite-button.loading {
+    background-color: rgba(255, 107, 0, 0.2);
+    color: #ff8c00;
+}
+
+/* Spinner for favorites button */
+.favorites-button-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 140, 0, 0.3);
+    border-radius: 50%;
+    border-top-color: #ff8c00;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Responsive adjustments */

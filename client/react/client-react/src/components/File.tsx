@@ -287,7 +287,7 @@ const File2: React.FC<FileViewerProps> = ({ recipe, fileUrl, onClose, details })
                             {recipeImage && <img src={recipeImage || "/placeholder.svg"} alt="chef" className="chef-image" />}
                         </div>
 
-                        {recipe && (
+                        {user && recipe && (
                             <div className="recipe-info">
                                 <div className="info-item" onClick={() => downloadRecipeFromUrl(recipe)} style={{ cursor: 'pointer' }}>
                                     <Download size={20} className="info-icon" />
